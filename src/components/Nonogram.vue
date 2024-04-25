@@ -6,50 +6,43 @@ let answers = ref([]);
 let nonogram = ref([]);
 let cluesX = ref([]);
 let cluesY = ref([]);
-let coords = ref([]);
-const size = 3;
+const size = 6;
 
 // funkcja sprawdzająca nasze rozwiązanie
 function check() {
-    let i = 0;
-    let ans = 0;
-    let checkX = [];
-    let checkY = [];
-    for (let row = 0; row < answers.value.length; row++) {
-        checkX.push([]);
-        for (let col = 0; col < answers.value.length; col++) {
-            if (answers.value[row][col] === 1) {
-                ans += 1;
-            }
-            if (answers.value[row][col] === 0 && ans !== 0) {
-                checkX[row][i++] = ans; 
-                ans = 0;
-            }
-        }
-        if (ans !== 0) {
-            checkX[row][i++] = ans; 
-            ans = 0;
-        }
-        i = 0;
-    }
+    let iX = 0, iY = 0;
+    let checkX = [], checkY = [];
+    let ansX = 0, ansY = 0;
 
-    ans = 0;
-    for (let col = 0; col < answers.value.length; col++) {
+    for (let row = 0; row < nonogram.value.length; row++) {
+        checkX.push([]);
         checkY.push([]);
-        for (let row = 0; row < answers.value.length; row++) {
+        for (let col = 0; col < nonogram.value.length; col++) {
             if (answers.value[row][col] === 1) {
-                ans += 1;
+                ansX += 1;
             }
-            if (answers.value[row][col] === 0 && ans !== 0) {
-                checkY[col][i++] = ans; 
-                ans = 0;
+            if (answers.value[row][col] === 0 && ansX !== 0) {
+                checkX[row][iX++] = ansX;
+                ansX = 0;
+            }
+            if (answers.value[col][row] === 1) {
+                ansY += 1;
+            }
+            if (answers.value[col][row] === 0 && ansY !== 0) {
+                checkY[row][iY++] = ansY;
+                ansY = 0;
             }
         }
-        if (ans !== 0) {
-            checkY[col][i++] = ans; 
-            ans = 0;
+        if (ansX !== 0) {
+            checkX[row][iX++] = ansX;
+            ansX = 0;
         }
-        i = 0;
+        if (ansY !== 0) {
+            checkY[row][iY++] = ansY;
+            ansY = 0;
+        }
+        iX = 0;
+        iY = 0;
     }
 
     let isSolvedX = true, isSolvedY = true;
@@ -90,9 +83,9 @@ function paint(row, col, cell) {
 // funkcja generująca nowy nonogram
 function generateAndFindHints() {
     answers.value = [];
+    nonogram.value = [];
     cluesX.value = [];
     cluesY.value = [];
-    nonogram.value = [];
     for (let row = 0; row < size; row++) {
         answers.value.push([]);
         nonogram.value.push([]);
@@ -101,40 +94,33 @@ function generateAndFindHints() {
             nonogram.value[row].push(Math.floor(Math.random() * 2));
         }
     }
-    let ans = 0;
+    let ansX = 0, ansY = 0;
     for (let row = 0; row < nonogram.value.length; row++) {
         cluesX.value.push([]);
+        cluesY.value.push([]);
         for (let col = 0; col < nonogram.value.length; col++) {
             if (nonogram.value[row][col] === 1) {
-                ans += 1;
-                coords.value.push({ i: row + 1, j: col + 1 });
+                ansX += 1;
             }
-            if (nonogram.value[row][col] === 0 && ans !== 0) {
-                cluesX.value[row].push(ans);
-                ans = 0;
+            if (nonogram.value[row][col] === 0 && ansX !== 0) {
+                cluesX.value[row].push(ansX);
+                ansX = 0;
             }
-        }
-        if (ans !== 0) {
-            cluesX.value[row].push(ans);
-            ans = 0;
-        }
-    }
-    ans = 0;
-    for (let col = 0; col < nonogram.value.length; col++) {
-        cluesY.value.push([]);
-        for (let row = 0; row < nonogram.value.length; row++) {
-            if (nonogram.value[row][col] === 1) {
-                ans += 1;
+            if (nonogram.value[col][row] === 1) {
+                ansY += 1;
             }
-
-            if (nonogram.value[row][col] === 0 && ans !== 0) {
-                cluesY.value[col].push(ans);
-                ans = 0;
+            if (nonogram.value[col][row] === 0 && ansY !== 0) {
+                cluesY.value[row].push(ansY);
+                ansY = 0;
             }
         }
-        if (ans !== 0) {
-            cluesY.value[col].push(ans);
-            ans = 0;
+        if (ansX !== 0) {
+            cluesX.value[row].push(ansX);
+            ansX = 0;
+        }
+        if (ansY !== 0) {
+            cluesY.value[row].push(ansY);
+            ansY = 0;
         }
     }
 }
