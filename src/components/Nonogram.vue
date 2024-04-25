@@ -1,116 +1,160 @@
 <script setup>
 import { ref } from 'vue'
-    
-let clues = ref([]);
+import BasicButton from '../UIcomponents/BasicButton.vue';
+
+let answers = ref([]);
 let nonogram = ref([]);
-let ansX = ref([]);
-let ansY = ref([]);
+let cluesX = ref([]);
+let cluesY = ref([]);
 let coords = ref([]);
-const size = 6;
+const size = 3;
 
 // funkcja sprawdzająca nasze rozwiązanie
 function check() {
-    let isSolved = true;
-    if (clues.value.length === coords.value.length) {
-        if (clues.value.forEach(item => {
-            if (!coords.value.some(clue => clue.i === item.i && clue.j === item.j)) {
-                isSolved = false;
-                console.log(item.i + " " + item.j);
+    let i = 0;
+    let ans = 0;
+    let checkX = [];
+    let checkY = [];
+    for (let row = 0; row < answers.value.length; row++) {
+        checkX.push([]);
+        for (let col = 0; col < answers.value.length; col++) {
+            if (answers.value[row][col] === 1) {
+                ans += 1;
             }
-        }));
-    } else {
-        isSolved = false;
-        alert('Spróbuj jeszcze raz');
-        return;
+            if (answers.value[row][col] === 0 && ans !== 0) {
+                checkX[row][i++] = ans; 
+                ans = 0;
+            }
+        }
+        if (ans !== 0) {
+            checkX[row][i++] = ans; 
+            ans = 0;
+        }
+        i = 0;
     }
 
-    if (isSolved) {
-        alert('Nonogram ukończony'); 
-    } else {
-        alert('Spróbuj jeszcze raz');
+    ans = 0;
+    for (let col = 0; col < answers.value.length; col++) {
+        checkY.push([]);
+        for (let row = 0; row < answers.value.length; row++) {
+            if (answers.value[row][col] === 1) {
+                ans += 1;
+            }
+            if (answers.value[row][col] === 0 && ans !== 0) {
+                checkY[col][i++] = ans; 
+                ans = 0;
+            }
+        }
+        if (ans !== 0) {
+            checkY[col][i++] = ans; 
+            ans = 0;
+        }
+        i = 0;
     }
-    console.log(clues);
+
+    let isSolvedX = true, isSolvedY = true;
+    cluesX.value.forEach((row, rowIndex) => {
+        row.forEach((element, colIndex) => {
+            if (element !== checkX[rowIndex][colIndex]) {
+                isSolvedX = false;
+            }
+        });
+    });
+    cluesY.value.forEach((row, rowIndex) => {
+        row.forEach((element, colIndex) => {
+            if (element !== checkY[rowIndex][colIndex]) {
+                isSolvedY = false;
+            }
+        });
+    });
+
+    if (isSolvedX === true && isSolvedY) {
+        alert("Rozwiązano");
+    } else {
+        alert("Spróbuj jeszcze raz");
+    }
 }
 
 // funkcja kolorująca pojedynczą kratkę
 function paint(row, col, cell) {
-    const clue = {i: col, j: row};
-    if (!clues.value.some(item => item.i === clue.i && item.j === clue.j)) {
-        clues.value.push(clue);
+    if (answers.value[row][col] === 0) {
+        answers.value[row][col] = 1;
         cell.style.backgroundColor = 'black';
     } else {
-        clues.value.splice(clues.value.indexOf(clues.value.find(item => item.i === clue.i && item.j === clue.j)), 1);
+        answers.value[row][col] = 0;
         cell.style.backgroundColor = 'white';
     }
-    console.log(clue);
+    console.log(row + ", " + col);
 }
 
+// funkcja generująca nowy nonogram
 function generateAndFindHints() {
-  clues.value = [];
-  ansX.value = [];
-  ansY.value = [];
-  nonogram.value = [];
-  for (let row = 0 ; row < size ; row++) {
-    nonogram.value.push([]);
-    for (let col = 0 ; col < size ; col++) {
-      nonogram.value[row].push(Math.floor(Math.random() * 2));
+    answers.value = [];
+    cluesX.value = [];
+    cluesY.value = [];
+    nonogram.value = [];
+    for (let row = 0; row < size; row++) {
+        answers.value.push([]);
+        nonogram.value.push([]);
+        for (let col = 0; col < size; col++) {
+            answers.value[row][col] = 0;
+            nonogram.value[row].push(Math.floor(Math.random() * 2));
+        }
     }
-  }
-  let ans = 0;
-  for (let row = 0 ; row < nonogram.value.length ; row++) {
-    ansY.value.push([]);
-    for (let col = 0 ; col < nonogram.value.length; col++) {
-      if (nonogram.value[row][col] === 1) {
-        ans += 1;
-        coords.value.push({i: row + 1, j: col + 1});
-      }
-      if (nonogram.value[row][col] === 0 && ans !== 0) {
-        ansY.value[row].push(ans);
-        ans = 0;
-      }
+    let ans = 0;
+    for (let row = 0; row < nonogram.value.length; row++) {
+        cluesX.value.push([]);
+        for (let col = 0; col < nonogram.value.length; col++) {
+            if (nonogram.value[row][col] === 1) {
+                ans += 1;
+                coords.value.push({ i: row + 1, j: col + 1 });
+            }
+            if (nonogram.value[row][col] === 0 && ans !== 0) {
+                cluesX.value[row].push(ans);
+                ans = 0;
+            }
+        }
+        if (ans !== 0) {
+            cluesX.value[row].push(ans);
+            ans = 0;
+        }
     }
-    if (ans !== 0) {
-      ansY.value[row].push(ans);
-      ans = 0;
+    ans = 0;
+    for (let col = 0; col < nonogram.value.length; col++) {
+        cluesY.value.push([]);
+        for (let row = 0; row < nonogram.value.length; row++) {
+            if (nonogram.value[row][col] === 1) {
+                ans += 1;
+            }
+
+            if (nonogram.value[row][col] === 0 && ans !== 0) {
+                cluesY.value[col].push(ans);
+                ans = 0;
+            }
+        }
+        if (ans !== 0) {
+            cluesY.value[col].push(ans);
+            ans = 0;
+        }
     }
-  }
-  ans = 0;
-  for (let col = 0 ; col < nonogram.value.length ; col++) {
-    ansX.value.push([]);
-    for (let row = 0 ; row < nonogram.value.length; row++) {
-      if (nonogram.value[row][col] === 1) {
-        ans += 1;
-      }
-      
-      if (nonogram.value[row][col] === 0 && ans !== 0) {
-        ansX.value[col].push(ans);
-        ans = 0;
-      }
-    }
-    if (ans !== 0) {
-      ansX.value[col].push(ans);
-      ans = 0;
-    }
-  }
-  console.log(nonogram.value);
 }
 </script>
 
 <template>
-    <main class="mx-auto mt-6 w-fit">
-        <div class="grid gap-0.5 grid-cols-[min-content_1fr]">
-            <div class="w-fit"></div>
-            <div class="bg-gray-600 p-1 rounded-sm flex gap-0.5">
-                <div v-for="ans in ansX" class="content-end">
+    <main class="mt-6 font-thin font-sans">
+        <div class="grid gap-0.5 grid-cols-[min-content_1fr] w-fit mx-auto">
+            <div class="w-full h-full bg-gray-600 border-t-4 border-l-4 border-gray-700 rounded-sm rounded-ss-lg"></div>
+            <div class="bg-gray-600 p-1 rounded-sm flex gap-[1.5px] rounded-se-md border-t-4 border-gray-700">
+                <div v-for="ans in cluesY" class="content-end">
                     <div class="w-14 rounded-sm text-center text-white flex flex-col">
                         <div v-for="single in ans" class="text-xl">
                             <p>{{ single }}</p>
                         </div>
                     </div>
-                </div>           
+                </div>
             </div>
-            <div class="bg-gray-600 p-1 rounded-sm w-fit flex flex-col gap-0.5">
-                <div v-for="ans in ansY" class="mx-1.5 flex justify-end items-center">
+            <div class="bg-gray-600 p-1 rounded-sm w-fit flex flex-col gap-[1.5px] rounded-es-md border-l-4 border-gray-700">
+                <div v-for="ans in cluesX" class="mx-[3px] flex justify-end items-center">
                     <div class="h-14 rounded-sm text-center text-white flex items-center">
                         <div v-for="single in ans" class="text-xl">
                             <p>&nbsp;{{ single }}&nbsp;</p>
@@ -118,24 +162,17 @@ function generateAndFindHints() {
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-700 rounded-sm p-1 grid grid-flow-col gap-0.5">
-                <div v-for="row in nonogram.length" class="grid grid-flow-row gap-0.5">
-                    <div class="w-14 h-14 rounded-sm bg-white text-center cursor-pointer transition" 
-                        v-for="col in nonogram.length" 
-                        @click="paint(row, col, $event.target)">  
+            <div class="bg-gray-700 rounded-sm p-1 grid grid-flow-col gap-[1.5px]">
+                <div v-for="row in nonogram.length" class="grid grid-flow-row gap-[1.5px]">
+                    <div class="w-full h-full rounded-sm bg-white text-center cursor-pointer transition"
+                        v-for="col in nonogram.length" @click="paint(col - 1, row - 1, $event.target)">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex justify-center gap-1">
-            <button 
-                class="bg-cyan-800 p-2 mt-2 rounded-sm text-white flex hover:bg-cyan-700 transition" 
-                @click="generateAndFindHints()">Nowy nonogram
-            </button>
-            <button 
-                class="bg-green-700 p-2 mt-2 rounded-sm text-white flex hover:bg-green-600 transition" 
-                @click="check()">Sprawdź
-            </button>
+        <div class="flex justify-center gap-1 my-2">
+            <BasicButton btnText="Nowy nonogram" :btnAction="generateAndFindHints" class="absolute left-3 bottom-3"></BasicButton>
+            <BasicButton btnText="Sprawdź" :btnAction="check" class="absolute right-3 bottom-3"></BasicButton>
         </div>
     </main>
 </template>

@@ -1,12 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HomeView from './views/NonogramView.vue';
+import NonogramView from './views/NonogramView.vue';
 </script>
 
 <template>
-  <HomeView></HomeView>
+  <body>
+    <NonogramView></NonogramView>
+  </body>
 </template>
-
-<style scoped>
-
-</style>
