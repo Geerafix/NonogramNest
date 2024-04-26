@@ -1,7 +1,6 @@
 <script setup>
 defineProps([
-    'btnText',
-    'btnAction'
+    'btnText'
 ]);
 </script>
 
@@ -27,8 +26,7 @@ defineProps([
     text-2xl
     antialiased
     tracking-wide
-    select-none"
-    @click="btnAction" 
+    select-none" 
     v-text="btnText">
     </button>
 </template>

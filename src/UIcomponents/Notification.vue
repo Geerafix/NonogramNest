@@ -23,25 +23,25 @@ function showNotification(msg, ms) {
 </script>
 
 <template>
-    <BasicButton btnText="Test powiadomienia" @click="showNotification('Dodano', 2000)"></BasicButton>
+    <BasicButton btnText="Test powiadomienia" @click="showNotification('Dodano', 2000)" class="absolute top-3 left-3"></BasicButton>
     <div ref="notification" 
     class="
-        px-3 
-        py-[5px] 
+        px-4 
+        py-[8px] 
         bg-green-700/85
         border-green-950/50
         text-slate-200   
-        rounded-lg
+        rounded-xl
         border-b-4 
         transition-all
         font-thin
         font-sans
-        text-lg
+        text-2xl
         tracking-wide
         select-none
         opacity-0
         absolute
-        bottom-3
+        top-3
         right-3">
         <div id="notificationContent">
             <p id="msg"></p>

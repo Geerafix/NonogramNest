@@ -1,10 +1,9 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import NonogramView from './views/NonogramView.vue';
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <body>
-    <NonogramView></NonogramView>
-  </body>
+  <main>
+    <RouterView/>
+  </main>
 </template>
