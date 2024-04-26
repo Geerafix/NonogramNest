@@ -8,8 +8,8 @@ defineProps([
 </script>
 
 <template>
-    <main class="mt-36 font-thin font-sans">
-        <div class="grid gap-0.5 grid-cols-[min-content_1fr] w-fit mx-auto">
+    <main class="font-thin font-sans h-full">
+        <div class="grid gap-0.5 grid-cols-[min-content_1fr] mx-auto w-fit">
             <div class="w-full h-full bg-gray-600 border-t-4 border-l-4 border-gray-700 rounded-sm rounded-ss-lg"></div>
             <NonogramYClues :clues="cluesY"></NonogramYClues>
             <NonogramXClues :clues="cluesX"></NonogramXClues>

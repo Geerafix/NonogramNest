@@ -6,23 +6,21 @@ defineProps([
 
 <template>
     <button class="
+    h-
     px-3 
     py-[10px] 
-    bg-blue-500/90
-    border-blue-900/60
+    bg-gray-700
     text-slate-200  
     rounded-xl
-    border-b-4 
     transition-[background-color_border-radius]
-    hover:bg-blue-400/90
-    hover:border-slate-800/60
+    hover:bg-gray-800
     hover:text-white
     hover:shadow-lg
-    hover:shadow-blue-600/10
+    hover:shadow-gray-600/10
     hover:rounded-[20px]
     font-thin
     font-sans
-    text-2xl
+    text-xl
     antialiased
     tracking-wide
     select-none" 

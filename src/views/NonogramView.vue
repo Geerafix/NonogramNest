@@ -7,7 +7,7 @@ let answers = ref([]);
 let nonogram = ref([]);
 let cluesX = ref([]);
 let cluesY = ref([]);
-let size = 4;
+let size = 5;
 
 // funkcja sprawdzająca nasze rozwiązanie
 function check() {
@@ -127,11 +127,9 @@ function generateAndFindHints() {
 </script>
 
 <template>
-  <main>
+  <main class="h-full relative">
     <Nonogram :cluesX="cluesX" :cluesY="cluesY" :size="nonogram.length" :paint="paint"/>
-    <div class="flex justify-center gap-1 my-2">
-        <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class="absolute left-3 bottom-3"/>
-        <BasicButton btnText="Sprawdź" @click="check()" class="absolute right-3 bottom-3"/>
-    </div>
+    <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class="absolute left-0 bottom-0"/>
+    <BasicButton btnText="Sprawdź" @click="check()" class="absolute right-0 bottom-0"/>
   </main>
 </template>
