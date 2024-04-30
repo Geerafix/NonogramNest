@@ -7,7 +7,7 @@ let answers = ref([]);
 let nonogram = ref([]);
 let cluesX = ref([]);
 let cluesY = ref([]);
-let size = 5;
+let size = 6;
 
 // funkcja sprawdzająca nasze rozwiązanie
 function check() {

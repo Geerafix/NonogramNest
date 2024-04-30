@@ -1,10 +1,22 @@
 <script setup>
 import MenuButton from './MenuButton.vue';
 import { ref } from 'vue';
-let navbar = ref();
 
-function expand() { navbar.value.style.width = '160px'; }
-function collapse() { navbar.value.style.width = '80px'; }
+let navbar = ref();
+let navbarWidth = ref(80);
+let vis = ref('hidden');
+let op = ref(0);
+
+function expand() { 
+    navbarWidth.value = 160; 
+    vis.value = 'visible';
+    op.value = 1;
+}
+function collapse() { 
+    navbarWidth.value = 80; 
+    vis.value = 'hidden';
+    op.value = 0;
+}
 
 </script>
 
@@ -25,15 +37,17 @@ function collapse() { navbar.value.style.width = '80px'; }
         border-s-4
         transition-all
         hover:rounded-2xl
+        hover:border-r-4
         flex
         flex-col
         gap-2"
+        :style="{ width: navbarWidth + 'px'}"
         @mouseenter="expand()"
         @mouseleave="collapse()">
-        <MenuButton btnText="T1"></MenuButton>
-        <MenuButton btnText="T2"></MenuButton>
-        <MenuButton btnText="T3"></MenuButton>
-        <MenuButton btnText="T4"></MenuButton>
-        <MenuButton btnText="T5"></MenuButton>
+        <MenuButton btnText="Test1" :vis="vis" :op="op"></MenuButton>
+        <MenuButton btnText="Test2" :vis="vis" :op="op"></MenuButton>
+        <MenuButton btnText="Test3" :vis="vis" :op="op"></MenuButton>
+        <MenuButton btnText="Test4" :vis="vis" :op="op"></MenuButton>
+        <MenuButton btnText="Test5" :vis="vis" :op="op"></MenuButton>
     </div>
 </template>
