@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NonogramView from '../views/NonogramView.vue'
-import TestView from '../views/TestView.vue'
+import ProfileView from '../views/ProfileView.vue'
+import RatingView from '@/views/RatingView.vue'
+import DailyView from '@/views/DailyView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,9 +13,19 @@ const router = createRouter({
       component: NonogramView
     },
     {
-      path: '/test',
-      name: 'test',
-      component: TestView
+      path: '/wyzwanie',
+      name: 'wyzwanie',
+      component: DailyView
+    },
+    {
+      path: '/ranking',
+      name: 'ranking',
+      component: RatingView
+    },
+    {
+      path: '/profil',
+      name: 'profil',
+      component: ProfileView
     }
   ]
 })

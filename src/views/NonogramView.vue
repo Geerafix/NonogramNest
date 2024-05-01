@@ -127,9 +127,14 @@ function generateAndFindHints() {
 </script>
 
 <template>
-  <main class="h-full relative">
+  <main class="grid grid-rows-[60px_min-content] h-full">
+    <div class="text-white">
+        <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
+    </div>
     <Nonogram :cluesX="cluesX" :cluesY="cluesY" :size="nonogram.length" :paint="paint"/>
-    <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class="absolute left-0 bottom-0"/>
-    <BasicButton btnText="Sprawdź" @click="check()" class="absolute right-0 bottom-0"/>
+    <div class="flex justify-between mt-auto">
+        <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class=""/>
+        <BasicButton btnText="Sprawdź" @click="check()" class=""/>
+    </div>
   </main>
 </template>

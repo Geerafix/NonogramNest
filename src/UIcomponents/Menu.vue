@@ -8,7 +8,7 @@ let vis = ref('hidden');
 let op = ref(0);
 
 function expand() { 
-    navbarWidth.value = 160; 
+    navbarWidth.value = 180; 
     vis.value = 'visible';
     op.value = 1;
 }
@@ -24,11 +24,6 @@ function collapse() {
     <div ref="navbar"
         class="absolute 
         p-[9.5px]
-        mt-4
-        mb-4
-        ml-4 
-        w-20 
-        h-[calc(100%-32px)]
         bg-gray-600 
         border-gray-700
         rounded-2xl 
@@ -44,10 +39,17 @@ function collapse() {
         :style="{ width: navbarWidth + 'px'}"
         @mouseenter="expand()"
         @mouseleave="collapse()">
-        <MenuButton btnText="Test1" :vis="vis" :op="op"></MenuButton>
-        <MenuButton btnText="Test2" :vis="vis" :op="op"></MenuButton>
-        <MenuButton btnText="Test3" :vis="vis" :op="op"></MenuButton>
-        <MenuButton btnText="Test4" :vis="vis" :op="op"></MenuButton>
-        <MenuButton btnText="Test5" :vis="vis" :op="op"></MenuButton>
+        <MenuButton btnText="Graj" :vis="vis" :op="op" @click="$router.push('/')">
+            <FAIcon icon="fa-solid fa-gamepad" class="my-auto mx-auto"/>
+        </MenuButton>
+        <MenuButton btnText="Wyzwanie" :vis="vis" :op="op" @click="$router.push('/wyzwanie')">
+            <FAIcon icon="fa-solid fa-calendar-days" class="my-auto mx-auto"/>
+        </MenuButton>
+        <MenuButton btnText="Ranking" :vis="vis" :op="op" @click="$router.push('/ranking')">
+            <FAIcon icon="fa-solid fa-chart-simple" class="my-auto mx-auto"/>
+        </MenuButton>
+        <MenuButton btnText="Profil" :vis="vis" :op="op" @click="$router.push('/profil')">
+            <FAIcon icon="fa-solid fa-user" class="my-auto mx-auto"/>
+        </MenuButton>
     </div>
 </template>
