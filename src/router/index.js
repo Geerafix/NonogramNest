@@ -3,6 +3,7 @@ import NonogramView from '../views/NonogramView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import RatingView from '@/views/RatingView.vue'
 import DailyView from '@/views/DailyView.vue'
+import CreateView from '@/views/CreateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,11 @@ const router = createRouter({
       path: '/wyzwanie',
       name: 'wyzwanie',
       component: DailyView
+    },
+    {
+      path: '/kreator',
+      name: 'kreator',
+      component: CreateView
     },
     {
       path: '/ranking',

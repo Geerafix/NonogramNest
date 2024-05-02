@@ -45,11 +45,17 @@ function collapse() {
         <MenuButton btnText="Wyzwanie" :vis="vis" :op="op" @click="$router.push('/wyzwanie')">
             <FAIcon icon="fa-solid fa-calendar-days" class="my-auto mx-auto"/>
         </MenuButton>
+        <MenuButton btnText="Kreator" :vis="vis" :op="op" @click="$router.push('/kreator')">
+            <FAIcon icon="fa-solid fa-plus" class="my-auto mx-auto"/>
+        </MenuButton>
         <MenuButton btnText="Ranking" :vis="vis" :op="op" @click="$router.push('/ranking')">
             <FAIcon icon="fa-solid fa-chart-simple" class="my-auto mx-auto"/>
         </MenuButton>
         <MenuButton btnText="Profil" :vis="vis" :op="op" @click="$router.push('/profil')">
             <FAIcon icon="fa-solid fa-user" class="my-auto mx-auto"/>
+        </MenuButton>
+        <MenuButton btnText="Wyloguj" :vis="vis" :op="op" @click="" class="mt-auto">
+            <FAIcon icon="fa-solid fa-door-open" class="my-auto mx-auto"/>
         </MenuButton>
     </div>
 </template>

@@ -7,7 +7,9 @@ let answers = ref([]);
 let nonogram = ref([]);
 let cluesX = ref([]);
 let cluesY = ref([]);
-let size = 6;
+let size = 5;
+let time = ref(0);
+let points = ref(0);
 
 // funkcja sprawdzająca nasze rozwiązanie
 function check() {
@@ -123,7 +125,9 @@ function generateAndFindHints() {
             ansY = 0;
         }
     }
+    points.value = Math.pow(nonogram.value.length, 2) * size;
 }
+
 </script>
 
 <template>
@@ -131,7 +135,16 @@ function generateAndFindHints() {
     <div class="text-white">
         <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
     </div>
-    <Nonogram :cluesX="cluesX" :cluesY="cluesY" :size="nonogram.length" :paint="paint"/>
+    <div v-if="nonogram.length > 0">
+        <Nonogram :cluesX="cluesX" :cluesY="cluesY" :size="nonogram.length" :paint="paint"/>
+        <div class="flex mt-4 mx-auto justify-between w-52">
+            <div class=" text-white font-thin font-sans">Czas: {{ time }}</div>
+            <div class=" text-white font-thin font-sans">Punkty: {{ points }}</div>
+        </div>
+    </div>
+    <div v-else class="font-thin font-sans text-white mx-auto mt-2">
+        Naciśnij przycisk <span class="italic">'Nowy nonogram'</span>, aby rozpocząć grę.
+    </div>
     <div class="flex justify-between mt-auto">
         <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class=""/>
         <BasicButton btnText="Sprawdź" @click="check()" class=""/>
