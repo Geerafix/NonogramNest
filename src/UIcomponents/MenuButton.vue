@@ -1,17 +1,27 @@
 <script setup>
+import { ref, computed } from 'vue';
+import { useElementSize } from '@vueuse/core'
+
 defineProps([
     'btnText',
-    'vis',
     'op'
 ]);
+
+const btn = ref(null);
+const { width, height } = useElementSize(btn);
+const computedWidth = computed(() => { 
+    return (width.value > height.value * 1.5) ? 1 : 0 
+});
+
 </script>
 
 <template>
-    <button class="
+    <button ref="btn" 
+    class="
     grid
-    grid-cols-[57px_auto]
+    grid-cols-[56px_auto]
     w-full
-    h-[57px]
+    h-[56px]
     bg-gray-700
     text-slate-200  
     rounded-xl
@@ -23,7 +33,7 @@ defineProps([
     hover:rounded-[20px]
     font-thin
     font-sans
-    text-xl
+    text-lg
     antialiased
     tracking-wide
     select-none
@@ -32,8 +42,8 @@ defineProps([
     overflow-hidden">
     <slot></slot>
     <span class="transition-all my-auto -ml-2" 
-        :style="{ visibility: vis, opacity: op }"
-        v-text="btnText">
+        :style="{ opacity: computedWidth }">
+        {{ btnText }}
     </span>
     </button>
 </template>

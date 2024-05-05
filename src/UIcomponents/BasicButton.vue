@@ -25,7 +25,7 @@ defineProps([
     text-2xl
     antialiased
     tracking-wide
-    select-none" 
-    v-text="btnText">
+    select-none">
+    {{ btnText }}
     </button>
 </template>

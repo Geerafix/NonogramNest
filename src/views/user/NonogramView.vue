@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue'
-import Nonogram from '@/components/Nonogram.vue';
-import BasicButton from '@/UIcomponents/BasicButton.vue';
+import { reactive } from 'vue';
+import Nonogram from '@/components/nonogram/Nonogram.vue';
+import BasicButton from '@/UIcomponents/BasicButton.vue'
+import axios from 'axios';
 
 let answers = ref([]);
 let nonogram = ref([]);
@@ -10,6 +12,8 @@ let cluesY = ref([]);
 let size = 5;
 let time = ref(0);
 let points = ref(0);
+let status = ref(false);
+let msg = ref('');
 
 // funkcja sprawdzająca nasze rozwiązanie
 function check() {
@@ -64,9 +68,9 @@ function check() {
     });
 
     if (isSolvedX === true && isSolvedY) {
-      alert("Dobrze");
+
     } else {
-      alert("Źle");
+
     }
 }
 
@@ -126,12 +130,13 @@ function generateAndFindHints() {
         }
     }
     points.value = Math.pow(nonogram.value.length, 2) * size;
+    axios({ method: 'POST', url: 'http://localhost:3000/nonograms', data: { cluesX: JSON.stringify(cluesX.value), cluesY: JSON.stringify(cluesY.value) }});
 }
-
 </script>
 
 <template>
   <main class="grid grid-rows-[60px_min-content] h-full">
+    
     <div class="text-white">
         <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
     </div>

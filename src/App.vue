@@ -1,13 +1,17 @@
 <script setup>
-import { RouterView } from 'vue-router'
-import Menu from '../src/UIcomponents/Menu.vue';
+import Menu from './UIcomponents/menu/Menu.vue';
+import MenuUserItems from './UIcomponents/menu/MenuUserItems.vue';
+import MenuAdminItems from './UIcomponents/menu/MenuAdminItems.vue';
+
 </script>
 
 <template>
-  <div class="flex">
-    <Menu class="z-50 min-h-[calc(100%-32px)] my-4 ml-4"></Menu>
-    <main class="z-100 h-[calc(100vh-32px)] w-[calc(100%-128px)] my-4 ml-[112px] mr-4">
-      <RouterView/>
-    </main>
-  </div>
+  <main class="p-4 h-[inherit] grid gap-4"
+        :class="{ 'grid-cols-[80px_auto]': $route.meta.pageOwner === 'user' || $route.meta.pageOwner === 'admin' }">
+    <Menu :width="$route.meta.pageOwner === 'user' ? 175 : 190" v-if="!$route.meta.hideMenu">
+      <MenuUserItems v-if="$route.meta.pageOwner === 'user'"/>
+      <MenuAdminItems v-else/>
+    </Menu>
+    <RouterView class="z-100 h-full w-full"/>  
+  </main>
 </template>
