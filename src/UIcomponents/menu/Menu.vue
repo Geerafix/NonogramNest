@@ -1,5 +1,5 @@
 <script setup>
-import MenuButton from '../MenuButton.vue';
+import MenuButton from '../inputs/MenuButton.vue';
 import { ref, computed } from 'vue';
 
 const props = defineProps([
@@ -9,7 +9,7 @@ const props = defineProps([
 let expanded = ref(false);
 const toggleNavbar = () => { expanded.value = !expanded.value; };
 const computedWidth = computed(() => { 
-    return (expanded.value) ? props.width : 80 
+    return (expanded.value) ? props.width : 80;
 });
 
 </script>

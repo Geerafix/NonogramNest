@@ -1,5 +1,5 @@
 <script setup>
-import MenuButton from '../MenuButton.vue';
+import MenuButton from '../inputs/MenuButton.vue';
 </script>
 
 <template>

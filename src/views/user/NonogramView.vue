@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { reactive } from 'vue';
 import Nonogram from '@/components/nonogram/Nonogram.vue';
-import BasicButton from '@/UIcomponents/BasicButton.vue'
+import BasicButton from '@/UIcomponents/inputs/BasicButton.vue'
 import axios from 'axios';
 
 let answers = ref([]);

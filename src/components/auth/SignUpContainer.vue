@@ -1,6 +1,6 @@
 <script setup>
-import BasicInput from '@/UIcomponents/BasicInput.vue'
-import BasicButton from '@/UIcomponents/BasicButton.vue';
+import BasicInput from '@/UIcomponents/inputs/BasicInput.vue'
+import BasicButton from '@/UIcomponents/inputs/BasicButton.vue';
 </script>
 
 <template>
