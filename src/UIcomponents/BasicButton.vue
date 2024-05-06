@@ -20,12 +20,12 @@ defineProps([
     hover:shadow-lg
     hover:shadow-blue-600/10
     hover:rounded-[20px]
-    font-thin
-    font-sans
     text-2xl
     antialiased
     tracking-wide
-    select-none">
+    select-none
+    max-w-min
+    text-nowrap">
     {{ btnText }}
     </button>
 </template>

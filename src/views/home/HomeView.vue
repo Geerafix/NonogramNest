@@ -1,7 +1,6 @@
 <script setup>
 import BasicButton from '@/UIcomponents/BasicButton.vue';
 
-
 </script>
 
 <template>
