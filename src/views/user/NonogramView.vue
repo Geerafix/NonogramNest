@@ -1,16 +1,18 @@
 <script setup>
-import { ref } from 'vue'
-import { reactive } from 'vue';
+import { onMounted, ref } from 'vue'
 import Nonogram from '@/components/nonogram/Nonogram.vue';
 import BasicButton from '@/UIcomponents/inputs/BasicButton.vue'
 import axios from 'axios';
+import { useInterval } from '@vueuse/core';
+import { watch } from 'vue';
 
 let answers = ref([]);
 let nonogram = ref([]);
 let cluesX = ref([]);
 let cluesY = ref([]);
 let size = 5;
-let time = ref(0);
+let paused = ref(false);
+let { counter, reset, pause, resume } = useInterval(1000, { controls: true });
 let points = ref(0);
 let status = ref(false);
 let msg = ref('');
@@ -75,19 +77,21 @@ function check() {
 }
 
 // funkcja kolorująca pojedynczą kratkę
-function paint(row, col, cell) {
+function paint(row, col, tile) {
     if (answers.value[row][col] === 0) {
         answers.value[row][col] = 1;
-        cell.style.backgroundColor = 'black';
+        tile.style.backgroundColor = 'black';
     } else {
         answers.value[row][col] = 0;
-        cell.style.backgroundColor = 'white';
+        tile.style.backgroundColor = 'white';
     }
-    console.log(row + ", " + col);
 }
 
 // funkcja generująca nowy nonogram
 function generateAndFindHints() {
+    reset();
+    resume();
+    paused.value = false;
     answers.value = [];
     nonogram.value = [];
     cluesX.value = [];
@@ -132,6 +136,10 @@ function generateAndFindHints() {
     points.value = Math.pow(nonogram.value.length, 2) * size;
     axios({ method: 'POST', url: 'http://localhost:3000/nonograms', data: { cluesX: JSON.stringify(cluesX.value), cluesY: JSON.stringify(cluesY.value) }});
 }
+
+watch(paused, (newPaused) => {
+    newPaused ? pause() : resume();
+});
 </script>
 
 <template>
@@ -141,9 +149,14 @@ function generateAndFindHints() {
         <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
     </div>
     <div v-if="nonogram.length > 0">
-        <Nonogram :cluesX="cluesX" :cluesY="cluesY" :size="nonogram.length" :paint="paint"/>
+        <Nonogram 
+            :cluesX="cluesX" 
+            :cluesY="cluesY" 
+            :size="nonogram.length" 
+            :paint="paused ? () => {} : paint" 
+            :style="{ opacity: paused ? 0.5 : 1 }"/>
         <div class="flex mt-4 mx-auto justify-between w-52">
-            <div class=" text-white font-thin font-sans">Czas: {{ time }}</div>
+            <div class=" text-white font-thin font-sans">Czas: {{ counter }}s</div>
             <div class=" text-white font-thin font-sans">Punkty: {{ points }}</div>
         </div>
     </div>
@@ -152,6 +165,7 @@ function generateAndFindHints() {
     </div>
     <div class="flex justify-between mt-auto">
         <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class=""/>
+        <BasicButton btnText="Stop" @click="paused = !paused"/>
         <BasicButton btnText="Sprawdź" @click="check()" class=""/>
     </div>
   </main>
