@@ -6,8 +6,7 @@ defineProps([
     'type'
 ]);
 
-let value = ref('');
-
+const value = ref('');
 </script>
 
 <template>
@@ -28,6 +27,7 @@ let value = ref('');
     focus:outline-0
     focus:ring-4
     focus:border-0
+    text-center
     focus:ring-gray-500"
     v-model="value"
     :placeholder="placeholder"

@@ -35,7 +35,7 @@ const computedWidth = computed(() => {
         @mouseenter="toggleNavbar"
         @mouseleave="toggleNavbar">
         <slot></slot>
-        <MenuButton btnText="Wyloguj" @click="$router.push('/')" class="mt-auto">
+        <MenuButton btnText="Wyloguj" @click="$router.push('/logowanie')" class="mt-auto">
             <Icon icon="fa-solid fa-door-open" class="my-auto mx-auto"/>
         </MenuButton>
     </div>

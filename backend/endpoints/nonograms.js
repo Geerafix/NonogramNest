@@ -8,6 +8,7 @@ server.get('/nonograms', (req, res) => {
     });
 });
 
-server.post('/nonograms', (req, res) => {
-    client.query('INSERT INTO nonograms (cluesx, cluesy) VALUES ($1, $2)', [req.body.cluesX, req.body.cluesY]);
+server.post('/nonograms', async (req, res) => {
+    client.query('INSERT INTO nonograms (cluesx, cluesy) VALUES ($1, $2)', [await req.body.cluesX, await req.body.cluesY]);
+    res.json();
 });

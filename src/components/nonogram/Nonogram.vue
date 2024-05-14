@@ -3,7 +3,10 @@ import NonogramXClues from './NonogramXClues.vue';
 import NonogramYClues from './NonogramYClues.vue';
 import NonogramBoard from './NonogramBoard.vue';
 defineProps([
-    'cluesX', 'cluesY', 'size', 'paint'
+    'cluesX', 
+    'cluesY', 
+    'size', 
+    'paint'
 ]);
 </script>
 
