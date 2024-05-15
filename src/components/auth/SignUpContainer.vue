@@ -14,25 +14,20 @@ const userData = reactive({
     confirmPassword: ''
 });
 
-const signUp = (event) => {
-    event.preventDefault();
+const onSubmit = () => {
     postSignUp(userData.email, userData.username, userData.password)
-    .then(res => {
-        router.push('/graj');
-    })
-    .catch(err => {
-        error.value = true;
-    });
+    .then(res => { router.push('/'); })
+    .catch(err => { error.value = true; });
 };
 </script>
 
 <template>
-    <form class="grid gap-4 w-fit mx-auto mt-20 justify-items-center" v-on:submit="signUp($event)">
+    <form class="grid gap-4 w-fit mx-auto mt-20 justify-items-center" @submit.prevent="onSubmit">
         <BasicInput placeholder="Login" v-model="userData.username"></BasicInput>
         <BasicInput placeholder="Email" v-model="userData.email"></BasicInput>
         <BasicInput placeholder="Hasło" type="password" v-model="userData.password"></BasicInput>
         <BasicInput placeholder="Powtórz hasło" type="password" v-model="userData.confirmPassword"></BasicInput>
-        <span v-if="error" class="text-red-500/70">Użytkownik już istnieje</span>
+        <span v-if="error" class="text-red-500/70 text-xl">Użytkownik już istnieje</span>
         <BasicButton btnText="Zarejestruj" type="submit"></BasicButton>
     </form>
 </template>

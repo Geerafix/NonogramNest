@@ -6,6 +6,7 @@ const argon2 = pkg;
 server.post('/signin', async (req, res) => {
     client.query('SELECT * FROM users WHERE email = $1 OR username = $1', [await req.body.username], async (err, result) => {
         if (result.rows[0] && await argon2.verify(result.rows[0].password, await req.body.password)) {
+            req.session.user = result.rows[0];
             res.status(200).send({ msg: 'Zalogowano' });
         } else {
             res.status(404).send({ msg: 'Nieprawidłowa nazwa użytkownika lub hasło' });
@@ -28,19 +29,21 @@ server.post('/signup', async (req, res) => {
     });
 });
 
-// server.get('/users', (req, res) => {
-//     client.query('SELECT * FROM users', (err, result) => {
-//         if (!err) {
-//             res.json(result.rows);
-//         }
-//     });
-// });
+// wylogowanie
+server.post('/logout', (req, res) => {
+    req.session.destroy();
+    res.status(200).send({ msg: 'Sesja zniszczona' })
+});
 
-// server.get('/users/:id', (req, res) => {
-//     const id = parseInt(req.params.id);
-//     client.query('SELECT * FROM users WHERE id = $1', [id], (err, result) => {
-//         if (!err) {
-//             res.json(result.rows);
-//         }
-//     });
-// });
+// sprawdzanie roli
+server.post('/role', async (req, res) => {
+    if (await req.session.user) {
+        res.json({ role: await req.session.user.role });
+    } else {
+        res.json({ role: 'none' });
+    }
+});
+
+server.get('/session', (req, res) => {
+    res.json(req.session);
+});

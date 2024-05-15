@@ -1,17 +1,23 @@
 <script setup>
 import MenuButton from '../inputs/MenuButton.vue';
+import { logout } from '@/services/usersService';
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps([
     'width'
 ]);
 
-let expanded = ref(false);
+const router = useRouter();
+const expanded = ref(false);
 const toggleNavbar = () => { expanded.value = !expanded.value; };
 const computedWidth = computed(() => { 
     return (expanded.value) ? props.width : 80;
 });
-
+const toggleLogout = () => {
+    logout();
+    router.push('/');
+};
 </script>
 
 <template>
@@ -35,7 +41,7 @@ const computedWidth = computed(() => {
         @mouseenter="toggleNavbar"
         @mouseleave="toggleNavbar">
         <slot></slot>
-        <MenuButton btnText="Wyloguj" @click="$router.push('/logowanie')" class="mt-auto">
+        <MenuButton btnText="Wyloguj" @click="toggleLogout" class="mt-auto">
             <Icon icon="fa-solid fa-door-open" class="my-auto mx-auto"/>
         </MenuButton>
     </div>

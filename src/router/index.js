@@ -9,14 +9,27 @@ import HomeView from '@/views/home/HomeView.vue'
 import SignInView from '@/views/home/SignInView.vue'
 import SignUpView from '@/views/home/SignUpView.vue'
 import UsersView from '@/views/admin/UsersView.vue'
+import { getRole } from '@/services/usersService'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     // HomeView
-    { path: '/',            component: HomeView,   meta: { hideMenu: true }},
-    { path: '/logowanie',   component: SignInView, meta: { hideMenu: true } },
-    { path: '/rejestracja', component: SignUpView, meta: { hideMenu: true } },
+    { path: '/',            
+      component: HomeView,   
+      meta: { hideMenu: true },
+      async beforeEnter() { await beforeHome(); }
+    },
+    { path: '/logowanie',   
+      component: SignInView, 
+      meta: { hideMenu: true },
+      async beforeEnter() { await beforeHome(); }
+    },
+    { path: '/rejestracja', 
+      component: SignUpView, 
+      meta: { hideMenu: true },
+      async beforeEnter() { await beforeHome(); }
+    },
 
     // UserView
     { path: '/graj',    component: NonogramView, meta: { pageOwner: 'user' } },
@@ -28,6 +41,21 @@ const router = createRouter({
     // AdminView
     { path: '/uzytkownicy',  component: UsersView,  meta: { pageOwner: 'admin' } }
   ]
-})
+});
+
+async function beforeHome() {
+  await getRole()
+  .then(res => { 
+    if (res.data.role === 'user') {
+      router.push('/graj');
+    } else if (res.data.role === 'admin') {
+      router.push('/uzytkownicy');
+    }
+  })
+  .catch(err => {
+    
+  });
+}
+
 
 export default router
