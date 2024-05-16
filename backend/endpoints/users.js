@@ -7,7 +7,7 @@ server.post('/signin', async (req, res) => {
     client.query('SELECT * FROM users WHERE email = $1 OR username = $1', [await req.body.username], async (err, result) => {
         if (result.rows[0] && await argon2.verify(result.rows[0].password, await req.body.password)) {
             req.session.user = result.rows[0];
-            res.status(200).send({ msg: 'Zalogowano' });
+            res.status(200).send(req.session.user.role);
         } else {
             res.status(404).send({ msg: 'Nieprawidłowa nazwa użytkownika lub hasło' });
         }
@@ -36,12 +36,8 @@ server.post('/logout', (req, res) => {
 });
 
 // sprawdzanie roli
-server.post('/role', async (req, res) => {
-    if (await req.session.user) {
-        res.json({ role: await req.session.user.role });
-    } else {
-        res.json({ role: 'none' });
-    }
+server.post('/role', (req, res) => {
+    req.session.user ? res.json({ role: req.session.user.role }) : res.json();
 });
 
 server.get('/session', (req, res) => {

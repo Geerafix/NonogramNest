@@ -14,8 +14,8 @@ const toggleNavbar = () => { expanded.value = !expanded.value; };
 const computedWidth = computed(() => { 
     return (expanded.value) ? props.width : 80;
 });
-const toggleLogout = () => {
-    logout();
+const toggleLogout = async () => {
+    await logout();
     router.push('/');
 };
 </script>

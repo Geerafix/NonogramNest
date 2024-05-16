@@ -25,8 +25,8 @@ const onSubmit = () => {
     <form class="grid gap-4 w-fit mx-auto mt-20 justify-items-center" @submit.prevent="onSubmit">
         <BasicInput placeholder="Login" v-model="userData.username"></BasicInput>
         <BasicInput placeholder="Email" v-model="userData.email"></BasicInput>
-        <BasicInput placeholder="Hasło" type="password" v-model="userData.password"></BasicInput>
-        <BasicInput placeholder="Powtórz hasło" type="password" v-model="userData.confirmPassword"></BasicInput>
+        <BasicInput placeholder="Hasło" type="password" autocomplete="off" v-model="userData.password"></BasicInput>
+        <BasicInput placeholder="Powtórz hasło" type="password" autocomplete="off" v-model="userData.confirmPassword"></BasicInput>
         <span v-if="error" class="text-red-500/70 text-xl">Użytkownik już istnieje</span>
         <BasicButton btnText="Zarejestruj" type="submit"></BasicButton>
     </form>

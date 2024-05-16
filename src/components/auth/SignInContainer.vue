@@ -12,11 +12,9 @@ const userData = reactive({
     password: ''
 });
 
-const onSubmit = () => {
-    postSignIn(userData.username, userData.password)
-    .then(res => { 
-        router.push('/graj'); 
-    })
+const onSubmit = async () => {
+    await postSignIn(userData.username, userData.password)
+    .then(res => { router.push('/'); })
     .catch(err => { error.value = true; });
 };
 </script>
@@ -24,7 +22,7 @@ const onSubmit = () => {
 <template>
     <form class="grid gap-4 w-fit mx-auto mt-20 justify-items-center" @submit.prevent="onSubmit">
         <BasicInput placeholder="Login lub Email" v-model="userData.username"></BasicInput>
-        <BasicInput placeholder="Hasło" type="password" v-model="userData.password"></BasicInput>
+        <BasicInput placeholder="Hasło" type="password" autocomplete="off" v-model="userData.password"></BasicInput>
         <span v-if="error" class="text-red-500/70 text-xl">Nieprawidłowe dane logowania</span>
         <BasicButton btnText="Zaloguj" type="submit"></BasicButton>
     </form>
