@@ -9,15 +9,14 @@ defineProps([
 
 const btn = ref(null);
 const { width, height } = useElementSize(btn);
-const computedWidth = computed(() => { 
-    return (width.value > height.value * 1.5) ? 1 : 0 
+const computedWidth = computed(() => {
+    return (width.value > height.value * 1.5) ? 1 : 0
 });
 
 </script>
 
 <template>
-    <button ref="btn" 
-    class="
+    <button ref="btn" class="
     grid
     grid-cols-[56px_auto]
     w-full
@@ -40,10 +39,9 @@ const computedWidth = computed(() => {
     text-left
     text-nowrap
     overflow-hidden">
-    <slot></slot>
-    <span class="transition-all my-auto -ml-2" 
-        :style="{ opacity: computedWidth }">
-        {{ btnText }}
-    </span>
+        <slot></slot>
+        <span class="transition-all my-auto -ml-2" :style="{ opacity: computedWidth }">
+            {{ btnText }}
+        </span>
     </button>
 </template>

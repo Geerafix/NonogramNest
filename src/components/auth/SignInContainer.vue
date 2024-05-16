@@ -14,8 +14,8 @@ const userData = reactive({
 
 const onSubmit = async () => {
     await postSignIn(userData.username, userData.password)
-    .then(res => { router.push('/'); })
-    .catch(err => { error.value = true; });
+        .then(res => { router.go(); })
+        .catch(err => { error.value = true; });
 };
 </script>
 

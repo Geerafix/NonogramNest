@@ -4,6 +4,6 @@ import MenuButton from '../inputs/MenuButton.vue';
 
 <template>
     <MenuButton btnText="Użytkownicy" @click="$router.push('/uzytkownicy')">
-        <Icon icon="fa-solid fa-users" class="my-auto mx-auto"/>
+        <Icon icon="fa-solid fa-users" class="my-auto mx-auto" />
     </MenuButton>
 </template>

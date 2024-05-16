@@ -8,62 +8,62 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     // HomeView
-    { 
-      path: '/',     
-      name: 'Home',      
-      component: () => import('@/views/home/HomeView.vue'),   
+    {
+      path: '/',
+      name: 'Home',
+      component: () => import('@/views/home/HomeView.vue'),
       meta: { hideMenu: true },
     },
-    { 
-      path: '/logowanie',  
-      name: 'SignIn', 
-      component: () => import('@/views/home/SignInView.vue'), 
+    {
+      path: '/logowanie',
+      name: 'SignIn',
+      component: () => import('@/views/home/SignInView.vue'),
       meta: { hideMenu: true },
     },
-    { 
+    {
       path: '/rejestracja',
-      name: 'SignUp', 
+      name: 'SignUp',
       component: () => import('@/views/home/SignUpView.vue'),
       meta: { hideMenu: true },
     },
 
     // UserView
-    { 
-      path: '/graj',    
+    {
+      path: '/graj',
       name: 'Play',
-      component: () => import('@/views/user/NonogramView.vue'), 
+      component: () => import('@/views/user/NonogramView.vue'),
       meta: { pageOwner: userRole },
     },
-    { 
+    {
       path: '/wyzwanie',
       name: 'Challenge',
-      component: () => import('@/views/user/DailyView.vue'),   
+      component: () => import('@/views/user/DailyView.vue'),
       meta: { pageOwner: userRole },
     },
-    { 
-      path: '/kreator', 
+    {
+      path: '/kreator',
       name: 'Creator',
-      component: () => import('@/views/user/CreateView.vue'),   
+      component: () => import('@/views/user/CreateView.vue'),
       meta: { pageOwner: userRole },
     },
-    { 
-      path: '/ranking', 
+    {
+      path: '/ranking',
       name: 'Rating',
-      component: () => import('@/views/user/RatingView.vue'),   
+      component: () => import('@/views/user/RatingView.vue'),
       meta: { pageOwner: userRole },
     },
-    { 
-      path: '/profil',  
+    {
+      path: '/profil',
       name: 'Profile',
-      component: () => import('@/views/user/ProfileView.vue'),  
+      component: () => import('@/views/user/ProfileView.vue'),
       meta: { pageOwner: userRole },
     },
 
     // AdminView
-    { 
-      path: '/uzytkownicy', 
-      name: 'Users', 
-      component: () => import('@/views/admin/UsersView.vue'),  
+    {
+      path: '/uzytkownicy',
+      name: 'Users',
+      component: () => import('@/views/admin/UsersView.vue'),
       meta: { pageOwner: adminRole },
     }
   ]
@@ -72,7 +72,7 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   const role = await getRole().then(res => { return res.data.role });
   if (to.meta.hideMenu === true) {
-    if (role === userRole) { return { name: 'Play' }; }    
+    if (role === userRole) { return { name: 'Play' }; }
     else if (role === adminRole) { return { name: 'Users' }; }
   } else if (!to.meta.hideMenu) {
     if (typeof role !== 'undefined') {

@@ -26,6 +26,6 @@ defineProps([
     select-none
     max-w-min
     text-nowrap">
-    {{ btnText }}
+        {{ btnText }}
     </button>
 </template>

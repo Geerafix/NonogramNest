@@ -11,7 +11,7 @@ const props = defineProps([
 const router = useRouter();
 const expanded = ref(false);
 const toggleNavbar = () => { expanded.value = !expanded.value; };
-const computedWidth = computed(() => { 
+const computedWidth = computed(() => {
     return (expanded.value) ? props.width : 80;
 });
 const toggleLogout = async () => {
@@ -36,13 +36,13 @@ const toggleLogout = async () => {
         hover:border-r-4
         flex
         flex-col
-        gap-[10px]"
-        :style="{ width: computedWidth + 'px'}"
-        @mouseenter="toggleNavbar"
+        gap-[10px]" 
+        :style="{ width: computedWidth + 'px' }" 
+        @mouseenter="toggleNavbar" 
         @mouseleave="toggleNavbar">
         <slot></slot>
         <MenuButton btnText="Wyloguj" @click="toggleLogout" class="mt-auto">
-            <Icon icon="fa-solid fa-door-open" class="my-auto mx-auto"/>
+            <Icon icon="fa-solid fa-door-open" class="my-auto mx-auto" />
         </MenuButton>
     </div>
 </template>

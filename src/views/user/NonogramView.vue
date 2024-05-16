@@ -134,7 +134,7 @@ function generateAndFindHints() {
         }
     }
     points.value = Math.pow(nonogram.value.length, 2) * size;
-    axios({ method: 'POST', url: 'http://localhost:3000/nonograms', data: { cluesX: JSON.stringify(cluesX.value), cluesY: JSON.stringify(cluesY.value) }});
+    axios({ method: 'POST', url: 'http://localhost:3000/nonograms', data: { cluesX: JSON.stringify(cluesX.value), cluesY: JSON.stringify(cluesY.value) } });
 }
 
 watch(paused, (newPaused) => {
@@ -143,30 +143,26 @@ watch(paused, (newPaused) => {
 </script>
 
 <template>
-  <main class="grid grid-rows-[60px_min-content] h-full">
-    
-    <div class="text-white">
-        <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
-    </div>
-    <div v-if="nonogram.length > 0">
-        <Nonogram 
-            :cluesX="cluesX" 
-            :cluesY="cluesY" 
-            :size="nonogram.length" 
-            :paint="paused ? () => {} : paint" 
-            :style="{ opacity: paused ? 0.5 : 1 }"/>
-        <div class="flex mt-4 mx-auto justify-between w-52">
-            <div class=" text-white font-thin font-sans">Czas: {{ counter }}s</div>
-            <div class=" text-white font-thin font-sans">Punkty: {{ points }}</div>
+    <main class="grid grid-rows-[60px_min-content] h-full">
+
+        <div class="text-white">
+            <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
         </div>
-    </div>
-    <div v-else class="font-thin font-sans text-white mx-auto mt-2">
-        Naciśnij przycisk <span class="italic">'Nowy nonogram'</span>, aby rozpocząć grę.
-    </div>
-    <div class="flex justify-between mt-auto">
-        <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class=""/>
-        <BasicButton btnText="Stop" @click="paused = !paused"/>
-        <BasicButton btnText="Sprawdź" @click="check()" class=""/>
-    </div>
-  </main>
+        <div v-if="nonogram.length > 0">
+            <Nonogram :cluesX="cluesX" :cluesY="cluesY" :size="nonogram.length" :paint="paused ? () => { } : paint"
+                :style="{ opacity: paused ? 0.5 : 1 }" />
+            <div class="flex mt-4 mx-auto justify-between w-52">
+                <div class=" text-white font-thin font-sans">Czas: {{ counter }}s</div>
+                <div class=" text-white font-thin font-sans">Punkty: {{ points }}</div>
+            </div>
+        </div>
+        <div v-else class="font-thin font-sans text-white mx-auto mt-2">
+            Naciśnij przycisk <span class="italic">'Nowy nonogram'</span>, aby rozpocząć grę.
+        </div>
+        <div class="flex justify-between mt-auto">
+            <BasicButton btnText="Nowy nonogram" @click="generateAndFindHints()" class="" />
+            <BasicButton btnText="Stop" @click="paused = !paused" />
+            <BasicButton btnText="Sprawdź" @click="check()" class="" />
+        </div>
+    </main>
 </template>

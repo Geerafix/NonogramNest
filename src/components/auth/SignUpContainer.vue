@@ -16,8 +16,8 @@ const userData = reactive({
 
 const onSubmit = () => {
     postSignUp(userData.email, userData.username, userData.password)
-    .then(res => { router.push('/'); })
-    .catch(err => { error.value = true; });
+        .then(res => { router.push('/'); })
+        .catch(err => { error.value = true; });
 };
 </script>
 
@@ -26,7 +26,8 @@ const onSubmit = () => {
         <BasicInput placeholder="Login" v-model="userData.username"></BasicInput>
         <BasicInput placeholder="Email" v-model="userData.email"></BasicInput>
         <BasicInput placeholder="Hasło" type="password" autocomplete="off" v-model="userData.password"></BasicInput>
-        <BasicInput placeholder="Powtórz hasło" type="password" autocomplete="off" v-model="userData.confirmPassword"></BasicInput>
+        <BasicInput placeholder="Powtórz hasło" type="password" autocomplete="off" v-model="userData.confirmPassword">
+        </BasicInput>
         <span v-if="error" class="text-red-500/70 text-xl">Użytkownik już istnieje</span>
         <BasicButton btnText="Zarejestruj" type="submit"></BasicButton>
     </form>

@@ -18,14 +18,14 @@ client.connect();
 
 server.use(express.json());
 
-server.use(cors({ 
+server.use(cors({
     origin: true,
-    credentials: true 
+    credentials: true
 }));
 
 server.use(session({
-    store: new pgStore({ 
-        conString: connectionString, 
+    store: new pgStore({
+        conString: connectionString,
         createTableIfMissing: true
     }),
     secret: 'keyboard cat',
