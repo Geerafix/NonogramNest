@@ -21,26 +21,26 @@ const computedWidth = computed(() => {
     grid-cols-[56px_auto]
     w-full
     h-[56px]
+    rounded-xl
     bg-gray-700
     text-slate-200  
-    rounded-xl
-    transition-[background-color_border-radius]
     hover:bg-gray-800
     hover:text-white
-    hover:shadow-lg
-    hover:shadow-gray-600/10
-    hover:rounded-[20px]
+    hover:shadow-gray-700/50
+    hover:shadow-md
+    hover:rounded-[18px]
+    transition-[background-color_border-radius]
+    select-none
     font-thin
     font-sans
     text-lg
-    antialiased
-    tracking-wide
-    select-none
     text-left
     text-nowrap
+    tracking-wide
     overflow-hidden">
         <slot></slot>
-        <span class="transition-all my-auto -ml-2" :style="{ opacity: computedWidth }">
+        <span class="-ml-2 mr-4 my-auto transition-[opacity] duration-[270ms]" 
+            :style="{ opacity: computedWidth }">
             {{ btnText }}
         </span>
     </button>

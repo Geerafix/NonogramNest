@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import Nonogram from '@/components/nonogram/Nonogram.vue';
 import BasicButton from '@/UIcomponents/inputs/BasicButton.vue'
 import axios from 'axios';
@@ -144,19 +144,18 @@ watch(paused, (newPaused) => {
 
 <template>
     <main class="grid grid-rows-[60px_min-content] h-full">
-
         <div class="text-white">
             <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
         </div>
         <div v-if="nonogram.length > 0">
             <Nonogram :cluesX="cluesX" :cluesY="cluesY" :size="nonogram.length" :paint="paused ? () => { } : paint"
-                :style="{ opacity: paused ? 0.5 : 1 }" />
-            <div class="flex mt-4 mx-auto justify-between w-52">
+                :style="{ opacity: paused ? 0.5 : 1, filter: paused ? 'blur(3.5px)' : 'blur(0)' }" />
+            <div class="flex justify-between w-52 mt-4 mx-auto">
                 <div class=" text-white font-thin font-sans">Czas: {{ counter }}s</div>
                 <div class=" text-white font-thin font-sans">Punkty: {{ points }}</div>
             </div>
         </div>
-        <div v-else class="font-thin font-sans text-white mx-auto mt-2">
+        <div v-else class="mx-auto mt-2 font-thin font-sans text-white">
             Naciśnij przycisk <span class="italic">'Nowy nonogram'</span>, aby rozpocząć grę.
         </div>
         <div class="flex justify-between mt-auto">

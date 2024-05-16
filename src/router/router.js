@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getRole } from '@/services/usersService'
-
 const userRole = 'user';
 const adminRole = 'admin';
 
@@ -70,13 +69,18 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-  const role = await getRole().then(res => { return res.data.role });
+  const role = await getRole();
   if (to.meta.hideMenu === true) {
-    if (role === userRole) { return { name: 'Play' }; }
-    else if (role === adminRole) { return { name: 'Users' }; }
+    if (role === userRole) { 
+      return { name: 'Play' }; 
+    } else if (role === adminRole) { 
+      return { name: 'Users' }; 
+    }
   } else if (!to.meta.hideMenu) {
     if (typeof role !== 'undefined') {
-      if (role !== to.meta.pageOwner) { return { name: from.name } }
+      if (role !== to.meta.pageOwner) { 
+        return { name: from.name } 
+      }
     } else if (typeof role === 'undefined') {
       return { name: 'SignIn' };
     }

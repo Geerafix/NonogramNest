@@ -10,7 +10,7 @@ onMounted(async () => {
 
 <template>
     <div class="h-full text-white">
-        <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Profil użytkownika <b>{{ user.username }}</b>
+        <div class="w-fit mx-auto font-thin font-sans text-4xl">Profil użytkownika <b>{{ user.username }}</b>
         </div>
     </div>
 </template>

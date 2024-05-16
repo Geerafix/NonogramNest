@@ -15,20 +15,20 @@ const value = ref('');
     h-12
     px-3 
     py-[10px] 
-    text-2xl
     border-b-4
-    border-gray-400
-    bg-gray-100
     rounded-xl
+    bg-gray-100
+    border-gray-400
     text-slate-900
-    transition-all
     ring-gray-600
+    focus:ring-gray-500
     focus:rounded-xl
     focus:outline-0
-    focus:ring-4
     focus:border-0
-    text-center
-    focus:ring-gray-500"
+    focus:ring-4
+    transition-all
+    text-2xl
+    text-center"
     v-model="value"
     :placeholder="placeholder"
     :type="type">

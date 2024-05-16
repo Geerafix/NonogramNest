@@ -5,9 +5,9 @@ defineProps([
 </script>
 
 <template>
-    <div class="bg-gray-600 p-1 rounded-sm w-fit flex flex-col gap-[1.5px] rounded-es-2xl border-l-4 border-gray-700">
-        <div v-for="ans in clues" class="mx-[3px] flex justify-end items-center">
-            <div class="h-10 rounded-sm text-center text-white flex items-center">
+    <div class="flex flex-col gap-[1.5px] p-1  bg-gray-600 border-gray-700 border-l-4 rounded-sm w-fit rounded-es-2xl">
+        <div v-for="ans in clues" class="flex justify-end items-center mx-[3px]">
+            <div class="flex items-center h-10 rounded-sm text-center text-white">
                 <div v-for="single in ans" class="text-xl">
                     <p>&nbsp;{{ single }}&nbsp;</p>
                 </div>

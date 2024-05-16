@@ -8,24 +8,22 @@ defineProps([
     <button class="
     px-3 
     py-[10px] 
+    border-b-4 
+    rounded-xl
     bg-blue-500/90
     border-blue-900/60
     text-slate-200  
-    rounded-xl
-    border-b-4 
-    transition-[background-color_border-radius]
     hover:bg-blue-400/90
     hover:border-slate-800/60
     hover:text-white
-    hover:shadow-lg
     hover:shadow-blue-600/10
+    hover:shadow-lg
     hover:rounded-[20px]
-    text-2xl
-    antialiased
-    tracking-wide
+    transition-[background-color_border-radius]
     select-none
-    max-w-min
-    text-nowrap">
+    text-2xl
+    text-nowrap
+    tracking-wide">
         {{ btnText }}
     </button>
 </template>

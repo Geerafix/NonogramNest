@@ -7,8 +7,13 @@ export async function postSignIn(username, password) {
         method: 'POST',
         url: `${apiUrl}/signin`,
         withCredentials: true,
-        data: { username: username, password: password }
-    });
+        data: { 
+            username: username, 
+            password: password 
+        }
+    })
+    .then((res) => { })
+    .catch((err) => { console.log(err.message) });
 }
 
 export async function postSignUp(email, username, password) {
@@ -16,8 +21,14 @@ export async function postSignUp(email, username, password) {
         method: 'POST',
         url: `${apiUrl}/signup`,
         withCredentials: true,
-        data: { email: email, username: username, password: password }
-    });
+        data: { 
+            email: email, 
+            username: username, 
+            password: password 
+        }
+    })
+    .then((res) => { })
+    .catch((err) => { console.log(err.message) });
 }
 
 export async function logout() {
@@ -25,13 +36,19 @@ export async function logout() {
         method: 'POST',
         url: `${apiUrl}/logout`,
         withCredentials: true
-    });
+    })
+    .then((res) => { })
+    .catch((err) => { console.log(err.message) });
 }
 
 export async function getRole() {
-    return await axios({
+    const role = await axios({
         method: 'POST',
-        url: 'http://localhost:3000/role',
+        url: `${apiUrl}/role`,
         withCredentials: true
-    });
+    })
+    .then((res) => { return res.data.role })
+    .catch((err) => { console.log(err.message); });
+
+    return role;
 }

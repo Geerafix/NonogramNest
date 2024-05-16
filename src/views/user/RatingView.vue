@@ -1,10 +1,9 @@
 <script setup>
 
-
 </script>
 
 <template>
     <div class="h-full text-white">
-        <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Ranking</div>
+        <div class="w-fit mx-auto font-thin font-sans text-4xl">Ranking</div>
     </div>
 </template>

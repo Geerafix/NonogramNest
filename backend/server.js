@@ -34,4 +34,4 @@ server.use(session({
     cookie: { maxAge: 1000 * 60 * 60 },
 }));
 
-server.listen(3000, () => { console.log('Server started'); });
+server.listen(3000, () => { });

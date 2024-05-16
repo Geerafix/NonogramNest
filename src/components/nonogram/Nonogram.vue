@@ -11,12 +11,12 @@ defineProps([
 </script>
 
 <template>
-    <main class="font-thin font-sans transition-all">
-        <div class="grid gap-0.5 grid-cols-[min-content_1fr] mx-auto w-fit">
-            <div class="w-full h-full bg-gray-600 border-t-4 border-l-4 border-gray-700 rounded-sm rounded-ss-lg"></div>
-            <NonogramYClues :clues="cluesY"></NonogramYClues>
-            <NonogramXClues :clues="cluesX"></NonogramXClues>
-            <NonogramBoard :size="size" :paint="paint"></NonogramBoard>
+    <main class="transition-all font-thin font-sans ">
+        <div class="grid grid-cols-[min-content_1fr] gap-0.5  mx-auto w-fit">
+            <div class="w-full h-full border-t-4 border-l-4 border-gray-700 bg-gray-600 rounded-sm rounded-ss-lg"></div>
+            <NonogramYClues :clues="cluesY" />
+            <NonogramXClues :clues="cluesX" />
+            <NonogramBoard :size="size" :paint="paint" />
         </div>
     </main>
 </template>
