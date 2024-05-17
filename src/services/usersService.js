@@ -11,9 +11,7 @@ export async function postSignIn(username, password) {
             username: username, 
             password: password 
         }
-    })
-    .then((res) => { })
-    .catch((err) => { console.log(err.message) });
+    });
 }
 
 export async function postSignUp(email, username, password) {
@@ -26,9 +24,7 @@ export async function postSignUp(email, username, password) {
             username: username, 
             password: password 
         }
-    })
-    .then((res) => { })
-    .catch((err) => { console.log(err.message) });
+    });
 }
 
 export async function logout() {
@@ -36,9 +32,7 @@ export async function logout() {
         method: 'POST',
         url: `${apiUrl}/logout`,
         withCredentials: true
-    })
-    .then((res) => { })
-    .catch((err) => { console.log(err.message) });
+    });
 }
 
 export async function getRole() {
