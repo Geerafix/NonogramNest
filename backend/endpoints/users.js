@@ -29,6 +29,17 @@ server.post('/signup', async (req, res) => {
     });
 });
 
+// zwraca użytkowników
+server.post('/users', async (req, res) => {
+    const page = await req.body.page;
+    const usersOnPage = await req.body.limit;
+    const start = (page - 1) * usersOnPage;
+    const limit = start + usersOnPage;
+    client.query('SELECT user_id, email, username, role FROM users ORDER BY user_id ASC LIMIT ($1) OFFSET ($2)', [limit, start], async (err, result) => {
+        res.json(result.rows);
+    });
+});
+
 // wylogowanie
 server.post('/logout', (req, res) => {
     req.session.destroy();

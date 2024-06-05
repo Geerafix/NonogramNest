@@ -25,5 +25,6 @@ defineProps([
     text-nowrap
     tracking-wide">
         {{ btnText }}
+        <slot></slot>
     </button>
 </template>

@@ -3,7 +3,7 @@ import BasicInput from '@/UIcomponents/inputs/BasicInput.vue'
 import BasicButton from '@/UIcomponents/inputs/BasicButton.vue';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { postSignUp } from '@/services/usersService.js';
+import { postSignUp } from '@/services/userService.js';
 
 const error = ref(false);
 const router = useRouter();
@@ -30,4 +30,4 @@ const onSubmit = () => {
         <span v-if="error" class="text-red-500/70 text-xl">Użytkownik już istnieje</span>
         <BasicButton btnText="Zarejestruj" type="submit" />
     </form>
-</template>
+</template>@/services/userService.js

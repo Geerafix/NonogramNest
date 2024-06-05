@@ -1,6 +1,6 @@
 <script setup>
 import MenuButton from '../inputs/MenuButton.vue';
-import { logout } from '@/services/usersService';
+import { logout } from '@/services/userService';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 

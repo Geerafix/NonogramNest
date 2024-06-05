@@ -3,7 +3,7 @@ import BasicInput from '@/UIcomponents/inputs/BasicInput.vue'
 import BasicButton from '@/UIcomponents/inputs/BasicButton.vue';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { postSignIn } from '@/services/usersService.js'
+import { postSignIn } from '@/services/userService.js'
 
 const error = ref(false);
 const router = useRouter();
@@ -26,4 +26,4 @@ const onSubmit = async () => {
         <span v-if="error" class="text-red-500/70 text-xl">Nieprawidłowe dane logowania</span>
         <BasicButton btnText="Zaloguj" type="submit" />
     </form>
-</template>
+</template>@/services/userService.js

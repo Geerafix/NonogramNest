@@ -2,18 +2,14 @@
 import Nonogram from '@/components/nonogram/Nonogram.vue';
 import BasicButton from '@/UIcomponents/inputs/BasicButton.vue'
 import { useInterval } from '@vueuse/core';
-import { reactive, watch } from 'vue';
+import { reactive, watch, ref } from 'vue';
+import { postPuzzle, postSolvedPuzzle } from '@/services/nonogramsService';
 
-const size = 5;
+const size = 8;
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
-const nonogram = reactive({
-    board: [],
-    answers: [],
-    cluesX: [],
-    cluesY: [],
-    paused: true,
-    points: 0
-});
+const nonogram = reactive({ board: [], answers: [], cluesX: [], cluesY: [], paused: true, points: 0 });
+
+const id = ref(0);
 
 // funkcja sprawdzająca nasze rozwiązanie
 function check() {
@@ -33,6 +29,7 @@ function check() {
     let isSolvedX = nonogram.cluesX.every((row, rowIdx) => row.every((el, colIdx) => el === checkX[rowIdx][colIdx]));
     let isSolvedY = nonogram.cluesY.every((row, rowIdx) => row.every((el, colIdx) => el === checkY[rowIdx][colIdx]));
     (isSolvedX && isSolvedY) ? console.log('Dobrze') : console.log('Źle');
+    postSolvedPuzzle(id.value, counter.value, nonogram.points);
 }
 
 // funkcja kolorująca pojedynczą kratkę
@@ -65,6 +62,7 @@ function generateAndFindHints() {
         if (ansX) nonogram.cluesX[rowIdx].push(ansX);
         if (ansY) nonogram.cluesY[rowIdx].push(ansY);
     });
+    postPuzzle(nonogram.cluesX, nonogram.cluesY, size).then((res) => { id.value = res.data.id });
     reset();
 }
 
@@ -81,9 +79,9 @@ watch(() => nonogram.paused, (newPaused) => {
         <div v-if="nonogram.board.length > 0">
             <Nonogram :cluesX="nonogram.cluesX" :cluesY="nonogram.cluesY" :size="nonogram.board.length" :paint="nonogram.paused ? () => {} : paint"
                 :style="{ opacity: nonogram.paused ? 0.5 : 1, filter: nonogram.paused ? 'blur(3.5px)' : 'blur(0)' }" />
-            <div class="flex justify-between w-52 mt-4 mx-auto">
-                <div class=" text-white font-thin font-sans">Czas: {{ counter }}s</div>
-                <div class=" text-white font-thin font-sans">Punkty: {{ nonogram.points }}</div>
+            <div class="flex justify-between w-fit mt-4 mx-auto gap-12">
+                <div class=" text-white font-thin font-sans text-2xl">Czas: {{ counter }}s</div>
+                <div class=" text-white font-thin font-sans text-2xl">Punkty: {{ nonogram.points }}</div>
             </div>
         </div>
         <div v-else class="mx-auto mt-2 font-thin font-sans text-white">

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { getRole } from '@/services/usersService'
+import { getRole } from '@/services/userService'
 const userRole = 'user';
 const adminRole = 'admin';
 
