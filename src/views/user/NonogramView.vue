@@ -3,7 +3,7 @@ import Nonogram from '@/components/nonogram/Nonogram.vue';
 import BasicButton from '@/UIcomponents/inputs/BasicButton.vue'
 import { useInterval } from '@vueuse/core';
 import { reactive, watch, ref } from 'vue';
-import { postPuzzle, postSolvedPuzzle } from '@/services/nonogramsService';
+import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 
 const size = 8;
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });

@@ -26,4 +26,4 @@ const onSubmit = async () => {
         <span v-if="error" class="text-red-500/70 text-xl">Nieprawidłowe dane logowania</span>
         <BasicButton btnText="Zaloguj" type="submit" />
     </form>
-</template>@/services/userService.js
+</template>
