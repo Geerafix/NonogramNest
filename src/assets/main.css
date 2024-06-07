@@ -69,3 +69,25 @@ body {
 .fade-leave-to {
   opacity: 0;
 }
+
+::-webkit-scrollbar {
+    width: 16px;
+    transition: all 0.5s;
+}
+ 
+::-webkit-scrollbar-track {
+    background: rgb(17 24 39 / 0.4);
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background: rgb(75 85 99 / 0.75);
+    border-radius: 10px;
+    border-right: 4px solid rgb(55 65 81 / 1);
+    cursor: pointer;
+    transition: color ease-in-out 0.5s;
+}
+ 
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(75 85 99 / 1);
+}

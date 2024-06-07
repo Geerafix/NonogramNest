@@ -20,7 +20,7 @@ const computedWidth = computed(() => {
     grid
     grid-cols-[56px_auto]
     w-full
-    h-[56px]
+    h-14
     rounded-xl
     bg-gray-700
     text-slate-200  

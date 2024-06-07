@@ -62,7 +62,7 @@ const router = createRouter({
     {
       path: '/uzytkownicy',
       name: 'Users',
-      component: () => import('@/views/admin/UsersView.vue'),
+      component: () => import('@/views/admin/ManageUsersView.vue'),
       meta: { pageOwner: adminRole },
     }
   ]

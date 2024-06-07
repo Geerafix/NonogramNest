@@ -1,17 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-
-defineProps([
-    'attributeVal'
-]);
-
 const overUser = ref(false);
 </script>
 
 <template>
-    <div class="grid gap-2 text-center cursor-pointer transition ease-[1s] w-full bg-gray-700/40 p-1 rounded-md"
+    <div class="grid grid-cols-[1fr_30%_30%_1fr] gap-2 items-center text-center cursor-pointer transition ease-[1s]"
     :style="{ filter: overUser ? 'brightness(1.3)' : 'brightness(1)' }" 
     @mouseover="overUser = true" @mouseleave="overUser = false">
-        <span>{{ attributeVal }}</span>
+        <slot></slot>
     </div>
 </template>
