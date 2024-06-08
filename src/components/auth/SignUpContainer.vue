@@ -30,4 +30,4 @@ const onSubmit = () => {
         <span v-if="error" class="text-red-500/70 text-xl">Użytkownik już istnieje</span>
         <BasicButton btnText="Zarejestruj" type="submit" />
     </form>
-</template>@/services/userService.js
+</template>

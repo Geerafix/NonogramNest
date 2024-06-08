@@ -10,7 +10,12 @@ const value = ref('');
 </script>
 
 <template>
-    <input class="
+    <input class="basic-input" v-model="value" :placeholder="placeholder" :type="type">
+</template>
+
+<style scoped>
+.basic-input {
+    @apply
     w-60
     h-12
     px-3 
@@ -28,8 +33,6 @@ const value = ref('');
     focus:ring-4
     transition-all
     text-2xl
-    text-center"
-    v-model="value"
-    :placeholder="placeholder"
-    :type="type">
-</template>
+    text-center;
+}
+</style>

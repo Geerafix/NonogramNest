@@ -9,14 +9,26 @@ defineProps([
 
 const btn = ref(null);
 const { width, height } = useElementSize(btn);
+
 const computedWidth = computed(() => {
-    return (width.value > height.value * 1.5) ? 1 : 0
+    return (width.value > height.value * 1.5) ? 1 : 0;
 });
 
 </script>
 
 <template>
-    <button ref="btn" class="
+    <button ref="btn" class="menu-button">
+        <slot></slot>
+        <span class="" 
+            :style="{ opacity: computedWidth }">
+            {{ btnText }}
+        </span>
+    </button>
+</template>
+
+<style>
+.menu-button {
+    @apply
     grid
     grid-cols-[56px_auto]
     w-full
@@ -37,11 +49,15 @@ const computedWidth = computed(() => {
     text-left
     text-nowrap
     tracking-wide
-    overflow-hidden">
-        <slot></slot>
-        <span class="-ml-2 mr-4 my-auto transition-[opacity] duration-[270ms]" 
-            :style="{ opacity: computedWidth }">
-            {{ btnText }}
-        </span>
-    </button>
-</template>
+    overflow-hidden;
+}
+
+.menu-button span {
+    @apply 
+    -ml-2 
+    mr-4 
+    my-auto 
+    transition-[opacity] 
+    duration-[270ms]
+}
+</style>

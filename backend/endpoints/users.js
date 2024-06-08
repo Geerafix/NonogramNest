@@ -4,7 +4,7 @@ const argon2 = pkg;
 
 // logowanie
 server.post('/signin', async (req, res) => {
-    client.query('SELECT * FROM users WHERE email = $1 OR username = $1', [await req.body.username], async (err, result) => {
+    client.query('SELECT * FROM users WHERE email = LOWER($1) OR username = LOWER($1)', [await req.body.username], async (err, result) => {
         if (result.rows[0] && await argon2.verify(result.rows[0].password, await req.body.password)) {
             req.session.user = result.rows[0];
             res.status(200).send(req.session.user.role);

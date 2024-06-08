@@ -1,11 +1,17 @@
 <script setup>
-defineProps([
-    'btnText'
-]);
+defineProps([ 'btnText' ]);
 </script>
 
 <template>
-    <button class="
+    <button class="basic-button">
+        {{ btnText }}
+        <slot></slot>
+    </button>
+</template>
+
+<style scoped>
+.basic-button {
+    @apply
     px-3 
     py-[10px] 
     border-b-4 
@@ -23,8 +29,6 @@ defineProps([
     select-none
     text-2xl
     text-nowrap
-    tracking-wide">
-        {{ btnText }}
-        <slot></slot>
-    </button>
-</template>
+    tracking-wide;
+}
+</style>

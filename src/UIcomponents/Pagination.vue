@@ -11,13 +11,14 @@ const props = defineProps([
 
 const prevHandle = () => { if (computedPrevPage) { props.prev(); } }
 const nextHandle = () => { if (computedNextPage) { props.next(); } }
+
 const computedPrevPage = computed(() => { return props.page === 1; });
 const computedNextPage = computed(() => { return props.perpage < props.limit; });
 
 </script>
 
 <template>
-    <div class="grid grid-cols-[min-content_80px_min-content] gap-2 items-center absolute bottom-0 left-0 right-0 mx-auto w-fit">
+    <div class="pagination">
         <BasicButton @click="prevHandle" :style="{ opacity: computedPrevPage ? 0.3 : 1 }" :disabled="computedPrevPage">
             <Icon icon="fa-solid fa-arrow-left" class="my-auto mx-auto" />
         </BasicButton>
@@ -27,3 +28,19 @@ const computedNextPage = computed(() => { return props.perpage < props.limit; })
         </BasicButton>
     </div>
 </template>
+
+<style scoped>
+.pagination {
+    @apply
+    grid 
+    grid-cols-[min-content_80px_min-content] 
+    gap-2 
+    items-center 
+    absolute 
+    bottom-0 
+    left-0 
+    right-0 
+    mx-auto 
+    w-fit
+}
+</style>

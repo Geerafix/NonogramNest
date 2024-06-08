@@ -15,7 +15,7 @@ import MenuButton from '../inputs/MenuButton.vue';
     <MenuButton btnText="Ranking" @click="$router.push({ name: 'Rating' })">
         <Icon icon="fa-solid fa-chart-simple" class="my-auto mx-auto" />
     </MenuButton>
-    <MenuButton btnText="Osiągnięcia" @click="$router.push()">
+    <MenuButton btnText="Osiągnięcia" @click="$router.push({ name: 'Achievements' })">
         <Icon icon="fa-solid fa-star" class="my-auto mx-auto" />
     </MenuButton>
     <MenuButton btnText="Profil" @click="$router.push({ name: 'Profile' })">
