@@ -8,7 +8,7 @@ import { ref, watch, onMounted  } from 'vue';
 
 const page = ref(1);
 const users = ref([]);
-const limit = ref(10);
+const limit = ref(2);
 
 const fetchUsers = async () => {
     await getUsers(page.value, limit.value)

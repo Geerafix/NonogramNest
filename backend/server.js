@@ -2,7 +2,8 @@ import pg from 'pg';
 import pgSession from 'connect-pg-simple';
 import express from 'express';
 import cors from 'cors';
-import session from 'express-session'
+import session from 'express-session';
+import { Sequelize } from 'sequelize';
 
 import('./endpoints/users.js');
 import('./endpoints/nonograms.js');
@@ -11,6 +12,10 @@ const connectionString = 'postgres://postgres:admin@localhost:4001/nonogram-data
 const { Client } = pg;
 const pgStore = pgSession(session);
 
+export const sequelize = new Sequelize(connectionString, {
+    dialect: 'postgres',
+    logging: false
+});
 export const server = express();
 export const client = new Client({ connectionString });
 

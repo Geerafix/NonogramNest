@@ -1,22 +1,28 @@
 import { server, client } from '../server.js';
+import { Puzzle } from '../models/Puzzle.js';
+import { SolvedPuzzle } from '../models/SolvedPuzzle.js';
 
-server.get('/nonograms', (req, res) => {
-    client.query('SELECT * FROM puzzles', (err, result) => {
-        if (!err) {
-            res.json(result.rows);
-        }
-    });
+server.get('/nonograms', async (req, res) => {
+    const puzzles = await Puzzle.findAll();
+    res.json(puzzles);
 });
 
 server.post('/nonograms', async (req, res) => {
-    const result = await client.query('INSERT INTO puzzles (clues_x, clues_y, size) VALUES ($1, $2, $3) RETURNING puzzle_id', [await req.body.cluesX, await req.body.cluesY, await req.body.size]);
-    res.json({ id: result.rows[0].puzzle_id });
+    const puzzle = await Puzzle.create({ 
+        clues_x: await req.body.cluesX, 
+        clues_y: await req.body.cluesY, 
+        size: await req.body.size
+    });
+
+    res.json({ id: puzzle.puzzle_id });
 });
 
 server.post('/solved', async (req, res) => {
-    await client.query(
-        'INSERT INTO solved_puzzles (puzzle_id, user_id, time, points) VALUES ($1, $2, $3, $4)', 
-        [await req.body.puzzleId, await req.session.user.user_id, await req.body.time, await req.body.points]
-    );
-    res.json();
+    const solved = await SolvedPuzzle.create({ 
+        puzzle_id: await req.body.puzzleId, 
+        user_id: await req.session.user.user_id, 
+        time: await req.body.time, 
+        points: await req.body.points
+    });
+    res.json(solved);
 });

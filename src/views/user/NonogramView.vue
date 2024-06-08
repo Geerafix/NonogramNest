@@ -5,7 +5,7 @@ import { useInterval } from '@vueuse/core';
 import { reactive, watch, ref } from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 
-const size = 8;
+const size = 3;
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
 const nonogram = reactive({ board: [], answers: [], cluesX: [], cluesY: [], paused: true, points: 0 });
 
