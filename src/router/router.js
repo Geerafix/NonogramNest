@@ -30,7 +30,7 @@ const router = createRouter({
     {
       path: '/graj',
       name: 'Play',
-      component: () => import('@/views/user/PuzzleView.vue'),
+      component: () => import('@/views/user/PlayView.vue'),
       meta: { pageOwner: userRole },
     },
     {

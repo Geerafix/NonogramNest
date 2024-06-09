@@ -13,7 +13,7 @@ const computedAdmin = computed(() => { return route.meta.pageOwner === 'admin'; 
 <template>
   <main class="flex gap-4 p-4 h-[inherit] font-thin font-sans">
     <Transition name="fade" mode="out-in">
-      <Menu class="basis-auto" v-if="computedUser || computedAdmin" :width="computedUser ? 180 : 188" v-slot="{ Component }">
+      <Menu class="basis-auto" v-if="computedUser || computedAdmin" :width="computedUser ? 185 : 190" v-slot="{ Component }">
         <component :is="computedAdmin ? MenuAdminItems : (computedUser ? MenuUserItems : Component)" />
       </Menu>
     </Transition>

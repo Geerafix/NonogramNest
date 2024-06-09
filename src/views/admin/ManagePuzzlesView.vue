@@ -7,7 +7,7 @@ import PuzzleListItem from "@/components/admin/puzzles/PuzzleListItem.vue";
 import PuzzleItem from "@/components/admin/puzzles/PuzzleItem.vue";
 
 const page = ref(1);
-const limit = ref(10);
+const limit = ref(20);
 const puzzles = ref([]);
 
 const settings = computed(() => ({
@@ -45,7 +45,7 @@ onMounted(fetchPuzzles)
                 <li>
                     <PuzzleListItem>
                       <div v-for="value in puzzle">
-                        <PuzzleItem :value="value.length > 15 ? value.slice(0, 15) : value" />
+                        <PuzzleItem :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
                       </div>
                     </PuzzleListItem>
                 </li>

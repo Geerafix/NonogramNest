@@ -5,7 +5,7 @@ const apiUrl = 'http://localhost:3000';
 export function postPuzzle(cluesX, cluesY, size) {
     return axios({
         method: 'POST',
-        url: `${apiUrl}/nonograms`,
+        url: `${apiUrl}/puzzles`,
         withCredentials: true,
         data: {
             cluesX: JSON.stringify(cluesX),

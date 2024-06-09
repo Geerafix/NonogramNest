@@ -37,7 +37,7 @@ const computedRole = computed(() => {
                 <Icon icon="fa-solid fa-cog" class="my-auto mx-auto" />
             </MenuButton>
             <MenuButton btnText="Wyloguj" @click="toggleLogout">
-                <Icon icon="fa-solid fa-door-open" class="my-auto mx-auto" />
+                <Icon icon="fa-solid fa-right-from-bracket" class="my-auto mx-auto" />
             </MenuButton>
         </div>
     </div>
