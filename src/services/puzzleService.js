@@ -2,28 +2,39 @@ import axios from "axios";
 
 const apiUrl = 'http://localhost:3000';
 
-export async function postPuzzle(cluesX, cluesY, size) {
-    return await axios({ 
-        method: 'POST', 
-        url: `${apiUrl}/nonograms`, 
+export function postPuzzle(cluesX, cluesY, size) {
+    return axios({
+        method: 'POST',
+        url: `${apiUrl}/nonograms`,
         withCredentials: true,
-        data: { 
-            cluesX: JSON.stringify(cluesX), 
+        data: {
+            cluesX: JSON.stringify(cluesX),
             cluesY: JSON.stringify(cluesY),
             size: size
-        } 
+        }
     });
 }
 
-export async function postSolvedPuzzle(puzzleId, time, points) {
-    return await axios({ 
-        method: 'POST', 
-        url: `${apiUrl}/solved`, 
+export function postSolvedPuzzle(puzzleId, time, points) {
+    return axios({
+        method: 'POST',
+        url: `${apiUrl}/solved`,
         withCredentials: true,
-        data: { 
+        data: {
             puzzleId: puzzleId,
             time: time,
             points: points
-        } 
+        }
+    });
+}
+
+export function getPuzzles(page, limit) {
+    return axios({
+        method: 'GET',
+        url: `${apiUrl}/puzzles`,
+        params: {
+            page: page,
+            limit: limit
+        }
     });
 }

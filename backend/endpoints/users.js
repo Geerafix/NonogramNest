@@ -4,7 +4,6 @@ import { Op } from 'sequelize';
 import * as pkg from 'argon2';
 const argon2 = pkg;
 
-// logowanie
 server.post('/signin', async (req, res) => {
     const user = await User.findOne({ 
         where: { [Op.or]: [{ username: await req.body.username }, { email: await req.body.username }]}
@@ -18,7 +17,6 @@ server.post('/signin', async (req, res) => {
     }
 });
 
-// rejestracja
 server.post('/signup', async (req, res) => {
     const email = await req.body.email;
     const username = await req.body.username;
@@ -36,23 +34,24 @@ server.post('/signup', async (req, res) => {
     }
 });
 
-// zwraca użytkowników
-server.post('/users', async (req, res) => {
-    const page = parseInt(req.body.page) || 1;
-    const limit = parseInt(req.body.limit) || 4;
+server.get('/users', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 4;
     const offset = (page - 1) * limit;
 
-    const users = await User.findAll({ limit: limit, offset: offset});
+    const users = await User.findAll({
+        attributes: { exclude: ['password'] },
+        limit: limit,
+        offset: offset
+    });
     res.json(users);
 });
 
-// wylogowanie
 server.post('/logout', (req, res) => {
     req.session.destroy();
     res.status(200).send({ msg: 'Sesja zniszczona' })
 });
 
-// sprawdzanie roli
 server.post('/role', (req, res) => {
     req.session.user ? res.json({ role: req.session.user.role }) : res.json();
 });

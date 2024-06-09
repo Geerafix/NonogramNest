@@ -2,47 +2,49 @@ import axios from 'axios';
 
 const apiUrl = 'http://localhost:3000';
 
-export async function postSignIn(username, password) {
-    return await axios({
+export function postSignIn(username, password) {
+    return axios({
         method: 'POST',
         url: `${apiUrl}/signin`,
         withCredentials: true,
-        data: { 
-            username: username, 
-            password: password 
+        data: {
+            username: username,
+            password: password
         }
     });
 }
 
-export async function postSignUp(email, username, password) {
-    return await axios({
+export function postSignUp(email, username, password) {
+    return axios({
         method: 'POST',
         url: `${apiUrl}/signup`,
         withCredentials: true,
-        data: { 
-            email: email, 
-            username: username, 
-            password: password 
+        data: {
+            email: email,
+            username: username,
+            password: password
         }
     });
 }
 
-export async function logout() {
-    return await axios({
+export function logout() {
+    return axios({
         method: 'POST',
         url: `${apiUrl}/logout`,
         withCredentials: true
     });
 }
 
-export async function getRole() {
-    const role = await axios({
+export function getRole() {
+    return axios({
         method: 'POST',
         url: `${apiUrl}/role`,
         withCredentials: true
     })
-    .then((res) => { return res.data.role })
-    .catch((err) => { console.log(err.message); });
-
-    return role;
+    .then((res) => {
+        return res.data.role
+    })
+    .catch((err) => {
+        console.log(err.message);
+    });
 }

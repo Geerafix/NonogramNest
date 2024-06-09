@@ -2,11 +2,12 @@ import axios from 'axios';
 
 const apiUrl = 'http://localhost:3000';
 
-export async function getUsers(page, limit) {
-    return await axios({
-        method: 'POST',
+export function getUsers(page, limit) {
+    return axios({
+        method: 'GET',
         url: `${apiUrl}/users`,
-        data: {
+        withCredentials: true,
+        params: {
             page: page,
             limit: limit
         }

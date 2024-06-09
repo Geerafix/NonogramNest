@@ -9,11 +9,25 @@ const props = defineProps([
     'next'
 ]);
 
-const prevHandle = () => { if (computedPrevPage) { props.prev(); } }
-const nextHandle = () => { if (computedNextPage) { props.next(); } }
+const prevHandle = () => {
+  if (computedPrevPage) {
+    props.prev();
+  }
+}
 
-const computedPrevPage = computed(() => { return props.page === 1; });
-const computedNextPage = computed(() => { return props.perpage < props.limit; });
+const nextHandle = () => {
+  if (computedNextPage) {
+    props.next();
+  }
+}
+
+const computedPrevPage = computed(() => {
+  return props.page === 1;
+});
+
+const computedNextPage = computed(() => {
+  return props.perpage < props.limit;
+});
 
 </script>
 
@@ -31,16 +45,6 @@ const computedNextPage = computed(() => { return props.perpage < props.limit; })
 
 <style scoped>
 .pagination {
-    @apply
-    grid 
-    grid-cols-[min-content_80px_min-content] 
-    gap-2 
-    items-center 
-    absolute 
-    bottom-0 
-    left-0 
-    right-0 
-    mx-auto 
-    w-fit
+    @apply grid grid-cols-[min-content_80px_min-content] gap-2 items-center absolute bottom-0 left-0 right-0 mx-auto w-fit
 }
 </style>

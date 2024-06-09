@@ -18,7 +18,7 @@ const computedWidth = computed(() => {
 
 const toggleLogout = async () => {
     await logout();
-    router.push({ name: 'Home' });
+    await router.push({name: 'Home'});
 };
 
 const computedRole = computed(() => {

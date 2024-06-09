@@ -1,14 +1,22 @@
 <script setup>
 import Pagination from '@/UIcomponents/Pagination.vue';
-import UserItem from '@/components/admin/UserItem.vue';
-import UserListItem from '@/components/admin/UserListItem.vue';
-import UserListHeader from '@/components/admin/UserListHeader.vue';
+import UserItem from '@/components/admin/users/UserItem.vue';
+import UserListItem from '@/components/admin/users/UserListItem.vue';
+import ListHeader from '@/components/admin/ListHeader.vue';
 import { getUsers } from '@/services/adminService';
-import { ref, watch, onMounted  } from 'vue';
+import {ref, watch, onMounted, computed} from 'vue';
 
 const page = ref(1);
+const limit = ref(10);
 const users = ref([]);
-const limit = ref(2);
+
+const settings = computed(() => ({
+  limit: limit.value,
+  page: page.value,
+  perpage: users.value.length,
+  prev: () => page.value -= 1,
+  next: () => page.value += 1
+}));
 
 const fetchUsers = async () => {
     await getUsers(page.value, limit.value)
@@ -24,28 +32,33 @@ onMounted(fetchUsers);
 <template>
     <div class="h-full text-white relative">
         <div class="w-fit relative mx-auto text-4xl font-thin font-sans h-16">Użytkownicy</div>
-        <Pagination :limit="limit" 
-                    :page="page" 
-                    :perpage="users.length" 
-                    :prev="() => page -= 1"
-                    :next="() => page += 1" />
-        
+        <Pagination v-bind="settings" />
         <div class="overflow-auto max-h-[calc(100%-9rem)] pr-2">
-            <div class="mb-2 p-2 gap-2 bg-gray-900/40 grid grid-cols-[1fr_30%_30%_1fr] sticky top-0 rounded-lg z-10">
-                <UserListHeader attributeName="Id" />
-                <UserListHeader attributeName="Nazwa użytkownika" />
-                <UserListHeader attributeName="Email" />
-                <UserListHeader attributeName="Rola" />
+            <div class="header">
+                <ul v-for="header of ['Id','Nazwa użytkownika','Email','Rola']">
+                  <li>
+                    <ListHeader :headerName="header" />
+                  </li>
+                </ul>
             </div>
-            <div v-for="(user, index) in users" class="p-2 bg-gray-900/40 rounded-lg mx-auto h-full"
-                :class="{ 'mb-2': index < users.length - 1 }">
-                <UserListItem>
-                    <UserItem :attributeVal="user.user_id" />
-                    <UserItem :attributeVal="user.username" />
-                    <UserItem :attributeVal="user.email" />
-                    <UserItem :attributeVal="user.role" />
-                </UserListItem>
-            </div>
+            <ul v-for="(user, idx) in users" class="list" :class="{ 'mb-2': idx < users.length - 1 }">
+                <li>
+                  <UserListItem>
+                    <div v-for="value in user">
+                      <UserItem :value="value" />
+                    </div>
+                  </UserListItem>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
+
+<style scoped>
+.header {
+  @apply mb-2 p-2 gap-2 bg-gray-900/40 grid grid-cols-[1fr_30%_30%_1fr] sticky top-0 rounded-lg z-10;
+}
+.list {
+  @apply p-2 bg-gray-900/40 rounded-lg mx-auto h-full list-none;
+}
+</style>
