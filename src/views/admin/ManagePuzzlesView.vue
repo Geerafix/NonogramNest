@@ -26,7 +26,7 @@ const fetchPuzzles = async () => {
 
 watch(page, fetchPuzzles);
 
-onMounted(fetchPuzzles)
+onMounted(fetchPuzzles);
 </script>
 
 <template>

@@ -2,7 +2,7 @@
 defineProps([
     'counter',
     'points'
-])
+]);
 </script>
 
 <template>

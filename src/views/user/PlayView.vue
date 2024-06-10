@@ -9,7 +9,7 @@ import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 import { generateAndFindHints } from "@/scripts/puzzleScript.js";
 import { check } from "@/scripts/puzzleScript.js";
 
-const size = 10;
+const size = 3;
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
 const nonogram = reactive({
   id: 0,
@@ -25,6 +25,7 @@ const nonogramSettings = computed(() => ({
     cluesX: nonogram.cluesX,
     cluesY: nonogram.cluesY,
     size: nonogram.board.length,
+    paused: nonogram.paused,
     paint: !nonogram.paused ? paint : () => {}
 }));
 
@@ -43,6 +44,7 @@ function paint(row, col, tile) {
 function handleCheck() {
     const isSolved = check(nonogram);
     (isSolved.X && isSolved.Y) ? console.log('Dobrze') : console.log('Źle');
+    nonogram.points = (nonogram.points - isSolved.counter >= 0) ? nonogram.points - isSolved.counter : 0;
     postSolvedPuzzle(nonogram.id, counter.value, nonogram.points);
 }
 
@@ -62,15 +64,15 @@ watch(() => nonogram.paused, (newPaused) => {
                 naciśnij przycisk <span class="italic">'Nowy nonogram'</span>, aby rozpocząć grę.
             </span>
             <div v-else class="h-full self-center">
-                <Nonogram v-bind="nonogramSettings" :style="{ opacity: nonogram.paused ? 0.5 : 1, filter: nonogram.paused ? 'blur(3.5px)' : 'blur(0)' }" />
+                <Nonogram v-bind="nonogramSettings"/>
                 <Score :counter="counter" :points="nonogram.points"/>
             </div>
-            <div class="grid grid-cols-3 gap-2 self-center" :class="{ 'grid-cols-1': nonogram.board.length === 0 }">
+            <div class="grid grid-cols-1 gap-2 self-center" :class="{ 'grid-flow-col': nonogram.board.length !== 0 }">
               <BasicButton btnText="Nowa gra" class="grid grid-cols-[8rem_auto]" @click="handleNewPuzzle()">
                 <Icon icon="fa-solid fa-square-plus" class="my-auto mx-auto" />
               </BasicButton>
-              <Actions class="" v-if="nonogram.board.length > 0"
-                       :pause="() => nonogram.paused = !nonogram.paused" :check="handleCheck"/>
+              <Actions v-if="nonogram.board.length > 0"
+                       :pause="() => nonogram.paused = !nonogram.paused" :check="handleCheck" />
             </div>
         </div>
     </main>

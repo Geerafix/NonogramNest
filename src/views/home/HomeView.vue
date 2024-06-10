@@ -9,7 +9,6 @@ import BasicButton from '@/UIcomponents/inputs/BasicButton.vue';
             <BasicButton btnText="Logowanie" @click="$router.push({ name: 'SignIn' })">
               <Icon icon="fa-solid fa-right-to-bracket" class="my-auto mx-auto" />
             </BasicButton>
-            <BasicButton btnText="Rejestracja" @click="$router.push({ name: 'SignUp' })"/>
         </div>
     </div>
 </template>
