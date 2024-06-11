@@ -33,11 +33,11 @@ const computedNextPage = computed(() => {
 
 <template>
     <div class="pagination">
-        <BasicButton @click="prevHandle" :style="{ opacity: computedPrevPage ? 0.3 : 1 }" :disabled="computedPrevPage">
+        <BasicButton @click="prevHandle" class="w-14" :style="{ opacity: computedPrevPage ? 0.3 : 1 }" :disabled="computedPrevPage">
             <Icon icon="fa-solid fa-arrow-left" class="my-auto mx-auto" />
         </BasicButton>
         <span class="text-2xl mx-auto">{{ page }}</span>
-        <BasicButton @click="nextHandle" :style="{ opacity: computedNextPage ? 0.3 : 1 }" :disabled="computedNextPage">
+        <BasicButton @click="nextHandle" class="w-14" :style="{ opacity: computedNextPage ? 0.3 : 1 }" :disabled="computedNextPage">
             <Icon icon="fa-solid fa-arrow-right" class="my-auto mx-auto"/>
         </BasicButton>
     </div>

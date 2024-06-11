@@ -1,9 +1,7 @@
 <script setup>
-
+import Header from '@/UIcomponents/Header.vue';
 </script>
 
 <template>
-    <div class="h-full text-white">
-        <div class="w-fit mx-auto text-4xl font-thin font-sans">Codzienne wyzwanie</div>
-    </div>
+    <Header>Codzienne wyzwanie</Header>
 </template>

@@ -1,9 +1,7 @@
 <script setup>
-
+import Header from '@/UIcomponents/Header.vue';
 </script>
 
 <template>
-    <div class="h-full text-white relative">
-        <div class="w-fit relative mx-auto text-4xl font-thin font-sans h-16">Wiadomości</div>
-    </div>
+    <Header>Wiadomości</Header>
 </template>

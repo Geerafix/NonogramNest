@@ -5,6 +5,7 @@ import Pagination from "@/UIcomponents/Pagination.vue";
 import ListHeader from "@/components/admin/ListHeader.vue";
 import PuzzleListItem from "@/components/admin/puzzles/PuzzleListItem.vue";
 import PuzzleItem from "@/components/admin/puzzles/PuzzleItem.vue";
+import Header from '@/UIcomponents/Header.vue';
 
 const page = ref(1);
 const limit = ref(20);
@@ -31,8 +32,7 @@ onMounted(fetchPuzzles);
 
 <template>
     <div class="h-full text-white relative">
-        <div class="w-fit relative mx-auto text-4xl font-thin font-sans h-16">Gry</div>
-        <Pagination v-bind="settings" />
+        <Header>Gry</Header>
         <div class="overflow-auto max-h-[calc(100%-9rem)] pr-2">
             <div class="header">
                 <ul v-for="header of ['Id','Wskazówki X','Wskazówki Y','Rozmiar']">
@@ -51,6 +51,7 @@ onMounted(fetchPuzzles);
                 </li>
             </ul>
         </div>
+        <Pagination v-bind="settings" />
     </div>
 </template>
 

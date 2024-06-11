@@ -9,6 +9,7 @@ import {reactive, watch, computed} from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 import { generateAndFindHints } from "@/scripts/puzzleScript.js";
 import { check } from "@/scripts/puzzleScript.js";
+import BasicInput from '@/UIcomponents/inputs/BasicInput.vue';
 
 const size = 6;
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
@@ -60,13 +61,13 @@ watch(() => nonogram.paused, (newPaused) => {
         <div class="flex flex-col justify-center h-full mt-8">
             <span v-if="!nonogram.board.length > 0" class="mx-auto mt-2 font-thin font-sans text-white h-full">
                 Wybierz rozmiar nonogramu, a następnie
-                naciśnij przycisk <span class="italic">'Nowy nonogram'</span>, aby rozpocząć grę.
+                naciśnij przycisk '+', aby rozpocząć grę.
             </span>
             <div v-else class="h-full self-center flex flex-col justify-center -translate-y-4">
                 <Nonogram v-bind="nonogramSettings"/>
             </div>
             <div class="grid grid-cols-1 gap-2 self-center" :class="{ 'grid-flow-col': nonogram.board.length !== 0 }">
-                <BasicButton btnText="Nowa gra" class="grid grid-cols-[auto_1fr] gap-3" @click="handleNewPuzzle()">
+                <BasicButton class="w-14" @click="handleNewPuzzle()">
                     <Icon icon="fa-solid fa-plus" class="my-auto mx-auto" />
                 </BasicButton>
                 <Actions v-if="nonogram.board.length !== 0"

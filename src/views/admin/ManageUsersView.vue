@@ -4,6 +4,7 @@ import UserItem from '@/components/admin/users/UserItem.vue';
 import UserListItem from '@/components/admin/users/UserListItem.vue';
 import ListHeader from '@/components/admin/ListHeader.vue';
 import { getUsers } from '@/services/adminService';
+import Header from '@/UIcomponents/Header.vue';
 import {ref, watch, onMounted, computed} from 'vue';
 
 const page = ref(1);
@@ -31,8 +32,7 @@ onMounted(fetchUsers);
 
 <template>
     <div class="h-full text-white relative">
-        <div class="w-fit relative mx-auto text-4xl font-thin font-sans h-16">Użytkownicy</div>
-        <Pagination v-bind="settings" />
+        <Header>Użytkownicy</Header>
         <div class="overflow-auto max-h-[calc(100%-9rem)] pr-2">
             <div class="header">
                 <ul v-for="header of ['Id','Nazwa użytkownika','Email','Rola']">
@@ -51,6 +51,7 @@ onMounted(fetchUsers);
                 </li>
             </ul>
         </div>
+        <Pagination v-bind="settings" />
     </div>
 </template>
 

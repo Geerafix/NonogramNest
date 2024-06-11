@@ -1,9 +1,7 @@
 <script setup>
-
+import Header from '@/UIcomponents/Header.vue';
 </script>
 
 <template>
-    <div class="h-full text-white">
-        <div class="w-fit mx-auto font-thin font-sans text-4xl">Osiągnięcia</div>
-    </div>
+    <Header>Osiągnięcia</Header>
 </template>
