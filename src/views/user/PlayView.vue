@@ -3,13 +3,14 @@ import Nonogram from '@/components/user/play/Nonogram.vue';
 import BasicButton from '@/UIcomponents/inputs/BasicButton.vue';
 import Score from "@/components/user/play/Score.vue";
 import Actions from "@/components/user/play/Actions.vue";
+import Header from "@/UIcomponents/Header.vue"
 import { useInterval } from '@vueuse/core';
 import {reactive, watch, computed} from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 import { generateAndFindHints } from "@/scripts/puzzleScript.js";
 import { check } from "@/scripts/puzzleScript.js";
 
-const size = 3;
+const size = 6;
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
 const nonogram = reactive({
   id: 0,
@@ -55,24 +56,22 @@ watch(() => nonogram.paused, (newPaused) => {
 
 <template>
     <main class="flex flex-col">
-        <div class="text-white">
-            <div class="w-fit relative mx-auto text-4xl font-thin font-sans">Graj</div>
-        </div>
+        <Header>Graj</Header>
         <div class="flex flex-col justify-center h-full mt-8">
             <span v-if="!nonogram.board.length > 0" class="mx-auto mt-2 font-thin font-sans text-white h-full">
                 Wybierz rozmiar nonogramu, a następnie
                 naciśnij przycisk <span class="italic">'Nowy nonogram'</span>, aby rozpocząć grę.
             </span>
-            <div v-else class="h-full self-center">
+            <div v-else class="h-full self-center flex flex-col justify-center -translate-y-4">
                 <Nonogram v-bind="nonogramSettings"/>
-                <Score :counter="counter" :points="nonogram.points"/>
             </div>
             <div class="grid grid-cols-1 gap-2 self-center" :class="{ 'grid-flow-col': nonogram.board.length !== 0 }">
-              <BasicButton btnText="Nowa gra" class="grid grid-cols-[8rem_auto]" @click="handleNewPuzzle()">
-                <Icon icon="fa-solid fa-square-plus" class="my-auto mx-auto" />
-              </BasicButton>
-              <Actions v-if="nonogram.board.length > 0"
+                <BasicButton btnText="Nowa gra" class="grid grid-cols-[auto_1fr] gap-3" @click="handleNewPuzzle()">
+                    <Icon icon="fa-solid fa-plus" class="my-auto mx-auto" />
+                </BasicButton>
+                <Actions v-if="nonogram.board.length !== 0"
                        :pause="() => nonogram.paused = !nonogram.paused" :check="handleCheck" />
+                <Score v-if="nonogram.board.length !== 0" :counter="counter" :points="nonogram.points"/>
             </div>
         </div>
     </main>

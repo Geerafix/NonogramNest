@@ -15,32 +15,37 @@ defineProps([
 
 <template>
     <main class="transition-all font-thin font-sans relative">
-        <span v-if="paused" :style="{ opacity: paused ? 1 : 0 }" class="paused-info">Gra zatrzymana</span>
+        <span v-if="paused" :style="{ opacity: paused ? 1 : 0 }" class="paused-info">Gra wstrzymana</span>
         <div class="grid grid-cols-[min-content_1fr] gap-0.5  mx-auto w-fit z-100 transition-all"
             :style="{ opacity: paused ? 0.5 : 1, filter: paused ? 'blur(4px)' : 'blur(0)' }" >
-            <div class="w-full h-full border-t-4 border-l-4 border-gray-700 bg-gray-600 rounded-sm rounded-ss-lg"></div>
-            <NonogramYClues :clues="cluesY" />
-            <NonogramXClues :clues="cluesX" />
+            <div class="blank-area"></div>
+            <NonogramYClues :clues="cluesY" class="select-none"/>
+            <NonogramXClues :clues="cluesX" class="select-none" />
             <NonogramBoard :size="size" :paint="paint" />
         </div>
     </main>
 </template>
 
 <style scoped>
+.blank-area {
+    @apply w-full h-full border-t-4 border-l-4 border-gray-700 bg-gray-600 rounded-sm rounded-ss-lg
+}
 .paused-info {
     @apply 
     z-10 
     absolute 
-    p-2 
+    p-4
     top-1/2 
     left-1/2 
     -translate-x-1/2 
     -translate-y-1/2 
-    bg-slate-800/75 
-    rounded-lg 
+    bg-gray-600     
+    rounded-xl 
     text-white 
     text-nowrap 
-    text-xl
-    select-none;
+    text-2xl
+    select-none
+    border-b-4
+    border-b-gray-700;
 }
 </style>

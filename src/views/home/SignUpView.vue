@@ -5,7 +5,7 @@ import SignUpContainer from '@/components/auth/SignUpContainer.vue'
 
 <template>
     <div class="h-full text-white">
-        <div class="w-fit relative mx-auto text-4xl">Rejestracja</div>
+        <div class="w-fit mx-auto text-4xl my-12">Rejestracja</div>
         <SignUpContainer />
     </div>
 </template>

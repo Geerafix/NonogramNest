@@ -17,7 +17,7 @@ const value = ref('');
 .basic-input {
     @apply
     w-60
-    h-12
+    h-[52px]
     px-3 
     py-[10px] 
     border-b-4

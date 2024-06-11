@@ -10,7 +10,7 @@ import MenuButton from '../inputs/MenuButton.vue';
         <Icon icon="fa-solid fa-calendar-days" class="my-auto mx-auto" />
     </MenuButton>
     <MenuButton btnText="Kreator" @click="$router.push({ name: 'Creator' })">
-        <Icon icon="fa-solid fa-plus" class="my-auto mx-auto" />
+        <Icon icon="fa-solid fa-square-plus" class="my-auto mx-auto" />
     </MenuButton>
     <MenuButton btnText="Ranking" @click="$router.push({ name: 'Rating' })">
         <Icon icon="fa-solid fa-chart-simple" class="my-auto mx-auto" />

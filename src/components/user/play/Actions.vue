@@ -27,8 +27,8 @@ const handleCheck = () => {
       <Icon v-if="!isPaused" icon="fa-solid fa-stop" class="my-auto mx-auto" />
       <Icon v-else icon="fa-solid fa-play" class="my-auto mx-auto" />
     </BasicButton>
-    <BasicButton class="grid grid-cols-[1fr_auto] w-14" @click="handleCheck"
-                :style="{ backgroundColor: '#8f5333' }">
+    <BasicButton class="grid grid-cols-[1fr_auto] w-14" @click="handleCheck" 
+                :style="{ backgroundColor: '#8f5333', opacity: isPaused ? 0.5 : 1 }" :disabled="isPaused">
       <Icon icon="fa-solid fa-check" class="my-auto mx-auto" />
     </BasicButton>
   </div>

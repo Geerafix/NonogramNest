@@ -15,9 +15,11 @@ const overItem = ref(false);
   @apply
   grid
   grid-cols-[1fr_30%_30%_1fr]
-  gap-2 items-center
+  gap-2 
+  items-center
   text-center
   cursor-pointer
-  transition ease-[1s]
+  transition 
+  ease-[1s]
 }
 </style>
