@@ -105,22 +105,22 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-  const role = await getRole();
-  if (to.meta.hideMenu === true) {
-    if (role === userRole) { 
-      return { name: 'Play' }; 
-    } else if (role === adminRole) { 
-      return { name: 'ManageUsers' }; 
-    }
-  } else if (!to.meta.hideMenu) {
-    if (typeof role !== 'undefined') {
-      if (role !== to.meta.pageOwner) { 
-        return { name: from.name } 
-      }
-    } else if (typeof role === 'undefined') {
-      return { name: 'SignIn' };
-    }
-  }
+  // const role = await getRole();
+  // if (to.meta.hideMenu === true) {
+  //   if (role === userRole) { 
+  //     return { name: 'Play' }; 
+  //   } else if (role === adminRole) { 
+  //     return { name: 'ManageUsers' }; 
+  //   }
+  // } else if (!to.meta.hideMenu) {
+  //   if (typeof role !== 'undefined') {
+  //     if (role !== to.meta.pageOwner) { 
+  //       return { name: from.name } 
+  //     }
+  //   } else if (typeof role === 'undefined') {
+  //     return { name: 'SignIn' };
+  //   }
+  // }
 });
 
 export default router

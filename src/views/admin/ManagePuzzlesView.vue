@@ -31,7 +31,7 @@ onMounted(fetchPuzzles);
 </script>
 
 <template>
-    <div class="h-full text-white relative">
+    <div class="h-full text-white">
         <Header>Gry</Header>
         <div class="overflow-auto max-h-[calc(100%-9rem)] pr-2">
             <div class="header">
@@ -60,6 +60,6 @@ onMounted(fetchPuzzles);
   @apply mb-2 p-2 gap-2 bg-gray-900/40 grid grid-cols-[1fr_30%_30%_1fr] sticky top-0 rounded-lg z-10;
 }
 .list {
-  @apply p-2 bg-gray-900/40 rounded-lg mx-auto h-full list-none;
+  @apply p-2 bg-gray-900/40 rounded-lg mx-auto list-none;
 }
 </style>

@@ -5,7 +5,6 @@ import { ref, computed } from 'vue';
 import { useWindowSize } from '@vueuse/core';
 import { useRoute, useRouter } from 'vue-router';
 import BasicButton from '../inputs/BasicButton.vue';
-const props = defineProps([ 'width' ]);
 
 const route = useRoute();
 const router = useRouter();
@@ -14,10 +13,6 @@ const visible = ref(true);
 const { width } = useWindowSize();
 
 const toggleNavbar = () => { expanded.value = !expanded.value; };
-
-const computedWidth = computed(() => {
-    return (expanded.value) ? props.width : 80;
-});
 
 const toggleLogout = async () => {
     await logout();
@@ -30,17 +25,17 @@ const computedRole = computed(() => {
     else return 'Home';
 });
 
-const computedScreenWidth = computed(() => {
+const computedScreen = computed(() => {
     return visible.value && width.value <= 640;
 });
 </script>
 
 <template>
     <div>
-        <div v-if="!computedScreenWidth" class="menu responsive-menu" :style="{ width: computedWidth + 'px' }" 
+        <div v-if="!computedScreen" class="menu" @click="() => { visible = !visible }" 
             @mouseenter="toggleNavbar" @mouseleave="toggleNavbar">
             <slot></slot>
-            <div class="flex flex-col gap-[10px] mt-auto">
+            <div class="buttons-container">
                 <MenuButton btnText="Ustawienia" @click="router.push({ name: computedRole });">
                     <Icon icon="fa-solid fa-gears" class="my-auto mx-auto" />
                 </MenuButton>
@@ -49,7 +44,7 @@ const computedScreenWidth = computed(() => {
                 </MenuButton>
             </div>
         </div>
-        <BasicButton class="absolute bottom-4 w-14 sm:hidden" @click="visible = !visible">
+        <BasicButton class="expand-button" @click="() => { visible = !visible }">
             <Icon icon="fa-solid fa-bars" class="my-auto mx-auto" />
         </BasicButton>
     </div>
@@ -62,6 +57,7 @@ const computedScreenWidth = computed(() => {
     flex-col
     gap-[10px]
     h-full
+    sm:w-20
     p-[10px]
     border-s-4
     rounded-2xl 
@@ -70,11 +66,19 @@ const computedScreenWidth = computed(() => {
     bg-gray-600 
     border-gray-700
     hover:rounded-2xl
+    sm:hover:w-[11.75rem]
     transition-all
     duration-[270ms]
     z-50;
+    @apply 
+    max-sm:absolute 
+    max-sm:h-min 
+    max-sm:bottom-24;
 }
-.responsive-menu {
-    @apply max-sm:absolute max-sm:h-min max-sm:min-w-[calc(100%-2rem)] max-sm:bottom-24;
+.buttons-container {
+    @apply flex flex-col gap-[10px] mt-auto;
+}
+.expand-button {
+    @apply absolute bottom-4 w-14 sm:hidden;
 }
 </style>

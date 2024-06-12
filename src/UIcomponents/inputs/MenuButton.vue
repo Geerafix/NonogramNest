@@ -19,7 +19,7 @@ const computedWidth = computed(() => {
 <template>
     <button ref="btn" class="menu-button">
         <slot></slot>
-        <span class="" 
+        <span class="mr-2" 
             :style="{ opacity: computedWidth }">
             {{ btnText }}
         </span>
@@ -32,6 +32,7 @@ const computedWidth = computed(() => {
     grid
     grid-cols-[56px_auto]
     w-full
+    min-w-14
     h-14
     rounded-xl
     bg-gray-700
@@ -55,7 +56,7 @@ const computedWidth = computed(() => {
 .menu-button span {
     @apply 
     -ml-2 
-    mr-4 
+    mr-4
     my-auto 
     transition-[opacity] 
     duration-[270ms]
