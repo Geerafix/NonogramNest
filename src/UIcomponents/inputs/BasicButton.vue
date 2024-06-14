@@ -14,6 +14,7 @@ defineProps([ 'btnText' ]);
     @apply
     px-3 
     py-[10px] 
+    min-h-14
     min-w-14
     border-b-4 
     rounded-xl

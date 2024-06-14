@@ -14,11 +14,11 @@ defineProps([
 </script>
 
 <template>
-    <main class="transition-all font-thin font-sans relative">
+    <main class="transition-all font-thin font-sans">
         <span v-if="paused" :style="{ opacity: paused ? 1 : 0 }" class="paused-info">Gra wstrzymana</span>
-        <div class="grid grid-cols-[min-content_1fr] gap-0.5  mx-auto w-fit z-100 transition-all"
+        <div class="grid grid-cols-[min-content_1fr] gap-0.5 mx-auto w-fit z-100 transition-all"
             :style="{ opacity: paused ? 0.5 : 1, filter: paused ? 'blur(4px)' : 'blur(0)' }" >
-            <div class="blank-area"></div>
+            <div class="blank-area"><div class="size-info">{{ size }} x {{ size }}</div></div>
             <NonogramYClues :clues="cluesY" class="select-none"/>
             <NonogramXClues :clues="cluesX" class="select-none" />
             <NonogramBoard :size="size" :paint="paint" />
@@ -28,7 +28,24 @@ defineProps([
 
 <style scoped>
 .blank-area {
-    @apply w-full h-full border-t-4 border-l-4 border-gray-700 bg-gray-600 rounded-sm rounded-ss-lg
+    @apply 
+    content-center 
+    w-full 
+    h-full 
+    border-t-4 
+    border-l-4 
+    border-gray-700 
+    bg-gray-600 
+    rounded-sm 
+    rounded-ss-lg;
+}
+.size-info {
+    @apply 
+    h-fit 
+    w-fit 
+    mx-auto 
+    -rotate-45
+    text-gray-400;
 }
 .paused-info {
     @apply 

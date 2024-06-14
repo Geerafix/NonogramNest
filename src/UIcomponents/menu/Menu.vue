@@ -16,7 +16,7 @@ const toggleNavbar = () => { expanded.value = !expanded.value; };
 
 const toggleLogout = async () => {
     await logout();
-    await router.push({name: 'Home'});
+    router.push({name: 'Home'});
 };
 
 const computedRole = computed(() => {
@@ -31,21 +31,26 @@ const computedScreen = computed(() => {
 </script>
 
 <template>
-    <div>
-        <div v-if="!computedScreen" class="menu" @click="() => { visible = !visible }" 
-            @mouseenter="toggleNavbar" @mouseleave="toggleNavbar">
-            <slot></slot>
-            <div class="buttons-container">
-                <MenuButton btnText="Ustawienia" @click="router.push({ name: computedRole });">
-                    <Icon icon="fa-solid fa-gears" class="my-auto mx-auto" />
-                </MenuButton>
-                <MenuButton btnText="Wyloguj" @click="toggleLogout">
-                    <Icon icon="fa-solid fa-right-from-bracket" class="my-auto mx-auto" />
-                </MenuButton>
+    <div class="relative">
+        <TransitionGroup name="slide-right">
+            <div v-if="!computedScreen" key="1" class="menu" @click="visible = !visible" 
+                @mouseenter="toggleNavbar" @mouseleave="toggleNavbar">
+                <slot></slot>
+                <div class="buttons-container">
+                    <MenuButton btnText="Ustawienia" @click="router.push({ name: computedRole });">
+                        <Icon icon="fa-solid fa-gears" class="my-auto mx-auto" />
+                    </MenuButton>
+                    <MenuButton btnText="Wyloguj" @click="toggleLogout">
+                        <Icon icon="fa-solid fa-right-from-bracket" class="my-auto mx-auto" />
+                    </MenuButton>
+                </div>
             </div>
-        </div>
-        <BasicButton class="expand-button" @click="() => { visible = !visible }">
-            <Icon icon="fa-solid fa-bars" class="my-auto mx-auto" />
+        </TransitionGroup>
+        <BasicButton key="2" class="expand-button" @click="visible = !visible">
+            <div :class="{ '-rotate-180': visible }" class="transition-all ease-out flex">
+                <Icon v-if="visible" icon="fa-solid fa-bars" class="my-auto mx-auto" />
+                <Icon v-else icon="fa-solid fa-arrow-left" class="my-auto mx-auto" />
+            </div>
         </BasicButton>
     </div>
 </template>
@@ -73,12 +78,16 @@ const computedScreen = computed(() => {
     @apply 
     max-sm:absolute 
     max-sm:h-min 
-    max-sm:bottom-24;
+    max-sm:bottom-24
+    max-sm:shadow-2xl
+    max-sm:border-4
+    max-sm:rounded-2xl
+    shadow-black;
 }
 .buttons-container {
     @apply flex flex-col gap-[10px] mt-auto;
 }
 .expand-button {
-    @apply absolute bottom-4 w-14 sm:hidden;
+    @apply absolute bottom-0 w-14 sm:hidden;
 }
 </style>

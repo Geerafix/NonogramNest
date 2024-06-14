@@ -12,9 +12,23 @@
 
 <style scoped>
 .header-container {
-    @apply text-white h-14 mb-4 bg-gray-700/40 p-2 border-gray-700 rounded-lg rounded-ss-xl rounded-ee-xl;
+    @apply 
+    h-14 
+    mb-4 
+    p-2
+    bg-gray-700/40 
+    border-gray-700 
+    rounded-lg 
+    rounded-ss-xl 
+    rounded-ee-xl;
 }
 .header-name {
-    @apply w-fit relative mx-auto text-3xl font-thin font-sans select-none;
+    @apply 
+    w-fit 
+    mx-auto 
+    text-3xl 
+    font-thin 
+    font-sans 
+    select-none;
 }
 </style>
