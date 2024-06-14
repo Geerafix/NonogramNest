@@ -1,5 +1,5 @@
 <script setup>
-import BasicButton from '@/UIcomponents/inputs/BasicButton.vue';
+import BasicButton from '@/components/ui/inputs/BasicButton.vue';
 import { computed } from 'vue';
 const props = defineProps([
     'limit',

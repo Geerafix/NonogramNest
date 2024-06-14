@@ -1,6 +1,9 @@
 <script setup>
-import BasicButton from '@/UIcomponents/inputs/BasicButton.vue';
-import Header from '@/UIcomponents/Header.vue';
+import BasicButton from '@/components/ui/inputs/BasicButton.vue';
+import Header from '@/components/ui/Header.vue';
+import Nonogram from '@/components/user/play/Nonogram.vue';
+import { computed } from 'vue';
+
 </script>
 
 <template>

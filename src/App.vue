@@ -1,7 +1,7 @@
 <script setup>
-import Menu from '@/UIcomponents/menu/Menu.vue';
-import MenuUserItems from '@/UIcomponents/menu/MenuUserItems.vue';
-import MenuAdminItems from '@/UIcomponents/menu/MenuAdminItems.vue';
+import Menu from '@/components/ui/menu/Menu.vue';
+import MenuUserItems from '@/components/ui/menu/MenuUserItems.vue';
+import MenuAdminItems from '@/components/ui/menu/MenuAdminItems.vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 

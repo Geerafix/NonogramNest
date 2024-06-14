@@ -1,6 +1,6 @@
 <script setup>
-import BasicButton from "@/UIcomponents/inputs/BasicButton.vue";
-import Select from "@/UIcomponents/inputs/Select.vue";
+import BasicButton from "@/components/ui/inputs/BasicButton.vue";
+import Select from "@/components/ui/inputs/Select.vue";
 import { ref } from "vue";
 const emit = defineEmits(['handleNewGame'])
 const props = defineProps([

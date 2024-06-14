@@ -1,11 +1,11 @@
 <script setup>
 import { getPuzzles } from "@/services/puzzleService.js";
 import {onMounted, ref, watch, computed } from "vue";
-import Pagination from "@/UIcomponents/Pagination.vue";
+import Pagination from "@/components/ui/Pagination.vue";
 import ListHeader from "@/components/admin/ListHeader.vue";
 import PuzzleListItem from "@/components/admin/puzzles/PuzzleListItem.vue";
 import PuzzleItem from "@/components/admin/puzzles/PuzzleItem.vue";
-import Header from '@/UIcomponents/Header.vue';
+import Header from '@/components/ui/Header.vue';
 
 const page = ref(1);
 const limit = ref(20);
@@ -31,9 +31,9 @@ onMounted(fetchPuzzles);
 </script>
 
 <template>
-    <div class="h-full text-white">
+    <div class="flex flex-col">
         <Header>Gry</Header>
-        <div class="overflow-auto max-h-[calc(100%-9rem)] pr-2">
+        <div class="overflow-auto h-full pr-2">
             <div class="header">
                 <ul v-for="header of ['Id','Wskazówki X','Wskazówki Y','Rozmiar']">
                     <li>
@@ -57,9 +57,23 @@ onMounted(fetchPuzzles);
 
 <style scoped>
 .header {
-  @apply mb-2 p-2 gap-2 bg-gray-900/40 grid grid-cols-[1fr_30%_30%_1fr] sticky top-0 rounded-lg z-10;
+  @apply 
+  sticky
+  grid 
+  grid-cols-[1fr_30%_30%_1fr]
+  top-0
+  mb-2 
+  p-2 
+  gap-2 
+  bg-gray-900/40 
+  rounded-lg;
 }
 .list {
-  @apply p-2 bg-gray-900/40 rounded-lg mx-auto list-none;
+  @apply 
+  p-2 
+  mx-auto
+  bg-gray-900/40 
+  rounded-lg 
+  list-none;
 }
 </style>

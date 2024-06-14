@@ -1,10 +1,10 @@
 <script setup>
-import Pagination from '@/UIcomponents/Pagination.vue';
+import Pagination from '@/components/ui/Pagination.vue';
 import UserItem from '@/components/admin/users/UserItem.vue';
 import UserListItem from '@/components/admin/users/UserListItem.vue';
 import ListHeader from '@/components/admin/ListHeader.vue';
 import { getUsers } from '@/services/adminService';
-import Header from '@/UIcomponents/Header.vue';
+import Header from '@/components/ui/Header.vue';
 import {ref, watch, onMounted, computed} from 'vue';
 
 const page = ref(1);
@@ -57,9 +57,23 @@ onMounted(fetchUsers);
 
 <style scoped>
 .header {
-  @apply mb-2 p-2 gap-2 bg-gray-900/40 grid grid-cols-[1fr_30%_30%_1fr] sticky top-0 rounded-lg z-10;
+  @apply 
+  sticky
+  grid 
+  grid-cols-[1fr_30%_30%_1fr]
+  top-0
+  mb-2 
+  p-2 
+  gap-2 
+  bg-gray-900/40 
+  rounded-lg;
 }
 .list {
-  @apply p-2 bg-gray-900/40 rounded-lg mx-auto list-none;
+  @apply 
+  p-2 
+  mx-auto
+  bg-gray-900/40 
+  rounded-lg 
+  list-none;
 }
 </style>

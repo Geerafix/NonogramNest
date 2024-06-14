@@ -36,7 +36,7 @@ const computedWidth = computed(() => {
     h-14
     rounded-xl
     bg-gray-700
-    text-slate-200  
+    text-slate-100/90  
     hover:bg-gray-800
     hover:text-white
     hover:shadow-gray-700/50

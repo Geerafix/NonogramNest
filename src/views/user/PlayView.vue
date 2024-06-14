@@ -2,7 +2,7 @@
 import Nonogram from '@/components/user/play/Nonogram.vue';
 import Score from "@/components/user/play/Score.vue";
 import Actions from "@/components/user/play/Actions.vue";
-import Header from "@/UIcomponents/Header.vue"
+import Header from "@/components/ui/Header.vue"
 import { useInterval } from '@vueuse/core';
 import {reactive, watch, computed} from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
