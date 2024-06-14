@@ -1,32 +1,67 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
+import MenuButton from './inputs/MenuButton.vue';
+
+const daysNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pią', 'Sob', 'Nie'];
 
 const days = ref([]);
-const daysNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pią', 'Sob', 'Nie'];
-const numberOfDays = ref(0);
-const year = new Date().getFullYear();
-const month = new Date().getMonth() + 1;
+const year = ref(new Date().getFullYear());
+const month = ref(new Date().getMonth());
+const firstDay = ref(0);
+
+const prevMonth = () => { 
+    if (month.value === 0) {
+        month.value = 11;
+        year.value -= 1;
+    } else {
+        month.value -= 1;
+    }
+}
+const nextMonth = () => { 
+    if (month.value === 11) {
+        month.value = 0;
+        year.value += 1;
+    } else {
+        month.value += 1;
+    }
+}
+
+function handleMonth() {
+    let numberOfDays = new Date(year.value, month.value + 1, 0).getDate();
+    firstDay.value = (new Date(year.value, month.value, 1).getDay() + 6) % 7;
+    days.value = Array.from(Array(numberOfDays), (_, idx) => idx + 1);
+} 
+
+const computedDate = computed(() => { 
+    return year.value === new Date().getFullYear() && month.value === new Date().getMonth();
+});
+
+watch(month,() => {
+    handleMonth();
+});
 
 onMounted(() => {
-    numberOfDays.value = new Date(year, month, 0).getDate();
+    handleMonth();
 });
 </script>
 
 <template>
     <div class="calendar-container">
         <div class="flex justify-between gap-6 mt-2 mx-2">
-            <button class="day day-name">
+            <MenuButton class="max-w-1" @click="prevMonth">
                 <Icon icon="fa-solid fa-arrow-left" class="my-auto mx-auto" />
-            </button>
-            <span class="text-xl rounded-xl p-2 w-full text-center">Czerwiec 2024</span>
-            <button class="day day-name">
+            </MenuButton>
+            <span class="text-xl rounded-xl p-2 w-full text-center">{{ month + 1 }}. {{ year }}</span>
+            <MenuButton class="max-w-1" @click="nextMonth">
                 <Icon icon="fa-solid fa-arrow-right" class="my-auto mx-auto" />
-            </button>
+            </MenuButton>
         </div>
         <div class="days-container">
             <div v-for="dayName of daysNames" class="day day-name">{{ dayName }}</div>
-            <div v-for="(day, index) of numberOfDays" :class="['day', {'today': day === new Date().getDate()}]">
-                <span>{{ index + 1 }}</span>
+            <div class="day" v-for="idx in firstDay"></div>
+            <div v-for="day of days" 
+                :class="['day', {'today': day === new Date().getDate() && computedDate}]">
+                <span>{{ day }}</span>
             </div>
         </div>
     </div>
@@ -61,9 +96,9 @@ onMounted(() => {
     p-2
     hover:bg-gray-800/30
     rounded-xl
-    transition-all
     cursor-pointer
     text-xl 
+    transition-all
     max-sm:text-base
     text-center
     select-none
@@ -71,12 +106,15 @@ onMounted(() => {
 }
 .day-name {
     @apply 
-    bg-gray-800/40 
-    shadow-inner 
-    pointer-events-none 
-    cursor-auto;
+    bg-gray-800/30 
+    pointer-events-none
+    cursor-auto
+    shadow-inner;
 }
 .today {
-    @apply bg-orange-600/30 border-b-4 ;
+    @apply 
+    bg-orange-600/30 
+    border-b-4
+    shadow-md;
 }
 </style>
