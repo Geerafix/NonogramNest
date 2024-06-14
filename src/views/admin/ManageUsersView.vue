@@ -34,14 +34,14 @@ onMounted(fetchUsers);
     <main class="flex flex-col">
         <Header>Użytkownicy</Header>
         <div class="overflow-auto h-full pr-2">
-            <div class="header">
+            <div class="list-header">
                 <ul v-for="header of ['Id','Nazwa użytkownika','Email','Rola']">
                   <li>
                     <ListHeader :headerName="header" />
                   </li>
                 </ul>
             </div>
-            <ul v-for="(user, idx) in users" class="list" :class="{ 'mb-2': idx < users.length - 1 }">
+            <ul v-for="(user, idx) in users" :class="['list', {'mb-2': idx < users.length - 1}]">
                 <li>
                   <UserListItem>
                     <div v-for="value in user">
@@ -56,7 +56,7 @@ onMounted(fetchUsers);
 </template>
 
 <style scoped>
-.header {
+.list-header {
   @apply 
   sticky
   grid 

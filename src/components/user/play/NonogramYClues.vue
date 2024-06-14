@@ -6,8 +6,8 @@ defineProps([
 
 <template>
     <div class="xclues-container">
-        <div v-for="ans in clues" class="content-end">
-            <div class="flex flex-col w-10 rounded-sm text-center text-white">
+        <div v-for="ans in clues" class="yclues">
+            <div class="single-clue">
                 <div v-for="single in ans" class="text-xl">
                     <p>{{ single }}</p>
                 </div>
@@ -27,5 +27,17 @@ defineProps([
     border-t-4 
     rounded-sm 
     rounded-se-2xl
+    select-none;
+}
+.yclues {
+    @apply content-end;
+}
+.single-clue {
+    @apply
+    flex 
+    flex-col 
+    w-10 
+    rounded-sm 
+    text-center;
 }
 </style>

@@ -63,36 +63,27 @@ body {
 
 .fade-enter-active,
 .fade-leave-active {
-  	transition: opacity 0.1s ease-in-out;
+  	transition: all 0.1s ease-in-out;
 }
-
 .fade-enter-from,
 .fade-leave-to {
   	opacity: 0;
 }
 
-.slide-right-enter-active {
-	transition: all 0.2s ease-out;
-}
-  
+.slide-right-enter-active,
 .slide-right-leave-active {
 	transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
 }
-
 .slide-right-enter-from,
 .slide-right-leave-to {
 	transform: translateX(-40px);
 	opacity: 0;
 }
 
-.slide-up-enter-active {
-	transition: all 0.35s ease-out;
-}
-  
+.slide-up-enter-active,
 .slide-up-leave-active {
 	transition: all 0.35s ease-out;
 }
-
 .slide-up-enter-from,
 .slide-up-leave-to {
 	transform: translateY(-2rem);

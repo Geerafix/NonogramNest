@@ -7,7 +7,7 @@ const overItem = ref(false);
 </script>
 
 <template>
-  <div class="puzzle-item" :style="{ filter: overItem ? 'brightness(1.3)' : 'brightness(1)' }"
+  <div :class="['puzzle-item', {'filter brightness-[1.3]': overItem}]"
        @mouseover="overItem = true" @mouseleave="overItem = false">
     <span>{{ value }}</span>
   </div>

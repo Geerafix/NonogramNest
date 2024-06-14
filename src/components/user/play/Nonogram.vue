@@ -9,17 +9,15 @@ defineProps([
     'paused',
     'paint'
 ]);
-
 </script>
 
 <template>
-    <main class="transition-all font-thin font-sans">
-        <span v-if="paused" :style="{ opacity: paused ? 1 : 0 }" class="paused-info">Gra wstrzymana</span>
-        <div class="grid grid-cols-[min-content_1fr] gap-0.5 mx-auto w-fit z-100 transition-all"
-            :style="{ opacity: paused ? 0.5 : 1, filter: paused ? 'blur(4px)' : 'blur(0)' }" >
+    <main class="nonogram-container">
+        <div v-if="paused" :class="['paused-info', { 'opacity-1': paused }]">Gra wstrzymana</div>
+        <div :class="['components', {'paused-filter': paused }]">
             <div class="blank-area"><div class="size-info">{{ size }} x {{ size }}</div></div>
-            <NonogramYClues :clues="cluesY" class="select-none"/>
-            <NonogramXClues :clues="cluesX" class="select-none" />
+            <NonogramYClues :clues="cluesY" />
+            <NonogramXClues :clues="cluesX" />
             <NonogramBoard :size="size" :paint="paint" />
         </div>
     </main>
@@ -46,6 +44,12 @@ defineProps([
     -rotate-45
     text-gray-400;
 }
+.paused-filter {
+    @apply 
+    filter 
+    blur-sm 
+    brightness-[0.9];
+}
 .paused-info {
     @apply 
     z-10 
@@ -63,5 +67,22 @@ defineProps([
     select-none
     border-b-4
     border-b-gray-700;
+}
+.nonogram-container {
+    @apply 
+    transition-all 
+    font-thin 
+    font-sans 
+    relative;
+}
+.components {
+    @apply 
+    grid 
+    grid-cols-[min-content_1fr] 
+    gap-0.5 
+    mx-auto 
+    w-fit 
+    z-10
+    transition-all;
 }
 </style>

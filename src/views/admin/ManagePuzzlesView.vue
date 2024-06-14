@@ -31,17 +31,17 @@ onMounted(fetchPuzzles);
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <main class="flex flex-col">
         <Header>Gry</Header>
         <div class="overflow-auto h-full pr-2">
-            <div class="header">
+            <div class="list-header">
                 <ul v-for="header of ['Id','Wskazówki X','Wskazówki Y','Rozmiar']">
                     <li>
                       <ListHeader :headerName="header" />
                     </li>
                 </ul>
             </div>
-            <ul v-for="(puzzle, idx) in puzzles" class="list" :class="{ 'mb-2': idx < puzzles.length - 1 }">
+            <ul v-for="(puzzle, idx) in puzzles" :class="['list', {'mb-2': idx < puzzles.length - 1}]">
                 <li>
                     <PuzzleListItem>
                       <div v-for="value in puzzle">
@@ -52,11 +52,11 @@ onMounted(fetchPuzzles);
             </ul>
         </div>
         <Pagination v-bind="settings" />
-    </div>
+      </main>
 </template>
 
 <style scoped>
-.header {
+.list-header {
   @apply 
   sticky
   grid 

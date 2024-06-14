@@ -4,23 +4,18 @@ import { useElementSize } from '@vueuse/core'
 
 defineProps([
     'btnText',
-    'op'
 ]);
 
 const btn = ref(null);
 const { width, height } = useElementSize(btn);
 
-const computedWidth = computed(() => {
-    return (width.value > height.value * 1.5) ? 1 : 0;
-});
-
+const computedWidth = computed(() => width.value < height.value * 1.5 );
 </script>
 
 <template>
     <button ref="btn" class="menu-button">
         <slot></slot>
-        <span class="mr-2" 
-            :style="{ opacity: computedWidth }">
+        <span :class="['mr-2', {'opacity-0': computedWidth}]">
             {{ btnText }}
         </span>
     </button>
@@ -52,7 +47,6 @@ const computedWidth = computed(() => {
     tracking-wide
     overflow-hidden;
 }
-
 .menu-button span {
     @apply 
     -ml-2 

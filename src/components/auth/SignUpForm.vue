@@ -41,12 +41,23 @@ const onSubmit = () => {
 
 <style scoped>
 .form-container {
-  @apply flex flex-col gap-10;
+  @apply 
+  flex 
+  flex-col 
+  gap-10;
 }
 form {
-  @apply grid gap-4 justify-items-center w-fit mx-auto mt-9;
+  @apply 
+  grid 
+  gap-4 
+  justify-items-center 
+  w-fit 
+  mx-auto 
+  mt-9;
 }
 .error {
-  @apply text-red-500/70 text-xl;
+  @apply 
+  text-red-500/70 
+  text-xl;
 }
 </style>

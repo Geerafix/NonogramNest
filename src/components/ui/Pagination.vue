@@ -9,42 +9,45 @@ const props = defineProps([
     'next'
 ]);
 
-const prevHandle = () => {
+const handlePrevPage = () => {
   if (computedPrevPage) {
     props.prev();
   }
 }
 
-const nextHandle = () => {
+const handleNextPage = () => {
   if (computedNextPage) {
     props.next();
   }
 }
 
-const computedPrevPage = computed(() => {
-  return props.page === 1;
-});
-
-const computedNextPage = computed(() => {
-  return props.perpage < props.limit;
-});
-
+const computedPrevPage = computed(() => props.page === 1 );
+const computedNextPage = computed(() => props.perpage < props.limit );
 </script>
 
 <template>
     <div class="pagination">
-        <BasicButton @click="prevHandle" :style="{ opacity: computedPrevPage ? 0.3 : 1 }" :disabled="computedPrevPage">
-            <Icon icon="fa-solid fa-arrow-left" class="my-auto mx-auto" />
+        <BasicButton @click="handlePrevPage" :disabled="computedPrevPage"
+          :class="{'opacity-30': computedPrevPage}" >
+          <Icon icon="fa-solid fa-arrow-left" />
         </BasicButton>
         <span class="text-2xl mx-auto">{{ page }}</span>
-        <BasicButton @click="nextHandle" :style="{ opacity: computedNextPage ? 0.3 : 1 }" :disabled="computedNextPage">
-            <Icon icon="fa-solid fa-arrow-right" class="my-auto mx-auto"/>
+        <BasicButton @click="handleNextPage" :disabled="computedNextPage"
+          :class="{'opacity-30': computedNextPage}" >
+          <Icon icon="fa-solid fa-arrow-right" />
         </BasicButton>
     </div>
 </template>
 
 <style scoped>
 .pagination {
-    @apply grid grid-cols-[min-content_80px_min-content] mt-4 gap-2 items-center mx-auto w-fit;
+  @apply 
+  grid 
+  grid-cols-[min-content_80px_min-content] 
+  gap-2 
+  mt-4 
+  mx-auto
+  w-fit
+  items-center;
 }
 </style>

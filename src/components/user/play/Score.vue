@@ -1,25 +1,28 @@
 <script setup>
 import { ref, watch } from 'vue';
+import { promiseTimeout } from '@vueuse/core';
 const props = defineProps([
   'counter',
   'points'
 ]);
-
 const highlightPoints = ref(false);
 
-watch(() => props.points, () => {
+watch(() => props.points, async () => {
   highlightPoints.value = true;
-  setTimeout(() => { highlightPoints.value = false; }, 200);
+  await promiseTimeout(200);
+  highlightPoints.value = false;
 });
 </script>
 
 <template>
   <div class="score-container">
-    <span class="item">
-          Punkty: <span :class="['transition-all', { 'text-red-500': highlightPoints } ]">{{ props.points }}
-      </span>
+    <span class="item border-r-[3px]">
+      Punkty: <span :class="{'text-red-500': highlightPoints}">{{ props.points }}
     </span>
-    <span class="item border-l-[3px] pl-3">Czas: <span>{{ props.counter }}s</span></span>
+    </span>
+    <div class="item border-l-[3px]">
+      Czas:<span>{{ props.counter }}s</span>
+    </div>
   </div>
 </template>
 
@@ -47,7 +50,6 @@ watch(() => props.points, () => {
   flex 
   justify-center 
   gap-2 
-  border-r-[3px] 
   pr-3
   font-thin 
   font-sans 
