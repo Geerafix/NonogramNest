@@ -2,11 +2,15 @@
 import BasicButton from "@/components/ui/inputs/BasicButton.vue";
 import Select from "@/components/ui/inputs/Select.vue";
 import { ref } from "vue";
-const emit = defineEmits(['handleNewGame'])
+const emit = defineEmits([
+  'handleNewGame',
+  'handleSize'
+]);
 const props = defineProps([
     'length',
     'pause',
-    'check'
+    'check',
+    'size'
 ]);
 
 const isPaused = ref(false);
@@ -22,32 +26,38 @@ const handleCheck = () => {
 };
 
 const handleNewGame = () => {
-  controlsVisible.value = true;
-  emit('handleNewGame'); 
+  if(props.size !== 0) {
+    controlsVisible.value = true;
+    emit('handleNewGame'); 
+  }
+};
+
+const setSize = (size) => {
+  emit('handleSize', size);
 };
 </script>
 
 <template>
   <div>
-    <div v-if="controlsVisible === false" class="flex gap-2">
+    <div v-if="!controlsVisible" class="flex gap-2">
       <BasicButton  @click="handleNewGame()">
-        <Icon icon="fa-solid fa-plus" class="my-auto mx-auto" />
+        <Icon icon="fa-solid fa-plus" />
       </BasicButton>
-      <Select></Select>
+      <Select @select="setSize"></Select>
     </div>
     <TransitionGroup name="slide-up">
-      <div v-if="controlsVisible === true" class="flex gap-2">
+      <div v-if="controlsVisible" class="flex gap-2">
       <BasicButton>
-        <Icon icon="fa-solid fa-xmark" class="my-auto mx-auto scale-125" />
+        <Icon icon="fa-solid fa-xmark" />
       </BasicButton>
       <BasicButton @click="handlePause" :class="{ 'animate-pulse': isPaused }"
-                  :style="{ backgroundColor: isPaused ? '#3C6961' : '#7C2C3B' }">
-        <Icon v-if="!isPaused" icon="fa-solid fa-stop" class="my-auto mx-auto" />
-        <Icon v-else icon="fa-solid fa-play" class="my-auto mx-auto" />
+        :style="{ backgroundColor: isPaused ? '#3C6961' : '#7C2C3B' }">
+        <Icon v-if="isPaused" icon="fa-solid fa-play" />
+        <Icon v-else icon="fa-solid fa-stop" />
       </BasicButton>
-      <BasicButton @click="handleCheck" :style="{ backgroundColor: '#8f5333', opacity: isPaused ? 0.5 : 1 }" 
-                  :disabled="isPaused">
-        <Icon icon="fa-solid fa-check" class="my-auto mx-auto" />
+      <BasicButton @click="handleCheck" :disabled="isPaused"
+        :style="{ backgroundColor: '#8f5333', opacity: isPaused ? 0.5 : 1 }">
+        <Icon icon="fa-solid fa-check" />
       </BasicButton>
     </div>
     </TransitionGroup>

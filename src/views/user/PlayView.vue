@@ -4,12 +4,12 @@ import Score from "@/components/user/play/Score.vue";
 import Actions from "@/components/user/play/Actions.vue";
 import Header from "@/components/ui/Header.vue"
 import { useInterval } from '@vueuse/core';
-import {reactive, watch, computed} from 'vue';
+import {reactive, watch, computed, ref} from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 import { generateAndFindHints } from "@/scripts/puzzleScript.js";
 import { check } from "@/scripts/puzzleScript.js";
 
-const size = 10;
+const size = ref(0);
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
 const nonogram = reactive({
   id: 0,
@@ -29,9 +29,20 @@ const nonogramSettings = computed(() => ({
     paint: !nonogram.paused ? paint : () => {}
 }));
 
+const actionSettings = computed(() => ({
+    length: nonogram.board.length,
+    pause: () => nonogram.paused = !nonogram.paused,
+    check: handleCheck,
+    size: size.value
+}));
+
+function setSize(data) {
+    size.value = data;
+};
+
 function handleNewPuzzle() {
-  generateAndFindHints(nonogram, size);
-//   postPuzzle(nonogram.cluesX, nonogram.cluesY, size)
+  generateAndFindHints(nonogram, size.value);
+//   postPuzzle(nonogram.cluesX, nonogram.cluesY, size.value)
 //       .then((res) => { nonogram.id = res.data.id });
   reset();
 }
@@ -57,7 +68,7 @@ watch(() => nonogram.paused, (newPaused) => {
     <main class="flex flex-col">
         <Header>Graj</Header>
         <div class="flex flex-col h-full">
-            <span v-if="!nonogram.board.length > 0" class="info">
+            <span v-if="nonogram.board.length === 0 || size === 0" class="info">
                 Wybierz rozmiar nonogramu, a następnie
                 naciśnij przycisk '+', aby rozpocząć grę.
             </span>
@@ -66,9 +77,8 @@ watch(() => nonogram.paused, (newPaused) => {
             </div>
             <div class="flex flex-wrap-reverse justify-end w-full gap-2">
                 <TransitionGroup name="slide-up">
-                    <Actions @handle-new-game="handleNewPuzzle()" key="1" :length="nonogram.board.length"
-                       :pause="() => nonogram.paused = !nonogram.paused" :check="handleCheck" />
-                    <Score v-if="nonogram.board.length !== 0" key="2" :counter="counter" :points="nonogram.points"/>
+                    <Actions @handle-new-game="handleNewPuzzle" @handle-size="setSize" key="1" v-bind="actionSettings" />
+                    <Score v-if="nonogram.board.length !== 0" key="2" :counter="counter" :points="nonogram.points" />
                 </TransitionGroup>
             </div>
         </div>
