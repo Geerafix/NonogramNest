@@ -6,7 +6,7 @@ defineProps([
 
 <template>
     <div class="xclues-container">
-        <div v-for="ans in clues" class="yclues">
+        <div v-for="ans in clues" class="content-end">
             <div class="single-clue">
                 <div v-for="single in ans" class="text-xl">
                     <p>{{ single }}</p>
@@ -28,9 +28,6 @@ defineProps([
     rounded-sm 
     rounded-se-2xl
     select-none;
-}
-.yclues {
-    @apply content-end;
 }
 .single-clue {
     @apply

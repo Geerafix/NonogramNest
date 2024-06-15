@@ -78,7 +78,7 @@ const computedScreen = computed(() => {
     @apply 
     max-sm:absolute 
     max-sm:h-min 
-    max-sm:bottom-24
+    max-sm:bottom-20
     max-sm:shadow-2xl
     max-sm:border-4
     max-sm:rounded-2xl
