@@ -8,7 +8,7 @@ import { computed } from 'vue';
 
 <template>
     <div class="h-full text-white">
-        <Header>Strona główna</Header>
+        <Header></Header>
         <div class="grid grid-cols-[min-content_min-content] gap-2 w-min ml-auto mt-4">
             <BasicButton btnText="Logowanie" @click="$router.push({ name: 'SignIn' })">
               <Icon icon="fa-solid fa-right-to-bracket" class="my-auto mx-auto" />

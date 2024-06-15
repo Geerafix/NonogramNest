@@ -1,20 +1,33 @@
 <script setup>
 import BasicInput from '@/components/ui/inputs/BasicInput.vue'
 import BasicButton from '@/components/ui/inputs/BasicButton.vue';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { postSignIn } from '@/services/userService.js';
+import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'; 
 
 const router = useRouter();
+const error = ref(false);
 const form = reactive({
   login: '',
   password: ''
 });
+const rules = {
+  login: {
+    required: true,
+    message: 'Login jest wymagany'
+  },
+  password: {
+    required: true,
+    message: 'Hasło jest wymagane'
+  }
+}
+const { pass } = useAsyncValidator(form, rules);
 
 const onSubmit = async () => {  
     await postSignIn(form.login, form.password)
       .then(() => { router.go(); })
-      .catch(() => {  });
+      .catch(() => { error.value = true; });
 };
 </script>
 
@@ -22,11 +35,9 @@ const onSubmit = async () => {
   <div class="form-container">
     <form @submit.prevent="onSubmit">
       <BasicInput v-model="form.login" placeholder="Login lub Email" />
-
       <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off" />
-
-      <BasicButton btnText="Zaloguj" type="submit" />
-
+      <BasicButton btnText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass" />
+      <span v-if="error" class="error">Nieprawidłowe dane logowania</span>
     </form>
     <span class="mx-auto text-lg">Nie masz konta?
       <a class="cursor-pointer hover:underline text-slate-300"

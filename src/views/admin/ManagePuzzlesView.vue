@@ -32,7 +32,7 @@ onMounted(fetchPuzzles);
 
 <template>
     <main class="flex flex-col">
-        <Header>Gry</Header>
+        <Header></Header>
         <div class="overflow-auto h-full pr-2">
             <div class="list-header">
                 <ul v-for="header of ['Id','Wskazówki X','Wskazówki Y','Rozmiar']">

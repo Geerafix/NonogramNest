@@ -10,5 +10,5 @@ onMounted(async () => {
 </script>
 
 <template>
-    <Header>Profil użytkownika</Header>
+    <Header></Header>
 </template>

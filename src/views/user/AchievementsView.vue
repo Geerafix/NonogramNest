@@ -3,5 +3,5 @@ import Header from '@/components/ui/Header.vue';
 </script>
 
 <template>
-    <Header>Osiągnięcia</Header>
+    <Header></Header>
 </template>

@@ -66,7 +66,7 @@ watch(() => nonogram.paused, (newPaused) => {
 
 <template>
     <main class="flex flex-col">
-        <Header>Graj</Header>
+        <Header></Header>
         <div class="flex flex-col h-full">
             <span v-if="nonogram.board.length === 0 || size === 0" class="info">
                 Wybierz rozmiar nonogramu, a następnie

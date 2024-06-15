@@ -3,5 +3,5 @@ import Header from '@/components/ui/Header.vue';
 </script>
 
 <template>
-    <Header>Ranking</Header>
+    <Header></Header>
 </template>

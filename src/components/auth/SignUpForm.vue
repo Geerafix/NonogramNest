@@ -4,20 +4,40 @@ import BasicButton from '@/components/ui/inputs/BasicButton.vue';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { postSignUp } from '@/services/userService.js';
+import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'; 
 
 const router = useRouter();
-const userExists = ref(false);
+const error = ref(false);
 const form = reactive({
     email: '',
     username: '',
     password: '',
     confirmPassword: ''
 });
+const rules = {
+  email: {
+    type: 'email',
+    required: true,
+  },
+  username: {
+    min: 5, max: 20,
+    required: true
+  },
+  password: {
+    pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.,;:=+<>]).{8,}$/,
+    required: true,
+  },
+  confirmPassword: {
+    validator: (rule, value) => value === form.password,
+    required: true,
+  }
+}
+const { pass } = useAsyncValidator(form, rules);
 
 const onSubmit = () => {
     postSignUp(form.email, form.username, form.password)
         .then(() => { router.push('/logowanie'); })
-        .catch(() => { userExists = true; });
+        .catch(() => { error.value = true; });
 };
 </script>
 
@@ -28,8 +48,8 @@ const onSubmit = () => {
       <BasicInput v-model="form.email" placeholder="Email" />
       <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off" />
       <BasicInput v-model="form.confirmPassword" placeholder="Powtórz hasło" type="password" autocomplete="off" />
-      <span v-if="userExists" class="error">Użytkownik już istnieje</span>
-      <BasicButton btnText="Zarejestruj" type="submit" />
+      <span v-if="error" class="error">Użytkownik już istnieje</span>
+      <BasicButton btnText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass" />
     </form>
     <span class="mx-auto text-lg">Przejdź do
       <a class="cursor-pointer hover:underline text-slate-300"

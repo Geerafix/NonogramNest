@@ -32,7 +32,7 @@ onMounted(fetchUsers);
 
 <template>
     <main class="flex flex-col">
-        <Header>Użytkownicy</Header>
+        <Header></Header>
         <div class="overflow-auto h-full pr-2">
             <div class="list-header">
                 <ul v-for="header of ['Id','Nazwa użytkownika','Email','Rola']">

@@ -22,8 +22,10 @@ server.post('/signup', async (req, res) => {
     const username = await req.body.username;
 
     const user = await User.findOne({ 
-        where: { [Op.or]: [{ username: await req.body.email }, { email: await req.body.username }]}
+        where: { [Op.or]: [{ username: await req.body.username }, { email: await req.body.email }]}
     });
+
+    console.log(user);
 
     if (!user) {
         const hash = await argon2.hash(await req.body.password);

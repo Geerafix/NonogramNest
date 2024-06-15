@@ -6,7 +6,7 @@ import BasicButton from '@/components/ui/inputs/BasicButton.vue';
 
 <template>
     <main>
-        <Header>Codzienne wyzwanie</Header>
+        <Header></Header>
         <div class="flex flex-col justify-between w-fit gap-8 mx-auto">
             <Calendar></Calendar>
             <BasicButton class="w-fit mx-auto">Wykonaj</BasicButton>

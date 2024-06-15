@@ -3,5 +3,5 @@ import Header from '@/components/ui/Header.vue';
 </script>
 
 <template>
-    <Header>Wiadomości</Header>
+    <Header></Header>
 </template>
