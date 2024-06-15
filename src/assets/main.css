@@ -80,6 +80,19 @@ body {
 	opacity: 0;
 }
 
+.slide-left-enter-active,
+.slide-left-leave-active {
+	transition: all 0.3s;
+}
+.slide-left-enter-from {
+	transform: translateY(1rem);
+	opacity: 0;
+}
+.slide-left-leave-to {
+	transform: translateX(2rem);
+	opacity: 0;
+}
+
 .slide-up-enter-active,
 .slide-up-leave-active {
 	transition: all 0.35s ease-out;

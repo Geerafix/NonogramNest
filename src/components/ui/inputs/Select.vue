@@ -9,11 +9,17 @@ const emit = defineEmits([
 ]);
 
 const plc = [
-    { name: '6 x 6', value: 6 },
-    { name: '8 x 8', value: 8 },
-    { name: '10 x 10', value: 10 },
+    { name: '15 x 15', value: 15 },
+    { name: '14 x 14', value: 14 },
+    { name: '13 x 13', value: 13 },
     { name: '12 x 12', value: 12 },
-    { name: '14 x 14', value: 14 }
+    { name: '11 x 11', value: 11 },
+    { name: '10 x 10', value: 10 },
+    { name: '9 x 9', value: 9 },
+    { name: '8 x 8', value: 8 },
+    { name: '7 x 7', value: 7 },
+    { name: '6 x 6', value: 6 },
+    { name: '5 x 5', value: 5 }
 ]
 
 const selected = ref('Rozmiar');
@@ -28,7 +34,7 @@ const selectOption = (item) => {
 
 <template>
     <div class="select-container relative">
-        <Transition appear name="fade" mode="out-in">
+        <Transition name="fade" mode="out-in">
             <ul v-if="expanded">
                 <li v-for="item in plc" @click="selectOption(item)">
                     {{ item.name }}
@@ -55,7 +61,7 @@ const selectOption = (item) => {
     rounded-xl 
     min-h-14
     min-w-[120px]
-    bg-cyan-700 
+    bg-cyan-800 
     border-slate-800/60
     ring-cyan-800/90
     hover:rounded-[20px]
@@ -73,7 +79,7 @@ ul {
     absolute 
     bottom-16 
     gap-2 
-    bg-cyan-700
+    bg-cyan-800
     border-b-4
     border-slate-800/60;
 }
@@ -85,6 +91,8 @@ li {
     text-xl 
     hover:bg-cyan-900/50 
     transition-all 
+    shadow-black
+    hover:shadow-inner
     rounded-xl 
     cursor-pointer;
 }

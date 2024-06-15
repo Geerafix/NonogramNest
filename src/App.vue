@@ -19,7 +19,7 @@ const computedAdmin = computed(() => { return route.meta.pageOwner === 'admin'; 
     </Transition>
     <RouterView class="h-full w-full z-100" v-slot="{ Component }">
       <Transition name="fade" mode="out-in" >
-        <component class="" :is="Component"/>
+        <component :is="Component"/>
       </Transition>
     </RouterView>
   </main>

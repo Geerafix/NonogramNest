@@ -3,6 +3,9 @@ import { reactive, onMounted, watch, computed } from 'vue';
 import MenuButton from './inputs/MenuButton.vue';
 
 const daysNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pią', 'Sob', 'Nie'];
+const monthsNames = [
+  'Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'
+];
 const calendar = reactive({
     year: new Date().getFullYear(),
     month: new Date().getMonth(),
@@ -41,11 +44,11 @@ onMounted(() => {
     <div class="calendar-container">
         <div class="calendar-header">
             <MenuButton class="max-w-1" @click="prevMonth">
-                <Icon icon="fa-solid fa-arrow-left" class="my-auto mx-auto" />
+                <Icon icon="fa-solid fa-caret-left" class="icon-adjust" />
             </MenuButton>
-            <span class="date-info">{{ calendar.month + 1 }}. {{ calendar.year }}</span>
+            <span class="date-info">{{ monthsNames[calendar.month] }} {{ calendar.year }}</span>
             <MenuButton class="max-w-1" @click="nextMonth">
-                <Icon icon="fa-solid fa-arrow-right" class="my-auto mx-auto" />
+                <Icon icon="fa-solid fa-caret-right" class="icon-adjust" />
             </MenuButton>
         </div>
         <div class="days-container">
@@ -67,7 +70,6 @@ onMounted(() => {
     w-full
     max-w-md
     border-b-[6px]
-    border-[3px]
     bg-gray-600 
     border-gray-800/70
     border-b-gray-800/50
@@ -121,8 +123,11 @@ onMounted(() => {
 }
 .today {
     @apply 
-    bg-orange-600/30 
+    bg-[#8f5333]/90
     border-b-4
     shadow-md;
+}
+.icon-adjust {
+    @apply my-auto mx-auto text-2xl;
 }
 </style>

@@ -18,10 +18,10 @@ defineProps([ 'btnText' ]);
     min-w-14
     border-b-4 
     rounded-xl
-    bg-blue-500/90
+    bg-sky-800/90
     border-slate-800/60
     text-slate-200  
-    hover:bg-blue-400/90
+    hover:bg-sky-600/70
     hover:text-white
     hover:shadow-gray-600/10
     hover:shadow-lg

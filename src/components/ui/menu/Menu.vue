@@ -60,6 +60,7 @@ const computedScreen = computed(() => {
     @apply  
     flex
     flex-col
+    relative
     gap-[10px]
     h-full
     sm:w-20
@@ -75,8 +76,8 @@ const computedScreen = computed(() => {
     transition-all
     duration-[270ms]
     z-50;
-    @apply 
-    max-sm:absolute 
+    @apply  
+    max-sm:absolute
     max-sm:h-min 
     max-sm:bottom-20
     max-sm:shadow-2xl
@@ -88,6 +89,6 @@ const computedScreen = computed(() => {
     @apply flex flex-col gap-[10px] mt-auto;
 }
 .expand-button {
-    @apply absolute bottom-0 w-14 sm:hidden;
+    @apply absolute bottom-0 w-14 sm:hidden z-10;
 }
 </style>

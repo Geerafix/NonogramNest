@@ -25,8 +25,6 @@ server.post('/signup', async (req, res) => {
         where: { [Op.or]: [{ username: await req.body.username }, { email: await req.body.email }]}
     });
 
-    console.log(user);
-
     if (!user) {
         const hash = await argon2.hash(await req.body.password);
         const newUser = await User.create({ email: email, username: username, password: hash});
