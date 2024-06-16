@@ -40,7 +40,7 @@ const setSize = (size) => {
 <template>
   <div>
     <div v-if="!controlsVisible" class="flex gap-2">
-      <BasicButton  @click="handleNewGame()">
+      <BasicButton @click="handleNewGame()" :class="{'opacity-50': size === 0}" :disabled="size === 0">
         <Icon icon="fa-solid fa-plus" />
       </BasicButton>
       <Select @select="setSize"></Select>

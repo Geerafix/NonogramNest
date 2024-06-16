@@ -18,7 +18,6 @@ const route = useRoute();
     w-full 
     mx-auto 
     bg-gray-700/40 
-    border-gray-700 
     rounded-lg 
     rounded-ss-xl 
     rounded-ee-xl

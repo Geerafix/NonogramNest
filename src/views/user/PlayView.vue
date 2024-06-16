@@ -68,14 +68,14 @@ watch(() => nonogram.paused, (newPaused) => {
     <main class="flex flex-col">
         <Header></Header>
         <div class="flex flex-col h-full">
-            <span v-if="nonogram.board.length === 0 || size === 0" class="info">
-                Wybierz rozmiar nonogramu, a następnie
-                naciśnij przycisk '+', aby rozpocząć grę.
-            </span>
-            <div v-else class="h-full overflow-auto ">
+            <div v-if="nonogram.board.length === 0" class="info">
+                <span v-if="size === 0">Wybierz rozmiar planszy nonogramu.</span>
+                <span v-else>Naciśnij przycisk z plusem, aby rozpocząć grę.</span>
+            </div>
+            <div v-else class="h-full overflow-auto">
                 <Nonogram v-bind="nonogramSettings"/>
             </div>
-            <div class="flex flex-wrap-reverse justify-end w-full gap-2">
+            <div class="actions">
                 <TransitionGroup name="slide-up">
                     <Actions @handle-new-game="handleNewPuzzle" @handle-size="setSize" key="1" v-bind="actionSettings" />
                     <Score v-if="nonogram.board.length !== 0" key="2" :counter="counter" :points="nonogram.points" />
@@ -90,8 +90,17 @@ watch(() => nonogram.paused, (newPaused) => {
     @apply 
     mx-auto 
     mt-2 
+    text-2xl
     font-thin 
     font-sans 
     h-full;
+}
+.actions {
+    @apply 
+    flex 
+    flex-wrap-reverse 
+    justify-end 
+    w-full 
+    gap-2;
 }
 </style>
