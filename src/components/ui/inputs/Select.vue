@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { set } from '@vueuse/core';
 
 defineProps([
     'items'
@@ -26,8 +27,8 @@ const selected = ref('Rozmiar');
 const expanded = ref(false);
 
 const selectOption = (item) => {
-    selected.value = item.name;
-    expanded.value = !expanded.value;
+    set(selected, item.name);
+    set(expanded, false);
     emit('select', item.value);
 };
 </script>
@@ -86,7 +87,8 @@ ul {
 li {
     @apply 
     w-[120px] 
-    p-2 
+    px-2
+    py-1.5 
     text-center 
     text-xl 
     hover:bg-cyan-900/50 

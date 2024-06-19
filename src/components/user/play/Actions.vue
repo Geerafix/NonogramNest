@@ -3,51 +3,58 @@ import BasicButton from "@/components/ui/inputs/BasicButton.vue";
 import Select from "@/components/ui/inputs/Select.vue";
 import { ref } from "vue";
 const emit = defineEmits([
-  'handleNewGame',
-  'handleSize'
+  'newGame',
+  'size',
+  'check',
+  'pause',
+  'endGame'
 ]);
 const props = defineProps([
-    'length',
-    'pause',
-    'check',
-    'size'
+    'started',
 ]);
 
+const size = ref(0);
 const isPaused = ref(false);
 const controlsVisible = ref(false);
 
 const handlePause = () => {
-  props.pause();
+  emit('pause');
   isPaused.value = !isPaused.value;
 };
 
 const handleCheck = () => {
-  props.check();
+  emit('check');
 };
 
 const handleNewGame = () => {
   if(props.size !== 0) {
     controlsVisible.value = true;
-    emit('handleNewGame'); 
+    emit('newGame'); 
   }
 };
 
-const setSize = (size) => {
-  emit('handleSize', size);
+const handleEndGame = () => {
+  size.value = 0;
+  controlsVisible.value = false;
+  emit('endGame');
+};
+ 
+const setSize = (data) => {
+  size.value = data;
+  emit('size', data);
 };
 </script>
 
 <template>
   <div>
-    <div v-if="!controlsVisible" class="flex gap-2">
-      <BasicButton @click="handleNewGame()" :class="{'opacity-50': size === 0}" :disabled="size === 0">
-        <Icon icon="fa-solid fa-plus" />
-      </BasicButton>
-      <Select @select="setSize"></Select>
-    </div>
-    <TransitionGroup name="slide-up">
-      <div v-if="controlsVisible" class="flex gap-2">
-      <BasicButton>
+      <div v-if="!controlsVisible" class="flex gap-2">
+        <BasicButton @click="handleNewGame()" :class="{'opacity-50': size === 0}" :disabled="size === 0">
+          <Icon icon="fa-solid fa-plus" />
+        </BasicButton>
+        <Select @select="setSize"></Select>
+      </div>
+      <div v-else class="flex gap-2">
+      <BasicButton @click="handleEndGame">
         <Icon icon="fa-solid fa-xmark" />
       </BasicButton>
       <BasicButton @click="handlePause" :class="{ 'animate-pulse': isPaused }"
@@ -60,6 +67,5 @@ const setSize = (size) => {
         <Icon icon="fa-solid fa-check" />
       </BasicButton>
     </div>
-    </TransitionGroup>
   </div>
 </template>

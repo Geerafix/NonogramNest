@@ -1,15 +1,20 @@
 <script setup>
-defineProps([
-    'size', 
+import { watch, ref } from 'vue';
+const props = defineProps([
+    'answers',
+    'size',
     'paint'
 ]);
+const board = ref([]);
+watch(() => props.answers, () => { board.value = props.answers; });
 </script>
 
 <template>
     <main class="board">
-        <div v-for="row in size" class="rows">
-            <div class="cols" v-for="col in size" 
-                @mousedown.left="paint(col - 1, row - 1, $event.target)" @mousedown.right="">
+        <div v-for="row in props.size" class="rows">
+            <div v-for="col in props.size" 
+                :class="['cols', (board[row-1] && board[col-1][row-1] === 1) ? 'bg-black' : 'bg-white']" 
+                @mousedown.left="props.paint(col - 1, row - 1)" @mousedown.right="">
             </div>
         </div>
     </main>
@@ -32,8 +37,7 @@ defineProps([
 .cols {
     @apply 
     w-full 
-    h-full 
-    bg-white 
+    h-full          
     border-gray-700 
     border-[1px] 
     rounded-[2px] 
