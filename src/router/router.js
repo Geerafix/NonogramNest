@@ -13,7 +13,7 @@ const router = createRouter({
       component: () => import('@/views/home/HomeView.vue'),
       meta: { 
         hideMenu: true, 
-        title: 'Strona główna' 
+        title: 'Nonogramy.pl' 
       },
     },
     {

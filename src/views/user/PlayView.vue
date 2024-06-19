@@ -3,8 +3,8 @@ import Nonogram from '@/components/user/play/Nonogram.vue';
 import Score from "@/components/user/play/Score.vue";
 import Actions from "@/components/user/play/Actions.vue";
 import Header from "@/components/ui/Header.vue"
-import { useInterval, set } from '@vueuse/core';
-import { watch, computed, ref, reactive, onMounted } from 'vue';
+import { useInterval } from '@vueuse/core';
+import { watch, ref } from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });

@@ -38,7 +38,8 @@ defineExpose({
     nonogram,
     handleNewPuzzle,
     handleCheck,
-    handleEndGame
+    handleEndGame,
+    paint
 });
 </script>
 

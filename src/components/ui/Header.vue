@@ -19,8 +19,8 @@ const route = useRoute();
     mx-auto 
     bg-gray-700/40 
     rounded-lg 
-    rounded-ss-xl 
-    rounded-ee-xl
+    rounded-ss-2xl 
+    rounded-ee-2xl
     text-3xl 
     text-center
     font-thin 
