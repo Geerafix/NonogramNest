@@ -30,35 +30,34 @@ export function generateAndFindHints(nonogram, size) {
 }
 
 export function check(nonogram) {
-    let iX = 0, iY = 0, checkX = [], checkY = [], ansX = 0, ansY = 0;
+    let checkX = [], checkY = [], ansX = 0, ansY = 0;
     
     nonogram.board.forEach((row, rowIdx) => {
         checkX.push([]); checkY.push([]);
         row.forEach((col, colIdx) => {
-            if (col === 1) {
+            if (nonogram.answers[rowIdx][colIdx] === 1) {
                 ansX += 1;
             }
-            if (col === 0 && ansX !== 0) { 
-                checkX[rowIdx][iX++] = ansX; 
+            if (nonogram.answers[rowIdx][colIdx] === 0 && ansX !== 0) { 
+                checkX[rowIdx].push(ansX); 
                 ansX = 0; 
             }
             if (nonogram.answers[colIdx][rowIdx] === 1) {
                 ansY += 1;
             }
             if (nonogram.answers[colIdx][rowIdx] === 0 && ansY !== 0) { 
-                checkY[rowIdx][iY++] = ansY; ansY = 0; 
+                checkY[rowIdx].push(ansY); 
+                ansY = 0; 
             }
         });
         if (ansX !== 0) { 
-            checkX[rowIdx][iX++] = ansX; 
+            checkX[rowIdx].push(ansX); 
             ansX = 0; 
         }
         if (ansY !== 0) { 
-            checkY[rowIdx][iY++] = ansY; 
+            checkY[rowIdx].push(ansY); 
             ansY = 0; 
         }
-        iX = 0; 
-        iY = 0;
     });
 
     let counter = 0;
@@ -66,20 +65,17 @@ export function check(nonogram) {
     let X = nonogram.cluesX.every((row, rowIdx) => row.every((el, colIdx) => el === checkX[rowIdx][colIdx]));
     let Y = nonogram.cluesY.every((row, rowIdx) => row.every((el, colIdx) => el === checkY[rowIdx][colIdx]));
 
-
     nonogram.cluesX.forEach((row, rowIdx) => {
         row.forEach((el, colIdx) => {
-            el !== checkX[rowIdx][colIdx] ? counter += 1 : counter;
+            if (el !== checkX[rowIdx][colIdx]) counter += 1;
         });
     });
 
     nonogram.cluesY.forEach((row, rowIdx) => {
         row.forEach((el, colIdx) => {
-            el !== checkY[rowIdx][colIdx] ? counter += 1 : counter;
+            if (el !== checkY[rowIdx][colIdx]) counter += 1;
         });
     });
-
-    console.log(counter);
 
     return { X, Y, counter };
 }
