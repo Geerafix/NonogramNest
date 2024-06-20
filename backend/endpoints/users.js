@@ -1,5 +1,5 @@
 import { server } from '../server.js';
-import { User } from '../models/User.js';
+import { User } from '../models/models.js';
 import { Op } from 'sequelize';
 import * as pkg from 'argon2';
 const argon2 = pkg;
@@ -27,7 +27,7 @@ server.post('/signup', async (req, res) => {
 
     if (!user) {
         const hash = await argon2.hash(await req.body.password);
-        const newUser = await User.create({ email: email, username: username, password: hash});
+        await User.create({ email: email, username: username, password: hash});
         res.status(200).send({ msg: 'Zarejestrowano' });
     } else {
         res.status(400).send({ msg: `Użytkownik o podanym email'u lub nazwie już istnieje` });

@@ -1,7 +1,5 @@
 import { server } from '../server.js';
-import { Puzzle } from '../models/Puzzle.js';
-import { SolvedPuzzle } from '../models/SolvedPuzzle.js';
-import { User } from "../models/User.js";
+import { Puzzle, SolvedPuzzle } from '../models/models.js';
 
 server.get('/puzzles', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
