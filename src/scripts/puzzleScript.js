@@ -35,28 +35,11 @@ export function check(nonogram) {
     nonogram.board.forEach((row, rowIdx) => {
         checkX.push([]); checkY.push([]);
         row.forEach((col, colIdx) => {
-            if (typeof nonogram.cluesX[rowIdx][x] !== 'undefined') {
-                checkX[rowIdx].push(-1);
-            }
-            if (typeof nonogram.cluesY[rowIdx][y] !== 'undefined') {
-                checkY[rowIdx].push(-1);
-            }
-            x += 1; y += 1;
-        });
-        x = 0; y = 0;
-    });
-    
-    nonogram.board.forEach((row, rowIdx) => {
-        row.forEach((col, colIdx) => {
             if (nonogram.answers[rowIdx][colIdx] === 1) {
                 ansX += 1;
             }
             if (nonogram.answers[rowIdx][colIdx] === 0 && ansX !== 0) { 
-                if (typeof checkX[rowIdx][x] === 'undefined') {
-                    checkX[rowIdx].push(ansX);
-                } else {
-                    checkX[rowIdx][x] = ansX;
-                }
+                checkX[rowIdx].push(ansX);
                 ansX = 0;
                 x += 1; 
             }
@@ -64,29 +47,17 @@ export function check(nonogram) {
                 ansY += 1;
             }
             if (nonogram.answers[colIdx][rowIdx] === 0 && ansY !== 0) { 
-                if (typeof checkY[rowIdx][y] === 'undefined') {
-                    checkY[rowIdx].push(ansY); 
-                } else {
-                    checkY[rowIdx][y] = ansY;
-                }
+                checkY[rowIdx].push(ansY); 
                 ansY = 0; 
                 y += 1;
             }
         });
         if (ansX !== 0) { 
-            if (typeof checkX[rowIdx][x] === 'undefined') {
-                checkX[rowIdx].push(ansX);
-            } else {
-                checkX[rowIdx][x] = ansX;
-            } 
+            checkX[rowIdx].push(ansX);
             ansX = 0; 
         }
         if (ansY !== 0) { 
-            if (typeof checkY[rowIdx][y] === 'undefined') {
-                checkY[rowIdx].push(ansY); 
-            } else {
-                checkY[rowIdx][y] = ansY;
-            }
+            checkY[rowIdx].push(ansY); 
             ansY = 0; 
         }
         x = 0;
@@ -94,7 +65,6 @@ export function check(nonogram) {
     });
 
     let counter = 0;
-
     let X = nonogram.cluesX.every((row, rowIdx) => row.every((el, colIdx) => el === checkX[rowIdx][colIdx]));
     let Y = nonogram.cluesY.every((row, rowIdx) => row.every((el, colIdx) => el === checkY[rowIdx][colIdx]));
 
@@ -109,8 +79,5 @@ export function check(nonogram) {
             if (el !== checkY[rowIdx][colIdx]) counter += 1;
         });
     });
-    console.log(nonogram.cluesX);
-    console.log(checkX);
-
     return { X, Y, counter };
 }
