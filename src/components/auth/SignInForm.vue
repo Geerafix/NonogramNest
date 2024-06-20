@@ -36,11 +36,11 @@ const onSubmit = async () => {
     <form @submit.prevent="onSubmit">
       <BasicInput v-model="form.login" placeholder="Login lub Email" />
       <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off" />
-      <BasicButton btnText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass" />
+      <BasicButton buttonText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass" />
       <span v-if="error" class="error">Nieprawidłowe dane logowania</span>
     </form>
     <span class="mx-auto text-lg">Nie masz konta?
-      <a class="cursor-pointer hover:underline text-slate-300"
+      <a class="register-link"
          @click="router.push({ name: 'SignUp' })"><b>Zarejestruj się</b>
       </a>
     </span>
@@ -67,5 +67,11 @@ form {
   @apply 
   text-red-500/70 
   text-xl;
+}
+.register-link {
+  @apply 
+  cursor-pointer 
+  hover:underline 
+  text-slate-300;
 }
 </style>

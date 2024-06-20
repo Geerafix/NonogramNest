@@ -1,8 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-defineProps([
-    'value'
-]);
+defineProps(['value']);
 const overItem = ref(false);
 </script>
 

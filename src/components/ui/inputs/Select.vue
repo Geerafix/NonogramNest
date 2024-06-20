@@ -1,13 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import { set } from '@vueuse/core';
-
-defineProps([
-    'items'
-]);
-const emit = defineEmits([
-    'select'
-]);
+defineProps(['items']);
+const emit = defineEmits(['select']);
 
 const plc = [
     { name: '15 x 15', value: 15 },
@@ -34,7 +29,7 @@ const selectOption = (item) => {
 </script>
 
 <template>
-    <div class="select-container relative">
+    <div class="select-container">
         <Transition name="fade" mode="out-in">
             <ul v-if="expanded">
                 <li v-for="item in plc" @click="selectOption(item)">
@@ -44,14 +39,17 @@ const selectOption = (item) => {
         </Transition>
         <div class="select" @click="expanded = !expanded">
             <span class="my-auto">{{ selected }}</span>
-            <Icon icon="fa-solid fa-chevron-up" :class="['my-auto', 'mx-auto', 'text-base', 'transition-all', { '-rotate-180': expanded }]" />
+            <Icon icon="fa-solid fa-chevron-up" :class="['icon', { '-rotate-180': expanded }]" />
         </div>
     </div>
 </template>
 
 <style>
 .select-container {
-    @apply flex flex-col;
+    @apply 
+    flex 
+    flex-col
+    relative;
 }
 .select {
     @apply 
@@ -71,6 +69,13 @@ const selectOption = (item) => {
     transition-all
     outline-none
     cursor-pointer;
+}
+.icon {
+    @apply 
+    my-auto 
+    mx-auto 
+    text-base 
+    transition-all;
 }
 ul {
     @apply 

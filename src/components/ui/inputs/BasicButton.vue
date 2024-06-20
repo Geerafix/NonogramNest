@@ -1,10 +1,10 @@
 <script setup>
-defineProps([ 'btnText' ]);
+defineProps(['buttonText']);
 </script>
 
 <template>
     <button class="basic-button">
-        {{ btnText }}
+        {{ buttonText }}
         <slot></slot>
     </button>
 </template>

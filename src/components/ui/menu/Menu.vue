@@ -37,10 +37,10 @@ const computedScreen = computed(() => {
                 @mouseenter="toggleNavbar" @mouseleave="toggleNavbar">
                 <slot></slot>
                 <div class="buttons-container">
-                    <MenuButton btnText="Ustawienia" @click="router.push({ name: computedRole });">
+                    <MenuButton buttonText="Ustawienia" @click="router.push({ name: computedRole });">
                         <Icon icon="fa-solid fa-gears" class="my-auto mx-auto" />
                     </MenuButton>
-                    <MenuButton btnText="Wyloguj" @click="toggleLogout">
+                    <MenuButton buttonText="Wyloguj" @click="toggleLogout">
                         <Icon icon="fa-solid fa-right-from-bracket" class="my-auto mx-auto" />
                     </MenuButton>
                 </div>

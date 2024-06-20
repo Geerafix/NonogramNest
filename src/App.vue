@@ -11,16 +11,35 @@ const computedAdmin = computed(() => { return route.meta.pageOwner === 'admin'; 
 </script>
 
 <template>
-  <main class="flex sm:gap-4 p-4 h-[inherit] font-thin font-sans text-white">
+  <main class="app-container">
     <Transition name="fade" mode="out-in">
       <Menu v-if="computedUser || computedAdmin" v-slot="{ Component }">
         <component :is="computedAdmin ? MenuAdminItems : (computedUser ? MenuUserItems : Component)" />
       </Menu>
     </Transition>
-    <RouterView class="h-full w-full z-100" v-slot="{ Component }">
+    <RouterView class="router-container" v-slot="{ Component }">
       <Transition name="fade" mode="out-in" >
         <component :is="Component"/>
       </Transition>
     </RouterView>
   </main>
 </template>
+
+<style scoped>
+.app-container {
+  @apply
+  flex 
+  p-4 
+  h-[inherit] 
+  font-thin 
+  font-sans 
+  text-white
+  sm:gap-4;
+}
+.router-container {
+  @apply
+  h-full 
+  w-full 
+  z-auto;
+}
+</style>

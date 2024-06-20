@@ -8,7 +8,6 @@ server.post('/signin', async (req, res) => {
     const user = await User.findOne({ 
         where: { [Op.or]: [{ username: await req.body.username }, { email: await req.body.username }]}
     });
-    
     if(user && await argon2.verify(user.password, await req.body.password)) {
         req.session.user = user;
         res.status(200).send(req.session.user.role);
@@ -20,7 +19,7 @@ server.post('/signin', async (req, res) => {
 server.post('/signup', async (req, res) => {
     const email = await req.body.email;
     const username = await req.body.username;
-
+    
     const user = await User.findOne({ 
         where: { [Op.or]: [{ username: await req.body.username }, { email: await req.body.email }]}
     });

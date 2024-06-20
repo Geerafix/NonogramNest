@@ -8,7 +8,7 @@ import PuzzleItem from "@/components/admin/puzzles/PuzzleItem.vue";
 import Header from '@/components/ui/Header.vue';
 
 const page = ref(1);
-const limit = ref(20);
+const limit = ref(10);
 const puzzles = ref([]);
 
 const settings = computed(() => ({

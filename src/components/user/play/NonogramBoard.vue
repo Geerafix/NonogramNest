@@ -1,12 +1,12 @@
 <script setup>
 import { watch, ref } from 'vue';
-const props = defineProps([
-    'answers',
-    'size',
-    'paint'
-]);
+import { set } from '@vueuse/core';
+
+const props = defineProps(['answers', 'size', 'paint']);
+
 const board = ref([]);
-watch(() => props.answers, () => { board.value = props.answers; });
+
+watch(() => props.answers, () => { set(board, props.answers); });
 </script>
 
 <template>

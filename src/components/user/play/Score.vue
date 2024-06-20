@@ -1,27 +1,25 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { promiseTimeout } from '@vueuse/core';
-const props = defineProps([
-  'counter',
-  'points'
-]);
+import { set, promiseTimeout } from '@vueuse/core';
+
+const props = defineProps(['counter', 'points']);
+
 const highlightPoints = ref(false);
 
 watch(() => props.points, async () => {
-  highlightPoints.value = true;
+  set(highlightPoints, true);
   await promiseTimeout(200);
-  highlightPoints.value = false;
+  set(highlightPoints, false);
 });
 </script>
 
 <template>
   <div class="score-container">
-    <span class="item border-r-[3px]">
-      Punkty: <span :class="{'text-red-500': highlightPoints}">{{ props.points }}
-    </span>
-    </span>
+    <div class="item border-r-[3px]">
+      Punkty: <span :class="{'text-red-500': highlightPoints}">{{ props.points }}</span>
+    </div>
     <div class="item border-l-[3px]">
-      Czas:<span>{{ props.counter }}s</span>
+      Czas: <span>{{ props.counter }}s</span>
     </div>
   </div>
 </template>

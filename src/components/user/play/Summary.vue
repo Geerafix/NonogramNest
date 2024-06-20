@@ -3,25 +3,23 @@ import { ref } from 'vue';
 import { set, onClickOutside } from '@vueuse/core'
 import BasicButton from '@/components/ui/inputs/BasicButton.vue';
 
-const target = ref(null)
 const isDisplayed = ref(false);
-const points = ref(null);
+const target = ref(null)
+const points = ref(0);
 
 const display = (data) => { 
     set(points, data);
     set(isDisplayed, true); 
 };
+
 const hide = () => { 
+    set(points, 0);
     set(isDisplayed, false); 
 };
 
 onClickOutside(target, event => hide());
 
-defineExpose({
-    isDisplayed,
-    display,
-    hide
-});
+defineExpose({ isDisplayed, display, hide });
 </script>
 
 <template>
@@ -36,7 +34,7 @@ defineExpose({
                 <span><b>{{ points }}</b> pkt.</span>
             </div>
             <div class="buttons">
-                <BasicButton @click="hide()"> Potwierdź
+                <BasicButton @click="hide()">Potwierdź
                     <Icon icon="fa-solid fa-check" />
                 </BasicButton>
             </div>

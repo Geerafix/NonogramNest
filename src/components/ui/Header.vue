@@ -4,15 +4,14 @@ const route = useRoute();
 </script>
 
 <template>
-    <div class="header">
+    <h1 class="header">
         {{ route.meta.title }}
-    </div>
+    </h1>
 </template>
 
 <style scoped>
 .header {
     @apply 
-    h-14 
     mb-4 
     p-2
     w-full 

@@ -5,7 +5,6 @@ server.get('/puzzles', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 4;
     const offset = (page - 1) * limit;
-
     const puzzles = await Puzzle.findAll({ limit: limit, offset: offset});
     res.json(puzzles);
 });
@@ -16,7 +15,6 @@ server.post('/puzzles', async (req, res) => {
         clues_y: await req.body.cluesY, 
         size: await req.body.size
     });
-
     res.json({ id: puzzle.puzzle_id });
 });
 

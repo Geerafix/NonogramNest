@@ -1,9 +1,27 @@
 <script setup>
-defineProps([ 'headerName' ]);
+defineProps(['headerName']);
 </script>
 
 <template>
-    <div class="grid bg-gray-600 rounded-md text-center w-full h-11">
-        <span class="self-center text-xl select-none">{{ headerName }}</span>
+    <div class="header-container">
+        <span class="header-name">{{ headerName }}</span>
     </div>
 </template>
+
+<style scoped>
+.header-container {
+    @apply 
+    grid 
+    w-full 
+    h-11
+    bg-gray-600 
+    rounded-md 
+    text-center;
+}
+.header-name {
+    @apply 
+    self-center 
+    text-xl 
+    select-none;
+}
+</style>

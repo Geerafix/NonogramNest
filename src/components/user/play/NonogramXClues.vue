@@ -1,7 +1,5 @@
 <script setup>
-defineProps([
-    'clues'
-]);
+defineProps(['clues']);
 </script>
 
 <template>

@@ -14,7 +14,7 @@ const props = defineProps([
     'started',
 ]);
 
-const isPaused = ref(false);
+const isPaused = ref(true);
 const isSelected = ref(false);
 
 const handlePause = () => {
@@ -27,11 +27,13 @@ const handleCheck = () => {
 };
 
 const handleNewGame = () => {
+  set(isPaused, false);
   emit('newGame'); 
 };
 
 const handleEndGame = () => {
   setSize(isSelected, false);
+  set(isPaused, true);
   emit('endGame');
 };
  

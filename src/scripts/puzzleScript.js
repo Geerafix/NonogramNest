@@ -2,7 +2,7 @@ export function generateAndFindHints(nonogram, size) {
     Object.assign(nonogram, { answers: [], board: [], cluesX: [], cluesY: [], paused: false });
     
     nonogram.answers = Array.from(Array(size), () => Array(size).fill(0));
-    nonogram.board = Array.from(Array(size), () => Array(size).fill().map(() => Math.floor(Math.random()*2)));
+    nonogram.board = Array.from(Array(size), () => Array(size).fill().map(() => Math.floor(Math.random() * 2)));
     nonogram.points = Math.pow(nonogram.board.length, 2) * size;
     
     nonogram.board.forEach((row, rowIdx) => {

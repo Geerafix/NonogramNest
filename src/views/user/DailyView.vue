@@ -7,7 +7,7 @@ import Notification from '@/components/ui/Notification.vue';
 
 const notification = ref(null);
 const settings = {
-    msg: 'Wykonano zadanie. Wróć jutro.',
+    message: 'Wykonano zadanie. Wróć jutro.',
     status: true,
     time: 2000
 };
@@ -19,7 +19,7 @@ const settings = {
         <div class="flex flex-col justify-between w-fit gap-8 mx-auto">
             <Calendar></Calendar>
             <BasicButton class="w-fit mx-auto" @click="notification.start()">Wykonaj</BasicButton>
-            <Notification ref="notification" v-bind="settings"></Notification>
+            <Notification ref="notification" v-bind="settings" />
         </div>
     </main>
 </template>

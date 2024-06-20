@@ -48,7 +48,6 @@ const Puzzle = sequelize.define('Puzzle', {
     size: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 'user'
     } 
 }, {
     tableName: 'puzzles',
@@ -82,8 +81,6 @@ const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
     timestamps: false
 });
 
-export { User, Puzzle, SolvedPuzzle };
-
 User.hasMany(SolvedPuzzle, {
     foreignKey: 'user_id'
 });
@@ -99,3 +96,11 @@ SolvedPuzzle.belongsTo(User, {
 SolvedPuzzle.belongsTo(Puzzle, {
     foreignKey: 'puzzle_id'
 });
+
+// uncomment to migrate models
+// await User.sync({ force: true });
+// await Puzzle.sync({ force: true });
+// await SolvedPuzzle.sync({ force: true });
+
+export { User, Puzzle, SolvedPuzzle };
+

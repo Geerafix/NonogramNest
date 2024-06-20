@@ -15,15 +15,15 @@ const nonogram = reactive({
   paused: true
 });
 
-function handleNewPuzzle() {
+const handleNewPuzzle = () => {
     generateAndFindHints(nonogram, nonogram.size);
     nonogram.paused = false;
 }
 
-function handleCheck() {
+const handleCheck = () => {
     const isSolved = check(nonogram);
-    (isSolved.X && isSolved.Y) ? console.log('Dobrze') : console.log('Źle');
     nonogram.points = (nonogram.points - isSolved.counter >= 0) ? nonogram.points - isSolved.counter : 0;
+    return { isSolved: (isSolved.X && isSolved.Y), lostPoints: isSolved.counter};
 }
 
 const paint = (row, col) => {
@@ -46,7 +46,7 @@ defineExpose({
 <template>
     <main class="nonogram-container">
         <div :class="['paused-info', { 'hidden': !nonogram.paused }]">Gra wstrzymana</div>
-        <div :class="['components', {'paused-filter': nonogram.paused }]">
+        <div :class="['nonogram-components', {'paused-filter': nonogram.paused }]">
             <div class="blank-area">
                 <div class="size-info">{{ nonogram.size }} x {{ nonogram.size }}</div>
             </div>
@@ -109,7 +109,7 @@ defineExpose({
     font-sans 
     relative;
 }
-.components {
+.nonogram-components {
     @apply 
     grid 
     grid-cols-[min-content_1fr] 

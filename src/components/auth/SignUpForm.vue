@@ -49,10 +49,10 @@ const onSubmit = () => {
       <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off" />
       <BasicInput v-model="form.confirmPassword" placeholder="Powtórz hasło" type="password" autocomplete="off" />
       <span v-if="error" class="error">Użytkownik już istnieje</span>
-      <BasicButton btnText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass" />
+      <BasicButton buttonText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass" />
     </form>
     <span class="mx-auto text-lg">Przejdź do
-      <a class="cursor-pointer hover:underline text-slate-300"
+      <a class="login-link"
          @click="router.push({ name: 'SignIn' })"><b>strony logowania</b>
       </a>
     </span>
@@ -79,5 +79,11 @@ form {
   @apply 
   text-red-500/70 
   text-xl;
+}
+.login-link {
+  @apply 
+  cursor-pointer 
+  hover:underline 
+  text-slate-300;
 }
 </style>

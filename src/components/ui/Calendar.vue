@@ -22,22 +22,18 @@ const nextMonth = () => {
     if (calendar.month === 0) calendar.year += 1;
 }
 
-function handleMonthChange() {
+const handleMonthChange = () => {
     calendar.firstDay = (new Date(calendar.year, calendar.month, 1).getDay() + 6) % 7;
     calendar.days = new Date(calendar.year, calendar.month + 1, 0).getDate();
 } 
 
-const computedDate = computed(() => 
+const currentYear = computed(() => 
     calendar.year === new Date().getFullYear() && calendar.month === new Date().getMonth()
 );
 
-watch(() => calendar.month, () => {
-    handleMonthChange();
-});
+watch(() => calendar.month, handleMonthChange);
 
-onMounted(() => {
-    handleMonthChange();
-});
+onMounted(handleMonthChange);
 </script>
 
 <template>
@@ -55,7 +51,7 @@ onMounted(() => {
             <div v-for="dayName of daysNames" class="day day-name">{{ dayName }}</div>
             <div v-for="day in calendar.firstDay"></div>
             <div v-for="day in calendar.days" 
-                :class="['day', {'today': day === new Date().getDate() && computedDate}]">
+                :class="['day', {'today': day === new Date().getDate() && currentYear}]">
                 <span>{{ day }}</span>
             </div>
         </div>
