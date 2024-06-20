@@ -30,34 +30,67 @@ export function generateAndFindHints(nonogram, size) {
 }
 
 export function check(nonogram) {
-    let checkX = [], checkY = [], ansX = 0, ansY = 0;
-    
+    let x = 0, y = 0, checkX = [], checkY = [], ansX = 0, ansY = 0;
+
     nonogram.board.forEach((row, rowIdx) => {
         checkX.push([]); checkY.push([]);
+        row.forEach((col, colIdx) => {
+            if (typeof nonogram.cluesX[rowIdx][x] !== 'undefined') {
+                checkX[rowIdx].push(-1);
+            }
+            if (typeof nonogram.cluesY[rowIdx][y] !== 'undefined') {
+                checkY[rowIdx].push(-1);
+            }
+            x += 1; y += 1;
+        });
+        x = 0; y = 0;
+    });
+    
+    nonogram.board.forEach((row, rowIdx) => {
         row.forEach((col, colIdx) => {
             if (nonogram.answers[rowIdx][colIdx] === 1) {
                 ansX += 1;
             }
             if (nonogram.answers[rowIdx][colIdx] === 0 && ansX !== 0) { 
-                checkX[rowIdx].push(ansX); 
-                ansX = 0; 
+                if (typeof checkX[rowIdx][x] === 'undefined') {
+                    checkX[rowIdx].push(ansX);
+                } else {
+                    checkX[rowIdx][x] = ansX;
+                }
+                ansX = 0;
+                x += 1; 
             }
             if (nonogram.answers[colIdx][rowIdx] === 1) {
                 ansY += 1;
             }
             if (nonogram.answers[colIdx][rowIdx] === 0 && ansY !== 0) { 
-                checkY[rowIdx].push(ansY); 
+                if (typeof checkY[rowIdx][y] === 'undefined') {
+                    checkY[rowIdx].push(ansY); 
+                } else {
+                    checkY[rowIdx][y] = ansY;
+                }
                 ansY = 0; 
+                y += 1;
             }
         });
         if (ansX !== 0) { 
-            checkX[rowIdx].push(ansX); 
+            if (typeof checkX[rowIdx][x] === 'undefined') {
+                checkX[rowIdx].push(ansX);
+            } else {
+                checkX[rowIdx][x] = ansX;
+            } 
             ansX = 0; 
         }
         if (ansY !== 0) { 
-            checkY[rowIdx].push(ansY); 
+            if (typeof checkY[rowIdx][y] === 'undefined') {
+                checkY[rowIdx].push(ansY); 
+            } else {
+                checkY[rowIdx][y] = ansY;
+            }
             ansY = 0; 
         }
+        x = 0;
+        y = 0;
     });
 
     let counter = 0;
@@ -76,6 +109,8 @@ export function check(nonogram) {
             if (el !== checkY[rowIdx][colIdx]) counter += 1;
         });
     });
+    console.log(nonogram.cluesX);
+    console.log(checkX);
 
     return { X, Y, counter };
 }
