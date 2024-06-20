@@ -1,11 +1,12 @@
 <script setup>
 import BasicButton from "@/components/ui/inputs/BasicButton.vue";
 import Select from "@/components/ui/inputs/Select.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { set } from '@vueuse/core'
 const emit = defineEmits([
   'newGame',
-  'size',
   'check',
+  'size',
   'pause',
   'endGame'
 ]);
@@ -13,12 +14,12 @@ const props = defineProps([
     'started',
 ]);
 
-const size = ref(0);
 const isPaused = ref(false);
+const isSelected = ref(false);
 
 const handlePause = () => {
-  emit('pause');
   isPaused.value = !isPaused.value;
+  emit('pause');
 };
 
 const handleCheck = () => {
@@ -26,26 +27,28 @@ const handleCheck = () => {
 };
 
 const handleNewGame = () => {
-  if(props.size !== 0) {
-    emit('newGame'); 
-  }
+  emit('newGame'); 
 };
 
 const handleEndGame = () => {
-  size.value = 0;
+  setSize(isSelected, false);
   emit('endGame');
 };
  
 const setSize = (data) => {
-  size.value = data;
+  set(isSelected, true);
   emit('size', data);
 };
+
+watch(() => props.started, (started) => {
+  if (started === false) set(isSelected, false); 
+});
 </script>
 
 <template>
   <div>
       <div v-if="!props.started" class="flex gap-2">
-        <BasicButton @click="handleNewGame()" :class="{'opacity-50': size === 0}" :disabled="size === 0">
+        <BasicButton @click="handleNewGame()" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
           <Icon icon="fa-solid fa-plus" />
         </BasicButton>
         <Select @select="setSize"></Select>

@@ -22,7 +22,7 @@ const paused = ref(false);
 const started = ref(false);
 
 function setSize(size) {
-    nonogram.value.nonogram.size = 3;
+    nonogram.value.nonogram.size = size;
 }
 
 function handleNewPuzzle() {
@@ -39,7 +39,7 @@ function handlePause() {
 function handleCheck() {
     const data = nonogram.value.handleCheck();
     if (!data.isSolved) {
-        notificationData.msg = `Twoje rozwiązanie jest złe. Tracisz ${data.lostPoints} pkt.`;
+        notificationData.msg = `Twoje rozwiązanie jest niepoprawne. Tracisz ${data.lostPoints} pkt.`;
         notificationData.status = false;
         notification.value.start();
     } else {
@@ -71,9 +71,9 @@ watch(paused, (newPaused) => {
             </div>
             <Nonogram ref="nonogram" :class="{'hidden': !started}" />
             <Summary ref="summary"></Summary>
-            <div class="actions">
-                <Actions key="1" :started="started" @new-game="handleNewPuzzle" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
-                <Score key="2" v-if="started" :counter="counter" :points="nonogram.nonogram.points" />
+            <div :class="['actions']">
+                <Actions :started="started" @new-game="handleNewPuzzle" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
+                <Score v-if="started" :counter="counter" :points="nonogram.nonogram.points" />
             </div>
         </div>
     </main>

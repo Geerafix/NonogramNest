@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-import { set } from '@vueuse/core'
+import { set, onClickOutside } from '@vueuse/core'
 import BasicButton from '@/components/ui/inputs/BasicButton.vue';
-const isDisplayed = ref(false);
 
+const target = ref(null)
+const isDisplayed = ref(false);
 const points = ref(null);
+
 const display = (data) => { 
     set(points, data);
     set(isDisplayed, true); 
@@ -13,14 +15,18 @@ const hide = () => {
     set(isDisplayed, false); 
 };
 
+onClickOutside(target, event => hide());
+
 defineExpose({
-    display
+    isDisplayed,
+    display,
+    hide
 });
 </script>
 
 <template>
     <Transition name="fade">
-        <div class="summary" v-if="isDisplayed">
+        <div ref="target" class="summary" v-if="isDisplayed">
             <div class="info">
                 <span>Twoje rozwiązanie jest poprawne.</span><br>
                 <span>Gratulacje!</span>
@@ -48,7 +54,6 @@ defineExpose({
     -translate-y-1/2
     grid
     min-h-14
-    max-w-fit
     px-4
     p-2
     border-b-4 
