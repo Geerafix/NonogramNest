@@ -13,7 +13,7 @@ watch(() => props.answers, () => { board.value = props.answers; });
     <main class="board">
         <div v-for="row in props.size" class="rows">
             <div v-for="col in props.size" 
-                :class="['cols', (board[row-1] && board[col-1][row-1] === 1) ? 'bg-black' : 'bg-white']" 
+                :class="['cols', (board[row-1] && board[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white']" 
                 @mousedown.left="props.paint(col - 1, row - 1)" @mousedown.right="">
             </div>
         </div>

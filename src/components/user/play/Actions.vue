@@ -15,7 +15,6 @@ const props = defineProps([
 
 const size = ref(0);
 const isPaused = ref(false);
-const controlsVisible = ref(false);
 
 const handlePause = () => {
   emit('pause');
@@ -28,14 +27,12 @@ const handleCheck = () => {
 
 const handleNewGame = () => {
   if(props.size !== 0) {
-    controlsVisible.value = true;
     emit('newGame'); 
   }
 };
 
 const handleEndGame = () => {
   size.value = 0;
-  controlsVisible.value = false;
   emit('endGame');
 };
  
@@ -47,7 +44,7 @@ const setSize = (data) => {
 
 <template>
   <div>
-      <div v-if="!controlsVisible" class="flex gap-2">
+      <div v-if="!props.started" class="flex gap-2">
         <BasicButton @click="handleNewGame()" :class="{'opacity-50': size === 0}" :disabled="size === 0">
           <Icon icon="fa-solid fa-plus" />
         </BasicButton>

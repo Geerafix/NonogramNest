@@ -4,16 +4,25 @@ import Score from "@/components/user/play/Score.vue";
 import Actions from "@/components/user/play/Actions.vue";
 import Header from "@/components/ui/Header.vue"
 import { useInterval } from '@vueuse/core';
-import { watch, ref } from 'vue';
+import { watch, ref, reactive } from 'vue';
+import Notification from '@/components/ui/Notification.vue';
+import Summary from '@/components/user/play/Summary.vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
 const nonogram = ref({});
+const notification = ref(null);
+const summary = ref(null);
+const notificationData = reactive({
+    msg: '',
+    status: true,
+    time: 2500
+});
 const paused = ref(false);
 const started = ref(false);
 
 function setSize(size) {
-    nonogram.value.nonogram.size = size;
+    nonogram.value.nonogram.size = 3;
 }
 
 function handleNewPuzzle() {
@@ -28,7 +37,15 @@ function handlePause() {
 }
 
 function handleCheck() {
-    nonogram.value.handleCheck();
+    const data = nonogram.value.handleCheck();
+    if (!data.isSolved) {
+        notificationData.msg = `Twoje rozwiązanie jest złe. Tracisz ${data.lostPoints} pkt.`;
+        notificationData.status = false;
+        notification.value.start();
+    } else {
+        summary.value.display(nonogram.value.nonogram.points);
+        handleEndGame();
+    }
 }
 
 const handleEndGame = () => {
@@ -44,16 +61,18 @@ watch(paused, (newPaused) => {
 </script>
 
 <template>
-    <main class="flex flex-col">
+    <main class="flex flex-col relative">
         <Header></Header>
         <div class="flex flex-col justify-between h-full">
+            <Notification ref="notification" :msg="notificationData.msg" :status="notificationData.status"></Notification>
             <div :class="['info', {'hidden': started}]">
                 <span>Wybierz rozmiar planszy nonogramu.</span><br>
                 <span>Naciśnij przycisk z plusem, aby rozpocząć grę.</span>
             </div>
             <Nonogram ref="nonogram" :class="{'hidden': !started}" />
+            <Summary ref="summary"></Summary>
             <div class="actions">
-                <Actions key="1" @new-game="handleNewPuzzle" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
+                <Actions key="1" :started="started" @new-game="handleNewPuzzle" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
                 <Score key="2" v-if="started" :counter="counter" :points="nonogram.nonogram.points" />
             </div>
         </div>
@@ -63,8 +82,6 @@ watch(paused, (newPaused) => {
 <style scoped>
 .info {
     @apply 
-    mx-auto 
-    mt-2 
     text-2xl
     font-thin 
     font-sans 
