@@ -12,6 +12,7 @@ defineProps(['headerName']);
 .header-container {
     @apply 
     grid 
+    grid-flow-col
     w-full 
     h-11
     bg-gray-600 

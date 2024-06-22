@@ -34,15 +34,13 @@ onMounted(fetchUsers);
     <main class="flex flex-col">
         <Header></Header>
         <div class="overflow-auto h-full pr-2">
-            <div class="list-header">
-                <ul v-for="header of ['Id','Nazwa użytkownika','Email','Rola']">
-                  <li>
-                    <ListHeader :headerName="header" />
-                  </li>
-                </ul>
-            </div>
-            <ul v-for="(user, idx) in users" :class="['list', {'mb-2': idx < users.length - 1}]">
-                <li>
+            <ul class="list-header">
+              <li v-for="header of ['Id','Nazwa użytkownika','Email','Rola']">
+                <ListHeader :headerName="header" />
+              </li>
+            </ul>
+            <ul>
+                <li v-for="(user, idx) in users" :class="['list', {'mb-2': idx < users.length - 1}]">
                   <UserListItem>
                     <div v-for="value in user">
                       <UserItem :value="value" />

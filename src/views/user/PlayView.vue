@@ -6,7 +6,7 @@ import Header from "@/components/ui/Header.vue"
 import Notification from '@/components/ui/Notification.vue';
 import Summary from '@/components/user/play/Summary.vue';
 import { set, useInterval } from '@vueuse/core';
-import { watch, ref, reactive } from 'vue';
+import { watch, ref, reactive, onMounted, onUnmounted } from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
@@ -68,11 +68,11 @@ watch(paused, (newPaused) => {
         <Header></Header>
         <div class="game-container">
             <Notification ref="notification" :message="notificationData.message" :status="notificationData.status" />
-            <div :class="['info', {'hidden': started}]">
+            <div :class="['info']" v-show="!started">
                 <p>Wybierz rozmiar planszy nonogramu.</p>
                 <p>Naciśnij przycisk z plusem, aby rozpocząć grę.</p>
             </div>
-            <Nonogram ref="nonogram" :class="{'hidden': !started}" />
+            <Nonogram ref="nonogram" v-show="started" />
             <Summary ref="summary"></Summary>
             <div class="actions">
                 <Actions :started="started" @new-game="handleNewPuzzle" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>

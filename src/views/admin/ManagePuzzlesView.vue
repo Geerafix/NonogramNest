@@ -34,15 +34,13 @@ onMounted(fetchPuzzles);
     <main class="flex flex-col">
         <Header></Header>
         <div class="overflow-auto h-full pr-2">
-            <div class="list-header">
-                <ul v-for="header of ['Id','Wskazówki X','Wskazówki Y','Rozmiar']">
-                    <li>
-                      <ListHeader :headerName="header" />
-                    </li>
-                </ul>
-            </div>
-            <ul v-for="(puzzle, idx) in puzzles" :class="['list', {'mb-2': idx < puzzles.length - 1}]">
-                <li>
+            <ul class="list-header">
+                <li v-for="header of ['Id','Wskazówki X','Wskazówki Y','Rozmiar']">
+                  <ListHeader :headerName="header" />
+                </li>
+            </ul>
+            <ul>
+                <li v-for="(puzzle, idx) in puzzles" :class="['list', {'mb-2': idx < puzzles.length - 1}]">
                     <PuzzleListItem>
                       <div v-for="value in puzzle">
                         <PuzzleItem :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
