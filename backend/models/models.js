@@ -81,12 +81,57 @@ const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
     timestamps: false
 });
 
+const DailyChallenge = sequelize.define('DailyChallenge', {
+  daily_id: {
+    type: DataTypes.BIGINT,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  user_id: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  puzzle_id: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  time: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+  points: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+  is_solved: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  date: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+    defaultValue: new Date()
+  }
+}, {
+  tableName: 'daily_challenges',
+  timestamps: false
+});
+
 User.hasMany(SolvedPuzzle, {
     foreignKey: 'user_id'
+});
+
+User.hasMany(DailyChallenge, {
+  foreignKey: 'user_id'
 });
   
 Puzzle.hasMany(SolvedPuzzle, {
     foreignKey: 'puzzle_id'
+});
+
+Puzzle.hasMany(DailyChallenge, {
+  foreignKey: 'puzzle_id'
 });
 
 SolvedPuzzle.belongsTo(User, {
@@ -97,10 +142,24 @@ SolvedPuzzle.belongsTo(Puzzle, {
     foreignKey: 'puzzle_id'
 });
 
+DailyChallenge.belongsTo(User, {
+  foreignKey: 'user_id'
+});
+
+DailyChallenge.belongsTo(Puzzle, {
+  foreignKey: 'puzzle_id'
+});
+
 // uncomment to migrate models
 // await User.sync({ force: true });
 // await Puzzle.sync({ force: true });
 // await SolvedPuzzle.sync({ force: true });
+// await DailyChallenge.sync({ force: true });
 
-export { User, Puzzle, SolvedPuzzle };
+export { 
+  User, 
+  Puzzle, 
+  SolvedPuzzle, 
+  DailyChallenge 
+};
 
