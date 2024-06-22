@@ -1,15 +1,13 @@
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3000';
+const api = axios.create({
+    baseURL: apiUrl,
+    withCredentials: true
+});
 
 export function getUsers(page, limit) {
-    return axios({
-        method: 'GET',
-        url: `${apiUrl}/users`,
-        withCredentials: true,
-        params: {
-            page: page,
-            limit: limit
-        }
+    return api.get('/users', {
+        params: { page: page, limit: limit }
     });
 }
