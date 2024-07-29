@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { set, promiseTimeout } from '@vueuse/core';
 
-const props = defineProps(['counter', 'points']);
+const props = defineProps(['time', 'points']);
 
 const highlightPoints = ref(false);
 
@@ -19,7 +19,7 @@ watch(() => props.points, async () => {
       Punkty: <span :class="{'text-red-500': highlightPoints}">{{ props.points }}</span>
     </div>
     <div class="item border-l-[3px]">
-      Czas: <span>{{ props.counter }}s</span>
+      Czas: <span>{{ props.time }}s</span>
     </div>
   </div>
 </template>
@@ -53,7 +53,7 @@ watch(() => props.points, async () => {
   font-sans 
   text-2xl 
   border-gray-700/70 
-  transition-all 
-  ease-[cubic-bezier(.01,.78,.22,.99)];
+  transition-all
+  ease-in-out
 }
 </style>

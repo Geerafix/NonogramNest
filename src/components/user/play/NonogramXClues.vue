@@ -20,6 +20,7 @@ defineProps(['clues']);
     flex 
     flex-col 
     w-fit 
+    min-w-12
     gap-px 
     p-1 
     bg-gray-600 

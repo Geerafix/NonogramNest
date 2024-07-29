@@ -1,20 +1,13 @@
 <script setup>
-import { watch, ref } from 'vue';
-import { set } from '@vueuse/core';
-
-const props = defineProps(['answers', 'size', 'paint']);
-
-const board = ref([]);
-
-watch(() => props.answers, () => { set(board, props.answers); });
+defineProps(['answers', 'size', 'paint']);
 </script>
 
 <template>
     <main class="board">
-        <div v-for="row in props.size" class="rows">
-            <div v-for="col in props.size" 
-                :class="['cols', (board[row-1] && board[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white']" 
-                @mousedown.left="props.paint(col - 1, row - 1)" @mousedown.right="">
+        <div class="rows" v-for="row in size">
+            <div v-for="col in size" 
+                :class="['cols', (answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white']" 
+                @mousedown.left="paint(col - 1, row - 1)" @mousedown.right="">
             </div>
         </div>
     </main>

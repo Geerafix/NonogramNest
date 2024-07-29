@@ -6,61 +6,61 @@ import Header from "@/components/ui/Header.vue"
 import Notification from '@/components/ui/Notification.vue';
 import Summary from '@/components/user/play/Summary.vue';
 import { set, useInterval } from '@vueuse/core';
-import { watch, ref, reactive, onMounted, onUnmounted } from 'vue';
+import { watch, ref, reactive } from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
+const points = ref(null);
 
-const nonogram = ref({});
-
+const nonogram = ref(null);
 const summary = ref(null);
-
 const paused = ref(true);
 const started = ref(false);
 
 const notification = ref(null);
 const notificationData = reactive({message: '', status: true, time: 2500});
 
-const setSize = (size) =>  { nonogram.value.nonogram.size = size; };
+const setSize = (size) =>  { 
+    nonogram.value.nonogram.size = 2; 
+    set(points, Math.pow(size, 2) * size);
+};
 
-const handleNewPuzzle = () => {
+const handleNewGame = () => {
     set(started, true);
     set(paused, false);
-    nonogram.value.handleNewPuzzle();
+    nonogram.value.newGame();
     reset();
     resume();
 };
 
 const handlePause = () => {
     paused.value = !paused.value;
-    nonogram.value.nonogram.paused = !nonogram.value.nonogram.paused;
 };
 
 const handleCheck = async () => {
-    const data = nonogram.value.handleCheck();
+    const data = nonogram.value.checkSolution();
     if (!data.isSolved) {
+        set(points, (points.value - data.lostPoints >= 0) ? points.value - data.lostPoints : 0);
         notificationData.message = `Twoje rozwiązanie jest niepoprawne. Tracisz ${data.lostPoints} pkt.`;
         notificationData.status = false;
         notification.value.start();
     } else {
         await postPuzzle(nonogram.value.nonogram.cluesX, nonogram.value.nonogram.cluesY, nonogram.value.nonogram.size)
             .then((res) => { nonogram.value.nonogram.id = res.data.id });
-        await postSolvedPuzzle(nonogram.value.nonogram.id, counter.value, nonogram.value.nonogram.points);
-        summary.value.display(nonogram.value.nonogram.points);
+        await postSolvedPuzzle(nonogram.value.nonogram.id, counter.value, points.value);
+        summary.value.show(points.value);
         handleEndGame();    
     }
 };
 
 const handleEndGame = () => {
     set(started, false);
-    nonogram.value.handleEndGame();
+    set(points, null);
+    nonogram.value.resetGame();
     pause();
 }
 
-watch(paused, (newPaused) => {
-    newPaused ? pause() : resume();
-    nonogram.value.nonogram.paused = newPaused;
-});
+watch(paused, (newValue) => newValue ? pause() : resume() );
 </script>
 
 <template>
@@ -72,11 +72,12 @@ watch(paused, (newPaused) => {
                 <p>Wybierz rozmiar planszy nonogramu.</p>
                 <p>Naciśnij przycisk z plusem, aby rozpocząć grę.</p>
             </div>
-            <Nonogram ref="nonogram" v-show="started" />
+            <Nonogram ref="nonogram" v-show="started" :paused="paused"/>
             <Summary ref="summary"></Summary>
             <div class="actions">
-                <Actions :started="started" @new-game="handleNewPuzzle" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
-                <Score v-if="started" :counter="counter" :points="nonogram.nonogram.points" />
+                <span class="self-center" v-if="points && !started">{{ points }} pkt.</span>
+                <Actions :started="started" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
+                <Score v-if="started" :time="counter" :points="points" />
             </div>
         </div>
     </main>

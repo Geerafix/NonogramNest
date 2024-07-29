@@ -21,7 +21,7 @@ onMounted(() => {
 watch(counter, () => {
     const x = Math.floor(Math.random() * size);
     const y = Math.floor(Math.random() * size);
-    nonogram.value.paint(y, x);
+    nonogram.value.paintTile(y, x);
 });
 </script>
 

@@ -3,56 +3,48 @@ import NonogramXClues from './NonogramXClues.vue';
 import NonogramYClues from './NonogramYClues.vue';
 import NonogramBoard from './NonogramBoard.vue';
 import { generateAndFindHints, check } from '@/scripts/puzzleScript';
-import { reactive } from 'vue';
-const nonogram = reactive({
-  id: 0,    
-  board: [],
-  answers: [],
-  cluesX: [],
-  cluesY: [],
-  size: 0,
-  points: 0,
-  paused: true
-});
+import { reactive, onMounted } from 'vue';
 
-const handleNewPuzzle = () => {
+defineProps(['paused']);
+
+const nonogram = reactive({});
+
+const newGame = () => {
     generateAndFindHints(nonogram, nonogram.size);
-    nonogram.paused = false;
-}
+};
 
-const handleCheck = () => {
+const resetGame = () => {
+    Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0});
+};
+
+const checkSolution = () => {
     const isSolved = check(nonogram);
-    nonogram.points = (nonogram.points - isSolved.counter >= 0) ? nonogram.points - isSolved.counter : 0;
     return { isSolved: (isSolved.X && isSolved.Y), lostPoints: isSolved.counter};
-}
+};
 
-const paint = (row, col) => {
+const paintTile = (row, col) => {
     nonogram.answers[row][col] = (nonogram.answers[row][col] + 1) % 2;
 };
 
-const handleEndGame = () => {
-    Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0, points: 0, paused: true});
-};
+defineExpose({ nonogram, newGame, resetGame, checkSolution, paintTile });
 
-defineExpose({
-    nonogram,
-    handleNewPuzzle,
-    handleCheck,
-    handleEndGame,
-    paint
-});
+onMounted(resetGame);
 </script>
 
 <template>
     <main class="nonogram-container">
-        <div :class="['paused-info', { 'hidden': !nonogram.paused }]">Gra wstrzymana</div>
-        <div :class="['nonogram-components', {'paused-filter': nonogram.paused }]">
+        <div :class="['paused-info', { 'hidden': !paused }]">Gra wstrzymana</div>
+        <div :class="['nonogram-components', {'paused-filter': paused }]">
             <div class="blank-area">
                 <div class="size-info">{{ nonogram.size }} x {{ nonogram.size }}</div>
             </div>
             <NonogramYClues :clues="nonogram.cluesY" />
             <NonogramXClues :clues="nonogram.cluesX" />
-            <NonogramBoard :answers="nonogram.answers" :size="nonogram.size" :paint="!nonogram.paused ? paint : () => {}" />
+            <NonogramBoard 
+                :answers="nonogram.answers" 
+                :size="nonogram.size" 
+                :paint="!paused ? paintTile : () => {}" 
+            />
         </div>
     </main>
 </template>
