@@ -16,7 +16,9 @@ body {
 .fade-leave-active {
   	transition: all 0.1s ease-in-out;
 }
-.fade-enter-from,
+.fade-enter-from {
+	opacity: 0;
+}
 .fade-leave-to {
   	opacity: 0;
 }
@@ -42,15 +44,18 @@ body {
 .slide-left-leave-to {
 	transform: translateX(2rem);
 	opacity: 0;
-}
+} 
 
-.slide-up-enter-active,
-.slide-up-leave-active {
-	transition: all 0.35s ease-out;
+.slide-down-no-leave-enter-active {
+	transition: all 0.25s ease-in-out;
 }
-.slide-up-enter-from,
-.slide-up-leave-to {
+.slide-down-no-leave-leave-active {
+	opacity: 0;
+}
+.slide-down-no-leave-enter-from,
+.slide-down-no-leave-leave-to {
 	transform: translateY(-2rem);
+	filter: blur(2.5px);
 	opacity: 0;
 }
 

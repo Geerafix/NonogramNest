@@ -48,14 +48,14 @@ watch(() => props.started, (started) => {
 </script>
 
 <template>
-  <div>
-      <div v-if="!props.started" class="flex gap-2">
-        <BasicButton @click="handleNewGame()" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
-          <Icon icon="fa-solid fa-plus" />
-        </BasicButton>
-        <Select @select="setSize"></Select>
-      </div>
-      <div v-else class="flex gap-2">
+  <TransitionGroup name="slide-down-no-leave">
+    <div v-if="!props.started" class="flex gap-2">
+      <BasicButton @click="handleNewGame()" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
+        <Icon icon="fa-solid fa-plus" />
+      </BasicButton>
+      <Select @select="setSize"></Select>
+    </div>
+    <div v-else class="flex gap-2">
       <BasicButton @click="handleEndGame">
         <Icon icon="fa-solid fa-xmark" />
       </BasicButton>
@@ -69,5 +69,5 @@ watch(() => props.started, (started) => {
         <Icon icon="fa-solid fa-check" />
       </BasicButton>
     </div>
-  </div>
+  </TransitionGroup>
 </template>

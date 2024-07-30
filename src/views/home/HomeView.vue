@@ -11,10 +11,8 @@ const nonogram = ref(null);
 const size = 6;
 
 onMounted(() => {
-    pause();
-    nonogram.value.nonogram.paused = false;
     nonogram.value.nonogram.size = size;
-    nonogram.value.handleNewPuzzle();
+    nonogram.value.newGame();
     resume();
 });
 
@@ -37,7 +35,7 @@ watch(counter, () => {
                 <span>Wykonuj codzienne wyzwania.</span>
                 <span>Wspinaj się po szczeblach rankingu.</span>
             </div>
-            <Nonogram ref="nonogram"/>
+            <Nonogram ref="nonogram" />
         </div>
     </div>
 </template>

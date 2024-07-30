@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { set, promiseTimeout } from '@vueuse/core';
 
-const props = defineProps(['time', 'points']);
+const props = defineProps(['time', 'points', 'started']);
 
 const highlightPoints = ref(false);
 
@@ -14,14 +14,16 @@ watch(() => props.points, async () => {
 </script>
 
 <template>
-  <div class="score-container">
-    <div class="item border-r-[3px]">
-      Punkty: <span :class="{'text-red-500': highlightPoints}">{{ props.points }}</span>
+  <Transition name="slide-down-no-leave">
+    <div v-if="started" class="score-container">
+      <div class="item border-r-[3px]">
+        Punkty: <span :class="{'text-red-500': highlightPoints}">{{ props.points }}</span>
+      </div>
+      <div class="item border-l-[3px]">
+        Czas: <span>{{ props.time }}s</span>
+      </div>
     </div>
-    <div class="item border-l-[3px]">
-      Czas: <span>{{ props.time }}s</span>
-    </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>

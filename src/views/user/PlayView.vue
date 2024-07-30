@@ -21,7 +21,7 @@ const notification = ref(null);
 const notificationData = reactive({message: '', status: true, time: 2500});
 
 const setSize = (size) =>  { 
-    nonogram.value.nonogram.size = 2; 
+    nonogram.value.nonogram.size = size; 
     set(points, Math.pow(size, 2) * size);
 };
 
@@ -68,16 +68,20 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
         <Header></Header>
         <div class="game-container">
             <Notification ref="notification" :message="notificationData.message" :status="notificationData.status" />
-            <div :class="['info']" v-show="!started">
-                <p>Wybierz rozmiar planszy nonogramu.</p>
-                <p>Naciśnij przycisk z plusem, aby rozpocząć grę.</p>
-            </div>
-            <Nonogram ref="nonogram" v-show="started" :paused="paused"/>
+            <Transition name="fade">
+                <div class="info" v-if="!started">
+                    <p>Wybierz rozmiar planszy nonogramu.</p>
+                    <p>Naciśnij przycisk z plusem, aby rozpocząć grę.</p>
+                </div>
+            </Transition>
+            <Transition name="fade">
+                <Nonogram ref="nonogram" v-show="started" :paused="paused" />
+            </Transition>
             <Summary ref="summary"></Summary>
             <div class="actions">
-                <span class="self-center" v-if="points && !started">{{ points }} pkt.</span>
+                <span class="self-center text-xl" v-if="points && !started">{{ points }} pkt.</span>
                 <Actions :started="started" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
-                <Score v-if="started" :time="counter" :points="points" />
+                <Score :time="counter" :points="points" :started="started"/>
             </div>
         </div>
     </main>
@@ -99,14 +103,17 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
 }
 .info {
     @apply 
+    absolute
+    w-full
     text-2xl
     font-thin 
     font-sans 
-    text-center
-    h-full;
+    text-center;
 }
 .actions {
     @apply 
+    absolute
+    bottom-0
     flex 
     flex-wrap-reverse 
     justify-end 

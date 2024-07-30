@@ -29,19 +29,21 @@ const selectOption = (item) => {
 </script>
 
 <template>
-    <div class="select-container">
-        <Transition name="fade" mode="out-in">
-            <ul v-if="expanded">
-                <li v-for="item in plc" @click="selectOption(item)">
-                    {{ item.name }}
-                </li>
-            </ul>
-        </Transition>
-        <div class="select" @click="expanded = !expanded">
-            <span class="my-auto">{{ selected }}</span>
-            <Icon icon="fa-solid fa-chevron-up" :class="['icon', { '-rotate-180': expanded }]" />
+    <Transition name="fade">
+        <div class="select-container">
+            <Transition name="fade" mode="out-in">
+                <ul v-if="expanded">
+                    <li v-for="item in plc" @click="selectOption(item)">
+                        {{ item.name }}
+                    </li>
+                </ul>
+            </Transition>
+            <div class="select" @click="expanded = !expanded">
+                <span class="my-auto">{{ selected }}</span>
+                <Icon icon="fa-solid fa-chevron-up" :class="['icon', { '-rotate-180': expanded }]" />
+            </div>
         </div>
-    </div>
+    </Transition>
 </template>
 
 <style>

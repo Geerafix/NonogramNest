@@ -3,7 +3,7 @@ import NonogramXClues from './NonogramXClues.vue';
 import NonogramYClues from './NonogramYClues.vue';
 import NonogramBoard from './NonogramBoard.vue';
 import { generateAndFindHints, check } from '@/scripts/puzzleScript';
-import { reactive, onMounted } from 'vue';
+import { reactive, onBeforeMount, onMounted } from 'vue';
 
 defineProps(['paused']);
 
@@ -28,15 +28,15 @@ const paintTile = (row, col) => {
 
 defineExpose({ nonogram, newGame, resetGame, checkSolution, paintTile });
 
-onMounted(resetGame);
+onBeforeMount(resetGame);
 </script>
 
 <template>
-    <main class="nonogram-container">
-        <div :class="['paused-info', { 'hidden': !paused }]">Gra wstrzymana</div>
+    <main class="nonogram-container" v-if="nonogram.board.length !== 0">
+        <div class="paused-info" v-if="paused">Gra wstrzymana</div>
         <div :class="['nonogram-components', {'paused-filter': paused }]">
             <div class="blank-area">
-                <div class="size-info">{{ nonogram.size }} x {{ nonogram.size }}</div>
+                <div class="size-info">{{ nonogram.board.length }} x {{ nonogram.board.length }}</div>
             </div>
             <NonogramYClues :clues="nonogram.cluesY" />
             <NonogramXClues :clues="nonogram.cluesX" />
@@ -96,7 +96,6 @@ onMounted(resetGame);
 }
 .nonogram-container {
     @apply 
-    transition-all 
     font-thin 
     font-sans 
     relative;
@@ -108,7 +107,6 @@ onMounted(resetGame);
     gap-0.5 
     mx-auto 
     w-fit 
-    z-10
-    transition-all;
+    z-10;
 }
 </style>
