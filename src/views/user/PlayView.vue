@@ -10,12 +10,14 @@ import { watch, ref, reactive } from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
 
 const { counter, reset, pause, resume } = useInterval(1000, { controls: true });
+
+const started = ref(false);
+const paused = ref(true);
+const nonogram = ref(null);
+
 const points = ref(null);
 
-const nonogram = ref(null);
 const summary = ref(null);
-const paused = ref(true);
-const started = ref(false);
 
 const notification = ref(null);
 const notificationData = reactive({message: '', status: true, time: 2500});
@@ -75,7 +77,7 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
                 </div>
             </Transition>
             <Transition name="fade">
-                <Nonogram ref="nonogram" v-show="started" :paused="paused" />
+                <Nonogram ref="nonogram" :started="started" :paused="paused" />
             </Transition>
             <Summary ref="summary"></Summary>
             <div class="actions">
@@ -112,10 +114,10 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
 }
 .actions {
     @apply 
-    absolute
-    bottom-0
     flex 
     flex-wrap-reverse 
+    absolute
+    bottom-0
     justify-end 
     w-full     
     gap-2;

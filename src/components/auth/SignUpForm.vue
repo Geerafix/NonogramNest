@@ -51,7 +51,8 @@ const onSubmit = () => {
       <span v-if="error" class="error">Użytkownik już istnieje</span>
       <BasicButton buttonText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass" />
     </form>
-    <span class="mx-auto text-lg">Przejdź do
+    <span class="mx-auto text-lg">
+      Przejdź do
       <a class="login-link"
          @click="router.push({ name: 'SignIn' })"><b>strony logowania</b>
       </a>
@@ -82,8 +83,8 @@ form {
 }
 .login-link {
   @apply 
+  text-slate-300
   cursor-pointer 
-  hover:underline 
-  text-slate-300;
+  hover:underline; 
 }
 </style>

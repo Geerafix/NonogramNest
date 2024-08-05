@@ -126,11 +126,11 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
 .actions {
     @apply 
     absolute
-    bottom-0
     flex 
     flex-wrap-reverse 
     justify-end 
-    w-full     
-    gap-2;
+    bottom-0
+    gap-2
+    w-full;     
 }
 </style>

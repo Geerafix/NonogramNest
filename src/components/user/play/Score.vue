@@ -51,10 +51,10 @@ watch(() => props.points, async () => {
   justify-center 
   gap-2 
   pr-3
+  border-gray-700/70 
   font-thin 
   font-sans 
   text-2xl 
-  border-gray-700/70 
   transition-all
   ease-in-out
 }

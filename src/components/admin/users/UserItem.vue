@@ -16,13 +16,13 @@ const overItem = ref(false);
   @apply
   grid
   gap-2
+  w-full
+  p-1
+  bg-gray-700/40
+  rounded-md
   text-center
   cursor-pointer
   transition
   ease-[1s]
-  w-full
-  bg-gray-700/40
-  p-1
-  rounded-md
 }
 </style>

@@ -26,8 +26,8 @@ onMounted(() => { initialWidth.value = (width.value * 2); });
     grid
     grid-cols-[56px_auto]
     w-full
-    min-w-14
     h-14
+    min-w-14
     rounded-xl
     bg-gray-700
     text-slate-100/90  

@@ -44,30 +44,30 @@ defineExpose({ isDisplayed, show, hide });
 .summary {
     @apply
     absolute
+    flex
+    flex-col
+    items-center
     top-1/2
     left-1/2
     -translate-x-1/2 
     -translate-y-1/2
-    flex
-    flex-col
     gap-4
     min-h-14
     py-2
     px-4
-    rounded-xl
     bg-gray-600
     border-gray-800/60
     text-slate-200   
-    select-none
+    rounded-xl
     font-thin
     font-sans
     text-2xl
     text-wrap
     text-center
-    items-center
     tracking-wide
-    max-sm:w-full
-    z-10;
+    select-none
+    z-10
+    max-sm:w-full;
 }
 .info {
     @apply

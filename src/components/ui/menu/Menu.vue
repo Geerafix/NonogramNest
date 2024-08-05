@@ -63,32 +63,41 @@ const computedScreen = computed(() => {
     relative
     gap-[10px]
     h-full
-    sm:w-20
     p-[10px]
+    border-gray-700
+    bg-gray-600 
+    shadow-black
     border-s-4
     rounded-2xl 
     rounded-ss-lg
     rounded-ee-md
-    bg-gray-600 
-    border-gray-700
     hover:rounded-2xl
-    sm:hover:w-[11.75rem]
     transition-all
     duration-[270ms]
     z-50;
     @apply  
+    sm:w-20
+    sm:hover:w-[11.75rem]
     max-sm:absolute
     max-sm:h-min 
     max-sm:bottom-20
     max-sm:shadow-2xl
     max-sm:border-4
-    max-sm:rounded-2xl
-    shadow-black;
+    max-sm:rounded-2xl;
 }
 .buttons-container {
-    @apply flex flex-col gap-[10px] mt-auto;
+    @apply 
+    flex 
+    flex-col 
+    gap-[10px] 
+    mt-auto;
 }
 .expand-button {
-    @apply absolute bottom-0 w-14 sm:hidden z-10;
+    @apply 
+    absolute 
+    bottom-0 
+    w-14 
+    z-10
+    sm:hidden; 
 }
 </style>

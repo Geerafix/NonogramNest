@@ -16,7 +16,7 @@ const plc = [
     { name: '7 x 7', value: 7 },
     { name: '6 x 6', value: 6 },
     { name: '5 x 5', value: 5 }
-]
+];
 
 const selected = ref('Rozmiar');
 const expanded = ref(false);

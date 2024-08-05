@@ -45,9 +45,9 @@ const computedNextPage = computed(() => props.perpage < props.limit );
   grid 
   grid-cols-[min-content_80px_min-content] 
   gap-2 
+  w-fit
   mt-4 
   mx-auto
-  w-fit
   items-center;
 }
 </style>

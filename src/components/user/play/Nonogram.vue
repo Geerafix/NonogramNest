@@ -85,14 +85,14 @@ onBeforeMount(resetGame);
     left-1/2 
     -translate-x-1/2 
     -translate-y-1/2 
-    bg-gray-600     
-    rounded-xl 
-    text-white 
-    text-nowrap 
-    text-2xl
-    select-none
     border-b-4
-    border-b-gray-700;
+    bg-gray-600     
+    border-b-gray-700
+    text-white 
+    text-2xl
+    text-nowrap 
+    rounded-xl 
+    select-none;
 }
 .nonogram-container {
     @apply 
@@ -105,8 +105,8 @@ onBeforeMount(resetGame);
     grid 
     grid-cols-[min-content_1fr] 
     gap-0.5 
-    mx-auto 
     w-fit 
+    mx-auto 
     z-10;
 }
 </style>

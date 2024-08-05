@@ -106,14 +106,14 @@ onMounted(handleMonthChange);
     min-w-12
     h-12
     p-2
+    border-gray-800/40
     hover:bg-gray-800/30
     rounded-xl
-    cursor-pointer
     text-xl 
-    max-sm:text-lg
     text-center
     select-none
-    border-gray-800/40;
+    cursor-pointer
+    max-sm:text-lg;
 }
 .day-name {
     @apply 
@@ -139,9 +139,9 @@ onMounted(handleMonthChange);
     absolute 
     top-1.5
     right-1.5
-    text-[10px] 
     text-teal-500   
     shadow-black
+    text-[10px] 
     drop-shadow-md
 }
 </style>

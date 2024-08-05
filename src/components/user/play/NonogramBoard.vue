@@ -35,6 +35,6 @@ defineProps(['answers', 'size', 'paint']);
     border-[1px] 
     rounded-[2px] 
     text-center 
-    transition;
+    transition-all;
 }
 </style>
