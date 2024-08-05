@@ -12,28 +12,13 @@ const emit = defineEmits([
 ]);
 const props = defineProps([
     'started',
+    'paused'
 ]);
 
-const isPaused = ref(true);
 const isSelected = ref(false);
-
-const handlePause = () => {
-  isPaused.value = !isPaused.value;
-  emit('pause');
-};
-
-const handleCheck = () => {
-  emit('check');
-};
-
-const handleNewGame = () => {
-  set(isPaused, false);
-  emit('newGame'); 
-};
 
 const handleEndGame = () => {
   setSize(isSelected, false);
-  set(isPaused, true);
   emit('endGame');
 };
  
@@ -50,7 +35,7 @@ watch(() => props.started, (started) => {
 <template>
   <TransitionGroup name="slide-down-no-leave">
     <div v-if="!props.started" class="flex gap-2">
-      <BasicButton @click="handleNewGame()" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
+      <BasicButton @click="emit('newGame')" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
         <Icon icon="fa-solid fa-plus" />
       </BasicButton>
       <Select @select="setSize"></Select>
@@ -59,13 +44,13 @@ watch(() => props.started, (started) => {
       <BasicButton @click="handleEndGame">
         <Icon icon="fa-solid fa-xmark" />
       </BasicButton>
-      <BasicButton @click="handlePause" :class="{ 'animate-pulse': isPaused }"
-        :style="{ backgroundColor: isPaused ? '#3C6961' : '#7C2C3B' }">
-        <Icon v-if="isPaused" icon="fa-solid fa-play" />
+      <BasicButton @click="emit('pause')" :class="{ 'animate-pulse': paused }"
+        :style="{ backgroundColor: paused ? '#3C6961' : '#7C2C3B' }">
+        <Icon v-if="paused" icon="fa-solid fa-play" />
         <Icon v-else icon="fa-solid fa-stop" />
       </BasicButton>
-      <BasicButton @click="handleCheck" :disabled="isPaused"
-        :style="{ backgroundColor: '#8f5333', opacity: isPaused ? 0.5 : 1 }">
+      <BasicButton @click="emit('check')" :disabled="paused"
+        :style="{ backgroundColor: '#8f5333', opacity: paused ? 0.5 : 1 }">
         <Icon icon="fa-solid fa-check" />
       </BasicButton>
     </div>

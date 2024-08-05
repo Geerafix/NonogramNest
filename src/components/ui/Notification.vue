@@ -4,7 +4,7 @@ import { useTimeout } from '@vueuse/core'
 
 const props = defineProps(['message', 'status', 'time']);
 
-const { ready, start, stop } = useTimeout(2000, {controls: true})
+const { ready, start, stop } = useTimeout(props.time, {controls: true})
 
 const notificationColor = computed(() => props.status ? 'bg-teal-900' : 'bg-[#7C2C3B]');
 

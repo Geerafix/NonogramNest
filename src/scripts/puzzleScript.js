@@ -31,7 +31,7 @@ export function generateAndFindHints(nonogram, size) {
 export function check(nonogram) {
     let x = 0, y = 0, checkX = [], checkY = [], ansX = 0, ansY = 0;
 
-    nonogram.board.forEach((row, rowIdx) => {
+    nonogram.answers.forEach((row, rowIdx) => {
         checkX.push([]); checkY.push([]);
         row.forEach((col, colIdx) => {
             if (nonogram.answers[rowIdx][colIdx] === 1) {

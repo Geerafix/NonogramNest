@@ -18,6 +18,16 @@ export function postDailyChallenge(puzzleId, time, points) {
     });
 }
 
-export function updateDailyChallenge() {
-    
+export function updateDailyChallenge(time, points, isSolved) {
+    return api.put('/dailyChallenge', {
+        time: time, 
+        points: points,
+        isSolved: isSolved
+    });
+}
+
+export function getDailies(month, year) {
+    return api.get('/dailies', {
+        params: { month: month, year: year }
+    });
 }

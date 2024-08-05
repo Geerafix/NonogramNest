@@ -30,8 +30,8 @@ server.post('/solved', async (req, res) => {
 });
 
 server.post('/dailyChallenge', async (req, res) => {
-    const puzzle_id = await req.body.puzzleId;
     const user_id = await req.session.user.user_id;
+    const puzzle_id = await req.body.puzzleId;
     const time = await req.body.time;
     const points = await req.body.points;
 
@@ -68,7 +68,7 @@ server.get('/dailyChallenges', async (req, res) => {
 });
 
 server.put('/dailyChallenge', async (req, res) => {
-    const user_id = await req.body.user_id;
+    const user_id = await req.session.user.user_id;
     const time = await req.body.time;
     const points = await req.body.points;
     const is_solved = await req.body.isSolved;
@@ -88,4 +88,24 @@ server.put('/dailyChallenge', async (req, res) => {
     await dailyChallenge.save();
 
     res.json(dailyChallenge);
+});
+
+server.get('/dailies', async (req, res) => {
+    const user_id = await req.session.user.user_id;
+    const month = parseInt(req.query.month);
+    const year = parseInt(req.query.year);
+
+    const dailies = await DailyChallenge.findAll({ 
+        where: { 
+            [Op.and]: [
+                {user_id: user_id}, 
+                {date: { [Op.between]: [new Date(year, month, 1), new Date(year, month + 1, 0)] }},
+                {is_solved: true}
+            ] 
+        } 
+    });
+
+    const streakDays = JSON.parse(JSON.stringify(dailies)).map((el) => new Date(el.date).getDate()); 
+
+    res.json(streakDays);
 });

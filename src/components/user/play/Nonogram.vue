@@ -3,9 +3,9 @@ import NonogramXClues from './NonogramXClues.vue';
 import NonogramYClues from './NonogramYClues.vue';
 import NonogramBoard from './NonogramBoard.vue';
 import { generateAndFindHints, check } from '@/scripts/puzzleScript';
-import { reactive, onBeforeMount, onMounted } from 'vue';
+import { reactive, onBeforeMount } from 'vue';
 
-defineProps(['paused']);
+defineProps(['paused', 'started']);
 
 const nonogram = reactive({});
 
@@ -32,11 +32,11 @@ onBeforeMount(resetGame);
 </script>
 
 <template>
-    <main class="nonogram-container" v-if="nonogram.board.length !== 0">
+    <main class="nonogram-container" v-if="started">
         <div class="paused-info" v-if="paused">Gra wstrzymana</div>
         <div :class="['nonogram-components', {'paused-filter': paused }]">
             <div class="blank-area">
-                <div class="size-info">{{ nonogram.board.length }} x {{ nonogram.board.length }}</div>
+                <div class="size-info">{{ nonogram.size }} x {{ nonogram.size }}</div>
             </div>
             <NonogramYClues :clues="nonogram.cluesY" />
             <NonogramXClues :clues="nonogram.cluesX" />
@@ -96,9 +96,9 @@ onBeforeMount(resetGame);
 }
 .nonogram-container {
     @apply 
+    relative
     font-thin 
-    font-sans 
-    relative;
+    font-sans;
 }
 .nonogram-components {
     @apply 

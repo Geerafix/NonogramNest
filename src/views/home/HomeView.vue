@@ -35,7 +35,7 @@ watch(counter, () => {
                 <span>Wykonuj codzienne wyzwania.</span>
                 <span>Wspinaj się po szczeblach rankingu.</span>
             </div>
-            <Nonogram ref="nonogram" />
+            <Nonogram ref="nonogram" :started="true"/>
         </div>
     </div>
 </template>

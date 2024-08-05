@@ -1,6 +1,8 @@
 <script setup>
-import { reactive, onMounted, watch, computed } from 'vue';
 import MenuButton from './inputs/MenuButton.vue';
+import { ref, reactive, onMounted, watch, computed } from 'vue';
+import { set } from '@vueuse/core';
+import { getDailies } from '@/services/dailyChallengeService'
 
 const daysNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pią', 'Sob', 'Nie'];
 const monthsNames = [
@@ -12,6 +14,7 @@ const calendar = reactive({
     firstDay: 0,
     days: 0
 });
+const streakDays = ref([]);
 
 const prevMonth = () => { 
     calendar.month = (calendar.month === 0) ? 11 : calendar.month - 1;
@@ -22,7 +25,9 @@ const nextMonth = () => {
     if (calendar.month === 0) calendar.year += 1;
 }
 
-const handleMonthChange = () => {
+const handleMonthChange = async () => {
+    const streak = await getDailies(calendar.month, calendar.year).then((res) =>  res.data);
+    set(streakDays, streak)
     calendar.firstDay = (new Date(calendar.year, calendar.month, 1).getDay() + 6) % 7;
     calendar.days = new Date(calendar.year, calendar.month + 1, 0).getDate();
 } 
@@ -50,9 +55,9 @@ onMounted(handleMonthChange);
         <div class="days-container">
             <div v-for="dayName of daysNames" class="day day-name">{{ dayName }}</div>
             <div v-for="day in calendar.firstDay"></div>
-            <div v-for="day in calendar.days" 
-                :class="['day', {'today': day === new Date().getDate() && currentYear}]">
+            <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]">
                 <span>{{ day }}</span>
+                <Icon v-if="streakDays.includes(day)" class="circle" icon="fa-solid fa-circle" />
             </div>
         </div>
     </div>
@@ -64,13 +69,13 @@ onMounted(handleMonthChange);
     flex
     flex-col
     w-full
+    mx-auto
     max-w-md
     border-b-[6px]
     bg-gray-600 
     border-gray-800/70
     border-b-gray-800/50
-    rounded-xl
-    transition-all;
+    rounded-xl;
 }
 .calendar-header {
     @apply 
@@ -97,6 +102,7 @@ onMounted(handleMonthChange);
 }
 .day {
     @apply 
+    relative
     min-w-12
     h-12
     p-2
@@ -104,11 +110,10 @@ onMounted(handleMonthChange);
     rounded-xl
     cursor-pointer
     text-xl 
-    transition-all
-    max-sm:text-base
+    max-sm:text-lg
     text-center
     select-none
-    border-gray-700/70;
+    border-gray-800/40;
 }
 .day-name {
     @apply 
@@ -119,11 +124,24 @@ onMounted(handleMonthChange);
 }
 .today {
     @apply 
-    bg-[#8f5333]/90
+    bg-slate-800/50
     border-b-4
     shadow-md;
 }
 .icon-adjust {
-    @apply my-auto mx-auto text-2xl;
+    @apply 
+    my-auto 
+    mx-auto 
+    text-2xl;
+}
+.circle {
+    @apply 
+    absolute 
+    top-1.5
+    right-1.5
+    text-[10px] 
+    text-teal-500   
+    shadow-black
+    drop-shadow-md
 }
 </style>
