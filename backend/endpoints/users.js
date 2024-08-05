@@ -8,6 +8,7 @@ server.post('/signin', async (req, res) => {
     const user = await User.findOne({ 
         where: { [Op.or]: [{ username: await req.body.username }, { email: await req.body.username }]}
     });
+
     if(user && await argon2.verify(user.password, await req.body.password)) {
         req.session.user = user;
         res.status(200).send(req.session.user.role);
@@ -19,13 +20,14 @@ server.post('/signin', async (req, res) => {
 server.post('/signup', async (req, res) => {
     const email = await req.body.email;
     const username = await req.body.username;
+    const password = await req.body.password;
     
     const user = await User.findOne({ 
         where: { [Op.or]: [{ username: await req.body.username }, { email: await req.body.email }]}
     });
 
     if (!user) {
-        const hash = await argon2.hash(await req.body.password);
+        const hash = await argon2.hash(password);
         await User.create({ email: email, username: username, password: hash});
         res.status(200).send({ msg: 'Zarejestrowano' });
     } else {
@@ -43,11 +45,13 @@ server.get('/users', async (req, res) => {
         limit: limit,
         offset: offset
     });
+
     res.json(users);
 });
 
 server.post('/logout', (req, res) => {
     req.session.destroy();
+    
     res.status(200).send({ msg: 'Sesja zniszczona' })
 });
 
