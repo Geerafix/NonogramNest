@@ -67,7 +67,7 @@ const handleCheck = async () => {
         notificationData.status = false;
         notification.value.start();
     } else {
-        await updateDailyChallenge(counter.value, points.value, true);
+        await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, true);
         summary.value.show(points.value);
         handleEndGame();    
     }
@@ -94,28 +94,34 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
 </script>
 
 <template>
-    <main class="relative">
+    <main class="view">
         <Header></Header>
-        <Notification ref="notification" v-bind="notificationData" />
         <Transition name="fade">
-            <div v-if="!started" class="daily-challenge-container">
+            <div class="daily-challenge-container" v-if="!started" >
                 <Calendar />
-                <Streak></Streak>
-                <BasicButton class="w-fit mx-auto " @click="handleDailyChallenge">Wykonaj</BasicButton>
+                <Streak />
+                <BasicButton class="w-fit mx-auto" @click="handleDailyChallenge">Wykonaj</BasicButton>
             </div> 
         </Transition>
         <Transition name="fade">
             <Nonogram ref="nonogram" :started="started" :paused="paused" />
         </Transition>
+        <Transition name="slide-down-no-leave">
+            <div class="actions" v-if="started">
+                <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @end-game="handleEndGame" />
+                <Score :time="counter" :points="points" :started="started" />
+            </div>
+        </Transition>
         <Summary ref="summary"></Summary>
-        <div v-if="started" class="actions">
-            <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @end-game="handleEndGame"/>
-            <Score :time="counter" :points="points" :started="started"/>
-        </div>
+        <Notification ref="notification" v-bind="notificationData" />
     </main>
 </template>
 
 <style scoped>
+.view {
+    @apply
+    relative
+}
 .daily-challenge-container {
     @apply 
     grid

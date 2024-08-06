@@ -32,7 +32,6 @@ const handleNewGame = () => {
     set(paused, false);
     nonogram.value.newGame();
     reset();
-    resume();
 };
 
 const handlePause = () => {
@@ -59,7 +58,6 @@ const handleEndGame = () => {
     set(started, false);
     set(points, null);
     nonogram.value.resetGame();
-    pause();
 }
 
 watch(paused, (newValue) => newValue ? pause() : resume() );
@@ -68,42 +66,32 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
 <template>
     <main class="view">
         <Header></Header>
-        <div class="game-container">
-            <Notification ref="notification" :message="notificationData.message" :status="notificationData.status" />
-            <Transition name="fade">
-                <div class="info" v-if="!started">
-                    <p>Wybierz rozmiar planszy nonogramu.</p>
-                    <p>Naciśnij przycisk z plusem, aby rozpocząć grę.</p>
-                </div>
-            </Transition>
-            <Transition name="fade">
-                <Nonogram ref="nonogram" :started="started" :paused="paused" />
-            </Transition>
-            <Summary ref="summary"></Summary>
-            <div class="actions">
-                <span class="self-center text-xl" v-if="points && !started">{{ points }} pkt.</span>
-                <Actions :started="started" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
-                <Score :time="counter" :points="points" :started="started"/>
+        <Transition name="fade">
+            <div class="game-instructions" v-if="!started">
+                <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z plusem, aby rozpocząć grę.</p>
             </div>
+        </Transition>
+        <Transition name="fade">
+            <Nonogram ref="nonogram" :started="started" :paused="paused" />
+        </Transition>
+        <div class="actions-container">
+            <span class="self-center text-xl" v-if="points && !started">
+                {{ points }} pkt.
+            </span>
+            <Actions :started="started" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
+            <Score :time="counter" :points="points" :started="started"/>
         </div>
+        <Summary ref="summary"></Summary>
+        <Notification ref="notification" v-bind="notificationData" />
     </main>
 </template>
 
 <style scoped>
 .view {
     @apply 
-    flex 
-    flex-col 
     relative;
 }
-.game-container {
-    @apply 
-    flex 
-    flex-col 
-    justify-between 
-    h-full;
-}
-.info {
+.game-instructions {
     @apply 
     absolute
     w-full
@@ -112,7 +100,7 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
     font-sans 
     text-center;
 }
-.actions {
+.actions-container {
     @apply 
     flex 
     flex-wrap-reverse 
