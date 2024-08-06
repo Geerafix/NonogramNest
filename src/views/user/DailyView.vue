@@ -2,6 +2,7 @@
 import Header from '@/components/ui/Header.vue';
 import Calendar from '@/components/ui/Calendar.vue';
 import BasicButton from '@/components/ui/inputs/BasicButton.vue';
+import Streak from '@/components/ui/Streak.vue';
 import Nonogram from '@/components/user/play/Nonogram.vue';
 import Notification from '@/components/ui/Notification.vue';
 import Score from '@/components/user/play/Score.vue';
@@ -44,7 +45,7 @@ const handleDailyChallenge = async () => {
         nonogram.value.nonogram.size = 8;
         nonogram.value.nonogram.cluesX = JSON.parse(dailyChallenge.Puzzle.clues_x);
         nonogram.value.nonogram.cluesY = JSON.parse(dailyChallenge.Puzzle.clues_y);
-        nonogram.value.nonogram.answers = Array.from(Array(8), () => Array(8).fill(0));
+        nonogram.value.nonogram.answers = JSON.parse(dailyChallenge.answers);
     } else {
         notificationData.message = `Wykonano dzisiejsze wyzwanie. Wróć jutro.`;
         notificationData.status = true;
@@ -73,7 +74,7 @@ const handleCheck = async () => {
 };
 
 const handleEndGame = async () => {
-    await updateDailyChallenge(counter.value, points.value, false);
+    await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
     set(started, false);
     set(paused, true);
     set(points, null);
@@ -86,7 +87,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(async () => {
-    if (points.value) await updateDailyChallenge(counter.value, points.value, false);
+    if (points.value) await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
 });
 
 watch(paused, (newValue) => newValue ? pause() : resume() );
@@ -99,7 +100,7 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
         <Transition name="fade">
             <div v-if="!started" class="daily-challenge-container">
                 <Calendar />
-                <Icon class="text-3xl text-orange-400" icon="fa-solid fa-fire" />
+                <Streak></Streak>
                 <BasicButton class="w-fit mx-auto " @click="handleDailyChallenge">Wykonaj</BasicButton>
             </div> 
         </Transition>
@@ -117,10 +118,14 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
 <style scoped>
 .daily-challenge-container {
     @apply 
-    flex
-    flex-col
+    grid
+    grid-cols-[auto_auto]
+    max-sm:grid-cols-[auto]
     absolute
-    w-full 
+    left-1/2
+    -translate-x-1/2
+    items-center
+    w-fit 
     gap-4;
 }
 .actions {

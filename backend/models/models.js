@@ -68,6 +68,10 @@ const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
       type: DataTypes.BIGINT,
       allowNull: false,
     },
+    answers: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     time: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -93,6 +97,10 @@ const DailyChallenge = sequelize.define('DailyChallenge', {
   },
   puzzle_id: {
     type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  answers: {
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   time: {

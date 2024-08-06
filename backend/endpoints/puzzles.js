@@ -52,7 +52,7 @@ server.get('/dailyChallenge', async (req, res) => {
         res.json(dailyChallenge);
     } catch (error) {
         res.json(error);
-    } 
+    }
 });
 
 server.get('/dailyChallenges', async (req, res) => {
@@ -64,6 +64,35 @@ server.get('/dailyChallenges', async (req, res) => {
         });
 
         res.json(dailyChallenge);
+    } catch (error) {
+        res.json(error);
+    }
+});
+
+server.get('/streak', async (req, res) => {
+    try {    
+        const user = req.session.user;
+
+        let streakCount = 0;
+        let yesterday = new Date(Date.now() - 86400000);
+
+        let streak = await DailyChallenge.findOne({ 
+            where: { [Op.and]: [{ user_id: user.user_id }, { date: new Date()}, { is_solved: true }]} 
+        });
+
+        if (streak !== null) streakCount += 1;
+
+        while (streak = await DailyChallenge.findOne({ 
+            where: { [Op.and]: [{ user_id: user.user_id }, { date: yesterday}, { is_solved: true }]} 
+        }) !== null) {
+            streakCount += 1;
+            yesterday.setDate(yesterday.getDate() - 1);
+            streak = await DailyChallenge.findOne({ 
+                where: { [Op.and]: [{ user_id: user.user_id }, { date: yesterday}, { is_solved: true }]} 
+            });
+        }
+        
+        res.json(streakCount);
     } catch (error) {
         res.json(error);
     }
@@ -99,10 +128,12 @@ server.post('/dailyChallenge', async (req, res) => {
         const puzzle_id = await req.body.puzzleId;
         const time = await req.body.time;
         const points = await req.body.points;
+        const answers = Array.from(Array(8), () => Array(8).fill(0));
 
         const dailyChallenge = await DailyChallenge.create({ 
             puzzle_id: puzzle_id, 
             user_id: user.user_id, 
+            answers: JSON.stringify(answers),
             time: time, 
             points: points,
         });
@@ -119,12 +150,14 @@ server.put('/dailyChallenge', async (req, res) => {
         const time = await req.body.time;
         const points = await req.body.points;
         const is_solved = await req.body.isSolved;
+        const answers = await req.body.answers;
         const today = new Date();
     
         const dailyChallenge = await DailyChallenge.findOne({ 
             where: { [Op.and]: [{ user_id: user.user_id }, { date: today }] } 
         });
     
+        dailyChallenge.answers = JSON.stringify(answers);
         dailyChallenge.time = time;
         dailyChallenge.points = points;
         
