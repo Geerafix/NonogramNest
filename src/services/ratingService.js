@@ -6,8 +6,12 @@ const api = axios.create({
     withCredentials: true
 });
 
-export function getRating(size) {
+export function getRating(page, limit, size) {
     return api.get('/rating/classic', {
-        size: size
+        params: {
+            page: page,
+            limit: limit,
+            size: size
+        }
     });
 }
