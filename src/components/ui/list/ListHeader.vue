@@ -3,26 +3,20 @@ defineProps(['headerName']);
 </script>
 
 <template>
-    <div class="header-container">
-        <span class="header-name">{{ headerName }}</span>
+    <div class="header">
+        <span>{{ headerName }}</span>
     </div>
 </template>
 
 <style scoped>
-.header-container {
+.header {
     @apply 
-    grid 
-    grid-flow-col
-    w-full 
-    h-11
+    h-12
     bg-gray-600 
     rounded-md 
-    text-center;
-}
-.header-name {
-    @apply 
-    self-center 
+    content-center
     text-xl 
+    text-center
     select-none;
 }
 </style>

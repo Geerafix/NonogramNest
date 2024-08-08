@@ -14,13 +14,9 @@ const overItem = ref(false);
 <style scoped>
 .item {
   @apply
-  grid
-  gap-2
-  w-full
   p-1
   bg-gray-700/40
   rounded-md
-  text-center
   cursor-pointer
   transition
   ease-[1s]

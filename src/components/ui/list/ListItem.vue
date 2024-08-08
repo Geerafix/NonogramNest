@@ -5,8 +5,8 @@ const overItem = ref(false);
 
 <template>
   <div :class="['list-item', {'filter brightness-[1.3]': overItem}]"
-        @mouseover="overItem = true" @mouseleave="overItem = false">
-      <slot></slot>
+      @mouseover="overItem = true" @mouseleave="overItem = false">
+    <slot></slot>
   </div>
 </template>
 
@@ -14,12 +14,14 @@ const overItem = ref(false);
 .list-item {
   @apply
   grid
-  grid-cols-[1fr_30%_30%_1fr]
+  grid-cols-[repeat(auto-fit,minmax(200px,1fr))]
   gap-2 
-  items-center
+  p-2
+  bg-gray-900/40 
+  rounded-lg 
   text-center
-  cursor-pointer
-  transition 
-  ease-[1s]
+  transition-all
+  ease-in
+  cursor-pointer;
 }
 </style>

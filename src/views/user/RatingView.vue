@@ -4,14 +4,12 @@ import Pagination from '@/components/ui/Pagination.vue';
 import Select from '@/components/ui/inputs/Select.vue';
 import { sizes } from '@/store';
 import { getRating } from '@/services/ratingService';
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onBeforeMount, watch } from 'vue';
 import { set } from '@vueuse/core';
-import ListHeader from '@/components/admin/ListHeader.vue';
-import UserListItem from '@/components/admin/users/UserListItem.vue';
-import UserItem from '@/components/admin/users/UserItem.vue';
+import List from '@/components/ui/list/List.vue';
 
 const page = ref(1);
-const limit = ref(1);
+const limit = ref(10);
 const rating = ref([]);
 const size = ref(5);
 
@@ -28,35 +26,27 @@ const setSize = (data) => {
 };
 
 const fetchRating = async () => {
-    await getRating(page.value, limit.value, size.value).then((res) => rating.value = res.data );
+    await getRating(page.value, limit.value, size.value).then((res) => {
+        rating.value = res.data.map((el) => ({ username: el.User.username, totalpoints: el.totalPoints })) 
+    });
+    
 };
 
 watch(page, fetchRating);
 
 watch(size, fetchRating);
 
-onMounted(fetchRating);
+onBeforeMount(fetchRating);
 </script>
 
 <template>
     <main class="view">
         <Header></Header>
-        <div class="rating-list">
-            <div>
-                <ListHeader headerName="Nazwa" />
-                <li class="list" v-for="el in rating">
-                    <UserItem :value="el.User.username" />
-                </li>
-            </div>
-            <div>
-                <ListHeader headerName="Punkty" />
-                <li class="list" v-for="el in rating">
-                    <UserItem :value="el.totalPoints" />
-                </li>
-            </div>
+        <List :headers="['Nazwa', 'Punkty']" :items="rating"></List>
+        <div class="controls-container">
+            <Pagination v-bind="settings"></Pagination>
+            <Select class="place-self-end" :items="sizes" @select="setSize"></Select>
         </div>
-        <Select :items="sizes" @select="setSize"></Select>
-        <Pagination v-bind="settings"></Pagination>
     </main>
 </template>
 
@@ -65,6 +55,7 @@ onMounted(fetchRating);
     @apply
     flex
     flex-col
+    relative
 }
 .rating-list {
     @apply
@@ -100,6 +91,13 @@ li {
     w-full
     p-2
     bg-pink-600
+}
+.controls-container > :last-child {
+    @apply
+    flex
+    absolute
+    bottom-0
+    right-0
 }
 </style>
 

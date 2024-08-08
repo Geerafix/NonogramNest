@@ -1,11 +1,9 @@
 <script setup>
+import Pagination from "@/components/ui/Pagination.vue";
+import Header from '@/components/ui/Header.vue';
+import List from '@/components/ui/list/List.vue';
 import { getPuzzles } from "@/services/puzzleService.js";
 import { onMounted, ref, watch, computed } from "vue";
-import Pagination from "@/components/ui/Pagination.vue";
-import ListHeader from "@/components/ui/list/ListHeader.vue";
-import ListItem from "@/components/ui/list/ListItem.vue";
-import Item from "@/components/ui/list/Item.vue";
-import Header from '@/components/ui/Header.vue';
 
 const page = ref(1);
 const limit = ref(10);
@@ -20,9 +18,7 @@ const settings = computed(() => ({
 }));
 
 const fetchPuzzles = async () => {
-    await getPuzzles(page.value, limit.value)
-        .then((res) => { puzzles.value = res.data })
-        .then((err) => {  });
+    await getPuzzles(page.value, limit.value).then((res) => { puzzles.value = res.data });
 }
 
 watch(page, fetchPuzzles);
@@ -32,45 +28,22 @@ onMounted(fetchPuzzles);
 
 <template>
     <main class="flex flex-col">
-        <Header></Header>
-        <div class="overflow-auto h-full pr-2">
-            <ul class="list-header">
-                <li v-for="header of ['Id','Wskazówki X','Wskazówki Y','Rozmiar']">
-                  <ListHeader :headerName="header" />
-                </li>
-            </ul>
-            <ul>
-                <li v-for="(puzzle, idx) in puzzles" :class="['list', {'mb-2': idx < puzzles.length - 1}]">
-                    <ListItem>
-                      <div v-for="value in puzzle">
-                        <Item :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
-                      </div>
-                    </ListItem>
-                </li>
-            </ul>
-        </div>
-        <Pagination v-bind="settings" />
-      </main>
+      <Header></Header>
+      <List class="list" :headers="['Id','Wskazówki X','Wskazówki Y','Rozmiar']" :items="puzzles" />
+      <Pagination v-bind="settings" />
+    </main>
 </template>
 
 <style scoped>
-.list-header {
-  @apply 
-  sticky
-  grid 
-  grid-cols-[1fr_30%_30%_1fr]
-  top-0
-  mb-2 
-  p-2 
-  gap-2 
-  rounded-lg;
+.view {
+  @apply
+  flex 
+  flex-col
 }
 .list {
   @apply 
-  p-2 
-  mx-auto
-  bg-gray-900/40 
-  rounded-lg 
-  list-none;
+  h-full 
+  pr-2
+  overflow-auto; 
 }
 </style>
