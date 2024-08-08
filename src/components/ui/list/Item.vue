@@ -5,14 +5,14 @@ const overItem = ref(false);
 </script>
 
 <template>
-    <div :class="['user-item', {'filter brightness-[1.3]': overItem}]"
-        @mouseover="overItem = true" @mouseleave="overItem = false">
-        <span>{{ value }}</span>
-    </div>
+  <div :class="['item', {'filter brightness-[1.3]': overItem}]"
+      @mouseover="overItem = true" @mouseleave="overItem = false">
+      <span>{{ value }}</span>
+  </div>
 </template>
 
 <style scoped>
-.user-item {
+.item {
   @apply
   grid
   gap-2

@@ -1,10 +1,10 @@
 <script setup>
 import { getPuzzles } from "@/services/puzzleService.js";
-import {onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import Pagination from "@/components/ui/Pagination.vue";
-import ListHeader from "@/components/admin/ListHeader.vue";
-import PuzzleListItem from "@/components/admin/puzzles/PuzzleListItem.vue";
-import PuzzleItem from "@/components/admin/puzzles/PuzzleItem.vue";
+import ListHeader from "@/components/ui/list/ListHeader.vue";
+import ListItem from "@/components/ui/list/ListItem.vue";
+import Item from "@/components/ui/list/Item.vue";
 import Header from '@/components/ui/Header.vue';
 
 const page = ref(1);
@@ -41,11 +41,11 @@ onMounted(fetchPuzzles);
             </ul>
             <ul>
                 <li v-for="(puzzle, idx) in puzzles" :class="['list', {'mb-2': idx < puzzles.length - 1}]">
-                    <PuzzleListItem>
+                    <ListItem>
                       <div v-for="value in puzzle">
-                        <PuzzleItem :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
+                        <Item :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
                       </div>
-                    </PuzzleListItem>
+                    </ListItem>
                 </li>
             </ul>
         </div>
@@ -63,7 +63,6 @@ onMounted(fetchPuzzles);
   mb-2 
   p-2 
   gap-2 
-  bg-gray-900/40 
   rounded-lg;
 }
 .list {

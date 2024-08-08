@@ -4,14 +4,14 @@ const overItem = ref(false);
 </script>
 
 <template>
-    <div :class="['user-list-item', {'filter brightness-[1.3]': overItem}]"
-         @mouseover="overItem = true" @mouseleave="overItem = false">
-        <slot></slot>
-    </div>
+  <div :class="['list-item', {'filter brightness-[1.3]': overItem}]"
+        @mouseover="overItem = true" @mouseleave="overItem = false">
+      <slot></slot>
+  </div>
 </template>
 
 <style scoped>
-.user-list-item {
+.list-item {
   @apply
   grid
   grid-cols-[1fr_30%_30%_1fr]

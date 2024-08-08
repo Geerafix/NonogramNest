@@ -1,11 +1,11 @@
 <script setup>
 import Pagination from '@/components/ui/Pagination.vue';
-import UserItem from '@/components/admin/users/UserItem.vue';
-import UserListItem from '@/components/admin/users/UserListItem.vue';
-import ListHeader from '@/components/admin/ListHeader.vue';
-import { getUsers } from '@/services/adminService';
 import Header from '@/components/ui/Header.vue';
-import {ref, watch, onMounted, computed} from 'vue';
+import Item from '@/components/ui/list/Item.vue';
+import ListItem from '@/components/ui/list/ListItem.vue';
+import ListHeader from '@/components/ui/list/ListHeader.vue';
+import { getUsers } from '@/services/adminService';
+import { ref, watch, onMounted, computed } from 'vue';
 
 const page = ref(1);
 const limit = ref(10);
@@ -41,11 +41,11 @@ onMounted(fetchUsers);
             </ul>
             <ul>
                 <li v-for="(user, idx) in users" :class="['list', {'mb-2': idx < users.length - 1}]">
-                  <UserListItem>
+                  <ListItem>
                     <div v-for="value in user">
-                      <UserItem :value="value" />
+                      <Item :value="value" />
                     </div>
-                  </UserListItem>
+                  </ListItem>
                 </li>
             </ul>
         </div>
