@@ -1,6 +1,7 @@
 <script setup>
 import BasicButton from "@/components/ui/inputs/BasicButton.vue";
 import Select from "@/components/ui/inputs/Select.vue";
+import { sizes } from "@/store";
 import { ref, watch } from "vue";
 import { set } from '@vueuse/core'
 const emit = defineEmits([
@@ -25,6 +26,9 @@ const handleEndGame = () => {
 const setSize = (data) => {
   set(isSelected, true);
   emit('size', data);
+  if (!data) {
+    set(isSelected, false);
+  }
 };
 
 watch(() => props.started, (started) => {
@@ -38,7 +42,7 @@ watch(() => props.started, (started) => {
       <BasicButton @click="emit('newGame')" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
         <Icon icon="fa-solid fa-plus" />
       </BasicButton>
-      <Select @select="setSize"></Select>
+      <Select :items="sizes" @select="setSize"></Select>
     </div>
     <div v-else class="flex gap-2">
       <BasicButton @click="handleEndGame">

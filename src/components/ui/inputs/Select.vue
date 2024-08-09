@@ -1,24 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { set } from '@vueuse/core';
-defineProps(['items']);
+const props = defineProps(['items']);
 const emit = defineEmits(['select']);
 
-const plc = [
-    { name: '15 x 15', value: 15 },
-    { name: '14 x 14', value: 14 },
-    { name: '13 x 13', value: 13 },
-    { name: '12 x 12', value: 12 },
-    { name: '11 x 11', value: 11 },
-    { name: '10 x 10', value: 10 },
-    { name: '9 x 9', value: 9 },
-    { name: '8 x 8', value: 8 },
-    { name: '7 x 7', value: 7 },
-    { name: '6 x 6', value: 6 },
-    { name: '5 x 5', value: 5 }
-];
-
-const selected = ref('Rozmiar');
+const selected = ref(props.items[props.items.length - 1].name);
 const expanded = ref(false);
 
 const selectOption = (item) => {
@@ -30,29 +16,23 @@ const selectOption = (item) => {
 
 <template>
     <Transition name="fade">
-        <div class="select-container">
+        <div>
             <Transition name="fade" mode="out-in">
                 <ul v-if="expanded">
-                    <li v-for="item in plc" @click="selectOption(item)">
-                        {{ item.name }}
+                    <li v-for="item in props.items" @click="selectOption(item)">
+                        <div :class="['item', {'selected': selected === item.name }]">{{ item.name }}</div>
                     </li>
                 </ul>
             </Transition>
             <div class="select" @click="expanded = !expanded">
-                <span class="my-auto">{{ selected }}</span>
+                <div class="my-auto mr-3">{{ selected }}</div>
                 <Icon icon="fa-solid fa-chevron-up" :class="['icon', { '-rotate-180': expanded }]" />
             </div>
         </div>
     </Transition>
 </template>
 
-<style>
-.select-container {
-    @apply 
-    flex 
-    flex-col
-    relative;
-}
+<style scoped>
 .select {
     @apply 
     grid
@@ -61,15 +41,15 @@ const selectOption = (item) => {
     px-3
     rounded-xl 
     min-h-14
-    min-w-[120px]
+    min-w-32
     bg-cyan-800 
     border-slate-800/60
-    ring-cyan-800/90
     hover:rounded-[20px]
     border-b-4
     text-xl
     transition-all
     outline-none
+    text-nowrap
     cursor-pointer;
 }
 .icon {
@@ -83,26 +63,36 @@ ul {
     @apply 
     flex 
     flex-col 
-    rounded-2xl 
+    gap-1.5
+    min-w-32
     absolute 
     bottom-16 
-    gap-2 
-    bg-cyan-800
+    rounded-2xl 
     border-b-4
+    bg-cyan-800
     border-slate-800/60;
 }
 li {
     @apply 
-    w-[120px] 
-    px-2
-    py-1.5 
     text-center 
     text-xl 
-    hover:bg-cyan-900/50 
-    transition-all 
+    rounded-2xl 
     shadow-black
+    hover:bg-cyan-900/70 
     hover:shadow-inner
-    rounded-xl 
+    transition-all 
     cursor-pointer;
+}
+.selected {
+    @apply
+    rounded-xl
+    border-x-4
+    border-y-[1px]
+    bg-cyan-900/30
+    border-cyan-900
+}
+.item {
+    @apply
+    py-1.5
 }
 </style>
