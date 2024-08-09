@@ -25,6 +25,10 @@ export function logout() {
     return api.post('/logout');
 }
 
+export async function getUserProfile() {
+    return api.get('/userProfile');
+}
+
 export async function getRole() {
     try {
         const res = await api.post('/role');

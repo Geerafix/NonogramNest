@@ -1,6 +1,6 @@
 import { server } from '../server.js';
 import { Op } from 'sequelize';
-import { Puzzle, SolvedPuzzle, DailyChallenge } from '../models/models.js';
+import { UserProfile, Puzzle, SolvedPuzzle, DailyChallenge } from '../models/models.js';
 
 server.get('/puzzles', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
@@ -31,6 +31,16 @@ server.post('/solved', async (req, res) => {
             time: await req.body.time, 
             points: await req.body.points
         });
+
+        const userProfile = await UserProfile.findOne({ 
+            where: { user_id: user.user_id } 
+        });
+
+        userProfile.solved_puzzles += 1;
+        userProfile.total_play_time += req.body.time;
+        userProfile.total_points += req.body.points;
+
+        await userProfile.save();
 
         res.json(solved);
     } catch (error) {

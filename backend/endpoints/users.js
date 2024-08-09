@@ -1,5 +1,5 @@
 import { server } from '../server.js';
-import { User } from '../models/models.js';
+import { User, UserProfile } from '../models/models.js';
 import { Op } from 'sequelize';
 import * as pkg from 'argon2';
 const argon2 = pkg;
@@ -28,7 +28,8 @@ server.post('/signup', async (req, res) => {
 
     if (!user) {
         const hash = await argon2.hash(password);
-        await User.create({ email: email, username: username, password: hash});
+        const user = await User.create({ email: email, username: username, password: hash});
+        await UserProfile.create({ user_id: user.user_id });
         res.status(200).send({ msg: 'Zarejestrowano' });
     } else {
         res.status(400).send({ msg: `Użytkownik o podanym email'u lub nazwie już istnieje` });
@@ -47,6 +48,15 @@ server.get('/users', async (req, res) => {
     });
 
     res.json(users);
+});
+
+server.get('/userProfile', async (req, res) => {
+    const user = await req.session.user;
+    const userProfile = await UserProfile.findOne({
+        where: { user_id: user.user_id }
+    });
+
+    res.json(userProfile);
 });
 
 server.post('/logout', (req, res) => {
