@@ -29,7 +29,7 @@ onBeforeMount(stop);
     min-h-14
     max-w-96
     px-4
-    py-[8px] 
+    py-2 
     border-b-4 
     rounded-xl
     border-gray-800/60

@@ -24,7 +24,7 @@ onMounted(() => { initialWidth.value = (width.value * 2); });
 .menu-button {
     @apply
     grid
-    grid-cols-[56px_auto]
+    grid-cols-[3.5rem_auto]
     w-full
     h-14
     min-w-14
@@ -35,11 +35,9 @@ onMounted(() => { initialWidth.value = (width.value * 2); });
     hover:text-white
     hover:shadow-gray-700/50
     hover:shadow-md
-    hover:rounded-[18px]
-    transition-[background-color_border-radius]
+    hover:rounded-[1.25rem]
+    transition-all
     select-none
-    font-thin
-    font-sans
     text-lg
     text-left
     text-nowrap
@@ -51,7 +49,7 @@ onMounted(() => { initialWidth.value = (width.value * 2); });
     -ml-2 
     mr-4
     my-auto 
-    transition-[opacity] 
+    transition-all 
     duration-[270ms]
 }
 </style>

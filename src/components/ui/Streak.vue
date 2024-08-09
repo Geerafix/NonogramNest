@@ -21,12 +21,11 @@ onMounted(async () => {
 .streak {
   @apply
   flex
-  flex-col
   gap-2
   h-fit
   w-fit
   p-3 
-  border-b-[6px]
+  border-b-4
   bg-gray-600 
   border-b-gray-800/50
   text-xl

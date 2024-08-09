@@ -16,8 +16,8 @@ defineProps(['buttonText']);
     py-[10px] 
     min-h-14
     min-w-14
-    border-b-4 
     rounded-xl
+    border-b-4 
     bg-sky-800/90
     border-slate-800/60
     text-slate-200  
@@ -26,7 +26,7 @@ defineProps(['buttonText']);
     hover:shadow-gray-600/10
     hover:shadow-lg
     hover:rounded-[20px]
-    transition-[background-color_border-radius]
+    transition-all
     select-none
     text-2xl
     text-nowrap

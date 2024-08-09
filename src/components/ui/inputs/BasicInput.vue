@@ -16,9 +16,8 @@ const value = ref('');
 .basic-input {
     @apply
     w-60
-    h-[52px]
+    h-[3.25rem]
     px-3 
-    py-[10px] 
     border-b-4
     rounded-xl
     bg-gray-100
@@ -30,8 +29,8 @@ const value = ref('');
     focus:outline-0
     focus:border-0
     focus:ring-4
-    transition-all
     text-2xl
-    text-center;
+    text-center
+    transition-all;
 }
 </style>

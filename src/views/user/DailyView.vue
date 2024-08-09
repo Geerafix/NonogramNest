@@ -99,8 +99,10 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
         <Transition name="fade">
             <div class="daily-challenge-container" v-if="!started" >
                 <Calendar />
-                <Streak />
-                <BasicButton class="w-fit mx-auto" @click="handleDailyChallenge">Wykonaj</BasicButton>
+                <div class="flex justify-between">
+                    <Streak />
+                    <BasicButton class="" @click="handleDailyChallenge">Wykonaj</BasicButton>
+                </div>
             </div> 
         </Transition>
         <Transition name="fade">
@@ -125,8 +127,6 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
 .daily-challenge-container {
     @apply 
     grid
-    grid-cols-[auto_auto]
-    max-sm:grid-cols-[auto]
     absolute
     left-1/2
     -translate-x-1/2
