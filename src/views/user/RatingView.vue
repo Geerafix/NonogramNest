@@ -2,8 +2,8 @@
 import Header from '@/components/ui/Header.vue';
 import Pagination from '@/components/ui/Pagination.vue';
 import Select from '@/components/ui/inputs/Select.vue';
-import { sizes } from '@/store';
-import { getRating } from '@/services/ratingService';
+import { sizes, modes } from '@/store';
+import { getClassicRating, getDailyChallengeRating } from '@/services/ratingService';
 import { ref, computed, onBeforeMount, watch } from 'vue';
 import { set } from '@vueuse/core';
 import List from '@/components/ui/list/List.vue';
@@ -11,7 +11,8 @@ import List from '@/components/ui/list/List.vue';
 const page = ref(1);
 const limit = ref(10);
 const rating = ref([]);
-const size = ref(5);
+const size = ref(null);
+const mode = ref(null);
 
 const settings = computed(() => ({
   limit: limit.value,
@@ -25,16 +26,23 @@ const setSize = (data) => {
   set(size, data);
 };
 
+const setMode = (data) => {
+    set(mode, data);
+};
+
 const fetchRating = async () => {
-    await getRating(page.value, limit.value, size.value).then((res) => {
-        rating.value = res.data.map((el) => ({ username: el.User.username, totalpoints: el.totalPoints })) 
-    });
-    
+    if (mode.value === 'challenge') {
+        await getDailyChallengeRating(page.value, limit.value).then((res) => rating.value = res.data );
+    } else {
+        await getClassicRating(page.value, limit.value, size.value).then((res) => rating.value = res.data );
+    }
 };
 
 watch(page, fetchRating);
 
 watch(size, fetchRating);
+
+watch(mode, fetchRating);
 
 onBeforeMount(fetchRating);
 </script>
@@ -42,10 +50,13 @@ onBeforeMount(fetchRating);
 <template>
     <main class="view">
         <Header></Header>
-        <List :headers="['Nazwa', 'Punkty']" :items="rating"></List>
+        <List class="list" :headers="['Nazwa', 'Punkty', 'Rozwiązanych']" :items="rating"></List>
         <div class="controls-container">
             <Pagination v-bind="settings"></Pagination>
-            <Select class="place-self-end" :items="sizes" @select="setSize"></Select>
+            <div class="controls">
+                <Select :items="modes" @select="setMode"></Select>
+                <Select :items="sizes" @select="setSize" :class="['test', { 'max-w-0': mode === 'challenge' }]" class="test"></Select>
+            </div>
         </div>
     </main>
 </template>
@@ -57,47 +68,24 @@ onBeforeMount(fetchRating);
     flex-col
     relative
 }
-.rating-list {
-    @apply
-    grid
-    grid-cols-2
-    gap-2
-    h-full
-    text-xl
-    list-inside
-    text-center
-    w-[40vw]
-    min-w-[300px]
-    max-sm:w-full
-    place-self-center
-}
 .list {
-  @apply 
-  p-2 
-  mx-auto
-  bg-gray-900/40 
-  rounded-lg 
-  list-none;
-}
-li {
     @apply
-    grid
-    p-4
-    bg-cyan-700
-    my-2;
+    h-full
 }
-.rating-header {
+.controls {
     @apply
-    w-full
-    p-2
-    bg-pink-600
-}
-.controls-container > :last-child {
-    @apply
-    flex
     absolute
     bottom-0
     right-0
+    flex
+    gap-2
+    place-self-end
+}
+.test {
+  @apply
+  w-fit
+  max-w-full
+  transition-all   
 }
 </style>
 

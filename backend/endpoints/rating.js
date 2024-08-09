@@ -18,21 +18,26 @@ server.get('/rating/classic', async (req, res) => {
                 attributes: [],
                 where: [
                     size ? { size: size } : { }
-                ]
+                ],
             }],
             attributes: [
+                [ sequelize.fn('COUNT', sequelize.col('Puzzle.puzzle_id')), 'puzzleCount' ],
                 [ sequelize.fn('SUM', sequelize.col('points')), 'totalPoints' ]
             ],
             group: [ 
-                'User.user_id'
+                'User.user_id',
             ],
             order: [ 
-                ['totalPoints', 'DESC'] 
+                [ 'totalPoints', 'DESC' ] 
             ],
             limit: limit,
             offset: offset
         });
-    
+
+        rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
+            username: el.User.username, totalpoints: el.totalPoints, puzzleCount: parseInt(el.puzzleCount) 
+        }));
+
         res.json(rating);
     } catch (error) {
         res.json(error);
@@ -40,5 +45,35 @@ server.get('/rating/classic', async (req, res) => {
 });
 
 server.get('/rating/dailyChallenges', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 4;
+    const offset = (page - 1) * limit;  
 
+    let rating = await DailyChallenge.findAll({
+        include: [{ 
+            model: User,
+            attributes: [ 'username' ], 
+        }, {
+            model: Puzzle,
+            attributes: [],
+        }],
+        attributes: [
+            [ sequelize.fn('COUNT', sequelize.col('Puzzle.puzzle_id')), 'puzzleCount' ],
+            [ sequelize.fn('SUM', sequelize.col('points')), 'totalPoints' ]
+        ],
+        group: [ 
+            'User.user_id',
+        ],
+        order: [ 
+            [ 'totalPoints', 'DESC' ] 
+        ],
+        limit: limit,
+        offset: offset
+    });
+
+    rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
+        username: el.User.username, totalpoints: el.totalPoints, puzzleCount: parseInt(el.puzzleCount) 
+    }));
+
+    res.json(rating);
 });

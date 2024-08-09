@@ -6,12 +6,21 @@ const api = axios.create({
     withCredentials: true
 });
 
-export function getRating(page, limit, size) {
+export function getClassicRating(page, limit, size) {
     return api.get('/rating/classic', {
         params: {
             page: page,
             limit: limit,
             size: size
+        }
+    });
+}
+
+export function getDailyChallengeRating(page, limit) {
+    return api.get('/rating/dailyChallenges', {
+        params: {
+            page: page,
+            limit: limit
         }
     });
 }
