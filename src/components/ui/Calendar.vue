@@ -1,10 +1,10 @@
 <script setup>
 import MenuButton from './inputs/MenuButton.vue';
-import { ref, reactive, onMounted, watch, computed } from 'vue';
+import { ref, reactive, onBeforeMount, watch, computed } from 'vue';
 import { set } from '@vueuse/core';
 import { getDailies } from '@/services/dailyChallengeService'
 
-const daysNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pią', 'Sob', 'Nie'];
+const daysNames = ['Pon', 'Wto', 'Śro', 'Czw', 'Pią', 'Sob', 'Nie'];
 const monthsNames = [
   'Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'
 ];
@@ -38,7 +38,7 @@ const currentYear = computed(() =>
 
 watch(() => calendar.month, handleMonthChange);
 
-onMounted(handleMonthChange);
+onBeforeMount(handleMonthChange);
 </script>
 
 <template>
@@ -57,7 +57,7 @@ onMounted(handleMonthChange);
             <div v-for="day in calendar.firstDay"></div>
             <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]">
                 <span>{{ day }}</span>
-                <Icon v-if="streakDays.includes(day)" class="circle" icon="fa-solid fa-circle" />
+                <div v-if="streakDays.includes(day)" class="indicator"></div>
             </div>
         </div>
     </div>
@@ -69,11 +69,11 @@ onMounted(handleMonthChange);
     flex
     flex-col
     w-full
+    min-w-96
     mx-auto
     max-w-md
-    border-b-[6px]
+    border-b-4
     bg-gray-600 
-    border-gray-800/70
     border-b-gray-800/50
     rounded-xl;
 }
@@ -106,9 +106,10 @@ onMounted(handleMonthChange);
     min-w-12
     h-12
     p-2
+    rounded-xl
     border-gray-800/40
     hover:bg-gray-800/30
-    rounded-xl
+    text-gray-200
     text-xl 
     text-center
     select-none
@@ -134,14 +135,21 @@ onMounted(handleMonthChange);
     mx-auto 
     text-2xl;
 }
-.circle {
+.indicator {
     @apply 
     absolute 
-    top-1.5
-    right-1.5
-    text-teal-500   
+    top-0
+    right-0
+    w-3
+    h-3
+    bg-transparent  
     shadow-black
-    text-[10px] 
-    drop-shadow-md
+    border-teal-500
+    border-t-[3px]
+    border-r-[3px]
+    rounded-ss-sm
+    rounded-ee-sm
+    rounded-se-xl
+    drop-shadow-md;
 }
 </style>

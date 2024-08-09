@@ -24,6 +24,9 @@ export function postSolvedPuzzle(puzzleId, time, points) {
 
 export function getPuzzles(page, limit) {
     return api.get('/puzzles', {
-        params: { page: page, limit: limit }
+        params: { 
+            page: page, 
+            limit: limit 
+        }
     });
 }

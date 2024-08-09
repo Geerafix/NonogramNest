@@ -12,13 +12,15 @@ defineProps(['headers', 'items']);
                 <ListHeader :headerName="header" />
             </li>
         </div>
-        <li class="items" v-for="item in items">
-            <ListItem>
-                <div v-for="value in item">
-                    <Item :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
-                </div>
-            </ListItem>
-        </li>
+        <div class="items">
+            <li v-for="item in items">
+                <ListItem>
+                    <div v-for="value in item">
+                        <Item :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
+                    </div>
+                </ListItem>
+            </li>
+        </div>
     </div>
 </template>
 
@@ -38,9 +40,9 @@ defineProps(['headers', 'items']);
 }
 .items {
     @apply  
-    flex
-    flex-col
+    grid
     gap-2
+    mb-2
     mx-auto
     list-none;
 }

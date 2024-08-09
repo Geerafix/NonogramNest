@@ -1,6 +1,6 @@
 <script setup>
 import BasicButton from '@/components/ui/inputs/BasicButton.vue';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 const props = defineProps([
     'limit',
     'page',
@@ -10,19 +10,16 @@ const props = defineProps([
 ]);
 
 const handlePrevPage = () => {
-  if (computedPrevPage) {
-    props.prev();
-  }
+  if (computedPrevPage) props.prev();
 }
 
 const handleNextPage = () => {
-  if (computedNextPage) {
-    props.next();
-  }
+  if (computedNextPage) props.next();
 }
 
 const computedPrevPage = computed(() => props.page === 1 );
 const computedNextPage = computed(() => props.perpage < props.limit );
+
 </script>
 
 <template>
@@ -31,7 +28,7 @@ const computedNextPage = computed(() => props.perpage < props.limit );
           :class="{'opacity-30': computedPrevPage}" >
           <Icon icon="fa-solid fa-arrow-left" />
         </BasicButton>
-        <span class="text-2xl mx-auto">{{ page }}</span>
+        <div class="page">{{ page }}</div>
         <BasicButton @click="handleNextPage" :disabled="computedNextPage"
           :class="{'opacity-30': computedNextPage}" >
           <Icon icon="fa-solid fa-arrow-right" />
@@ -49,5 +46,25 @@ const computedNextPage = computed(() => props.perpage < props.limit );
   mt-4 
   mx-auto
   items-center;
+}
+.page {
+  @apply
+  w-14
+  h-14
+  text-2xl 
+  mx-auto
+  text-center
+  content-center
+  hover:bg-slate-900/50
+  rounded-xl
+  select-none
+  cursor-pointer
+  transition-all;
+}
+.pageInput {
+  @apply
+  max-w-52
+  -translate-x-1/2
+  transition-all 
 }
 </style>

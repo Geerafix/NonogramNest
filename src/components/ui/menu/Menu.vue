@@ -16,7 +16,7 @@ const toggleNavbar = () => { expanded.value = !expanded.value; };
 
 const toggleLogout = async () => {
     await logout();
-    router.push({name: 'Home'});
+    router.push({name: 'SignIn'});
 };
 
 const computedRole = computed(() => {
@@ -49,7 +49,7 @@ const computedScreen = computed(() => {
         <BasicButton key="2" class="expand-button" @click="visible = !visible">
             <div :class="{ '-rotate-180': visible }" class="transition-all ease-out flex">
                 <Icon v-if="visible" icon="fa-solid fa-bars" class="my-auto mx-auto" />
-                <Icon v-else icon="fa-solid fa-arrow-left" class="my-auto mx-auto" />
+                <Icon v-else icon="fa-solid fa-reply" class="my-auto mx-auto" />
             </div>
         </BasicButton>
     </div>
