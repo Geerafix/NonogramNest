@@ -1,6 +1,8 @@
 import { sequelize, server } from '../server.js';
-import { Op } from 'sequelize';
-import { Puzzle, SolvedPuzzle, DailyChallenge, User } from '../models/models.js';
+
+import { User } from '../models/User.js';
+import { Rating } from '../models/Rating.js';
+import('../models/setup/relations.js');
 
 server.get('/rating/classic', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
@@ -9,33 +11,19 @@ server.get('/rating/classic', async (req, res) => {
     const size = req.query.size;
 
     try {
-        let rating = await SolvedPuzzle.findAll({
-            include: [{ 
-                model: User,
-                attributes: [ 'username' ], 
-            }, {
-                model: Puzzle,
-                attributes: [],
-                where: [
-                    size ? { size: size } : { }
-                ],
-            }],
-            attributes: [
-                [ sequelize.fn('COUNT', sequelize.col('Puzzle.puzzle_id')), 'puzzleCount' ],
-                [ sequelize.fn('SUM', sequelize.col('points')), 'totalPoints' ]
-            ],
-            group: [ 
-                'User.user_id',
-            ],
-            order: [ 
-                [ 'totalPoints', 'DESC' ] 
-            ],
+        const column = `size_${size}`;
+        let rating = await User.findAll({
+            attributes: [ 'username' ],
+            include: {
+                model: Rating,
+                attributes: size ? [ column ] : [ 'sum' ]
+            },
             limit: limit,
             offset: offset
         });
 
         rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
-            username: el.User.username, totalpoints: el.totalPoints, puzzleCount: parseInt(el.puzzleCount) 
+            username: Object.values(el)[0], totalPoints: Object.values(el.Rating)[0]
         }));
 
         res.json(rating);
@@ -49,31 +37,7 @@ server.get('/rating/dailyChallenges', async (req, res) => {
     const limit = parseInt(req.query.limit) || 4;
     const offset = (page - 1) * limit;  
 
-    let rating = await DailyChallenge.findAll({
-        include: [{ 
-            model: User,
-            attributes: [ 'username' ], 
-        }, {
-            model: Puzzle,
-            attributes: [],
-        }],
-        attributes: [
-            [ sequelize.fn('COUNT', sequelize.col('Puzzle.puzzle_id')), 'puzzleCount' ],
-            [ sequelize.fn('SUM', sequelize.col('points')), 'totalPoints' ]
-        ],
-        group: [ 
-            'User.user_id',
-        ],
-        order: [ 
-            [ 'totalPoints', 'DESC' ] 
-        ],
-        limit: limit,
-        offset: offset
-    });
-
-    rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
-        username: el.User.username, totalpoints: el.totalPoints, puzzleCount: parseInt(el.puzzleCount) 
-    }));
+    let rating = '';
 
     res.json(rating);
 });

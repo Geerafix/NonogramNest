@@ -1,8 +1,11 @@
 import { server } from '../server.js';
-import { User, UserProfile } from '../models/models.js';
 import { Op } from 'sequelize';
 import * as pkg from 'argon2';
 const argon2 = pkg;
+
+import { User } from '../models/User.js';
+import { UserProfile } from '../models/UserProfile.js';
+import('../models/setup/relations.js');
 
 server.post('/signin', async (req, res) => {
     const user = await User.findOne({ 
@@ -28,8 +31,7 @@ server.post('/signup', async (req, res) => {
 
     if (!user) {
         const hash = await argon2.hash(password);
-        const user = await User.create({ email: email, username: username, password: hash});
-        await UserProfile.create({ user_id: user.user_id });
+        await User.create({ email: email, username: username, password: hash});
         res.status(200).send({ msg: 'Zarejestrowano' });
     } else {
         res.status(400).send({ msg: `Użytkownik o podanym email'u lub nazwie już istnieje` });
@@ -53,10 +55,24 @@ server.get('/users', async (req, res) => {
 server.get('/userProfile', async (req, res) => {
     const user = await req.session.user;
     const userProfile = await UserProfile.findOne({
-        where: { user_id: user.user_id }
+        include: { 
+            model: User,
+            attributes: [ 'username' ]
+        },
+        where: { 
+            user_id: user.user_id 
+        }
     });
 
     res.json(userProfile);
+});
+
+server.delete('/deleteUser', async (req, res) => {
+    const user = await req.session.user;
+
+    await User.destroy({ where: { user_id: user.user_id } });
+
+    res.send();
 });
 
 server.post('/logout', (req, res) => {

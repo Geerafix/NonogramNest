@@ -50,12 +50,12 @@ onBeforeMount(fetchRating);
 <template>
     <main class="view">
         <Header></Header>
-        <List class="list" :headers="['Nazwa', 'Punkty', 'Rozwiązanych']" :items="rating"></List>
+        <List class="list" :headers="['Nazwa', 'Punkty']" :items="rating"></List>
         <div class="controls-container">
             <Pagination v-bind="settings"></Pagination>
             <div class="controls">
                 <Select :items="modes" @select="setMode"></Select>
-                <Select :items="sizes" @select="setSize" :class="['test', { 'max-w-0': mode === 'challenge' }]" class="test"></Select>
+                <Select :items="sizes" @select="setSize" :class="['test', { 'hidden': mode === 'challenge' }]" class="test"></Select>
             </div>
         </div>
     </main>
