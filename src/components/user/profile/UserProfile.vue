@@ -16,7 +16,7 @@ defineProps(['user']);
         <div class="numbers">
             <div class="item-container">Rozwiązane gry</div>
                 <div class="item">{{ user.solved_puzzles }}</div>
-            <div class="item-container">Punktów łącznie</div>  
+            <div class="item-container">Suma punktów</div>  
                 <div class="item">{{ user.total_points }}</div>
             <div class="item-container">Łączny czas gry</div>
                 <div class="item">{{ (user.total_play_time / 3600).toFixed(2) }} g.</div>

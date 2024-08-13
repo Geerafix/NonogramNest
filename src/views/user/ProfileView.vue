@@ -1,8 +1,9 @@
 <script setup>
 import Header from '@/components/ui/Header.vue';
+import BasicButton from '@/components/ui/inputs/BasicButton.vue';
+import UserProfile from '@/components/user/profile/UserProfile.vue';
 import { onBeforeMount, ref } from 'vue';
-import { getUserProfile } from '@/services/userService';
-import List from '@/components/ui/list/List.vue';
+import { getUserProfile, deleteUser } from '@/services/userService';
 
 const user = ref({});
 
@@ -14,7 +15,8 @@ onBeforeMount(async () => {
 <template>
     <main class="view">
         <Header></Header>
-        <List :items="Array.from([ user ])" :headers="['UID', 'Bio', 'Rozwiązanych', 'Punktów razem', 'Łączny czas gry', 'Data rejestracji']"></List>
+        <UserProfile :user="user" class="place-self-center"></UserProfile>
+        <BasicButton @click="deleteUser()" class="w-fit">Usuń konto</BasicButton>
     </main>
 </template>
 
