@@ -80,6 +80,7 @@ li {
     shadow-black
     hover:bg-cyan-900/70 
     hover:shadow-inner
+    drop-shadow-sm
     transition-all 
     cursor-pointer;
 }
@@ -90,6 +91,7 @@ li {
     border-y-[1px]
     bg-cyan-900/30
     border-cyan-900
+
 }
 .item {
     @apply

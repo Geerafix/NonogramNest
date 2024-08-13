@@ -4,7 +4,7 @@ const overItem = ref(false);
 </script>
 
 <template>
-  <div :class="['list-item', {'filter brightness-[1.3]': overItem}]"
+  <div :class="['list-item', {'filter brightness-[1.15]': overItem}]"
       @mouseover="overItem = true" @mouseleave="overItem = false">
     <slot></slot>
   </div>

@@ -34,7 +34,7 @@ defineProps(['headers', 'items']);
     gap-2
     p-2
     mb-2
-    bg-gray-900/60 
+    bg-gray-900/50 
     rounded-lg 
     list-none;
 }

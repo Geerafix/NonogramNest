@@ -47,13 +47,15 @@ onBeforeMount(handleMonthChange);
             <MenuButton class="max-w-1" @click="prevMonth">
                 <Icon icon="fa-solid fa-caret-left" class="icon-adjust" />
             </MenuButton>
-            <span class="date-info">{{ monthsNames[calendar.month] }} {{ calendar.year }}</span>
+            <div class="date-info">{{ monthsNames[calendar.month] }} {{ calendar.year }}</div>
             <MenuButton class="max-w-1" @click="nextMonth">
                 <Icon icon="fa-solid fa-caret-right" class="icon-adjust" />
             </MenuButton>
         </div>
+        <div class="days-name-container">
+            <div v-for="dayName of daysNames" class="day-name">{{ dayName }}</div>
+        </div>
         <div class="days-container">
-            <div v-for="dayName of daysNames" class="day day-name">{{ dayName }}</div>
             <div v-for="day in calendar.firstDay"></div>
             <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]">
                 <span>{{ day }}</span>
@@ -79,26 +81,31 @@ onBeforeMount(handleMonthChange);
 }
 .calendar-header {
     @apply 
-    flex 
-    justify-between 
-    gap-6 
-    mt-2 
-    mx-2;
+    grid
+    grid-cols-[auto_1fr_auto] 
+    rounded-ss-xl
+    rounded-se-xl
+    bg-gray-500/25
+    gap-2 
+    p-2;
 }
 .date-info {
     @apply 
-    p-2 
     w-full 
-    rounded-xl 
-    text-xl 
-    text-center;
+    h-full
+    rounded-xl
+    bg-gray-700/25 
+    text-xl
+    text-center
+    shadow-inner
+    content-center;
 }
 .days-container {
     @apply 
     grid 
     grid-cols-7 
     gap-1
-    p-2;
+    p-2
 }
 .day {
     @apply 
@@ -106,8 +113,9 @@ onBeforeMount(handleMonthChange);
     min-w-12
     h-12
     p-2
-    rounded-xl
+    rounded-lg
     border-gray-800/40
+    bg-gray-800/15
     hover:bg-gray-800/30
     text-gray-200
     text-xl 
@@ -116,12 +124,21 @@ onBeforeMount(handleMonthChange);
     cursor-pointer
     max-sm:text-lg;
 }
+.days-name-container {
+    @apply
+    grid 
+    grid-cols-7 
+    p-3 
+    px-2 
+    gap-1 
+    bg-gray-700 
+    shadow-inner;
+}
 .day-name {
     @apply 
-    bg-gray-800/30 
     pointer-events-none
     cursor-auto
-    shadow-inner;
+    mx-auto
 }
 .today {
     @apply 
@@ -138,18 +155,18 @@ onBeforeMount(handleMonthChange);
 .indicator {
     @apply 
     absolute 
-    top-0
-    right-0
-    w-3
-    h-3
-    bg-transparent  
-    shadow-black
-    border-teal-500
-    border-t-[3px]
-    border-r-[3px]
-    rounded-ss-sm
-    rounded-ee-sm
-    rounded-se-xl
+    -top-0.5
+    -left-0.5
+    w-5
+    h-5
+    bg-teal-600/20
+    border-teal-500/55
+    border-t-4
+    border-l-4
+    rounded-sm
+    rounded-ss-xl
+    rounded-ee-2xl
+    filter
     drop-shadow-md;
 }
 </style>
