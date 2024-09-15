@@ -66,7 +66,12 @@ export const Score = sequelize.define('Score', {
         allowNull: false,
         defaultValue: 0
     },
-    sum: {
+    classic_sum: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    challenge_sum: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0

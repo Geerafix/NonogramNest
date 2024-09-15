@@ -54,10 +54,10 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
             
             await Score.update({
             [column]: sequelize.literal(`${column} + ${solved_puzzle.points}`),
-            sum: sequelize.literal(`sum + ${solved_puzzle.points}`),
+            classic_sum: sequelize.literal(`classic_sum + ${solved_puzzle.points}`),
             }, {
                 where: {
-                user_id: solved_puzzle.user_id
+                    user_id: solved_puzzle.user_id
                 }
             });
         }

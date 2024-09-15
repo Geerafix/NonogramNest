@@ -1,6 +1,8 @@
 import { sequelize } from '../server.js';
 import { DataTypes } from 'sequelize';
 
+import { Score } from './Score.js';
+
 export const DailyChallenge = sequelize.define('DailyChallenge', {
     daily_id: {
         type: DataTypes.INTEGER,
@@ -39,5 +41,16 @@ export const DailyChallenge = sequelize.define('DailyChallenge', {
     }
 }, {
     tableName: 'daily_challenges',
-    timestamps: false
+    timestamps: false,
+    hooks: {
+        afterCreate: async (solved_challenge, options) => {
+            await Score.update({
+            challenge_sum: sequelize.literal(`challenge_sum + ${solved_challenge.points}`),
+            }, {
+                where: {
+                    user_id: solved_challenge.user_id
+                }
+            });
+        }
+    }
 });
