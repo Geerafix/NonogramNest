@@ -2,7 +2,7 @@ import { sequelize } from '../server.js';
 import { DataTypes } from 'sequelize';
 
 import { UserProfile } from './UserProfile.js';
-import { Rating } from './Rating.js';
+import { Score } from './Score.js';
 
 export const User = sequelize.define('User', {
     user_id: {
@@ -35,7 +35,7 @@ export const User = sequelize.define('User', {
     hooks: {
         afterCreate: (user, options) => {
             UserProfile.create({ user_id: user.user_id });
-            Rating.create({ user_id: user.user_id });
+            Score.create({ user_id: user.user_id });
         },
         afterDestroy: (user, options) => {
             UserProfile.destroy({ where: { user_id: user.user_id } });

@@ -1,7 +1,7 @@
-import { sequelize, server } from '../server.js';
+import { server } from '../server.js';
 
 import { User } from '../models/User.js';
-import { Rating } from '../models/Rating.js';
+import { Score } from '../models/Score.js';
 import('../dbRelations.js');
 
 server.get('/rating/classic', async (req, res) => {
@@ -15,7 +15,7 @@ server.get('/rating/classic', async (req, res) => {
         let rating = await User.findAll({
             attributes: [ 'username' ],
             include: {
-                model: Rating,
+                model: Score,
                 attributes: size ? [ column ] : [ 'sum' ],
             },
             limit: limit,
@@ -23,7 +23,7 @@ server.get('/rating/classic', async (req, res) => {
         });
 
         rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
-            username: Object.values(el)[0], totalPoints: Object.values(el.Rating)[0]
+            username: Object.values(el)[0], totalPoints: Object.values(el.Score)[0]
         })).sort((a, b) => a.totalPoints > b.totalPoints ? -1 : 1);
 
         res.json(rating);

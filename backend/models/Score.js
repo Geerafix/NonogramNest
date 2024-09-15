@@ -1,8 +1,8 @@
 import { sequelize } from '../server.js';
 import { DataTypes } from 'sequelize';
 
-export const Rating = sequelize.define('Rating', {
-    rating_id: {
+export const Score = sequelize.define('Score', {
+    score_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
@@ -72,6 +72,6 @@ export const Rating = sequelize.define('Rating', {
         defaultValue: 0
     }
 }, {
-    tableName: 'rating',
+    tableName: 'score',
     timestamps: false
 });

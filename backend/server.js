@@ -6,6 +6,7 @@ import { Sequelize } from 'sequelize';
 // import path from 'path';
 // import { fileURLToPath } from 'url';
 import('./endpoints/users.js');
+import('./endpoints/rating.js');
 import('./endpoints/puzzles.js');
 
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));

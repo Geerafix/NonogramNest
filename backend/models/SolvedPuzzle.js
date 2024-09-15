@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize';
 
 import { UserProfile } from './UserProfile.js';
 import { Puzzle } from './Puzzle.js';
-import { Rating } from './Rating.js';
+import { Score } from './Score.js';
 
 export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
     solved_id: {
@@ -52,7 +52,7 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
 
             const column = `size_${puzzle.size}`;
             
-            await Rating.update({
+            await Score.update({
             [column]: sequelize.literal(`${column} + ${solved_puzzle.points}`),
             sum: sequelize.literal(`sum + ${solved_puzzle.points}`),
             }, {

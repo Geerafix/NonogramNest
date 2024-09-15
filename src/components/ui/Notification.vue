@@ -25,6 +25,7 @@ onBeforeMount(stop);
 .notification {
     @apply 
     absolute
+    top-0
     right-0 
     min-h-14
     max-w-96
