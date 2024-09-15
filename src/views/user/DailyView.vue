@@ -21,7 +21,7 @@ const started = ref(false);
 const paused = ref(true);
 
 const nonogram = ref(null);
-const points = ref(null);
+const points = ref(0);
 
 const notification = ref(null);
 const notificationData = reactive({ message: '', status: true, time: 3000 });
@@ -73,12 +73,18 @@ const handleCheck = async () => {
     }
 };
 
+const handleResetGame = () => {
+    counter.value = 0;
+    points.value = 0;
+    nonogram.value.resetGame(2);
+};
+
 const handleEndGame = async () => {
     await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
     set(started, false);
     set(paused, true);
     set(points, null);
-    nonogram.value.resetGame();
+    nonogram.value.resetGame(1);
     pause();
 };
 
@@ -87,7 +93,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(async () => {
-    if (points.value) await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
+    await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
 });
 
 watch(paused, (newValue) => newValue ? pause() : resume() );
@@ -110,7 +116,7 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
         </Transition>
         <Transition name="slide-down-no-leave">
             <div class="actions" v-if="started">
-                <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @end-game="handleEndGame" />
+                <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @reset-game="handleResetGame" @end-game="handleEndGame" />
                 <Score :time="counter" :points="points" :started="started" />
             </div>
         </Transition>

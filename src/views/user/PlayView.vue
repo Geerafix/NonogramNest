@@ -54,10 +54,16 @@ const handleCheck = async () => {
     }
 };
 
+const handleResetGame = () => {
+    counter.value = 0;
+    points.value = 0;
+    nonogram.value.resetGame(2);
+};
+
 const handleEndGame = () => {
     set(started, false);
     set(points, null);
-    nonogram.value.resetGame();
+    nonogram.value.resetGame(1);
 }
 
 watch(paused, (newValue) => newValue ? pause() : resume() );
@@ -78,7 +84,7 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
             <span class="self-center text-xl" v-if="points && !started">
                 {{ points }} pkt.
             </span>
-            <Actions :started="started" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @end-game="handleEndGame"/>
+            <Actions :started="started" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @reset-game="handleResetGame" @end-game="handleEndGame"/>
             <Score :time="counter" :points="points" :started="started"/>
         </div>
         <Summary ref="summary"></Summary>
