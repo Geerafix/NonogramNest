@@ -56,6 +56,7 @@ const handleCheck = async () => {
 
 const handleResetGame = () => {
     counter.value = 0;
+    set(points, Math.pow(nonogram.value.nonogram.size, 2) * nonogram.value.nonogram.size);
     nonogram.value.resetGame(2);
 };
 

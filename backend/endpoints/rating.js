@@ -16,7 +16,7 @@ server.get('/rating/classic', async (req, res) => {
             attributes: [ 'username' ],
             include: {
                 model: Score,
-                attributes: size ? [ column ] : [ 'sum' ],
+                attributes: size ? [ column ] : [ 'classic_sum' ],
             },
             limit: limit,
             offset: offset
@@ -37,7 +37,23 @@ server.get('/rating/dailyChallenges', async (req, res) => {
     const limit = parseInt(req.query.limit) || 4;
     const offset = (page - 1) * limit;  
 
-    let rating = '';
+    try {
+        let rating = await User.findAll({
+            attributes: [ 'username' ],
+            include: {
+                model: Score,
+                attributes: [ 'challenge_sum' ],
+            },
+            limit: limit,
+            offset: offset
+        });
 
-    res.json(rating);
+        rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
+            username: Object.values(el)[0], totalPoints: Object.values(el.Score)[0]
+        })).sort((a, b) => a.totalPoints > b.totalPoints ? -1 : 1);
+
+        res.json(rating);
+    } catch (error) {
+        res.json(error);
+    }
 });
