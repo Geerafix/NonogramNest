@@ -2,10 +2,14 @@ import { sequelize } from '../server.js';
 import { DataTypes } from 'sequelize';
 
 export const UserProfile = sequelize.define('UserProfile', {
-    user_id: {
+    user_profile_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
     },
     bio: {
         type: DataTypes.TEXT,

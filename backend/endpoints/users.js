@@ -5,7 +5,7 @@ const argon2 = pkg;
 
 import { User } from '../models/User.js';
 import { UserProfile } from '../models/UserProfile.js';
-import('../models/setup/relations.js');
+import('../dbRelations.js');
 
 server.post('/signin', async (req, res) => {
     const user = await User.findOne({ 

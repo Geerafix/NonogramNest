@@ -1,9 +1,10 @@
-import { DailyChallenge } from "../DailyChallenge.js";
-import { Puzzle } from "../Puzzle.js";
-import { Rating } from "../Rating.js";
-import { SolvedPuzzle } from "../SolvedPuzzle.js";
-import { User } from "../User.js";
-import { UserProfile } from "../UserProfile.js";
+import { User } from "./models/User.js";
+import { UserProfile } from "./models/UserProfile.js";
+import { Puzzle } from "./models/Puzzle.js";
+import { SolvedPuzzle } from "./models/SolvedPuzzle.js";
+import { DailyChallenge } from "./models/DailyChallenge.js";
+import { Rating } from "./models/Rating.js";
+import { sequelize } from "./server.js";
 
 User.hasMany(SolvedPuzzle, { foreignKey: 'user_id' });
 User.hasMany(DailyChallenge, { foreignKey: 'user_id' });
@@ -22,4 +23,6 @@ SolvedPuzzle.belongsTo(Puzzle, { foreignKey: 'puzzle_id' });
 DailyChallenge.belongsTo(User, { foreignKey: 'user_id' });
 DailyChallenge.belongsTo(Puzzle, { foreignKey: 'puzzle_id' });
 
-Rating.belongsTo(User, { foreignKey: 'user_id' });
+// uncomment to migrate models
+
+// await sequelize.sync({ force: true });

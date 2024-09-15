@@ -4,7 +4,7 @@ import { Op } from 'sequelize';
 import { Puzzle } from '../models/Puzzle.js';
 import { SolvedPuzzle } from '../models/SolvedPuzzle.js';
 import { DailyChallenge } from '../models/DailyChallenge.js';
-import('../models/setup/relations.js');
+import('../dbRelations.js');
 
 server.get('/puzzles', async (req, res) => {
     const page = parseInt(req.query.page) || 1;

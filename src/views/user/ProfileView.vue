@@ -3,7 +3,7 @@ import Header from '@/components/ui/Header.vue';
 import BasicButton from '@/components/ui/inputs/BasicButton.vue';
 import UserProfile from '@/components/user/profile/UserProfile.vue';
 import { onBeforeMount, ref } from 'vue';
-import { getUserProfile, deleteUser } from '@/services/userService';
+import { getUserProfile } from '@/services/userService';
 
 const user = ref({});
 

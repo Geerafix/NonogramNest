@@ -2,9 +2,14 @@ import { sequelize } from '../server.js';
 import { DataTypes } from 'sequelize';
 
 export const Rating = sequelize.define('Rating', {
+    rating_id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    }, 
     user_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        allowNull: false
     }, 
     size_5: {
         type: DataTypes.INTEGER,

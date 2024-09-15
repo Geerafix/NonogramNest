@@ -9,7 +9,7 @@ import('./endpoints/users.js');
 import('./endpoints/puzzles.js');
 
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const connectionString = 'postgres://postgres:admin@localhost:4001/nonogram-database';
+const connectionString = 'postgres://postgres:admin@localhost:5432/nonogram-database';
 const pgStore = pgSession(session);
 
 export const sequelize = new Sequelize(connectionString, {

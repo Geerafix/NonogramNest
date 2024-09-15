@@ -2,7 +2,7 @@ import { sequelize, server } from '../server.js';
 
 import { User } from '../models/User.js';
 import { Rating } from '../models/Rating.js';
-import('../models/setup/relations.js');
+import('../dbRelations.js');
 
 server.get('/rating/classic', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
