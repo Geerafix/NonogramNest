@@ -16,7 +16,6 @@ onBeforeMount(async () => {
     <main class="view">
         <Header></Header>
         <UserProfile :user="user" class="place-self-center"></UserProfile>
-        <BasicButton @click="deleteUser()" class="w-fit">Usuń konto</BasicButton>
     </main>
 </template>
 

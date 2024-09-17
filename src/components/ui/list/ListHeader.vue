@@ -15,7 +15,7 @@ defineProps(['headerName']);
     bg-gray-600 
     rounded-md 
     content-center
-    text-xl 
+    text-2xl 
     text-center
     select-none;
 }

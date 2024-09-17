@@ -21,6 +21,7 @@ const overItem = ref(false);
   rounded-lg 
   text-center
   transition-all
+  text-xl
   ease-in
   cursor-pointer;
 }
