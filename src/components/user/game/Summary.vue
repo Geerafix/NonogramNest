@@ -55,6 +55,7 @@ defineExpose({ isDisplayed, show, hide });
     min-h-14
     py-2
     px-4
+    border-b-4
     bg-gray-600
     border-gray-800/60
     text-slate-200   

@@ -1,10 +1,10 @@
 <script setup>
-import Nonogram from '@/components/user/play/Nonogram.vue';
-import Score from "@/components/user/play/Score.vue";
-import Actions from "@/components/user/play/Actions.vue";
+import Nonogram from '@/components/user/game/Nonogram.vue';
+import Score from "@/components/user/game/Score.vue";
+import Actions from "@/components/user/game/Actions.vue";
 import Header from "@/components/ui/Header.vue"
 import Notification from '@/components/ui/Notification.vue';
-import Summary from '@/components/user/play/Summary.vue';
+import Summary from '@/components/user/game/Summary.vue';
 import { set, useInterval } from '@vueuse/core';
 import { watch, ref, reactive } from 'vue';
 import { postPuzzle, postSolvedPuzzle } from '@/services/puzzleService';
