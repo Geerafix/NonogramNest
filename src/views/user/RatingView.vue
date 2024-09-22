@@ -1,12 +1,12 @@
 <script setup>
-import Header from '@/components/ui/Header.vue';
-import Pagination from '@/components/ui/Pagination.vue';
-import Select from '@/components/ui/inputs/Select.vue';
+import Header from '@/components/shared/Header.vue';
+import Pagination from '@/components/shared/Pagination.vue';
+import Select from '@/components/shared/inputs/Select.vue';
 import { sizes, modes } from '@/store';
 import { getClassicRating, getDailyChallengeRating } from '@/services/ratingService';
 import { ref, computed, onBeforeMount, watch } from 'vue';
 import { set } from '@vueuse/core';
-import List from '@/components/ui/list/List.vue';
+import List from '@/components/shared/list/List.vue';
 
 const page = ref(1);
 const limit = ref(10);

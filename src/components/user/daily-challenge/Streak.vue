@@ -1,5 +1,5 @@
 <script setup>
-import { getStreak } from '@/services/dailyChallengeService';
+import { getStreak } from '@/services/dailyChallengeService.js';
 import { onMounted, ref } from 'vue';
 
 const streak = ref(null);

@@ -1,7 +1,7 @@
 <script setup>
-import Pagination from '@/components/ui/Pagination.vue';
-import Header from '@/components/ui/Header.vue';
-import List from '@/components/ui/list/List.vue';
+import Pagination from '@/components/shared/Pagination.vue';
+import Header from '@/components/shared/Header.vue';
+import List from '@/components/shared/list/List.vue';
 import { getUsers } from '@/services/adminService';
 import { ref, watch, onMounted, computed } from 'vue';
 

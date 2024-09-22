@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { set, onClickOutside } from '@vueuse/core'
-import BasicButton from '@/components/ui/inputs/BasicButton.vue';
+import BasicButton from '@/components/shared/inputs/BasicButton.vue';
 
 const isDisplayed = ref(false);
 const target = ref(null)

@@ -1,6 +1,6 @@
 <script setup>
-import BasicButton from "@/components/ui/inputs/BasicButton.vue";
-import Select from "@/components/ui/inputs/Select.vue";
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import Select from "@/components/shared/inputs/Select.vue";
 import { sizes } from "@/store";
 const emit = defineEmits([
   'newBoard',

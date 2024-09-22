@@ -1,6 +1,6 @@
 <script setup>
 import SignUpForm from '@/components/auth/SignUpForm.vue'
-import Header from '@/components/ui/Header.vue';
+import Header from '@/components/shared/Header.vue';
 </script>
 
 <template>

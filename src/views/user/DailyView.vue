@@ -1,10 +1,10 @@
 <script setup>
-import Header from '@/components/ui/Header.vue';
-import Calendar from '@/components/ui/Calendar.vue';
-import BasicButton from '@/components/ui/inputs/BasicButton.vue';
-import Streak from '@/components/ui/Streak.vue';
+import Header from '@/components/shared/Header.vue';
+import Calendar from '@/components/user/daily-challenge/Calendar.vue';
+import BasicButton from '@/components/shared/inputs/BasicButton.vue';
+import Streak from '@/components/user/daily-challenge/Streak.vue';
 import Nonogram from '@/components/user/game/Nonogram.vue';
-import Notification from '@/components/ui/Notification.vue';
+import Notification from '@/components/shared/Notification.vue';
 import Score from '@/components/user/game/Score.vue';
 import Actions from '@/components/user/game/Actions.vue';
 import Summary from '@/components/user/game/Summary.vue';

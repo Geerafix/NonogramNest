@@ -1,6 +1,6 @@
 <script setup>
-import BasicButton from '@/components/ui/inputs/BasicButton.vue';
-import Header from '@/components/ui/Header.vue';
+import BasicButton from '@/components/shared/inputs/BasicButton.vue';
+import Header from '@/components/shared/Header.vue';
 import Nonogram from '@/components/user/game/Nonogram.vue';
 import { onMounted, ref } from 'vue'; 
 import { useInterval } from '@vueuse/core';

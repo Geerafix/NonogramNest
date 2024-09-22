@@ -1,6 +1,6 @@
 <script setup>
-import BasicInput from '@/components/ui/inputs/BasicInput.vue'
-import BasicButton from '@/components/ui/inputs/BasicButton.vue';
+import BasicInput from '@/components/shared/inputs/BasicInput.vue'
+import BasicButton from '@/components/shared/inputs/BasicButton.vue';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { postSignUp } from '@/services/userService.js';

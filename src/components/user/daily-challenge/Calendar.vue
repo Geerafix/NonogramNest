@@ -1,8 +1,8 @@
 <script setup>
-import MenuButton from './inputs/MenuButton.vue';
+import MenuButton from '@/components/shared/inputs/MenuButton.vue';
 import { ref, reactive, onBeforeMount, watch, computed } from 'vue';
 import { set } from '@vueuse/core';
-import { getDailies } from '@/services/dailyChallengeService'
+import { getDailies } from '@/services/dailyChallengeService.js'
 
 const daysNames = ['Pon', 'Wto', 'Śro', 'Czw', 'Pią', 'Sob', 'Nie'];
 const monthsNames = [
