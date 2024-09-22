@@ -32,7 +32,7 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
         allowNull: false,
     }
 }, {
-    tableName: 'solved_puzzles',
+    tableName: 'SolvedPuzzles',
     timestamps: false,
     hooks: {
         afterCreate: async (solved_puzzle, options) => {

@@ -1,7 +1,7 @@
 <script setup>
 import BasicButton from '@/components/ui/inputs/BasicButton.vue';
 import Header from '@/components/ui/Header.vue';
-import Nonogram from '@/components/user/play/Nonogram.vue';
+import Nonogram from '@/components/user/game/Nonogram.vue';
 import { onMounted, ref } from 'vue'; 
 import { useInterval } from '@vueuse/core';
 import { watch } from 'vue';

@@ -77,6 +77,6 @@ export const Score = sequelize.define('Score', {
         defaultValue: 0
     }
 }, {
-    tableName: 'score',
+    tableName: 'Scores',
     timestamps: false
 });

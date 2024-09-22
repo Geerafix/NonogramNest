@@ -40,7 +40,7 @@ export const DailyChallenge = sequelize.define('DailyChallenge', {
         defaultValue: new Date()
     }
 }, {
-    tableName: 'daily_challenges',
+    tableName: 'DailyChallenges',
     timestamps: false,
     hooks: {
         afterCreate: async (solved_challenge, options) => {

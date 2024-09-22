@@ -37,6 +37,6 @@ export const UserProfile = sequelize.define('UserProfile', {
         defaultValue: new Date()
     }
 }, {
-    tableName: 'user_profile',
+    tableName: 'UsersProfiles',
     timestamps: false
 });

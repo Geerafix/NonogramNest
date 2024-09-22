@@ -28,9 +28,9 @@ export const User = sequelize.define('User', {
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: 'user'
-    } 
+    }
 }, {
-    tableName: 'users',
+    tableName: 'Users',
     timestamps: false,
     hooks: {
         afterCreate: (user, options) => {
