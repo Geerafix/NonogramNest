@@ -1,16 +1,43 @@
 <script setup>
 import Header from '@/components/ui/Header.vue';
 import Actions from '@/components/user/game-creation/Actions.vue';
-import { ref } from 'vue';
-import { set } from '@vueuse/core';
 import NonogramBoard from '@/components/user/game-creation/NonogramBoard.vue';
+import Notification from '@/components/ui/Notification.vue';
+import { postCreatedPuzzle } from '@/services/puzzleService';
+import { generateGame } from '@/scripts/puzzleScripts';
+import { ref, reactive } from 'vue';
+import { set } from '@vueuse/core';
 
 const board = ref(null);
 const isSizeSelected = ref(false);
 
+const notification = ref(null);
+const notificationData = reactive({message: '', status: true, time: 2500});
+
 const handleNewBoard = (size) => {
     board.value.setBoard(size);
     set(isSizeSelected, true);
+};
+
+const handleClearBoard = () => {
+    board.value.clearBoard();
+};
+
+const handleSubmitGame = async () => {
+    const nonogram = generateGame(board.value.answers);
+    await board.value.clearBoard();
+
+    await postCreatedPuzzle(
+        nonogram.cluesX, 
+        nonogram.cluesY, 
+        board.value.answers.length,
+        nonogram.excludedTiles
+    );
+
+    notificationData.message = 'Zapisano nonogram';
+    notification.value.start();
+    
+    set(isSizeSelected, false);
 };
 </script>
 
@@ -25,7 +52,8 @@ const handleNewBoard = (size) => {
         <Transition name="fade">
             <NonogramBoard ref="board" v-show="isSizeSelected"></NonogramBoard>
         </Transition>
-        <Actions class="actions" @new-board="handleNewBoard"></Actions>
+        <Actions class="actions" @new-board="handleNewBoard" @clear-board="handleClearBoard" @submit="handleSubmitGame"></Actions>
+        <Notification ref="notification" v-bind="notificationData" />
     </main>
 </template>
 

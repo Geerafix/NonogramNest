@@ -3,7 +3,9 @@ import BasicButton from "@/components/ui/inputs/BasicButton.vue";
 import Select from "@/components/ui/inputs/Select.vue";
 import { sizes } from "@/store";
 const emit = defineEmits([
-  'newBoard'
+  'newBoard',
+  'clearBoard',
+  'submit'
 ]);
 
 const setSize = (size) => {
@@ -15,10 +17,10 @@ const setSize = (size) => {
 <template>
   <Transition name="slide-down-no-leave">
     <div class="flex gap-2">
-        <BasicButton :style="{ backgroundColor: '#5548a1' }">
+        <BasicButton @click="emit('clearBoard')" :style="{ backgroundColor: '#5548a1' }">
             <Icon icon="fa-solid fa-rotate" />
         </BasicButton>
-        <BasicButton :style="{ backgroundColor: 'rgb(40 78 70)' }">
+        <BasicButton @click="emit('submit')" :style="{ backgroundColor: 'rgb(40 78 70)' }">
             <Icon icon="fa-solid fa-check" />
         </BasicButton>
         <Select :items="sizes" @select="setSize"></Select>

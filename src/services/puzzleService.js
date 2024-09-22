@@ -22,6 +22,15 @@ export function postSolvedPuzzle(puzzleId, time, points) {
     });
 }
 
+export function postCreatedPuzzle(cluesX, cluesY, size, excludedTiles) {
+    return api.post('/created', {
+        cluesX: JSON.stringify(cluesX),
+        cluesY: JSON.stringify(cluesY),
+        size: size,
+        excludedTiles: JSON.stringify(excludedTiles)
+    });
+}
+
 export function getPuzzles(page, limit) {
     return api.get('/puzzles', {
         params: { 

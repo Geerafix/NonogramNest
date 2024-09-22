@@ -2,7 +2,7 @@
 import NonogramXClues from './NonogramXClues.vue';
 import NonogramYClues from './NonogramYClues.vue';
 import NonogramBoard from './NonogramBoard.vue';
-import { generateAndFindHints, check } from '@/scripts/puzzleScript';
+import { generateAndFindHints, check } from '@/scripts/puzzleScripts';
 import { reactive, onBeforeMount } from 'vue';
 
 defineProps(['paused', 'started']);

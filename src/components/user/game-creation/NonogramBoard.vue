@@ -8,7 +8,7 @@ const paintTileAnswer = (row, col) => {
     answers.value[row][col] = (answers.value[row][col] + 1) % 2; 
 };
 
-const paintTileConstraint = (row, col) => {
+const paintTileExclude = (row, col) => {
     answers.value[row][col] = (answers.value[row][col] - 1) % 2; 
 };
 
@@ -16,7 +16,11 @@ const setBoard = (size) => {
     set(answers, Array.from({ length: size }, () => Array(size).fill(0)));
 };
 
-defineExpose({ setBoard });
+const clearBoard = () => {
+    set(answers, answers.value.map((row) => row.map(() => 0)));
+};
+
+defineExpose({ setBoard, clearBoard, answers });
 </script>
 
 <template>
@@ -26,7 +30,7 @@ defineExpose({ setBoard });
                 :class="['cols', (answers[row-1] && answers[col-1][row-1] === -1) ? 'bg-gray-200/80' :
                                  ((answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')]" 
                 @mousedown.left="paintTileAnswer(col - 1, row - 1)" 
-                @contextmenu.prevent="paintTileConstraint(col - 1, row - 1)">
+                @contextmenu.prevent="paintTileExclude(col - 1, row - 1)">
             </div>
         </div>
     </main>

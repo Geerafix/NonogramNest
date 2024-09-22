@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import { Puzzle } from '../models/Puzzle.js';
 import { SolvedPuzzle } from '../models/SolvedPuzzle.js';
 import { DailyChallenge } from '../models/DailyChallenge.js';
+import { CreatedPuzzle } from '../models/CreatedPuzzle.js';
 import('../dbRelations.js');
 
 server.get('/puzzles', async (req, res) => {
@@ -40,6 +41,23 @@ server.post('/solved', async (req, res) => {
     } catch (error) {
         res.json(error);
     }
+});
+
+server.post('/created', async (req, res) => {
+    const puzzle = await Puzzle.create({ 
+        clues_x: await req.body.cluesX, 
+        clues_y: await req.body.cluesY, 
+        size: await req.body.size,
+        excluded_tiles: await req.body.excludedTiles
+    });
+
+    await CreatedPuzzle.create({
+        user_id: await req.session.user.user_id,
+        puzzle_id: puzzle.puzzle_id,
+        name: `Nonogram ${puzzle.puzzle_id}`,
+    });
+
+    res.json({ });
 });
 
 

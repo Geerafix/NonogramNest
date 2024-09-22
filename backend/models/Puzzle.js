@@ -7,6 +7,10 @@ export const Puzzle = sequelize.define('Puzzle', {
         autoIncrement: true,
         primaryKey: true,
     },
+    size: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
     clues_x: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -15,11 +19,11 @@ export const Puzzle = sequelize.define('Puzzle', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    size: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    } 
+    excluded_tiles : {
+        type: DataTypes.TEXT,
+        allowNull: true
+    }
 }, {
-    tableName: 'puzzles',
+    tableName: 'Puzzles',
     timestamps: false
 });

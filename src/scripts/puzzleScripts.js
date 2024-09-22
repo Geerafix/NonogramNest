@@ -1,11 +1,22 @@
 export function generateAndFindHints(nonogram, size) {
-    Object.assign(nonogram, { answers: [], board: [], cluesX: [], cluesY: [], paused: false });
+    Object.assign(
+        nonogram, { 
+            answers: [], 
+            board: [], 
+            cluesX: [], 
+            cluesY: [], 
+            excludedTiles: [],
+            paused: false 
+        }
+    );
     
     nonogram.answers = Array.from(Array(size), () => Array(size).fill(0));
+    nonogram.excludedTiles = Array.from(Array(size), () => Array(size).fill(0));
     nonogram.board = Array.from(Array(size), () => Array(size).fill().map(() => Math.floor(Math.random() * 2)));
-    
+
     nonogram.board.forEach((row, rowIdx) => {
-        nonogram.cluesX[rowIdx] = []; nonogram.cluesY[rowIdx] = [];
+        nonogram.cluesX[rowIdx] = []; 
+        nonogram.cluesY[rowIdx] = [];
         let ansX = 0, ansY = 0;
         row.forEach((col, colIdx) => {
             ansX += col;
@@ -79,4 +90,45 @@ export function check(nonogram) {
         });
     });
     return { X, Y, counter };
+}
+
+export function generateGame(answers) {
+    const nonogram = { cluesX: [], cluesY: [], excludedTiles: [] };
+    
+    nonogram.excludedTiles = Array.from(Array(answers.length), () => Array(answers.length).fill(0));
+
+    answers.forEach((row, rowIdx) => {
+        row.forEach((col, colIdx) => {
+            if (col === -1) {
+                nonogram.excludedTiles[rowIdx][colIdx] = -1;
+                answers[rowIdx][colIdx] = 0;
+            }
+        });
+    });
+
+    answers.forEach((row, rowIdx) => {
+        nonogram.cluesX[rowIdx] = []; 
+        nonogram.cluesY[rowIdx] = [];
+        let ansX = 0, ansY = 0;
+        row.forEach((col, colIdx) => {
+            ansX += col;
+            ansY += answers[colIdx][rowIdx];
+            if (col === 0 && ansX) {
+                nonogram.cluesX[rowIdx].push(ansX);
+                ansX = 0;
+            }
+            if (answers[colIdx][rowIdx] === 0 && ansY) {
+                nonogram.cluesY[rowIdx].push(ansY);
+                ansY = 0;
+            }
+        });
+        if (ansX) {
+            nonogram.cluesX[rowIdx].push(ansX);
+        }
+        if (ansY) {
+            nonogram.cluesY[rowIdx].push(ansY);
+        }
+    });
+
+    return nonogram;
 }
