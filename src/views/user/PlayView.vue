@@ -2,8 +2,8 @@
 import Nonogram from '@/components/user/game/Nonogram.vue';
 import Score from "@/components/user/game/Score.vue";
 import Actions from "@/components/user/game/Actions.vue";
-import Header from "@/components/ui/Header.vue"
-import Notification from '@/components/ui/Notification.vue';
+import Header from "@/components/shared/Header.vue"
+import Notification from '@/components/shared/Notification.vue';
 import Summary from '@/components/user/game/Summary.vue';
 import { set, useInterval } from '@vueuse/core';
 import { watch, ref, reactive } from 'vue';
@@ -84,7 +84,7 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
             <span class="self-center text-xl" v-if="points && !started">
                 {{ points }} pkt.
             </span>
-            <Actions :started="started" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @reset-game="handleResetGame" @end-game="handleEndGame"/>
+            <Actions :started="started" :paused="paused" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @reset-game="handleResetGame" @end-game="handleEndGame"/>
             <Score :time="counter" :points="points" :started="started"/>
         </div>
         <Summary ref="summary"></Summary>
