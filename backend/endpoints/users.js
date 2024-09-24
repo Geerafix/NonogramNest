@@ -65,8 +65,10 @@ server.get('/userProfile', async (req, res) => {
     });
 
     userProfile = JSON.parse(JSON.stringify(userProfile));
-    userProfile.username = userProfile.User.username;
-    delete userProfile.User;
+    if (userProfile) {
+        userProfile.username = userProfile.User.username;
+        delete userProfile.User;
+    }
 
     res.json(userProfile);
 });

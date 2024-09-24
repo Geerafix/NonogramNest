@@ -21,6 +21,11 @@ export const UserProfile = sequelize.define('UserProfile', {
         allowNull: false,
         defaultValue: 0
     },
+    solved_challenges: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     total_points: {
         type: DataTypes.INTEGER,
         allowNull: false,

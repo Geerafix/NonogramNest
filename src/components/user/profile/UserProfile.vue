@@ -5,7 +5,7 @@ defineProps(['user']);
 <template>
     <div class="user-profile-container">
         <div class="grid gap-2 p-2 text-center bg-gray-700 rounded-xl">
-            <div class="bg-gray-800/75 rounded-lg py-2">
+            <div class="bg-gray-800/75 rounded-lg py-2 text-2xl font-normal content-center">
                 <p>{{ user.username }}</p>
             </div>
             <div class="grid grid-cols-[1fr_1fr] gap-2">
@@ -21,6 +21,8 @@ defineProps(['user']);
         <div class="numbers">
             <div class="item-container">Rozwiązane gry</div>
                 <div class="item">{{ user.solved_puzzles }}</div>
+            <div class="item-container">Rozwiązane wyzwania</div>
+                <div class="item">{{ user.solved_challenges }}</div>
             <div class="item-container">Suma punktów</div>  
                 <div class="item">{{ user.total_points }}</div>
             <div class="item-container">Łączny czas gry</div>
@@ -71,7 +73,7 @@ defineProps(['user']);
 .numbers {
     @apply
     grid
-    grid-cols-2 
+    grid-cols-[min-content_1fr] 
     gap-2
     p-2 
     bg-gray-700
