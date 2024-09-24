@@ -19,12 +19,9 @@ server.get('/rating/classic', async (req, res) => {
                 attributes: size ? [ column ] : [ 'classic_sum' ],
             },
             limit: limit,
-            offset: offset
+            offset: offset,
+            raw: true
         });
-
-        rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
-            username: Object.values(el)[0], totalPoints: Object.values(el.Score)[0]
-        })).sort((a, b) => a.totalPoints > b.totalPoints ? -1 : 1);
 
         res.json(rating);
     } catch (error) {
@@ -45,12 +42,9 @@ server.get('/rating/dailyChallenges', async (req, res) => {
                 attributes: [ 'challenge_sum' ],
             },
             limit: limit,
-            offset: offset
+            offset: offset,
+            raw: true
         });
-
-        rating = Array.from(JSON.parse(JSON.stringify(rating))).map((el) => ({ 
-            username: Object.values(el)[0], totalPoints: Object.values(el.Score)[0]
-        })).sort((a, b) => a.totalPoints > b.totalPoints ? -1 : 1);
 
         res.json(rating);
     } catch (error) {
