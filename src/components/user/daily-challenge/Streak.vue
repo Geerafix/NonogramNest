@@ -12,8 +12,7 @@ onMounted(async () => {
 <template>
     <div class="streak">
       <Icon class="flame" icon="fa-solid fa-fire" />
-      <span>Dzień</span>
-      <span>{{ streak }}</span>
+      <span> Dzień {{ streak }}</span>
     </div>
 </template>
 

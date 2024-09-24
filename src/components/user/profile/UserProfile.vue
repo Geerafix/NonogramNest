@@ -82,9 +82,15 @@ defineProps(['user']);
 }
 .item-container {
     @apply
-    text-right
+    text-left
     text-nowrap
     content-center
+    bg-gradient-to-r
+    from-transparent
+    to-gray-600/50
+    rounded-lg
+    pr-2;
+
 }
 .item {
     @apply

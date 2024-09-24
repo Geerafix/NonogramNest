@@ -93,8 +93,6 @@ server.get('/dailyChallenge', async (req, res) => {
             include: [{ model: Puzzle }],
             where: { [Op.and]: [{ user_id: user.user_id }, { date: today }] } 
         });
-
-        console.log(dailyChallenge);
         
         res.json(dailyChallenge);
 

@@ -7,7 +7,7 @@ defineProps(['headers', 'items']);
 
 <template>
     <div>
-        <div class="headers">
+        <div v-if="headers" class="headers">
             <li v-for="header of headers">
                 <ListHeader :headerName="header" />
             </li>
