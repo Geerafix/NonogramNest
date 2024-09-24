@@ -54,7 +54,7 @@ server.get('/users', async (req, res) => {
 
 server.get('/userProfile', async (req, res) => {
     const user = await req.session.user;
-    const userProfile = await UserProfile.findOne({
+    let userProfile = await UserProfile.findOne({
         include: { 
             model: User,
             attributes: [ 'username' ]
@@ -63,6 +63,10 @@ server.get('/userProfile', async (req, res) => {
             user_id: user.user_id 
         }
     });
+
+    userProfile = JSON.parse(JSON.stringify(userProfile));
+    userProfile.username = userProfile.User.username;
+    delete userProfile.User;
 
     res.json(userProfile);
 });

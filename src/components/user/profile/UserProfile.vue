@@ -4,9 +4,14 @@ defineProps(['user']);
 
 <template>
     <div class="user-profile-container">
-        <div class="grid gap-2 p-2 grid-rows-[min-content_auto] text-center bg-gray-700 rounded-xl">
+        <div class="grid gap-2 p-2 text-center bg-gray-700 rounded-xl">
+            <div class="bg-gray-800/75 rounded-lg py-2">
+                <p>{{ user.username }}</p>
+            </div>
             <div class="grid grid-cols-[1fr_1fr] gap-2">
-                <Icon icon="fa-solid fa-user" class="my-auto mx-auto text-5xl bg-gray-800/50 w-full py-2 rounded-lg" />
+                <div class="bg-gray-800/50 rounded-lg content-center py-2">
+                    <Icon icon="fa-solid fa-user" class="my-auto mx-auto text-5xl" />
+                </div>
                 <div class="bg-gray-800/50 rounded-lg content-center">UID: {{ user.user_id }}</div>
             </div>
             <div>
