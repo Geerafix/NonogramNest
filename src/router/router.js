@@ -64,6 +64,15 @@ const router = createRouter({
       },
     },
     {
+      path: '/spolecznosc',
+      name: 'Community',
+      component: () => import('@/views/user/CommunityView.vue'),
+      meta: { 
+        pageOwner: userRole,
+        title: 'Gry społeczności' 
+      },
+    },
+    {
       path: '/ranking',
       name: 'Rating',
       component: () => import('@/views/user/RatingView.vue'),

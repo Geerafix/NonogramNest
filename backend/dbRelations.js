@@ -28,6 +28,7 @@ DailyChallenge.belongsTo(Puzzle, { foreignKey: 'puzzle_id' });
 Score.belongsTo(User, { foreignKey: 'user_id' });
 
 CreatedPuzzle.belongsTo(User, { foreignKey: 'user_id' });
+CreatedPuzzle.belongsTo(Puzzle, { foreignKey: 'puzzle_id' });
 
 // uncomment to migrate models
 

@@ -5,6 +5,7 @@ import { Puzzle } from '../models/Puzzle.js';
 import { SolvedPuzzle } from '../models/SolvedPuzzle.js';
 import { DailyChallenge } from '../models/DailyChallenge.js';
 import { CreatedPuzzle } from '../models/CreatedPuzzle.js';
+import { User } from '../models/User.js';
 import('../dbRelations.js');
 
 server.get('/puzzles', async (req, res) => {
@@ -12,6 +13,28 @@ server.get('/puzzles', async (req, res) => {
     const limit = parseInt(req.query.limit) || 4;
     const offset = (page - 1) * limit;
     const puzzles = await Puzzle.findAll({ limit: limit, offset: offset});
+    
+    res.json(puzzles);
+});
+
+server.get('/community', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 4;
+    const offset = (page - 1) * limit;
+
+    const puzzles = await CreatedPuzzle.findAll({
+        include: [{
+            model: Puzzle,
+            attributes: [ 'size' ]
+        }, {
+            model: User,
+            attributes: [ 'username' ]
+        }],
+        attributes: [ 'created_id', 'name' ],
+        limit: limit, 
+        offset: offset,
+        raw: true
+    });
     
     res.json(puzzles);
 });

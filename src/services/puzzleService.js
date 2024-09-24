@@ -39,3 +39,12 @@ export function getPuzzles(page, limit) {
         }
     });
 }
+
+export function getCommunityPuzzles(page, limit) {
+    return api.get('/community', {
+        params: { 
+            page: page, 
+            limit: limit 
+        }
+    });
+}
