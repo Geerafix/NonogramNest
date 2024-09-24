@@ -81,9 +81,11 @@ watch(paused, (newValue) => newValue ? pause() : resume() );
             <Nonogram ref="nonogram" :started="started" :paused="paused" />
         </Transition>
         <div class="actions-container">
-            <span class="self-center text-xl" v-if="points && !started">
-                {{ points }} pkt.
-            </span>
+            <Transition name="fade">
+                <span class="self-center text-xl" v-if="points && !started">
+                    {{ points }} pkt.
+                </span>
+            </Transition>
             <Actions :started="started" :paused="paused" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck" @size="setSize" @reset-game="handleResetGame" @end-game="handleEndGame"/>
             <Score :time="counter" :points="points" :started="started"/>
         </div>
