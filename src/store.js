@@ -17,3 +17,8 @@ export const modes = [
     { name: 'Wyzwanie', value: 'challenge' },
     { name: 'Klasyczny', value: 'classic' },
 ];
+
+export const ratingSearchBy = [
+    { name: 'Twórca', value: 'creator' },
+    { name: 'Nazwa', value: 'name' },
+];

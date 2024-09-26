@@ -22,14 +22,19 @@ server.get('/community', async (req, res) => {
     const limit = parseInt(req.query.limit) || 4;
     const offset = (page - 1) * limit;
 
+    const search = `%${req.query.search}%` || '%%';
+    const option = req.query.option;
+
     const puzzles = await CreatedPuzzle.findAll({
         include: [{
             model: Puzzle,
-            attributes: [ 'size' ]
+            attributes: [ 'size' ],
         }, {
             model: User,
-            attributes: [ 'username' ]
+            attributes: [ 'username' ],
+            where: { username: { [Op.iLike]: option === 'creator' ? search : '%%' } } 
         }],
+        where: { name: { [Op.iLike]: option === 'name' ? search : '%%' } }, 
         attributes: [ 'created_id', 'name' ],
         limit: limit, 
         offset: offset,

@@ -40,11 +40,13 @@ export function getPuzzles(page, limit) {
     });
 }
 
-export function getCommunityPuzzles(page, limit) {
+export function getCommunityPuzzles(page, limit, search, option) {
     return api.get('/community', {
         params: { 
             page: page, 
-            limit: limit 
+            limit: limit,
+            search: search,
+            option: option
         }
     });
 }
