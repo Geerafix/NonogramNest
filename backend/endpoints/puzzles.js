@@ -112,6 +112,20 @@ server.get('/dailyChallenges', async (req, res) => {
     }
 });
 
+server.get('/communityPuzzle', async (req, res) => {
+    const id = req.query.created_id || 1;
+
+    const communityPuzzle = await Puzzle.findOne({
+        include: [{
+            model: CreatedPuzzle,
+            attributes: [ ],
+            where: { created_id: id }
+        }],
+    });
+
+    res.json(communityPuzzle);
+});
+
 server.get('/streak', async (req, res) => {
     try {    
         const user = req.session.user;

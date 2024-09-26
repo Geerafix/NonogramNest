@@ -1,13 +1,20 @@
 <script setup>
-defineProps(['answers', 'size', 'paint']);
+defineProps([
+  'answers',
+  'size',
+  'paint',
+  'exclude'
+]);
 </script>
 
 <template>
     <main class="board">
         <div class="rows" v-for="row in size">
-            <div v-for="col in size" 
-                :class="['cols', (answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white']" 
-                @mousedown.left="paint(col - 1, row - 1)" @mousedown.right="">
+            <div v-for="col in size"
+                 :class="['cols', (answers[row-1] && answers[col-1][row-1] === -1) ? 'bg-gray-200/80' :
+                                 ((answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')]"
+                 @mousedown.left="paint(col - 1, row - 1)"
+                 @contextmenu.prevent="exclude(col - 1, row - 1)">
             </div>
         </div>
     </main>

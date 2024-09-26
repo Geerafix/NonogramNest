@@ -73,6 +73,15 @@ const router = createRouter({
       },
     },
     {
+      path: '/spolecznosc/:id',
+      name: 'CommunityGame',
+      component: () => import('@/views/user/CommunityGameView.vue'),
+      meta: {
+        pageOwner: userRole,
+        title: 'Gra społeczności'
+      },
+    },
+    {
       path: '/ranking',
       name: 'Rating',
       component: () => import('@/views/user/RatingView.vue'),
@@ -168,13 +177,14 @@ router.beforeEach(async (to, from) => {
     }
   } else if (!to.meta.hideMenu) {
     if (typeof role !== 'undefined') {
-      if (role !== to.meta.pageOwner) { 
-        return { name: from.name } 
+      if (role !== to.meta.pageOwner) {
+        return { name: from.name }
       }
     } else if (typeof role === 'undefined') {
       return { name: 'SignIn' };
     }
   }
+
   document.title = to.meta.title;
 });
 

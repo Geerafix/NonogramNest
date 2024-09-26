@@ -3,6 +3,11 @@ import ListHeader from './ListHeader.vue'
 import ListItem from './ListItem.vue';
 import Item from './Item.vue';
 defineProps(['headers', 'items']);
+const emit = defineEmits(['action']);
+
+const itemAction = (item) => {
+    emit('action', item);
+};
 </script>
 
 <template>
@@ -14,7 +19,7 @@ defineProps(['headers', 'items']);
         </div>
         <div class="items">
             <li v-for="item in items">
-                <ListItem>
+                <ListItem @click="itemAction(item)">
                     <div v-for="value in item">
                         <Item :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
                     </div>

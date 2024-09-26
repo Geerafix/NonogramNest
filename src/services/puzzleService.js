@@ -48,3 +48,11 @@ export function getCommunityPuzzles(page, limit) {
         }
     });
 }
+
+export function getCommunityPuzzle(id) {
+    return api.get('/communityPuzzle', {
+        params: {
+            created_id: id
+        }
+    });
+}
