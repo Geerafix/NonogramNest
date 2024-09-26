@@ -2,8 +2,7 @@
 defineProps([
   'answers',
   'size',
-  'paint',
-  'exclude'
+  'paint'
 ]);
 </script>
 
@@ -11,10 +10,10 @@ defineProps([
     <main class="board">
         <div class="rows" v-for="row in size">
             <div v-for="col in size"
-                 :class="['cols', (answers[row-1] && answers[col-1][row-1] === -1) ? 'bg-gray-200/80' :
+                 :class="['cols', (answers[row-1] && answers[col-1][row-1] === -1) ? 'bg-gray-200/80 pointer-events-none' :
                                  ((answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')]"
                  @mousedown.left="paint(col - 1, row - 1)"
-                 @contextmenu.prevent="exclude(col - 1, row - 1)">
+                 @contextmenu.prevent="">
             </div>
         </div>
     </main>

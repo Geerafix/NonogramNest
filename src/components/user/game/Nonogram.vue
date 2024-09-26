@@ -27,12 +27,8 @@ const checkSolution = () => {
     return { isSolved: (isSolved.X && isSolved.Y), lostPoints: isSolved.counter};
 };
 
-const paintTileAnswer = (row, col) => {
+const paintTile = (row, col) => {
     nonogram.answers[row][col] = (nonogram.answers[row][col] + 1) % 2;
-};
-
-const paintTileExclude = (row, col) => {
-    nonogram.answers[row][col] = (nonogram.answers[row][col] - 1) % 2;
 };
 
 defineExpose({ nonogram, newGame, resetGame, checkSolution });
@@ -52,8 +48,7 @@ onBeforeMount(resetGame);
             <NonogramBoard 
                 :answers="nonogram.answers" 
                 :size="nonogram.size" 
-                :paint="!paused ? paintTileAnswer : () => {}"
-                :exclude="!paused ? paintTileExclude : () => {}"
+                :paint="!paused ? paintTile : () => {}"
             />
         </div>
     </main>
