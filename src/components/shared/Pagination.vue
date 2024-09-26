@@ -19,7 +19,6 @@ const handleNextPage = () => {
 
 const computedPrevPage = computed(() => props.page === 1 );
 const computedNextPage = computed(() => props.perpage < props.limit );
-
 </script>
 
 <template>
@@ -43,8 +42,6 @@ const computedNextPage = computed(() => props.perpage < props.limit );
   grid-cols-[min-content_80px_min-content] 
   gap-2 
   w-fit
-  mt-4 
-  mx-auto
   items-center;
 }
 .page {

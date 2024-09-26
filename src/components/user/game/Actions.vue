@@ -53,13 +53,13 @@ watch(() => props.started, (started) => {
       <BasicButton @click="handleEndGame">
         <Icon icon="fa-solid fa-xmark" />
       </BasicButton>
-      <BasicButton @click="emit('pause')" :class="{ 'animate-pulse': paused }"
-      :style="{ backgroundColor: paused ? '#3C6961' : '#7C2C3B' }">
-      <Icon v-if="paused" icon="fa-solid fa-play" />
-      <Icon v-else icon="fa-solid fa-stop" />
-      </BasicButton>
-      <BasicButton @click="handleResetGame" :style="{ backgroundColor: '#5548a1' }">
+      <BasicButton @click="handleResetGame" :style="{ backgroundColor: 'teal' }">
         <Icon icon="fa-solid fa-rotate" />
+      </BasicButton>
+      <BasicButton @click="emit('pause')" :class="{ 'animate-pulse': paused }"
+        :style="{ backgroundColor: paused ? '#3C6961' : '#7C2C3B' }">
+        <Icon v-if="paused" icon="fa-solid fa-play" />
+        <Icon v-else icon="fa-solid fa-stop" />
       </BasicButton>
       <BasicButton @click="emit('check')" :disabled="paused"
         :style="{ backgroundColor: '#8f5333', opacity: paused ? 0.5 : 1 }">
