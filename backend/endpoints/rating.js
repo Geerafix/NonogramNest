@@ -16,8 +16,11 @@ server.get('/rating/classic', async (req, res) => {
             attributes: [ 'username' ],
             include: {
                 model: Score,
-                attributes: size ? [ column ] : [ 'classic_sum' ],
+                attributes: size ? [ column ] : [ 'classic_sum' ]
             },
+            order: [
+                [ Score, size ? column : 'classic_sum', 'DESC' ]
+            ],
             limit: limit,
             offset: offset,
             raw: true
@@ -41,6 +44,9 @@ server.get('/rating/dailyChallenges', async (req, res) => {
                 model: Score,
                 attributes: [ 'challenge_sum' ],
             },
+            order: [
+                [ Score, 'challenge_sum', 'DESC' ]
+            ],
             limit: limit,
             offset: offset,
             raw: true

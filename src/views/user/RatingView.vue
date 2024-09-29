@@ -38,11 +38,7 @@ const fetchRating = async () => {
     }
 };
 
-watch(page, fetchRating);
-
-watch(size, fetchRating);
-
-watch(mode, fetchRating);
+watch([page, size, mode], fetchRating);
 
 onBeforeMount(fetchRating);
 </script>
