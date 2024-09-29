@@ -4,9 +4,9 @@ import Pagination from '@/components/shared/Pagination.vue';
 import BasicInput from '@/components/shared/inputs/BasicInput.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
-import { getCommunityPuzzles} from '@/services/puzzleService';
-import {ref, onBeforeMount, watch, computed} from 'vue';
-import {useRouter} from "vue-router";
+import { getCommunityPuzzles } from '@/services/puzzleService';
+import { ref, onBeforeMount, watch, computed } from 'vue';
+import { useRouter } from "vue-router";
 import { ratingSearchBy } from '@/store';
 import { set } from '@vueuse/core';
 
@@ -28,20 +28,21 @@ const settings = computed(() => ({
 
 const fetchPuzzles = async () => {
     await getCommunityPuzzles(page.value, limit.value, searchVal.value, option.value)
-            .then((res) => puzzles.value = res.data);
+            .then((res) => set(puzzles, res.data));
 };
 
 const handleAction = async (item) => {
     await router.push({name: 'CommunityGame', params: { id: item.created_id }});
 };
 
-const setOption = (opt) => {
-    set(option, opt);
-};
+const setOption = (opt) => set(option, opt);
 
 watch(page, fetchPuzzles);
 
-watch(searchVal, fetchPuzzles)
+watch([searchVal, option], () => {
+    set(page, 1);
+    fetchPuzzles();
+});
 
 onBeforeMount(fetchPuzzles);
 </script>
