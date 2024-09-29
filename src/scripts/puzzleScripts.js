@@ -47,15 +47,13 @@ export function generateAndFindHints(nonogram, size) {
 export function check(nonogram) {
     let x = 0, y = 0, checkX = [], checkY = [], ansX = 0, ansY = 0;
 
-    nonogram.answers = nonogram.answers.map((row) => row.map((el) => el === -1 ? 0 : el));
-
     nonogram.answers.forEach((row, rowIdx) => {
         checkX.push([]); checkY.push([]);
         row.forEach((col, colIdx) => {
             if (nonogram.answers[rowIdx][colIdx] === 1) {
                 ansX += 1;
             }
-            if (nonogram.answers[rowIdx][colIdx] === 0 && ansX !== 0) { 
+            if (nonogram.answers[rowIdx][colIdx] <= 0 && ansX !== 0) { 
                 checkX[rowIdx].push(ansX);
                 ansX = 0;
                 x += 1; 
@@ -63,7 +61,7 @@ export function check(nonogram) {
             if (nonogram.answers[colIdx][rowIdx] === 1) {
                 ansY += 1;
             }
-            if (nonogram.answers[colIdx][rowIdx] === 0 && ansY !== 0) { 
+            if (nonogram.answers[colIdx][rowIdx] <= 0 && ansY !== 0) { 
                 checkY[rowIdx].push(ansY); 
                 ansY = 0; 
                 y += 1;
