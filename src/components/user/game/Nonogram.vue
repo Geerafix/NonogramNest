@@ -18,7 +18,7 @@ const resetGame = (option) => {
         case 1 : 
             Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0});
         case 2 :
-            nonogram.answers = nonogram.answers.map(row => row.map(cell => cell = 0));
+            nonogram.answers = nonogram.answers.map(row => row.map((el) => el === -1 ? el : 0));
     }
 };
 

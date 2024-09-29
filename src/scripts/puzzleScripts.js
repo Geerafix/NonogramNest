@@ -10,9 +10,14 @@ export function generateAndFindHints(nonogram, size) {
         }
     );
     
-    nonogram.answers = Array.from(Array(size), () => Array(size).fill(0));
     nonogram.excludedTiles = Array.from(Array(size), () => Array(size).fill(0));
     nonogram.board = Array.from(Array(size), () => Array(size).fill().map(() => Math.floor(Math.random() * 2)));
+    
+    nonogram.answers = Array.from(Array(size), () => Array(size).fill(0));
+    nonogram.answers = nonogram.answers.map((row, rowIdx) => 
+        row.map((col, colIdx) => 
+            nonogram.board[rowIdx][colIdx] !== 1 ? Math.floor(Math.random() * 2) * -1 : col
+    ));
 
     nonogram.board.forEach((row, rowIdx) => {
         nonogram.cluesX[rowIdx] = []; 
@@ -41,6 +46,8 @@ export function generateAndFindHints(nonogram, size) {
 
 export function check(nonogram) {
     let x = 0, y = 0, checkX = [], checkY = [], ansX = 0, ansY = 0;
+
+    nonogram.answers = nonogram.answers.map((row) => row.map((el) => el === -1 ? 0 : el));
 
     nonogram.answers.forEach((row, rowIdx) => {
         checkX.push([]); checkY.push([]);
