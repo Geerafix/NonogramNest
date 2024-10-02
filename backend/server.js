@@ -8,6 +8,7 @@ import { Sequelize } from 'sequelize';
 import('./endpoints/users.js');
 import('./endpoints/rating.js');
 import('./endpoints/puzzles.js');
+import('./endpoints/achievements.js');
 
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const connectionString = 'postgres://postgres:admin@localhost:5432/nonogram-database';
