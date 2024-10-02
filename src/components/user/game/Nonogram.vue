@@ -31,7 +31,7 @@ const paintTile = (row, col) => {
     nonogram.answers[row][col] = (nonogram.answers[row][col] + 1) % 2;
 };
 
-defineExpose({ nonogram, newGame, resetGame, checkSolution });
+defineExpose({ nonogram, newGame, resetGame, paintTile, checkSolution });
 
 onBeforeMount(resetGame);
 </script>

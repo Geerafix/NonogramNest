@@ -34,7 +34,7 @@ const computedScreen = computed(() => {
     <div class="relative">
         <TransitionGroup name="slide-right">
             <div v-if="!computedScreen" key="1" class="menu" @click="visible = !visible" 
-                @mouseenter="toggleNavbar" @mouseleave="toggleNavbar">
+                @mouseover="toggleNavbar">
                 <slot></slot>
                 <div class="buttons-container">
                     <MenuButton buttonText="Ustawienia" @click="router.push({ name: computedRole });">

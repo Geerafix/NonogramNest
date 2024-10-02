@@ -1,20 +1,17 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useElementSize } from '@vueuse/core'
 defineProps(['buttonText']);
 
 const button = ref(null);
-const initialWidth = ref(0);
 const { width } = useElementSize(button);
-const computedWidth = computed(() => initialWidth.value < width.value );
-
-onMounted(() => { initialWidth.value = (width.value * 2); });
+const computedWidth = computed(() => width.value > 100 );
 </script>
 
 <template>
     <button ref="button" class="menu-button">
         <slot></slot>
-        <span :class="['mr-2', 'sm:opacity-0', {'sm:opacity-100': computedWidth}]">
+        <span :class="[ 'mr-2', 'sm:opacity-0', { 'sm:opacity-100': computedWidth } ]">
             {{ buttonText }}
         </span>
     </button>
