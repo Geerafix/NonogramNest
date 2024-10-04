@@ -1,9 +1,9 @@
-import { sequelize } from '../server.js';
-import { DataTypes } from 'sequelize';
+import {sequelize} from '../server.js';
+import {DataTypes} from 'sequelize';
 
-import { UserProfile } from './UserProfile.js';
-import { Puzzle } from './Puzzle.js';
-import { Score } from './Score.js';
+import {UserProfile} from './UserProfile.js';
+import {Puzzle} from './Puzzle.js';
+import {Score} from './Score.js';
 
 export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
     solved_id: {
@@ -47,11 +47,11 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
             });
 
             const puzzle = await Puzzle.findOne({
-                where: { puzzle_id: solved_puzzle.puzzle_id }
+                where: {puzzle_id: solved_puzzle.puzzle_id}
             });
 
             const column = `size_${puzzle.size}`;
-            
+
             await Score.update({
                 [column]: sequelize.literal(`${column} + ${solved_puzzle.points}`),
                 classic_sum: sequelize.literal(`classic_sum + ${solved_puzzle.points}`),

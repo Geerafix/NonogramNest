@@ -17,7 +17,7 @@ export function postSignUp(email, username, password) {
     return api.post('/signup', {
         email: email,
         username: username,
-        password: password     
+        password: password
     });
 }
 

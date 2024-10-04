@@ -1,8 +1,8 @@
-import { sequelize } from '../server.js';
-import { DataTypes } from 'sequelize';
+import {sequelize} from '../server.js';
+import {DataTypes} from 'sequelize';
 
-import { UserProfile } from './UserProfile.js';
-import { Score } from './Score.js';
+import {UserProfile} from './UserProfile.js';
+import {Score} from './Score.js';
 
 export const DailyChallenge = sequelize.define('DailyChallenge', {
     daily_id: {

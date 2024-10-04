@@ -8,6 +8,6 @@ const api = axios.create({
 
 export function getUserAchievements(page, limit) {
     return api.get('/userAchievements', {
-        params: { page: page, limit: limit }
+        params: {page: page, limit: limit}
     });
 }

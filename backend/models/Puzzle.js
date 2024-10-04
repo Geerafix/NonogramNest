@@ -1,5 +1,5 @@
-import { sequelize } from '../server.js';
-import { DataTypes } from 'sequelize';
+import {sequelize} from '../server.js';
+import {DataTypes} from 'sequelize';
 
 export const Puzzle = sequelize.define('Puzzle', {
     puzzle_id: {
@@ -19,7 +19,7 @@ export const Puzzle = sequelize.define('Puzzle', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    excluded_tiles : {
+    excluded_tiles: {
         type: DataTypes.TEXT,
         allowNull: true
     }

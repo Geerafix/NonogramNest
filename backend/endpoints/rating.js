@@ -1,59 +1,48 @@
-import { server } from '../server.js';
+import {server} from '../server.js';
+import {User} from '../models/User.js';
+import {Score} from '../models/Score.js';
+import {asyncHandler, getPagination} from "../utils.js";
 
-import { User } from '../models/User.js';
-import { Score } from '../models/Score.js';
 import('../dbRelations.js');
 
-server.get('/rating/classic', async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 4;
-    const offset = (page - 1) * limit;  
-    const size = req.query.size;
+server.get('/rating/classic', asyncHandler(async (req, res) => {
+    const {limit, offset} = getPagination(req);
+    const size = parseInt(req.query.size);
 
-    try {
-        const column = `size_${size}`;
-        let rating = await User.findAll({
-            attributes: [ 'username' ],
-            include: {
-                model: Score,
-                attributes: size ? [ column ] : [ 'classic_sum' ]
-            },
-            order: [
-                [ Score, size ? column : 'classic_sum', 'DESC' ]
-            ],
-            limit: limit,
-            offset: offset,
-            raw: true
-        });
+    const column = !Number.isNaN(size) ? `size_${size}` : 'classic_sum';
+    const rating = await User.findAll({
+        attributes: ['username'],
+        include: {
+            model: Score,
+            attributes: [column]
+        },
+        order: [
+            [Score, column, 'DESC']
+        ],
+        limit: limit,
+        offset: offset,
+        raw: true
+    });
 
-        res.json(rating);
-    } catch (error) {
-        res.json(error);
-    }
-});
+    res.json(rating);
+}));
 
-server.get('/rating/dailyChallenges', async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 4;
-    const offset = (page - 1) * limit;  
+server.get('/rating/dailyChallenges', asyncHandler(async (req, res) => {
+    const {limit, offset} = getPagination(req);
 
-    try {
-        let rating = await User.findAll({
-            attributes: [ 'username' ],
-            include: {
-                model: Score,
-                attributes: [ 'challenge_sum' ],
-            },
-            order: [
-                [ Score, 'challenge_sum', 'DESC' ]
-            ],
-            limit: limit,
-            offset: offset,
-            raw: true
-        });
+    const rating = await User.findAll({
+        attributes: ['username'],
+        include: {
+            model: Score,
+            attributes: ['challenge_sum'],
+        },
+        order: [
+            [Score, 'challenge_sum', 'DESC']
+        ],
+        limit: limit,
+        offset: offset,
+        raw: true
+    });
 
-        res.json(rating);
-    } catch (error) {
-        res.json(error);
-    }
-});
+    res.json(rating);
+}));

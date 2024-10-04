@@ -8,6 +8,6 @@ const api = axios.create({
 
 export function getUsers(page, limit) {
     return api.get('/users', {
-        params: { page: page, limit: limit }
+        params: {page: page, limit: limit}
     });
 }

@@ -33,17 +33,17 @@ export function postCreatedPuzzle(cluesX, cluesY, size, excludedTiles) {
 
 export function getPuzzles(page, limit) {
     return api.get('/puzzles', {
-        params: { 
-            page: page, 
-            limit: limit 
+        params: {
+            page: page,
+            limit: limit
         }
     });
 }
 
 export function getCommunityPuzzles(page, limit, search, option) {
-    return api.get('/community', {
-        params: { 
-            page: page, 
+    return api.get('/communityPuzzles', {
+        params: {
+            page: page,
             limit: limit,
             search: search,
             option: option

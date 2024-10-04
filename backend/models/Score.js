@@ -1,16 +1,16 @@
-import { sequelize } from '../server.js';
-import { DataTypes } from 'sequelize';
+import {sequelize} from '../server.js';
+import {DataTypes} from 'sequelize';
 
 export const Score = sequelize.define('Score', {
     score_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
-    }, 
+    },
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: false
-    }, 
+    },
     size_5: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -12,8 +12,8 @@ export function getDailyChallenge() {
 
 export function postDailyChallenge(puzzleId, time, points) {
     return api.post('/dailyChallenge', {
-        puzzleId: puzzleId, 
-        time: time, 
+        puzzleId: puzzleId,
+        time: time,
         points: points,
     });
 }
@@ -21,7 +21,7 @@ export function postDailyChallenge(puzzleId, time, points) {
 export function updateDailyChallenge(answers, time, points, isSolved) {
     return api.put('/dailyChallenge', {
         answers: answers,
-        time: time, 
+        time: time,
         points: points,
         isSolved: isSolved
     });
@@ -29,7 +29,7 @@ export function updateDailyChallenge(answers, time, points, isSolved) {
 
 export function getDailies(month, year) {
     return api.get('/dailies', {
-        params: { month: month, year: year }
+        params: {month: month, year: year}
     });
 }
 

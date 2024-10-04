@@ -1,5 +1,5 @@
-import { sequelize } from '../server.js';
-import { DataTypes } from 'sequelize';
+import {sequelize} from '../server.js';
+import {DataTypes} from 'sequelize';
 
 export const UserAchievement = sequelize.define('UserAchievement', {
     user_achievement_id: {

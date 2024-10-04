@@ -1,5 +1,5 @@
-import { sequelize } from '../server.js';
-import { DataTypes } from 'sequelize';
+import {sequelize} from '../server.js';
+import {DataTypes} from 'sequelize';
 
 export const UserProfile = sequelize.define('UserProfile', {
     user_profile_id: {
