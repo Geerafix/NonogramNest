@@ -4,7 +4,7 @@ import {Op} from "sequelize";
 import {Puzzle} from "../models/Puzzle.js";
 import {asyncHandler} from "../utils.js";
 
-server.post('/dailyChallenge', asyncHandler(async (req, res) => {
+server.post('/challenge', asyncHandler(async (req, res) => {
     const puzzle_id = await req.body.puzzleId;
     const time = await req.body.time;
     const points = await req.body.points;
@@ -23,7 +23,7 @@ server.post('/dailyChallenge', asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.put('/dailyChallenge', asyncHandler(async (req, res) => {
+server.put('/challenge', asyncHandler(async (req, res) => {
     const time = await req.body.time;
     const points = await req.body.points;
     const is_solved = await req.body.isSolved;
@@ -47,7 +47,7 @@ server.put('/dailyChallenge', asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.get('/dailyChallenge', asyncHandler(async (req, res) => {
+server.get('/challenge', asyncHandler(async (req, res) => {
     const today = new Date();
 
     const user = await req.session.user;
@@ -70,7 +70,7 @@ server.get('/dailyChallenges', asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.get('/streak', asyncHandler(async (req, res) => {
+server.get('/challenge/streak', asyncHandler(async (req, res) => {
     let streakCount = 0;
     let yesterday = new Date(Date.now() - 86400000);
 
@@ -95,7 +95,7 @@ server.get('/streak', asyncHandler(async (req, res) => {
     res.json(streakCount);
 }));
 
-server.get('/dailies', asyncHandler(async (req, res) => {
+server.get('/challenge/dailies', asyncHandler(async (req, res) => {
     const month = !Number.isNaN(parseInt(req.query.month)) ? parseInt(req.query.month) : (new Date()).getMonth();
     const year = !Number.isNaN(parseInt(req.query.year)) ? parseInt(req.query.year) : (new Date().getFullYear());
 

@@ -4,7 +4,7 @@ import Pagination from '@/components/shared/Pagination.vue';
 import BasicInput from '@/components/shared/inputs/BasicInput.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
-import { getCommunityPuzzles } from '@/services/puzzleService';
+import { getCommunityPuzzles } from '@/services/communityService.js';
 import { ref, onBeforeMount, watch, computed } from 'vue';
 import { useRouter } from "vue-router";
 import { ratingSearchBy } from '@/store';

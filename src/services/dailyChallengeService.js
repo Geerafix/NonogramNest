@@ -7,11 +7,11 @@ const api = axios.create({
 });
 
 export function getDailyChallenge() {
-    return api.get('/dailyChallenge');
+    return api.get('/challenge');
 }
 
 export function postDailyChallenge(puzzleId, time, points) {
-    return api.post('/dailyChallenge', {
+    return api.post('/challenge', {
         puzzleId: puzzleId,
         time: time,
         points: points,
@@ -19,7 +19,7 @@ export function postDailyChallenge(puzzleId, time, points) {
 }
 
 export function updateDailyChallenge(answers, time, points, isSolved) {
-    return api.put('/dailyChallenge', {
+    return api.put('/challenge', {
         answers: answers,
         time: time,
         points: points,
@@ -28,11 +28,11 @@ export function updateDailyChallenge(answers, time, points, isSolved) {
 }
 
 export function getDailies(month, year) {
-    return api.get('/dailies', {
+    return api.get('/challenge/dailies', {
         params: {month: month, year: year}
     });
 }
 
 export function getStreak() {
-    return api.get('/streak');
+    return api.get('/challenge/streak');
 }

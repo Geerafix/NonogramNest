@@ -5,7 +5,7 @@ import {Puzzle} from "../models/Puzzle.js";
 import {User} from "../models/User.js";
 import {Op} from "sequelize";
 
-server.get('/communityPuzzles', asyncHandler(async (req, res) => {
+server.get('/community/puzzles', asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const search = `%${req.query.search}%` || '%%';
     const option = req.query.option;
@@ -29,7 +29,7 @@ server.get('/communityPuzzles', asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.get('/communityPuzzle', asyncHandler(async (req, res) => {
+server.get('/community/puzzle', asyncHandler(async (req, res) => {
     const id = parseInt(req.query.created_id);
 
     const communityPuzzle = await Puzzle.findOne({
@@ -43,7 +43,7 @@ server.get('/communityPuzzle', asyncHandler(async (req, res) => {
     res.json(communityPuzzle);
 }));
 
-server.post('/created', asyncHandler(async (req, res) => {
+server.post('/community/created', asyncHandler(async (req, res) => {
     const puzzle = await Puzzle.create({
         clues_x: await req.body.cluesX,
         clues_y: await req.body.cluesY,

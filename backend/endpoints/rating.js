@@ -27,7 +27,7 @@ server.get('/rating/classic', asyncHandler(async (req, res) => {
     res.json(rating);
 }));
 
-server.get('/rating/dailyChallenges', asyncHandler(async (req, res) => {
+server.get('/rating/challenges', asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
 
     const rating = await User.findAll({

@@ -7,7 +7,7 @@ const api = axios.create({
 });
 
 export function getUserAchievements(page, limit) {
-    return api.get('/userAchievements', {
+    return api.get('/user/achievements', {
         params: {page: page, limit: limit}
     });
 }

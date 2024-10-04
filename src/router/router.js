@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { getRole } from '@/services/userService'
+import { getUserRole } from '@/services/userService'
 const userRole = 'user';
 const adminRole = 'admin';
 
@@ -168,7 +168,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-  const role = await getRole();
+  const role = await getUserRole();
   if (to.meta.hideMenu === true) {
     if (role === userRole) { 
       return { name: 'Play' }; 

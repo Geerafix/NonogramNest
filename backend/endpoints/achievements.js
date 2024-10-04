@@ -8,7 +8,7 @@ import {asyncHandler, getPagination} from "../utils.js";
 
 import('../dbRelations.js');
 
-server.get('/userAchievements', asyncHandler(async (req, res) => {
+server.get('/user/achievements', asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const user = req.session.user;
 

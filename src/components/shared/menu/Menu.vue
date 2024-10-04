@@ -1,6 +1,6 @@
 <script setup>
 import MenuButton from '../inputs/MenuButton.vue';
-import { logout } from '@/services/userService.js';
+import { postLogOut } from '@/services/userService.js';
 import { ref, computed } from 'vue';
 import { useWindowSize } from '@vueuse/core';
 import { useRoute, useRouter } from 'vue-router';
@@ -15,7 +15,7 @@ const { width } = useWindowSize();
 const toggleNavbar = () => { expanded.value = !expanded.value; };
 
 const toggleLogout = async () => {
-    await logout();
+    await postLogOut();
     router.push({name: 'SignIn'});
 };
 

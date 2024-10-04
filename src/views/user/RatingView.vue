@@ -3,7 +3,7 @@ import Header from '@/components/shared/Header.vue';
 import Pagination from '@/components/shared/Pagination.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import { sizes, modes } from '@/store';
-import { getClassicRating, getDailyChallengeRating } from '@/services/ratingService';
+import { getRatingClassic, getRatingChallenge } from '@/services/ratingService';
 import { ref, computed, onBeforeMount, watch } from 'vue';
 import { set } from '@vueuse/core';
 import List from '@/components/shared/list/List.vue';
@@ -32,9 +32,9 @@ const setMode = (data) => {
 
 const fetchRating = async () => {
     if (mode.value === 'challenge') {
-        await getDailyChallengeRating(page.value, limit.value).then((res) => rating.value = res.data );
+        await getRatingChallenge(page.value, limit.value).then((res) => rating.value = res.data );
     } else {
-        await getClassicRating(page.value, limit.value, size.value).then((res) => rating.value = res.data );
+        await getRatingClassic(page.value, limit.value, size.value).then((res) => rating.value = res.data );
     }
 };
 

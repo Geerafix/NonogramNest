@@ -21,15 +21,15 @@ export function postSignUp(email, username, password) {
     });
 }
 
-export function logout() {
+export function postLogOut() {
     return api.post('/logout');
 }
 
 export async function getUserProfile() {
-    return api.get('/userProfile');
+    return api.get('/profile');
 }
 
-export async function getRole() {
+export async function getUserRole() {
     try {
         const res = await api.post('/role');
         return res.data.role;

@@ -8,7 +8,7 @@ import {asyncHandler, getPagination} from "../utils.js";
 const argon2 = pkg;
 import('../dbRelations.js');
 
-server.post('/signin', asyncHandler(async (req, res, next) => {
+server.post('/signIn', asyncHandler(async (req, res, next) => {
     const user = await User.findOne({
         where: {[Op.or]: [{username: await req.body.username}, {email: await req.body.username}]}
     });
@@ -48,7 +48,7 @@ server.get('/users', asyncHandler(async (req, res, next) => {
     res.json(users);
 }));
 
-server.get('/userProfile', asyncHandler(async (req, res, next) => {
+server.get('/profile', asyncHandler(async (req, res, next) => {
     const user = await req.session.user;
 
     let userProfile = await UserProfile.findOne({

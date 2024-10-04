@@ -3,7 +3,7 @@ import Header from '@/components/shared/Header.vue';
 import Actions from '@/components/user/game-creation/Actions.vue';
 import NonogramBoard from '@/components/user/game-creation/NonogramBoard.vue';
 import Notification from '@/components/shared/Notification.vue';
-import { postCreatedPuzzle } from '@/services/puzzleService';
+import { postCommunityPuzzle } from '@/services/communityService.js';
 import { generateGame } from '@/scripts/puzzleScripts';
 import { ref, reactive } from 'vue';
 import { set } from '@vueuse/core';
@@ -27,7 +27,7 @@ const handleSubmitGame = async () => {
     const nonogram = generateGame(board.value.answers);
     await board.value.clearBoard();
 
-    await postCreatedPuzzle(
+    await postCommunityPuzzle(
         nonogram.cluesX, 
         nonogram.cluesY, 
         board.value.answers.length,

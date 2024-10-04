@@ -5,7 +5,7 @@ import {asyncHandler, getPagination} from "../utils.js";
 
 import('../dbRelations.js');
 
-server.get('/puzzles', asyncHandler(async (req, res) => {
+server.get('/community/created', asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
 
     const puzzles = await Puzzle.findAll({
@@ -16,7 +16,7 @@ server.get('/puzzles', asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.post('/puzzles', asyncHandler(async (req, res) => {
+server.post('/community/created', asyncHandler(async (req, res) => {
     const puzzle = await Puzzle.create({
         clues_x: await req.body.cluesX,
         clues_y: await req.body.cluesY,
@@ -26,7 +26,7 @@ server.post('/puzzles', asyncHandler(async (req, res) => {
     res.json({id: puzzle.puzzle_id});
 }));
 
-server.post('/solved', asyncHandler(async (req, res) => {
+server.post('/community/created/created', asyncHandler(async (req, res) => {
     const user = await req.session.user;
 
     const solved = await SolvedPuzzle.create({
