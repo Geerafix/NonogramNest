@@ -10,7 +10,7 @@ import('../dbRelations.js');
 
 server.get('/user/achievements', asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
-    const user = req.session.user;
+    const user = await req.session.user;
 
     const achieved = await Achievement.findAll({
         include: [{model: Criterion}]
@@ -42,7 +42,7 @@ server.get('/user/achievements', asyncHandler(async (req, res) => {
         }, {
             model: UserAchievement,
             attributes: ['date_achieved'],
-            where: {user_id: {[Op.not]: null}}
+            where: {[Op.and]: [{user_id: {[Op.not]: null}}, {user_id: user.user_id}]}
         }],
         attributes: ['achievement_id', 'name', 'description'],
         limit: limit,
