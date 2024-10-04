@@ -7,7 +7,7 @@ const api = axios.create({
 });
 
 export function getPuzzles(page, limit) {
-    return api.get('/community/created', {
+    return api.get('/puzzles', {
         params: {
             page: page,
             limit: limit
@@ -16,7 +16,7 @@ export function getPuzzles(page, limit) {
 }
 
 export function postPuzzle(cluesX, cluesY, size) {
-    return api.post('/community/created', {
+    return api.post('/puzzle', {
         cluesX: JSON.stringify(cluesX),
         cluesY: JSON.stringify(cluesY),
         size: size
@@ -24,7 +24,7 @@ export function postPuzzle(cluesX, cluesY, size) {
 }
 
 export function postSolvedPuzzle(puzzleId, time, points) {
-    return api.post('/community/created/created', {
+    return api.post('/puzzle/solved', {
         puzzleId: puzzleId,
         time: time,
         points: points

@@ -4,6 +4,29 @@ import {Op} from "sequelize";
 import {Puzzle} from "../models/Puzzle.js";
 import {asyncHandler} from "../utils.js";
 
+server.get('/challenges', asyncHandler(async (req, res) => {
+    const user = req.session.user;
+
+    const dailyChallenge = await DailyChallenge.findAll({
+        where: {user_id: user.user_id}
+    });
+
+    res.json(dailyChallenge);
+}));
+
+server.get('/challenge', asyncHandler(async (req, res) => {
+    const today = new Date();
+
+    const user = await req.session.user;
+
+    const dailyChallenge = await DailyChallenge.findOne({
+        include: [{model: Puzzle}],
+        where: {[Op.and]: [{user_id: user.user_id}, {date: today}]}
+    });
+
+    res.json(dailyChallenge);
+}));
+
 server.post('/challenge', asyncHandler(async (req, res) => {
     const puzzle_id = await req.body.puzzleId;
     const time = await req.body.time;
@@ -43,29 +66,6 @@ server.put('/challenge', asyncHandler(async (req, res) => {
     if (is_solved) dailyChallenge.is_solved = true;
 
     await dailyChallenge.save();
-
-    res.json(dailyChallenge);
-}));
-
-server.get('/challenge', asyncHandler(async (req, res) => {
-    const today = new Date();
-
-    const user = await req.session.user;
-
-    const dailyChallenge = await DailyChallenge.findOne({
-        include: [{model: Puzzle}],
-        where: {[Op.and]: [{user_id: user.user_id}, {date: today}]}
-    });
-
-    res.json(dailyChallenge);
-}));
-
-server.get('/dailyChallenges', asyncHandler(async (req, res) => {
-    const user = req.session.user;
-
-    const dailyChallenge = await DailyChallenge.findAll({
-        where: {user_id: user.user_id}
-    });
 
     res.json(dailyChallenge);
 }));
