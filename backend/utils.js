@@ -24,22 +24,28 @@ export const asyncHandler = (fn) => {
 }
 
 export const authHandler = (req, res, next) => {
-    const token = req.cookies.token;
+    try {
+        const token = req.cookies.token;
 
-    if (token == null) {
-        res.json({ message: 'No token provided' });
-    }
+        if (token == null) {
+            return res.json({ message: 'Access denied' });
+        }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (!err) {
+        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+            if (err) {
+                res.json({ message: 'Invalid token' });
+            }
             req.user = {
                 user_id: user.user_id,
                 username: user.username,
                 role: user.role,
             };
             next();
-        } else {
-            res.json({ message: 'Invalid token' });
-        }
-    });
+        });
+    } catch (err) {
+        return res.status(500).json({
+            name: err.name,
+            message: err.message
+        });
+    }
 }

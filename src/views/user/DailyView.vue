@@ -93,7 +93,9 @@ onMounted(() => {
 });
 
 onBeforeUnmount(async () => {
-    await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
+    if (nonogram.value.nonogram.answers && points.value) {
+      await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
+    }
 });
 
 watch(paused, (newValue) => newValue ? pause() : resume() );

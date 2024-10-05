@@ -25,7 +25,9 @@ server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
         const criteria = element.Criterion.criteria;
         if (userProfile[type] >= criteria) {
             await UserAchievement.findOrCreate({
-                where: {achievement_id: element.achievement_id},
+                where: {
+                    [Op.and]: [{user_id: user.user_id}, {achievement_id: element.achievement_id}],
+                },
                 defaults: {
                     achievement_id: element.achievement_id,
                     user_id: userProfile.user_id,
