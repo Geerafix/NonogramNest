@@ -1,10 +1,7 @@
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3000';
-const api = axios.create({
-    baseURL: apiUrl,
-    withCredentials: true
-});
+const apiUrl = `http://${import.meta.env.VITE_SERVER_NETWORK}:${import.meta.env.VITE_SERVER_PORT}`;
+const api = axios.create({ baseURL: apiUrl, withCredentials: true });
 
 export function getDailyChallenge() {
     return api.get('/challenge');

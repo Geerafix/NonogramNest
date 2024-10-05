@@ -1,11 +1,11 @@
 import {server} from '../server.js';
 import {Puzzle} from '../models/Puzzle.js';
 import {SolvedPuzzle} from '../models/SolvedPuzzle.js';
-import {asyncHandler, getPagination} from "../utils.js";
+import {asyncHandler, authHandler, getPagination} from "../utils.js";
 
 import('../dbRelations.js');
 
-server.get('/puzzles', asyncHandler(async (req, res) => {
+server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
 
     const puzzles = await Puzzle.findAll({
@@ -16,7 +16,7 @@ server.get('/puzzles', asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.post('/puzzle', asyncHandler(async (req, res) => {
+server.post('/puzzle', authHandler, asyncHandler(async (req, res) => {
     const puzzle = await Puzzle.create({
         clues_x: await req.body.cluesX,
         clues_y: await req.body.cluesY,
@@ -26,8 +26,8 @@ server.post('/puzzle', asyncHandler(async (req, res) => {
     res.json({id: puzzle.puzzle_id});
 }));
 
-server.post('/puzzle/solved', asyncHandler(async (req, res) => {
-    const user = await req.session.user;
+server.post('/puzzle/solved', authHandler, asyncHandler(async (req, res) => {
+    const user = await req.user;
 
     const solved = await SolvedPuzzle.create({
         puzzle_id: await req.body.puzzleId,

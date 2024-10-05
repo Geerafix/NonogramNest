@@ -1,11 +1,11 @@
 import {server} from "../server.js";
-import {asyncHandler, getPagination} from "../utils.js";
+import {asyncHandler, authHandler, getPagination} from "../utils.js";
 import {CreatedPuzzle} from "../models/CreatedPuzzle.js";
 import {Puzzle} from "../models/Puzzle.js";
 import {User} from "../models/User.js";
 import {Op} from "sequelize";
 
-server.get('/community/puzzles', asyncHandler(async (req, res) => {
+server.get('/community/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const search = `%${req.query.search}%` || '%%';
     const option = req.query.option;
@@ -29,7 +29,7 @@ server.get('/community/puzzles', asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.get('/community/puzzle', asyncHandler(async (req, res) => {
+server.get('/community/puzzle', authHandler, asyncHandler(async (req, res) => {
     const id = parseInt(req.query.created_id);
 
     const communityPuzzle = await Puzzle.findOne({
@@ -43,7 +43,9 @@ server.get('/community/puzzle', asyncHandler(async (req, res) => {
     res.json(communityPuzzle);
 }));
 
-server.post('/community/created', asyncHandler(async (req, res) => {
+server.post('/community/created', authHandler, asyncHandler(async (req, res) => {
+    const user = await req.user;
+
     const puzzle = await Puzzle.create({
         clues_x: await req.body.cluesX,
         clues_y: await req.body.cluesY,
@@ -52,7 +54,7 @@ server.post('/community/created', asyncHandler(async (req, res) => {
     });
 
     await CreatedPuzzle.create({
-        user_id: await req.session.user.user_id,
+        user_id: user.user_id,
         puzzle_id: puzzle.puzzle_id,
         name: `Nonogram ${puzzle.puzzle_id}`,
     });

@@ -4,13 +4,13 @@ import {UserProfile} from '../models/UserProfile.js';
 import {UserAchievement} from '../models/UserAchievement.js';
 import {Achievement} from '../models/Achievement.js';
 import {Criterion} from '../models/Criterion.js';
-import {asyncHandler, getPagination} from "../utils.js";
+import {asyncHandler, authHandler, getPagination} from "../utils.js";
 
 import('../dbRelations.js');
 
-server.get('/user/achievements', asyncHandler(async (req, res) => {
+server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
-    const user = await req.session.user;
+    const user = await req.user;
 
     const achieved = await Achievement.findAll({
         include: [{model: Criterion}]

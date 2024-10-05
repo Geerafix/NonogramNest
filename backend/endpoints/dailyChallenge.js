@@ -2,10 +2,10 @@ import {server} from "../server.js";
 import {DailyChallenge} from "../models/DailyChallenge.js";
 import {Op} from "sequelize";
 import {Puzzle} from "../models/Puzzle.js";
-import {asyncHandler} from "../utils.js";
+import {asyncHandler, authHandler} from "../utils.js";
 
-server.get('/challenges', asyncHandler(async (req, res) => {
-    const user = req.session.user;
+server.get('/challenges', authHandler, asyncHandler(async (req, res) => {
+    const user = req.user;
 
     const dailyChallenge = await DailyChallenge.findAll({
         where: {user_id: user.user_id}
@@ -14,10 +14,10 @@ server.get('/challenges', asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.get('/challenge', asyncHandler(async (req, res) => {
+server.get('/challenge', authHandler, asyncHandler(async (req, res) => {
     const today = new Date();
 
-    const user = await req.session.user;
+    const user = req.user;
 
     const dailyChallenge = await DailyChallenge.findOne({
         include: [{model: Puzzle}],
@@ -27,13 +27,13 @@ server.get('/challenge', asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.post('/challenge', asyncHandler(async (req, res) => {
+server.post('/challenge', authHandler, asyncHandler(async (req, res) => {
     const puzzle_id = await req.body.puzzleId;
     const time = await req.body.time;
     const points = await req.body.points;
     const answers = Array.from(Array(8), () => Array(8).fill(0));
 
-    const user = await req.session.user;
+    const user = await req.user;
 
     const dailyChallenge = await DailyChallenge.create({
         puzzle_id: puzzle_id,
@@ -46,14 +46,14 @@ server.post('/challenge', asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.put('/challenge', asyncHandler(async (req, res) => {
+server.put('/challenge', authHandler, asyncHandler(async (req, res) => {
     const time = await req.body.time;
     const points = await req.body.points;
     const is_solved = await req.body.isSolved;
     const answers = await req.body.answers;
     const today = new Date();
 
-    const user = await req.session.user;
+    const user = await req.user;
 
     const dailyChallenge = await DailyChallenge.findOne({
         where: {[Op.and]: [{user_id: user.user_id}, {date: today}]}
@@ -70,11 +70,11 @@ server.put('/challenge', asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.get('/challenge/streak', asyncHandler(async (req, res) => {
+server.get('/challenge/streak', authHandler, asyncHandler(async (req, res) => {
     let streakCount = 0;
     let yesterday = new Date(Date.now() - 86400000);
 
-    const user = req.session.user;
+    const user = req.user;
 
     let streak = await DailyChallenge.findOne({
         where: {[Op.and]: [{user_id: user.user_id}, {date: new Date()}, {is_solved: true}]}
@@ -95,11 +95,11 @@ server.get('/challenge/streak', asyncHandler(async (req, res) => {
     res.json(streakCount);
 }));
 
-server.get('/challenge/dailies', asyncHandler(async (req, res) => {
+server.get('/challenge/dailies', authHandler, asyncHandler(async (req, res) => {
     const month = !Number.isNaN(parseInt(req.query.month)) ? parseInt(req.query.month) : (new Date()).getMonth();
     const year = !Number.isNaN(parseInt(req.query.year)) ? parseInt(req.query.year) : (new Date().getFullYear());
 
-    const user = await req.session.user;
+    const user = await req.user;
 
     const dailies = await DailyChallenge.findAll({
         where: {

@@ -3,19 +3,26 @@ import {Op} from 'sequelize';
 import * as pkg from 'argon2';
 import {User} from '../models/User.js';
 import {UserProfile} from '../models/UserProfile.js';
-import {asyncHandler, getPagination} from "../utils.js";
+import {asyncHandler, authHandler, getPagination} from "../utils.js";
+import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+dotenv.config({ path: '../../.env' });
 
 const argon2 = pkg;
 import('../dbRelations.js');
 
-server.post('/signIn', asyncHandler(async (req, res, next) => {
+server.post('/signin', asyncHandler(async (req, res, next) => {
     const user = await User.findOne({
         where: {[Op.or]: [{username: await req.body.username}, {email: await req.body.username}]}
     });
 
     if (user && await argon2.verify(user.password, await req.body.password)) {
-        req.session.user = user;
-        res.status(200).send(req.session.user.role);
+        const token = jwt.sign(
+            JSON.stringify(user),
+            process.env.JWT_SECRET,
+        );
+        res.cookie('token', token, { httpOnly: true });
+        res.status(200).json(token);
     } else {
         res.status(404).send({msg: 'Nieprawidłowa nazwa użytkownika lub hasło'});
     }
@@ -36,7 +43,7 @@ server.post('/signup', asyncHandler(async (req, res, next) => {
     res.json({message: 'Zarejestrowano'});
 }));
 
-server.get('/users', asyncHandler(async (req, res, next) => {
+server.get('/users', authHandler, asyncHandler(async (req, res, next) => {
     const {limit, offset} = getPagination(req);
 
     const users = await User.findAll({
@@ -48,8 +55,8 @@ server.get('/users', asyncHandler(async (req, res, next) => {
     res.json(users);
 }));
 
-server.get('/profile', asyncHandler(async (req, res, next) => {
-    const user = await req.session.user;
+server.get('/profile', authHandler, asyncHandler(async (req, res, next) => {
+    const user = await req.user;
 
     let userProfile = await UserProfile.findOne({
         include: {
@@ -71,24 +78,25 @@ server.get('/profile', asyncHandler(async (req, res, next) => {
 }));
 
 server.delete('/deleteUser', async (req, res) => {
-    const user = await req.session.user;
+    const user = await req.user;
 
     await User.destroy({where: {user_id: user.user_id}});
 
-    res.send();
+    res.json();
 });
 
-server.post('/logout', (req, res) => {
-    req.session.destroy();
+server.post('/logout', authHandler, asyncHandler(async (req, res) => {
+    res.clearCookie('token');
+    res.status(200).send({msg: 'Sesja zniszczona'});
+}));
 
-    res.status(200).send({msg: 'Sesja zniszczona'})
-});
+server.post('/role', authHandler, asyncHandler(async (req, res) => {
+    const user = req.user;
 
-server.post('/role', (req, res) => {
-    req.session.user ? res.json({role: req.session.user.role}) : res.json();
-});
+    if (!user) {
+        res.json({role: ''})
+    }
 
-server.get('/session', (req, res) => {
-    res.json(req.session);
-});
+    res.json({role: user.role});
+}));
 

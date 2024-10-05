@@ -1,10 +1,7 @@
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3000';
-const api = axios.create({
-    baseURL: apiUrl,
-    withCredentials: true
-});
+const apiUrl = `http://${import.meta.env.VITE_SERVER_NETWORK}:${import.meta.env.VITE_SERVER_PORT}`;
+const api = axios.create({ baseURL: apiUrl, withCredentials: true });
 
 export function postSignIn(username, password) {
     return api.post('/signin', {
@@ -30,10 +27,6 @@ export async function getUserProfile() {
 }
 
 export async function getUserRole() {
-    try {
-        const res = await api.post('/role');
-        return res.data.role;
-    } catch (err) {
-        console.log(err.message);
-    }
+    const res = await api.post('/role');
+    return res.data.role;
 }
