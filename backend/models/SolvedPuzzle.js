@@ -1,9 +1,12 @@
 import {sequelize} from '../server.js';
-import {DataTypes} from 'sequelize';
+import {DataTypes, Op} from 'sequelize';
 
 import {UserProfile} from './UserProfile.js';
 import {Puzzle} from './Puzzle.js';
 import {Score} from './Score.js';
+import {Achievement} from "./Achievement.js";
+import {Criterion} from "./Criterion.js";
+import {UserAchievement} from "./UserAchievement.js";
 
 export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
     solved_id: {
@@ -36,15 +39,37 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
     timestamps: false,
     hooks: {
         afterCreate: async (solved_puzzle, options) => {
-            await UserProfile.update({
-                solved_puzzles: sequelize.literal('solved_puzzles + 1'),
-                total_points: sequelize.literal(`total_points + ${solved_puzzle.points}`),
-                total_play_time: sequelize.literal(`total_play_time + ${solved_puzzle.time}`),
-            }, {
-                where: {
-                    user_id: solved_puzzle.user_id
-                }
+            const userProfile = await UserProfile.findOne({
+                where: {user_id: solved_puzzle.user_id}
             });
+
+            userProfile.solved_puzzles += 1;
+            userProfile.total_points += solved_puzzle.points;
+            userProfile.total_play_time += solved_puzzle.time;
+
+            const achieved = await Achievement.findAll({
+                include: [{model: Criterion}]
+            });
+
+            for (const element of achieved) {
+                const type = JSON.parse(JSON.stringify(element.Criterion.type));
+                const criteria = element.Criterion.criteria;
+                if (userProfile[type] >= criteria) {
+                    await UserAchievement.findOrCreate({
+                        where: {
+                            [Op.and]: [
+                                {user_id: userProfile.user_id},
+                                {achievement_id: element.achievement_id}
+                            ],
+                        },
+                        defaults: {
+                            achievement_id: element.achievement_id,
+                            user_id: userProfile.user_id,
+                            date_achieved: new Date()
+                        }
+                    });
+                }
+            }
 
             const puzzle = await Puzzle.findOne({
                 where: {puzzle_id: solved_puzzle.puzzle_id}
@@ -60,6 +85,8 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
                     user_id: solved_puzzle.user_id
                 }
             });
+
+            await userProfile.save();
         }
     }
 });

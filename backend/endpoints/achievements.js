@@ -12,31 +12,6 @@ server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const user = await req.user;
 
-    const achieved = await Achievement.findAll({
-        include: [{model: Criterion}]
-    });
-
-    const userProfile = await UserProfile.findOne({
-        where: {user_id: user.user_id}
-    });
-
-    for (const element of achieved) {
-        const type = JSON.parse(JSON.stringify(element.Criterion.type));
-        const criteria = element.Criterion.criteria;
-        if (userProfile[type] >= criteria) {
-            await UserAchievement.findOrCreate({
-                where: {
-                    [Op.and]: [{user_id: user.user_id}, {achievement_id: element.achievement_id}],
-                },
-                defaults: {
-                    achievement_id: element.achievement_id,
-                    user_id: userProfile.user_id,
-                    date_achieved: new Date()
-                }
-            });
-        }
-    }
-
     const achievements = await Achievement.findAll({
         include: [{
             model: Criterion,

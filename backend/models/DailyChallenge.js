@@ -1,8 +1,11 @@
 import {sequelize} from '../server.js';
-import {DataTypes} from 'sequelize';
+import {DataTypes, Op} from 'sequelize';
 
 import {UserProfile} from './UserProfile.js';
 import {Score} from './Score.js';
+import {Achievement} from "./Achievement.js";
+import {Criterion} from "./Criterion.js";
+import {UserAchievement} from "./UserAchievement.js";
 
 export const DailyChallenge = sequelize.define('DailyChallenge', {
     daily_id: {
@@ -55,15 +58,39 @@ export const DailyChallenge = sequelize.define('DailyChallenge', {
         },
         afterUpdate: async (solved_challenge, options) => {
             if (solved_challenge.is_solved === true) {
-                await UserProfile.update({
-                    solved_challenges: sequelize.literal('solved_challenges + 1'),
-                    total_points: sequelize.literal(`total_points + ${solved_challenge.points}`),
-                    total_play_time: sequelize.literal(`total_play_time + ${solved_challenge.time}`),
-                }, {
-                    where: {
-                        user_id: solved_challenge.user_id
-                    }
+                const userProfile = await UserProfile.findOne({
+                    where: {user_id: solved_challenge.user_id}
                 });
+
+                userProfile.solved_challenges += 1;
+                userProfile.total_points += solved_challenge.points;
+                userProfile.total_play_time += solved_challenge.time;
+
+                const achieved = await Achievement.findAll({
+                    include: [{model: Criterion}]
+                });
+
+                for (const element of achieved) {
+                    const type = JSON.parse(JSON.stringify(element.Criterion.type));
+                    const criteria = element.Criterion.criteria;
+                    if (userProfile[type] >= criteria) {
+                        await UserAchievement.findOrCreate({
+                            where: {
+                                [Op.and]: [
+                                    {user_id: userProfile.user_id},
+                                    {achievement_id: element.achievement_id}
+                                ],
+                            },
+                            defaults: {
+                                achievement_id: element.achievement_id,
+                                user_id: userProfile.user_id,
+                                date_achieved: new Date()
+                            }
+                        });
+                    }
+                }
+
+                await userProfile.save();
             }
         },
     }
