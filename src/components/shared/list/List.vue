@@ -2,16 +2,19 @@
 import ListHeader from './ListHeader.vue'
 import ListItem from './ListItem.vue';
 import Item from './Item.vue';
+import {computed} from "vue";
 defineProps(['headers', 'items']);
 const emit = defineEmits(['action']);
 
 const itemAction = (item) => {
     emit('action', item);
 };
+
+const shortenedValue = (val) => val && val.length > 15 ? val.slice(0, 15).concat('...') : val;
 </script>
 
 <template>
-    <div>
+    <div v-if="items">
         <div v-if="headers" class="headers">
             <li v-for="header of headers">
                 <ListHeader :headerName="header" />
@@ -21,7 +24,7 @@ const itemAction = (item) => {
             <li v-for="item in items">
                 <ListItem @click="itemAction(item)">
                     <div v-for="value in item">
-                        <Item :value="value.length > 15 ? value.slice(0, 15).concat('...') : value" />
+                        <Item :value="shortenedValue(value)" />
                     </div>
                 </ListItem>
             </li>
