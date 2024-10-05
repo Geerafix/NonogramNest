@@ -1,18 +1,24 @@
 <script setup>
 import MenuButton from '../inputs/MenuButton.vue';
+import {useRoute, useRouter} from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
+
+const routes = [
+  {name: 'ManageUsers', icon: 'fa-users', text: 'Użytkownicy'},
+  {name: 'ManagePuzzles', icon: 'fa-gamepad', text: 'Gry'},
+  {name: 'ManageAchievements', icon: 'fa-star', text: 'Osiągnięcia'},
+  {name: 'AdminMessages', icon: 'fa-message', text: 'Wiadomości'},
+];
+
+const colorByRoute = (index) => (route.name === routes[index].name ? 'rgb(31 41 55)' : '');
 </script>
 
 <template>
-    <MenuButton buttonText="Użytkownicy" @click="$router.push({ name: 'ManageUsers' })">
-        <Icon icon="fa-solid fa-users" class="my-auto mx-auto" />
+    <MenuButton v-for="(route, index) of routes"
+        :buttonText="route.text" :style="{'background-color': colorByRoute(index)}"
+        @click="router.push({ name: route.name })">
+        <Icon :icon="['fa-solid', route.icon]" class="my-auto mx-auto" />
     </MenuButton>
-    <MenuButton buttonText="Gry" @click="$router.push({ name: 'ManagePuzzles' })">
-        <Icon icon="fa-solid fa-gamepad" class="my-auto mx-auto" />
-    </MenuButton>
-    <MenuButton buttonText="Osiągnięcia" @click="$router.push({ name: 'ManageAchievements' })">
-        <Icon icon="fa-solid fa-star" class="my-auto mx-auto" />
-    </MenuButton>
-    <MenuButton buttonText="Wiadomości" @click="$router.push({ name: 'AdminMessages' })">
-        <Icon icon="fa-solid fa-message" class="my-auto mx-auto" />
-    </MenuButton> 
 </template>
