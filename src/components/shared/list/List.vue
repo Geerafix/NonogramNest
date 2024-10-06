@@ -1,31 +1,47 @@
 <script setup>
 import ListHeader from './ListHeader.vue'
 import ListItem from './ListItem.vue';
+import Header from "./Header.vue";
 import Item from './Item.vue';
-import {computed} from "vue";
-defineProps(['headers', 'items']);
-const emit = defineEmits(['action']);
 
-const itemAction = (item) => {
+const props = defineProps([
+  'headers',
+  'items',
+  'excluded'
+]);
+
+const emit = defineEmits([
+    'action'
+]);
+
+const onItemClick = (item) => {
     emit('action', item);
 };
 
-const shortenedValue = (val) => val && val.length > 15 ? val.slice(0, 15).concat('...') : val;
+const shortenedValue = (val) => (
+    val && val.length > 15 ? val.slice(0, 15).concat('...') : val
+);
+
+const filteredItem = (item) => (
+    Object.fromEntries(Object.entries(item).filter((key, idx) => !props.excluded?.includes(idx)))
+);
 </script>
 
 <template>
-    <div v-if="items">
+    <div v-if="props.items">
         <div v-if="headers" class="headers">
-            <li v-for="header of headers">
-                <ListHeader :headerName="header" />
+          <ListHeader>
+            <li v-for="header in props.headers">
+              <Header :headerName="header" />
             </li>
+          </ListHeader>
         </div>
         <div class="items">
-            <li v-for="item in items">
-                <ListItem @click="itemAction(item)">
-                    <div v-for="value in item">
+            <li v-for="item in props.items">
+                <ListItem @click="onItemClick(item)">
+                    <li v-for="(value, key, index) of filteredItem(item)">
                         <Item :value="shortenedValue(value)" />
-                    </div>
+                    </li>
                 </ListItem>
             </li>
         </div>
@@ -37,21 +53,12 @@ const shortenedValue = (val) => val && val.length > 15 ? val.slice(0, 15).concat
     @apply
     sticky
     top-0
-    grid
-    grid-cols-[repeat(auto-fit,minmax(0,1fr))]
-    gap-2
-    p-2
-    mb-2
-    bg-gray-900/50 
-    rounded-lg 
     list-none;
 }
 .items {
-    @apply  
+    @apply
+    list-none
     grid
-    gap-2
-    mb-2
-    mx-auto
-    list-none;
+    gap-2;
 }
 </style>

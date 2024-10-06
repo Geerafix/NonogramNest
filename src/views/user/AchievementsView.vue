@@ -14,12 +14,11 @@ const settings = computed(() => ({
     limit: limit.value,
     perpage: achievements.value.length,
     prev: () => page.value -= 1,
-    next: () => page.value += 1,
-    listenTo: [page]
+    next: () => page.value += 1
 }));
 
 const fetchUserAchievements = async () => {
-    await getUserAchievements(page.value, limit.value)
+    await getUserAchievements(page.value, limit.value + 1)
         .then((res) => achievements.value = res.data );
 };
 
@@ -30,8 +29,9 @@ onMounted(fetchUserAchievements);
     <main class="view">
         <Header></Header>
         <List class="list"
-              :headers="['ID', 'Nazwa', 'Opis', 'Ilość', 'Data']"
+              :headers="['Nazwa', 'Opis', 'Ilość', 'Data']"
               :items="achievements"
+              :excluded="[0]"
         />
         <div class="controls">
           <Pagination v-bind="settings" @onPageChange="fetchUserAchievements"/>

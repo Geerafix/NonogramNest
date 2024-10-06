@@ -1,21 +1,23 @@
 <script setup>
-defineProps(['headerName']);
+
 </script>
 
 <template>
-    <div class="header">
-        <span>{{ headerName }}</span>
+    <div class="headers">
+      <slot></slot>
     </div>
 </template>
 
 <style scoped>
-.header {
-    @apply 
-    h-12
-    bg-gray-600 
-    rounded-md 
-    content-center
-    text-2xl 
+.headers {
+    @apply
+    grid
+    grid-cols-[repeat(auto-fit,minmax(0,1fr))]
+    gap-2
+    bg-gray-900/40
+    p-2
+    mb-2
+    rounded-md
     text-center
     select-none;
 }

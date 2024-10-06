@@ -14,7 +14,7 @@ const overItem = ref(false);
 .list-item {
   @apply
   grid
-  grid-cols-[repeat(auto-fit,minmax(200px,1fr))]
+  grid-cols-[repeat(auto-fit,minmax(0,1fr))]
   gap-2 
   p-2
   bg-gray-900/40 
