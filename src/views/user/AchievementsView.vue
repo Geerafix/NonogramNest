@@ -3,27 +3,27 @@ import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
 import Pagination from "@/components/shared/Pagination.vue";
 import {getUserAchievements} from '@/services/achievementsService';
-import {computed, onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 
 const achievements = ref([]);
-const page = ref(1);
-const limit = ref(2);
 
+const page = ref(1);
+const limit = ref(10);
 const settings = computed(() => ({
-  limit: limit.value,
-  page: page.value,
-  perpage: achievements.value.length,
-  prev: () => page.value -= 1,
-  next: () => page.value += 1
+    page: page.value,
+    limit: limit.value,
+    perpage: achievements.value.length,
+    prev: () => page.value -= 1,
+    next: () => page.value += 1,
+    listenTo: [page]
 }));
 
-const fetchAchievements = async () => {
-    await getUserAchievements(page.value, limit.value).then((res) => achievements.value = res.data );
+const fetchUserAchievements = async () => {
+    await getUserAchievements(page.value, limit.value)
+        .then((res) => achievements.value = res.data );
 };
 
-watch(page, fetchAchievements);
-
-onMounted(fetchAchievements);
+onMounted(fetchUserAchievements);
 </script>
 
 <template>
@@ -34,7 +34,7 @@ onMounted(fetchAchievements);
               :items="achievements"
         />
         <div class="controls">
-          <Pagination v-bind="settings" />
+          <Pagination v-bind="settings" @onPageChange="fetchUserAchievements"/>
         </div>
     </main>
 </template>

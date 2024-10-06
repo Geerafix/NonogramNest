@@ -8,18 +8,19 @@ import { ref, computed, onBeforeMount, watch } from 'vue';
 import { set } from '@vueuse/core';
 import List from '@/components/shared/list/List.vue';
 
-const page = ref(1);
-const limit = ref(10);
 const rating = ref([]);
 const size = ref(null);
 const mode = ref(null);
 
+const page = ref(1);
+const limit = ref(10);
 const settings = computed(() => ({
-  limit: limit.value,
   page: page.value,
+  limit: limit.value,
   perpage: rating.value.length,
   prev: () => page.value -= 1,
-  next: () => page.value += 1
+  next: () => page.value += 1,
+  listenTo: [page, size, mode]
 }));
 
 const setSize = (data) => {
@@ -38,8 +39,6 @@ const fetchRating = async () => {
     }
 };
 
-watch([page, size, mode], fetchRating);
-
 onBeforeMount(fetchRating);
 </script>
 
@@ -48,7 +47,7 @@ onBeforeMount(fetchRating);
         <Header></Header>
         <List class="list" :headers="['Nazwa', 'Punkty']" :items="rating"></List>
         <div class="controls-container">
-            <Pagination v-bind="settings"></Pagination>
+            <Pagination v-bind="settings" @onPageChange="fetchRating"></Pagination>
             <div class="controls">
                 <Select :items="modes" @select="setMode"></Select>
                 <Select :items="sizes" @select="setSize" :class="['test', { 'hidden': mode === 'challenge' }]" class="test"></Select>

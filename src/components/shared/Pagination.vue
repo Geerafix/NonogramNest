@@ -1,12 +1,17 @@
 <script setup>
 import BasicButton from '@/components/shared/inputs/BasicButton.vue';
-import { computed, onMounted, ref } from 'vue';
+import {computed, watch} from 'vue';
 const props = defineProps([
     'limit',
     'page',
     'perpage',
     'prev',
-    'next'
+    'next',
+    'listenTo'
+]);
+
+const emit = defineEmits([
+    'onPageChange'
 ]);
 
 const handlePrevPage = () => {
@@ -19,6 +24,10 @@ const handleNextPage = () => {
 
 const computedPrevPage = computed(() => props.page === 1 );
 const computedNextPage = computed(() => props.perpage < props.limit );
+
+watch(() => props.listenTo, () => {
+  emit('onPageChange')
+});
 </script>
 
 <template>

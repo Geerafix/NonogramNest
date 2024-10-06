@@ -10,24 +10,25 @@ import { useRouter } from "vue-router";
 import { ratingSearchBy } from '@/store';
 import { set } from '@vueuse/core';
 
-const page = ref(1);
-const limit = ref(10);
-const puzzles = ref([]);
 const router = useRouter();
 
-const searchVal = ref('');
+const puzzles = ref([]);
+const search = ref('');
 const option = ref('name');
 
+const page = ref(1);
+const limit = ref(10);
 const settings = computed(() => ({
-  limit: limit.value,
   page: page.value,
+  limit: limit.value,
   perpage: puzzles.value.length,
   prev: () => page.value -= 1,
-  next: () => page.value += 1
+  next: () => page.value += 1,
+  listenTo: [page]
 }));
 
-const fetchPuzzles = async () => {
-    await getCommunityPuzzles(page.value, limit.value, searchVal.value, option.value)
+const fetchCommunityPuzzles = async () => {
+    await getCommunityPuzzles(page.value, limit.value, search.value, option.value)
             .then((res) => set(puzzles, res.data));
 };
 
@@ -37,14 +38,12 @@ const handleAction = async (item) => {
 
 const setOption = (opt) => set(option, opt);
 
-watch(page, fetchPuzzles);
-
-watch([searchVal, option], () => {
+watch([search, option], () => {
     set(page, 1);
-    fetchPuzzles();
+    fetchCommunityPuzzles();
 });
 
-onBeforeMount(fetchPuzzles);
+onBeforeMount(fetchCommunityPuzzles);
 </script>
 
 <template>
@@ -52,9 +51,9 @@ onBeforeMount(fetchPuzzles);
         <Header></Header>
         <List class="list" :headers="['ID', 'Nazwa', 'Rozmiar', 'Twórca']" :items="puzzles" @action="handleAction"></List>
         <div class="relative flex gap-2 w-full justify-between">
-            <Pagination v-bind="settings"></Pagination>
+            <Pagination v-bind="settings" @onPageChange="fetchCommunityPuzzles"></Pagination>
             <div class="search-container">
-                <BasicInput v-model="searchVal" placeholder="Wyszukaj po..."></BasicInput>
+                <BasicInput v-model="search" placeholder="Wyszukaj po..."></BasicInput>
                 <Select :items="ratingSearchBy" @select="setOption"></Select>
             </div>
         </div>
@@ -71,21 +70,6 @@ onBeforeMount(fetchPuzzles);
 .list {
     @apply
     h-full
-}
-.controls {
-    @apply
-    absolute
-    bottom-0
-    right-0
-    flex
-    gap-2
-    place-self-end
-}
-.test {
-  @apply
-  w-fit
-  max-w-full
-  transition-all
 }
 .search-container {
     @apply
