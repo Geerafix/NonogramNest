@@ -22,8 +22,9 @@ export function getCommunityPuzzle(id) {
     });
 }
 
-export function postCommunityPuzzle(cluesX, cluesY, size, excludedTiles) {
+export function postCommunityPuzzle(name, cluesX, cluesY, size, excludedTiles) {
     return api.post('/community/created', {
+        name: name,
         cluesX: JSON.stringify(cluesX),
         cluesY: JSON.stringify(cluesY),
         size: size,

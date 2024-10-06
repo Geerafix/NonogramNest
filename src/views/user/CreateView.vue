@@ -23,21 +23,32 @@ const handleClearBoard = () => {
   board.value.clearBoard();
 };
 
-const handleSubmitGame = async () => {
-  const nonogram = generateGame(board.value.answers);
-  await board.value.clearBoard();
+const handleSubmitGame = async (name) => {
+  if (isSizeSelected.value) {
+    if (name.length > 0) {
+      const nonogram = generateGame(board.value.answers);
+      board.value.clearBoard();
 
-  await postCommunityPuzzle(
-      nonogram.cluesX,
-      nonogram.cluesY,
-      board.value.answers.length,
-      nonogram.excludedTiles
-  );
+      await postCommunityPuzzle(
+          name,
+          nonogram.cluesX,
+          nonogram.cluesY,
+          board.value.answers.length,
+          nonogram.excludedTiles
+      );
 
-  notificationData.message = 'Zapisano nonogram';
-  notification.value.start();
+      showNotification(true, 'Zapisano nonogram');
+      set(isSizeSelected, false);
+    } else {
+      showNotification(false, 'Nie wpisano nazwy planszy');
+    }
+  } else {
+    showNotification(false, 'Nie wybrano rozmiaru planszy');
+  }
+};
 
-  set(isSizeSelected, false);
+const showNotification = (status, message) => {
+  Object.assign(notificationData, { status: status, message: message });
 };
 </script>
 
@@ -52,8 +63,12 @@ const handleSubmitGame = async () => {
     <Transition name="fade">
       <NonogramBoard ref="board" v-show="isSizeSelected"></NonogramBoard>
     </Transition>
-    <Actions class="actions" @new-board="handleNewBoard" @clear-board="handleClearBoard"
-             @submit="handleSubmitGame"></Actions>
+    <Actions class="actions" 
+            :isCreating="isSizeSelected"
+            @new-board="handleNewBoard" 
+            @clear-board="handleClearBoard"
+            @submit="handleSubmitGame">
+    </Actions>
     <Notification ref="notification" v-bind="notificationData"/>
   </main>
 </template>

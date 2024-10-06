@@ -18,7 +18,6 @@ export const CreatedPuzzle = sequelize.define('CreatedPuzzle', {
     name: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: 'Brak nazwy'
     },
     is_public: {
         type: DataTypes.BOOLEAN,

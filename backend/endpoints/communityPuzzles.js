@@ -46,17 +46,24 @@ server.get('/community/puzzle', authHandler, asyncHandler(async (req, res) => {
 server.post('/community/created', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
 
+    const clues_x = await req.body.cluesX;
+    const clues_y = await req.body.cluesY;
+    const size = await req.body.size;
+    const excluded_tiles = await req.body.excludedTiles;
+
     const puzzle = await Puzzle.create({
-        clues_x: await req.body.cluesX,
-        clues_y: await req.body.cluesY,
-        size: await req.body.size,
-        excluded_tiles: await req.body.excludedTiles
+        clues_x: clues_x,
+        clues_y: clues_y,
+        size: size,
+        excluded_tiles: excluded_tiles
     });
+
+    const name = await req.body.name;
 
     await CreatedPuzzle.create({
         user_id: user.user_id,
         puzzle_id: puzzle.puzzle_id,
-        name: `Nonogram ${puzzle.puzzle_id}`,
+        name: name,
     });
 
     res.json({});
