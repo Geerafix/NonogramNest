@@ -52,16 +52,8 @@ const computedNextPage = computed(() => props.perpage < props.limit );
   mx-auto
   text-center
   content-center
-  hover:bg-slate-900/50
   rounded-xl
   select-none
-  cursor-pointer
   transition-all;
-}
-.pageInput {
-  @apply
-  max-w-52
-  -translate-x-1/2
-  transition-all 
 }
 </style>
