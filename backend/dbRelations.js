@@ -8,7 +8,6 @@ import {CreatedPuzzle} from "./models/CreatedPuzzle.js";
 import {UserAchievement} from "./models/UserAchievement.js";
 import {Achievement} from "./models/Achievement.js";
 import {Criterion} from "./models/Criterion.js";
-import {sequelize} from "./server.js";
 
 User.hasMany(SolvedPuzzle, {foreignKey: 'user_id'});
 User.hasMany(DailyChallenge, {foreignKey: 'user_id'});

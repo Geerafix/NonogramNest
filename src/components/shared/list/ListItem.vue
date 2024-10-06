@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
+
 const overItem = ref(false);
 </script>
 
 <template>
   <div :class="['list-item', {'filter brightness-[1.15]': overItem}]"
-      @mouseover="overItem = true" @mouseleave="overItem = false">
+       @mouseover="overItem = true" @mouseleave="overItem = false">
     <slot></slot>
   </div>
 </template>
@@ -15,10 +16,10 @@ const overItem = ref(false);
   @apply
   grid
   grid-cols-[repeat(auto-fit,minmax(0,1fr))]
-  gap-2 
+  gap-2
   p-2
-  bg-gray-900/40 
-  rounded-lg 
+  bg-gray-900/40
+  rounded-lg
   text-center
   transition-all
   text-xl

@@ -1,19 +1,19 @@
 <script setup>
-import { getStreak } from '@/services/dailyChallengeService.js';
-import { onMounted, ref } from 'vue';
+import {getStreak} from '@/services/dailyChallengeService.js';
+import {onMounted, ref} from 'vue';
 
 const streak = ref(null);
 
 onMounted(async () => {
-  streak.value = await getStreak().then((res) => res.data );
+  streak.value = await getStreak().then((res) => res.data);
 });
 </script>
 
 <template>
-    <div class="streak">
-      <Icon class="flame" icon="fa-solid fa-fire" />
-      <span> Dzień {{ streak }}</span>
-    </div>
+  <div class="streak">
+    <Icon class="flame" icon="fa-solid fa-fire"/>
+    <span> Dzień {{ streak }}</span>
+  </div>
 </template>
 
 <style scoped>
@@ -23,19 +23,21 @@ onMounted(async () => {
   gap-2
   h-fit
   w-fit
-  p-3 
+  p-3
   border-b-4
-  bg-gray-600 
+  bg-gray-600
   border-b-gray-800/50
   text-xl
   rounded-xl;
 }
+
 .flame {
   @apply
-  text-3xl 
+  text-3xl
   text-orange-600/80
   drop-shadow-md;
 }
+
 span {
   @apply
   text-center;

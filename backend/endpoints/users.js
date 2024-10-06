@@ -6,7 +6,8 @@ import {UserProfile} from '../models/UserProfile.js';
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
 import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
-dotenv.config({ path: '../../.env' });
+
+dotenv.config({path: '../../.env'});
 
 const argon2 = pkg;
 import('../dbRelations.js');
@@ -21,7 +22,7 @@ server.post('/signin', asyncHandler(async (req, res, next) => {
             JSON.stringify(user),
             process.env.JWT_SECRET,
         );
-        res.cookie('token', token, { httpOnly: true });
+        res.cookie('token', token, {httpOnly: true});
         res.status(200).json(token);
     } else {
         res.status(404).send({msg: 'Nieprawidłowa nazwa użytkownika lub hasło'});

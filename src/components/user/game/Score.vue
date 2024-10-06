@@ -1,6 +1,6 @@
 <script setup>
-import { ref, watch } from 'vue';
-import { set, promiseTimeout } from '@vueuse/core';
+import {ref, watch} from 'vue';
+import {promiseTimeout, set} from '@vueuse/core';
 
 const props = defineProps(['time', 'points', 'started']);
 
@@ -28,33 +28,34 @@ watch(() => props.points, async () => {
 
 <style scoped>
 .score-container {
-  @apply 
-  grid 
-  grid-cols-[1fr_1fr] 
-  gap-1 
-  px-3 
+  @apply
+  grid
+  grid-cols-[1fr_1fr]
+  gap-1
+  px-3
   min-h-14
-  content-center 
-  text-center 
+  content-center
+  text-center
   bg-gray-600
   border-b-4
-  border-gray-700 
-  rounded-xl 
+  border-gray-700
+  rounded-xl
   select-none;
-  @apply 
-  max-sm:w-full 
+  @apply
+  max-sm:w-full
   sm:w-96;
 }
+
 .item {
-  @apply 
-  flex 
-  justify-center 
-  gap-2 
+  @apply
+  flex
+  justify-center
+  gap-2
   pr-3
-  border-gray-700/70 
-  font-thin 
-  font-sans 
-  text-2xl 
+  border-gray-700/70
+  font-thin
+  font-sans
+  text-2xl
   transition-all
   ease-in-out
 }

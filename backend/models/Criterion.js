@@ -21,5 +21,20 @@ export const Criterion = sequelize.define('Criterion', {
     },
 }, {
     tableName: 'Criteria',
-    timestamps: false
+    timestamps: false,
+    hooks: {
+        async afterSync(options) {
+            await Criterion.create({
+                achievement_id: 1,
+                type: 'solved_puzzles',
+                criteria: 1
+            });
+
+            await Criterion.create({
+                achievement_id: 2,
+                type: 'solved_puzzles',
+                criteria: 2
+            });
+        }
+    }
 });

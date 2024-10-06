@@ -1,14 +1,15 @@
 <script setup>
 import Header from "@/components/shared/Header.vue";
 import Nonogram from "@/components/user/game/Nonogram.vue";
-import { getCommunityPuzzle } from "@/services/puzzleService.js";
-import { set } from "@vueuse/core";
-import { onMounted, ref} from "vue";
-import { useRoute } from "vue-router";
+import Actions from "@/components/user/game/Actions.vue";
+import {getCommunityPuzzle} from "@/services/communityService.js";
+import {set} from "@vueuse/core";
+import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
 
-const nonogram = ref(null);
 const started = ref(false);
 const paused = ref(true);
+const nonogram = ref(null);
 const route = useRoute();
 
 const fetchCommunityGame = async () => {
@@ -22,6 +23,22 @@ const fetchCommunityGame = async () => {
   set(paused, false);
 };
 
+const handlePause = () => {
+
+};
+
+const handleCheck = async () => {
+
+};
+
+const handleResetGame = () => {
+
+};
+
+const handleEndGame = () => {
+
+}
+
 onMounted(fetchCommunityGame);
 </script>
 
@@ -29,7 +46,13 @@ onMounted(fetchCommunityGame);
   <main class="view">
     <Header></Header>
     <Transition name="fade">
-      <Nonogram ref="nonogram" :started="started" :paused="paused" />
+      <Nonogram ref="nonogram" :started="started" :paused="paused"/>
+    </Transition>
+    <Transition name="slide-down-no-leave">
+      <div class="actions" v-if="started">
+        <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck"
+                 @reset-game="handleResetGame" @end-game="handleEndGame"/>
+      </div>
     </Transition>
   </main>
 </template>
@@ -37,7 +60,17 @@ onMounted(fetchCommunityGame);
 <style scoped>
 .view {
   @apply
+  relative
+}
+
+.actions {
+  @apply
+  absolute
   flex
-  flex-col
+  flex-wrap-reverse
+  justify-end
+  bottom-0
+  gap-2
+  w-full;
 }
 </style>

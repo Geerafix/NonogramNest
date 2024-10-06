@@ -21,5 +21,20 @@ export const Achievement = sequelize.define('Achievement', {
     }
 }, {
     tableName: 'Achievements',
-    timestamps: false
+    timestamps: false,
+    hooks: {
+        async afterSync(options) {
+            await Achievement.create({
+                criteria_id: 1,
+                name: 'Początkujący I',
+                description: 'Ukończ 1 nonogram.'
+            });
+
+            await Achievement.create({
+                criteria_id: 2,
+                name: 'Początkujący II',
+                description: 'Ukończ 2 nonogramy.'
+            });
+        }
+    }
 });

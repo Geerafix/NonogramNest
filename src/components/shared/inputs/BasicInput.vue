@@ -1,36 +1,37 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
+
 defineProps([
-    'placeholder',
-    'type'
+  'placeholder',
+  'type'
 ]);
 
 const value = ref('');
 </script>
 
 <template>
-    <input class="basic-input" v-model="value" :placeholder="placeholder" :type="type">
+  <input class="basic-input" v-model="value" :placeholder="placeholder" :type="type">
 </template>
 
 <style scoped>
 .basic-input {
-    @apply
-    w-60
-    h-14
-    px-3 
-    border-b-4
-    rounded-xl
-    bg-gray-200
-    border-gray-500/90
-    text-slate-900
-    ring-gray-600
-    focus:ring-gray-500
-    focus:rounded-xl
-    focus:outline-0
-    focus:border-0
-    focus:ring-4
-    text-2xl
-    text-left
-    transition-all;
+  @apply
+  w-60
+  h-14
+  px-3
+  border-b-4
+  rounded-xl
+  bg-gray-200
+  border-gray-500/90
+  text-slate-900
+  ring-gray-600
+  focus:ring-gray-500
+  focus:rounded-xl
+  focus:outline-0
+  focus:border-0
+  focus:ring-4
+  text-2xl
+  text-left
+  transition-all;
 }
 </style>

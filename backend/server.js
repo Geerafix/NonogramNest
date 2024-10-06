@@ -12,7 +12,7 @@ import('./endpoints/communityPuzzles.js');
 import('./endpoints/dailyChallenge.js');
 import('./endpoints/achievements.js');
 
-dotenv.config({ path: '../.env' });
+dotenv.config({path: '../.env'});
 
 const db_user = process.env.DB_USER;
 const db_password = process.env.DB_PASSWORD;

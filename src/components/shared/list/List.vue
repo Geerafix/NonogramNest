@@ -11,11 +11,11 @@ const props = defineProps([
 ]);
 
 const emit = defineEmits([
-    'action'
+  'action'
 ]);
 
 const onItemClick = (item) => {
-    emit('action', item);
+  emit('action', item);
 };
 
 const shortenedValue = (val) => (
@@ -28,37 +28,38 @@ const filteredItem = (item) => (
 </script>
 
 <template>
-    <div v-if="props.items">
-        <div v-if="headers" class="headers">
-          <ListHeader>
-            <li v-for="header in props.headers">
-              <Header :headerName="header" />
-            </li>
-          </ListHeader>
-        </div>
-        <div class="items">
-            <li v-for="item in props.items">
-                <ListItem @click="onItemClick(item)">
-                    <li v-for="(value, key, index) of filteredItem(item)">
-                        <Item :value="shortenedValue(value)" />
-                    </li>
-                </ListItem>
-            </li>
-        </div>
+  <div v-if="props.items">
+    <div v-if="headers" class="headers">
+      <ListHeader>
+        <li v-for="header in props.headers">
+          <Header :headerName="header"/>
+        </li>
+      </ListHeader>
     </div>
+    <div class="items">
+      <li v-for="item in props.items">
+        <ListItem @click="onItemClick(item)">
+          <li v-for="(value, key, index) of filteredItem(item)">
+            <Item :value="shortenedValue(value)"/>
+          </li>
+        </ListItem>
+      </li>
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .headers {
-    @apply
-    sticky
-    top-0
-    list-none;
+  @apply
+  sticky
+  top-0
+  list-none;
 }
+
 .items {
-    @apply
-    list-none
-    grid
-    gap-2;
+  @apply
+  list-none
+  grid
+  gap-2;
 }
 </style>

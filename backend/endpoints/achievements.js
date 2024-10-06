@@ -1,6 +1,5 @@
 import {server} from '../server.js';
 import {Op} from 'sequelize';
-import {UserProfile} from '../models/UserProfile.js';
 import {UserAchievement} from '../models/UserAchievement.js';
 import {Achievement} from '../models/Achievement.js';
 import {Criterion} from '../models/Criterion.js';
@@ -22,6 +21,7 @@ server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
             where: {[Op.and]: [{user_id: {[Op.not]: null}}, {user_id: user.user_id}]}
         }],
         attributes: ['achievement_id', 'name', 'description'],
+        order: [['name', 'ASC']],
         limit: limit,
         offset: offset,
         raw: true

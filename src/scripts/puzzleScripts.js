@@ -1,26 +1,26 @@
 export function generateAndFindHints(nonogram, size) {
     Object.assign(
-        nonogram, { 
-            answers: [], 
-            board: [], 
-            cluesX: [], 
-            cluesY: [], 
+        nonogram, {
+            answers: [],
+            board: [],
+            cluesX: [],
+            cluesY: [],
             excludedTiles: [],
-            paused: false 
+            paused: false
         }
     );
-    
+
     nonogram.excludedTiles = Array.from(Array(size), () => Array(size).fill(0));
     nonogram.board = Array.from(Array(size), () => Array(size).fill().map(() => Math.floor(Math.random() * 2)));
-    
+
     nonogram.answers = Array.from(Array(size), () => Array(size).fill(0));
-    nonogram.answers = nonogram.answers.map((row, rowIdx) => 
-        row.map((col, colIdx) => 
+    nonogram.answers = nonogram.answers.map((row, rowIdx) =>
+        row.map((col, colIdx) =>
             nonogram.board[rowIdx][colIdx] !== 1 ? Math.floor(Math.random() * 2) * -1 : col
-    ));
+        ));
 
     nonogram.board.forEach((row, rowIdx) => {
-        nonogram.cluesX[rowIdx] = []; 
+        nonogram.cluesX[rowIdx] = [];
         nonogram.cluesY[rowIdx] = [];
         let ansX = 0, ansY = 0;
         row.forEach((col, colIdx) => {
@@ -48,32 +48,33 @@ export function check(nonogram) {
     let x = 0, y = 0, checkX = [], checkY = [], ansX = 0, ansY = 0;
 
     nonogram.answers.forEach((row, rowIdx) => {
-        checkX.push([]); checkY.push([]);
+        checkX.push([]);
+        checkY.push([]);
         row.forEach((col, colIdx) => {
             if (nonogram.answers[rowIdx][colIdx] === 1) {
                 ansX += 1;
             }
-            if (nonogram.answers[rowIdx][colIdx] <= 0 && ansX !== 0) { 
+            if (nonogram.answers[rowIdx][colIdx] <= 0 && ansX !== 0) {
                 checkX[rowIdx].push(ansX);
                 ansX = 0;
-                x += 1; 
+                x += 1;
             }
             if (nonogram.answers[colIdx][rowIdx] === 1) {
                 ansY += 1;
             }
-            if (nonogram.answers[colIdx][rowIdx] <= 0 && ansY !== 0) { 
-                checkY[rowIdx].push(ansY); 
-                ansY = 0; 
+            if (nonogram.answers[colIdx][rowIdx] <= 0 && ansY !== 0) {
+                checkY[rowIdx].push(ansY);
+                ansY = 0;
                 y += 1;
             }
         });
-        if (ansX !== 0) { 
+        if (ansX !== 0) {
             checkX[rowIdx].push(ansX);
-            ansX = 0; 
+            ansX = 0;
         }
-        if (ansY !== 0) { 
-            checkY[rowIdx].push(ansY); 
-            ansY = 0; 
+        if (ansY !== 0) {
+            checkY[rowIdx].push(ansY);
+            ansY = 0;
         }
         x = 0;
         y = 0;
@@ -94,12 +95,12 @@ export function check(nonogram) {
             if (el !== checkY[rowIdx][colIdx]) counter += 1;
         });
     });
-    return { X, Y, counter };
+    return {X, Y, counter};
 }
 
 export function generateGame(answers) {
-    const nonogram = { cluesX: [], cluesY: [], excludedTiles: [] };
-    
+    const nonogram = {cluesX: [], cluesY: [], excludedTiles: []};
+
     nonogram.excludedTiles = Array.from(Array(answers.length), () => Array(answers.length).fill(0));
 
     answers.forEach((row, rowIdx) => {
@@ -112,7 +113,7 @@ export function generateGame(answers) {
     });
 
     answers.forEach((row, rowIdx) => {
-        nonogram.cluesX[rowIdx] = []; 
+        nonogram.cluesX[rowIdx] = [];
         nonogram.cluesY[rowIdx] = [];
         let ansX = 0, ansY = 0;
         row.forEach((col, colIdx) => {

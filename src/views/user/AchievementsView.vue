@@ -10,42 +10,43 @@ const achievements = ref([]);
 const page = ref(1);
 const limit = ref(10);
 const settings = computed(() => ({
-    page: page.value,
-    limit: limit.value,
-    perpage: achievements.value.length,
-    prev: () => page.value -= 1,
-    next: () => page.value += 1
+  page: page.value,
+  limit: limit.value,
+  perpage: achievements.value.length,
+  prev: () => page.value -= 1,
+  next: () => page.value += 1
 }));
 
 const fetchUserAchievements = async () => {
-    await getUserAchievements(page.value, limit.value + 1)
-        .then((res) => achievements.value = res.data );
+  await getUserAchievements(page.value, limit.value + 1)
+      .then((res) => achievements.value = res.data);
 };
 
 onMounted(fetchUserAchievements);
 </script>
 
 <template>
-    <main class="view">
-        <Header></Header>
-        <List class="list"
-              :headers="['Nazwa', 'Opis', 'Ilość', 'Data']"
-              :items="achievements"
-              :excluded="[0]"
-        />
-        <div class="controls">
-          <Pagination v-bind="settings" @onPageChange="fetchUserAchievements"/>
-        </div>
-    </main>
+  <main class="view">
+    <Header></Header>
+    <List class="list"
+          :headers="['Nazwa', 'Opis', 'Ilość', 'Data']"
+          :items="achievements"
+          :excluded="[0]"
+    />
+    <div class="controls">
+      <Pagination v-bind="settings" @onPageChange="fetchUserAchievements"/>
+    </div>
+  </main>
 </template>
 
 <style scoped>
 .view {
-    @apply
-    flex
-    flex-col
+  @apply
+  flex
+  flex-col
   relative
 }
+
 .controls {
   @apply
   absolute

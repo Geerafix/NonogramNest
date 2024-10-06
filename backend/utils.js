@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-dotenv.config({ path: "../.env" });
+
+dotenv.config({path: "../.env"});
 
 export const getPagination = (req) => {
     const page = !Number.isNaN(parseInt(req.query.page)) ? parseInt(req.query.page) : 1;
@@ -28,12 +29,12 @@ export const authHandler = (req, res, next) => {
         const token = req.cookies.token;
 
         if (token == null) {
-            return res.json({ message: 'Access denied' });
+            return res.json({message: 'Access denied'});
         }
 
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
-                res.json({ message: 'Invalid token' });
+                res.json({message: 'Invalid token'});
             }
             req.user = {
                 user_id: user.user_id,
