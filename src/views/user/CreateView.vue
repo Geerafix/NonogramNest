@@ -48,7 +48,8 @@ const handleSubmitGame = async (name) => {
 };
 
 const showNotification = (status, message) => {
-  Object.assign(notificationData, { status: status, message: message });
+  Object.assign(notificationData, {status: status, message: message});
+  notification.value.start();
 };
 </script>
 

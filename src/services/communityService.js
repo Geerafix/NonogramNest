@@ -31,3 +31,9 @@ export function postCommunityPuzzle(name, cluesX, cluesY, size, excludedTiles) {
         excludedTiles: JSON.stringify(excludedTiles)
     });
 }
+
+export function postSolvedCommunityPuzzle(id) {
+    return api.post('/community/solved', {
+        puzzle_id: id
+    });
+}

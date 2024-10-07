@@ -42,8 +42,7 @@ const handleCheck = async () => {
   const data = nonogram.value.checkSolution();
   if (!data.isSolved) {
     set(points, (points.value - data.lostPoints >= 0) ? points.value - data.lostPoints : 0);
-    notificationData.message = `Twoje rozwiązanie jest niepoprawne. Tracisz ${data.lostPoints} pkt.`;
-    notificationData.status = false;
+    Object.assign(notificationData, {status: false, message: `Twoje rozwiązanie jest niepoprawne. Tracisz ${data.lostPoints} pkt.`});
     notification.value.start();
   } else {
     await postPuzzle(nonogram.value.nonogram.cluesX, nonogram.value.nonogram.cluesY, nonogram.value.nonogram.size)
@@ -83,7 +82,7 @@ watch(paused, (newValue) => newValue ? pause() : resume());
       <Nonogram ref="nonogram" :started="started" :paused="paused"/>
     </Transition>
     <div class="actions-container">
-      <Transition name="fade">
+      <Transition name="slide-down-no-leave">
                 <span class="self-center text-xl" v-if="points && !started">
                     {{ points }} pkt.
                 </span>

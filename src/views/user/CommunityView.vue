@@ -52,6 +52,7 @@ onBeforeMount(fetchCommunityPuzzles);
           :headers="['ID', 'Nazwa', 'Rozmiar', 'Twórca']"
           :items="puzzles"
           @action="handleAction"
+          :excluded="[2, 5, 6]"
     />
     <div class="relative flex gap-2 w-full justify-between">
       <Pagination v-bind="settings" @onPageChange="fetchCommunityPuzzles"></Pagination>

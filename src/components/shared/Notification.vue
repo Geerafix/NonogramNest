@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onBeforeMount, watch} from 'vue';
+import {computed, onBeforeMount} from 'vue';
 import {useTimeout} from '@vueuse/core'
 
 const props = defineProps(['message', 'status', 'time']);
@@ -8,7 +8,7 @@ const {ready, start, stop} = useTimeout(props.time, {controls: true})
 
 const notificationColor = computed(() => props.status ? 'bg-teal-900' : 'bg-[#7C2C3B]');
 
-watch(() => props.message, start);
+defineExpose({start});
 
 onBeforeMount(stop);
 </script>

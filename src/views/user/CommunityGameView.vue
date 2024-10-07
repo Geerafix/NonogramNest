@@ -2,18 +2,24 @@
 import Header from "@/components/shared/Header.vue";
 import Nonogram from "@/components/user/game/Nonogram.vue";
 import Actions from "@/components/user/game/Actions.vue";
-import {getCommunityPuzzle} from "@/services/communityService.js";
+import Notification from "@/components/shared/Notification.vue";
+import {getCommunityPuzzle, postSolvedCommunityPuzzle} from "@/services/communityService.js";
 import {set} from "@vueuse/core";
-import {onMounted, ref} from "vue";
-import {useRoute} from "vue-router";
+import {onMounted, ref, reactive} from "vue";
+import {useRoute, useRouter} from "vue-router";
 
 const started = ref(false);
 const paused = ref(true);
 const nonogram = ref(null);
 const route = useRoute();
+const router = useRouter();
+
+const notification = ref(null);
+const notificationData = reactive({message: '', status: true, time: 2500});
 
 const fetchCommunityGame = async () => {
   const communityPuzzle = await getCommunityPuzzle(route.params.id).then((res) => res.data);
+  nonogram.value.nonogram.id = communityPuzzle.puzzle_id;
   nonogram.value.nonogram.size = communityPuzzle.size;
   nonogram.value.nonogram.cluesX = JSON.parse(communityPuzzle.clues_x);
   nonogram.value.nonogram.cluesY = JSON.parse(communityPuzzle.clues_y);
@@ -24,19 +30,26 @@ const fetchCommunityGame = async () => {
 };
 
 const handlePause = () => {
-
+  paused.value = !paused.value;
 };
 
 const handleCheck = async () => {
-
+  const data = nonogram.value.checkSolution();
+  if (!data.isSolved) {
+    Object.assign(notificationData, {status: false, message: 'Twoje rozwiązanie jest niepoprawne.'});
+    notification.value.start();
+  } else {
+    await postSolvedCommunityPuzzle(nonogram.value.nonogram.id);
+    handleEndGame();
+  }
 };
 
 const handleResetGame = () => {
-
+  nonogram.value.resetGame(2);
 };
 
 const handleEndGame = () => {
-
+  router.push({name: 'Community'});
 }
 
 onMounted(fetchCommunityGame);
@@ -54,6 +67,7 @@ onMounted(fetchCommunityGame);
                  @reset-game="handleResetGame" @end-game="handleEndGame"/>
       </div>
     </Transition>
+    <Notification ref="notification" v-bind="notificationData"/>
   </main>
 </template>
 
