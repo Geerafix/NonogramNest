@@ -14,6 +14,17 @@ export function getCommunityPuzzles(page, limit, search, option) {
     });
 }
 
+export function getUserPuzzles(page, limit, search) {
+    return api.get('/user/puzzles', {
+        params: {
+            page: page,
+            limit: limit,
+            search: search
+        }
+    });
+}
+
+
 export function getCommunityPuzzle(id) {
     return api.get('/community/puzzle', {
         params: {

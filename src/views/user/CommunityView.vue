@@ -4,7 +4,8 @@ import Pagination from '@/components/shared/Pagination.vue';
 import BasicInput from '@/components/shared/inputs/BasicInput.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
-import {getCommunityPuzzles} from '@/services/communityService.js';
+import Switch from '@/components/shared/inputs/Switch.vue';
+import {getCommunityPuzzles, getUserPuzzles} from '@/services/communityService.js';
 import {computed, onBeforeMount, ref, watch} from 'vue';
 import {useRouter} from "vue-router";
 import {ratingSearchBy} from '@/store';
@@ -15,6 +16,7 @@ const router = useRouter();
 const puzzles = ref([]);
 const search = ref('');
 const option = ref('name');
+const whose = ref(false);
 
 const page = ref(1);
 const limit = ref(10);
@@ -26,9 +28,17 @@ const settings = computed(() => ({
   next: () => page.value += 1,
 }));
 
-const fetchCommunityPuzzles = async () => {
-  await getCommunityPuzzles(page.value, limit.value, search.value, option.value)
+const fetchPuzzles = async (switched) => {
+  set(whose, switched);
+  if (switched) {
+    await getUserPuzzles(page.value, limit.value, search.value)
       .then((res) => set(puzzles, res.data));
+      console.log("One");
+  } else {
+    await getCommunityPuzzles(page.value, limit.value, search.value, option.value)
+      .then((res) => set(puzzles, res.data));
+      console.log("Users");
+  }
 };
 
 const handleAction = async (item) => {
@@ -39,10 +49,10 @@ const setOption = (opt) => set(option, opt);
 
 watch([search, option], () => {
   set(page, 1);
-  fetchCommunityPuzzles();
+  fetchPuzzles(whose.value);
 });
 
-onBeforeMount(fetchCommunityPuzzles);
+onBeforeMount(fetchPuzzles);
 </script>
 
 <template>
@@ -52,13 +62,16 @@ onBeforeMount(fetchCommunityPuzzles);
           :headers="['ID', 'Nazwa', 'Rozmiar', 'Twórca']"
           :items="puzzles"
           @action="handleAction"
-          :excluded="[2, 5, 6]"
     />
     <div class="relative flex gap-2 w-full justify-between">
-      <Pagination v-bind="settings" @onPageChange="fetchCommunityPuzzles"></Pagination>
+      <Pagination v-bind="settings" @onPageChange="fetchPuzzles(whose)"></Pagination>
       <div class="search-container">
-        <BasicInput v-model="search" placeholder="Wyszukaj po..."></BasicInput>
-        <Select :items="ratingSearchBy" @select="setOption"></Select>
+        <BasicInput v-model="search" placeholder="Wyszukaj..."></BasicInput>
+        <Select v-if="!whose" :items="ratingSearchBy" @select="setOption"></Select>
+        <Switch @onSwitch="fetchPuzzles">
+          <Icon icon="fa-solid fa-user" class="my-auto mx-auto text-2xl text-gray-600"/> 
+          <Icon icon="fa-solid fa-user-group" class="my-auto mx-auto text-2xl text-gray-600"/>  
+        </Switch>
       </div>
     </div>
   </main>

@@ -3,7 +3,7 @@ import Header from "@/components/shared/Header.vue";
 import Nonogram from "@/components/user/game/Nonogram.vue";
 import Actions from "@/components/user/game/Actions.vue";
 import Notification from "@/components/shared/Notification.vue";
-import {getCommunityPuzzle, postSolvedCommunityPuzzle} from "@/services/communityService.js";
+import {getCommunityPuzzle} from "@/services/communityService.js";
 import {set} from "@vueuse/core";
 import {onMounted, ref, reactive} from "vue";
 import {useRoute, useRouter} from "vue-router";
@@ -39,7 +39,6 @@ const handleCheck = async () => {
     Object.assign(notificationData, {status: false, message: 'Twoje rozwiązanie jest niepoprawne.'});
     notification.value.start();
   } else {
-    await postSolvedCommunityPuzzle(nonogram.value.nonogram.id);
     handleEndGame();
   }
 };
