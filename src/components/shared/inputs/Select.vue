@@ -3,15 +3,15 @@ import {ref} from 'vue';
 import {set} from '@vueuse/core';
 
 const props = defineProps(['items']);
-const emit = defineEmits(['select']);
+const emit = defineEmits(['onSelect']);
 
 const selected = ref(props.items[props.items.length - 1].name);
 const expanded = ref(false);
 
-const selectOption = (item) => {
+const onSelect = (item) => {
   set(selected, item.name);
   set(expanded, false);
-  emit('select', item.value);
+  emit('onSelect', item.value);
 };
 </script>
 
@@ -20,7 +20,7 @@ const selectOption = (item) => {
     <div>
       <Transition name="fade" mode="out-in">
         <ul v-if="expanded">
-          <li v-for="item in props.items" @click="selectOption(item)">
+          <li v-for="item in props.items" @click="onSelect(item)">
             <div :class="['item', {'selected': selected === item.name }]">{{ item.name }}</div>
           </li>
         </ul>

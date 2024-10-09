@@ -25,9 +25,7 @@ const handleNextPage = () => {
 const computedPrevPage = computed(() => props.page === 1);
 const computedNextPage = computed(() => props.perpage < props.limit);
 
-watch(() => props.page, () => {
-  emit('onPageChange')
-});
+watch(() => props.page, () => emit('onPageChange'));
 </script>
 
 <template>
@@ -51,7 +49,9 @@ watch(() => props.page, () => {
   grid-cols-[min-content_80px_min-content]
   gap-2
   w-fit
-  items-center;
+  items-center
+  absolute
+  bottom-0;
 }
 
 .page {

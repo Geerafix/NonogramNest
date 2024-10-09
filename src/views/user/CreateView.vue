@@ -5,14 +5,15 @@ import NonogramBoard from '@/components/user/game-creation/NonogramBoard.vue';
 import Notification from '@/components/shared/Notification.vue';
 import {postCommunityPuzzle} from '@/services/communityService.js';
 import {generateGame} from '@/scripts/puzzleScripts';
-import {reactive, ref} from 'vue';
+import {ref} from 'vue';
 import {set} from '@vueuse/core';
+import { useNotification } from '@/composables/useNotification';
 
 const board = ref(null);
-const isSizeSelected = ref(false);
-
 const notification = ref(null);
-const notificationData = reactive({message: '', status: true, time: 2500});
+const {notify} = useNotification(notification);
+
+const isSizeSelected = ref(false);
 
 const handleNewBoard = (size) => {
   board.value.setBoard(size);
@@ -26,30 +27,23 @@ const handleClearBoard = () => {
 const handleSubmitGame = async (name) => {
   if (isSizeSelected.value) {
     if (name.length > 0) {
-      const nonogram = generateGame(board.value.answers);
       board.value.clearBoard();
-
-      await postCommunityPuzzle(
-          name,
-          nonogram.cluesX,
-          nonogram.cluesY,
-          board.value.answers.length,
-          nonogram.excludedTiles
-      );
-
-      showNotification(true, 'Zapisano nonogram');
       set(isSizeSelected, false);
+      notify(true, 'Zapisano nonogram');
+      
+      const nonogram = generateGame(board.value.answers);
+      await postCommunityPuzzle(name,
+        nonogram.cluesX,
+        nonogram.cluesY,
+        board.value.answers.length,
+        nonogram.excludedTiles
+      );
     } else {
-      showNotification(false, 'Nie wpisano nazwy planszy');
+      notify(false, 'Nie wpisano nazwy planszy');
     }
   } else {
-    showNotification(false, 'Nie wybrano rozmiaru planszy');
+    notify(false, 'Nie wybrano rozmiaru planszy');
   }
-};
-
-const showNotification = (status, message) => {
-  Object.assign(notificationData, {status: status, message: message});
-  notification.value.start();
 };
 </script>
 
@@ -70,7 +64,7 @@ const showNotification = (status, message) => {
             @clear-board="handleClearBoard"
             @submit="handleSubmitGame">
     </Actions>
-    <Notification ref="notification" v-bind="notificationData"/>
+    <Notification ref="notification" />
   </main>
 </template>
 

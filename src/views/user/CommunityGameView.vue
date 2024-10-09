@@ -11,6 +11,7 @@ import {useRoute, useRouter} from "vue-router";
 const started = ref(false);
 const paused = ref(true);
 const nonogram = ref(null);
+
 const route = useRoute();
 const router = useRouter();
 
@@ -71,11 +72,6 @@ onMounted(fetchCommunityGame);
 </template>
 
 <style scoped>
-.view {
-  @apply
-  relative
-}
-
 .actions {
   @apply
   absolute

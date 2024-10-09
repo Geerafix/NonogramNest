@@ -5,48 +5,45 @@ import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
 import {modes, sizes} from '@/store';
 import {getRatingChallenge, getRatingClassic} from '@/services/ratingService';
-import {computed, onBeforeMount, ref, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
+import {useList} from '@/composables/useList';
+import {usePagination} from '@/composables/usePagination';
 
-const rating = ref([]);
 const size = ref(null);
 const mode = ref(null);
+const rating = ref([]);
 
-const page = ref(1);
-const limit = ref(10);
-const settings = computed(() => ({
-  page: page.value,
-  limit: limit.value,
-  perpage: rating.value.length,
-  prev: () => page.value -= 1,
-  next: () => page.value += 1
-}));
+const listState = useList(['Nazwa', 'Punkty'], rating);
+const {pageState} = usePagination(1, 10, rating);
 
 const setSize = (data) => set(size, data);
 const setMode = (data) => set(mode, data);
 
 const fetchRating = async () => {
   if (mode.value === 'challenge') {
-    await getRatingChallenge(page.value, limit.value).then((res) => rating.value = res.data);
+    await getRatingChallenge({...pageState.value})
+        .then((res) => set(rating, res.data));
   } else {
-    await getRatingClassic(page.value, limit.value, size.value).then((res) => rating.value = res.data);
+    await getRatingClassic(pageState.value.page, pageState.value.limit, size.value)
+        .then((res) => set(rating, res.data));
   }
 };
 
 watch([size, mode], fetchRating)
 
-onBeforeMount(fetchRating);
+onMounted(fetchRating);
 </script>
 
 <template>
   <main class="view">
     <Header></Header>
-    <List class="list" :headers="['Nazwa', 'Punkty']" :items="rating"></List>
+    <List class="list" v-bind="listState"></List>
     <div class="controls-container">
-      <Pagination v-bind="settings" @onPageChange="fetchRating"></Pagination>
+      <Pagination v-bind="pageState" @onPageChange="fetchRating"></Pagination>
       <div class="controls">
-        <Select :items="modes" @select="setMode"/>
-        <Select :items="sizes" @select="setSize" :class="['test', { 'hidden': mode === 'challenge' }]"/>
+        <Select :items="modes" @onSelect="setMode"/>
+        <Select :items="sizes" @onSelect="setSize" :class="['test', { 'hidden': mode === 'challenge' }]"/>
       </div>
     </div>
   </main>

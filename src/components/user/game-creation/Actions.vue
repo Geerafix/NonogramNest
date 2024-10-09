@@ -41,7 +41,7 @@ const setSize = (size) => {
       <BasicButton @click="submitNonogram" :style="{ backgroundColor: '#8f5333' }">
         <Icon icon="fa-solid fa-check"/>
       </BasicButton>
-      <Select :items="sizes" @select="setSize"></Select>
+      <Select :items="sizes" @onSelect="setSize"></Select>
     </div>
   </Transition>
 </template>

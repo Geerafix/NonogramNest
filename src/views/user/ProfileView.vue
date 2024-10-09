@@ -12,16 +12,8 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <main class="view">
+  <main>
     <Header></Header>
-    <UserProfile :user="user" class="place-self-center"></UserProfile>
+    <UserProfile :user="user" class="m-auto"></UserProfile>
   </main>
 </template>
-
-<style scoped>
-.view {
-  @apply
-  flex
-  flex-col
-}
-</style>

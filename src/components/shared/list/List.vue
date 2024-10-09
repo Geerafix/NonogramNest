@@ -11,11 +11,11 @@ const props = defineProps([
 ]);
 
 const emit = defineEmits([
-  'action'
+  'onListItemClick'
 ]);
 
-const onItemClick = (item) => {
-  emit('action', item);
+const onListItemClick = (item) => {
+  emit('onListItemClick', item);
 };
 
 const shortenedValue = (val) => (
@@ -38,7 +38,7 @@ const filteredItem = (item) => (
     </div>
     <div class="items">
       <li v-for="item in props.items">
-        <ListItem @click="onItemClick(item)">
+        <ListItem @click="onListItemClick(item)">
           <li v-for="(value, key, index) of filteredItem(item)">
             <Item :value="shortenedValue(value)"/>
           </li>

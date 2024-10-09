@@ -1,14 +1,18 @@
 <script setup>
-import {computed, onBeforeMount} from 'vue';
+import {computed, reactive, onBeforeMount} from 'vue';
 import {useTimeout} from '@vueuse/core'
 
-const props = defineProps(['message', 'status', 'time']);
+const settings = reactive({status: false, message: '', time: 2500})
+const {ready, start, stop} = useTimeout(settings.time, {controls: true})
 
-const {ready, start, stop} = useTimeout(props.time, {controls: true})
+const notificationColor = computed(() => settings.status ? 'bg-teal-900' : 'bg-[#7C2C3B]');
 
-const notificationColor = computed(() => props.status ? 'bg-teal-900' : 'bg-[#7C2C3B]');
+const show = (status, message, time) => {
+  Object.assign(settings, {status: status, message: message, time: time || 2500});
+  start();
+};
 
-defineExpose({start});
+defineExpose({show});
 
 onBeforeMount(stop);
 </script>
@@ -16,7 +20,7 @@ onBeforeMount(stop);
 <template>
   <Transition name="slide-left">
     <p v-if="!ready" :class="['notification', notificationColor]">
-      {{ props.message }}
+      {{ settings.message }}
     </p>
   </Transition>
 </template>

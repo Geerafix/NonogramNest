@@ -2,55 +2,27 @@
 import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
 import Pagination from "@/components/shared/Pagination.vue";
+import {usePagination} from '@/composables/usePagination';
+import {useList} from '@/composables/useList';
 import {getUserAchievements} from '@/services/achievementsService';
-import {computed, onMounted, ref} from 'vue';
+import {onMounted, ref} from 'vue';
+import {set} from '@vueuse/core';
 
 const achievements = ref([]);
-
-const page = ref(1);
-const limit = ref(10);
-const settings = computed(() => ({
-  page: page.value,
-  limit: limit.value,
-  perpage: achievements.value.length,
-  prev: () => page.value -= 1,
-  next: () => page.value += 1
-}));
+const {pageState} = usePagination(1, 10, achievements);
+const listState = useList(['Nazwa','Opis','Ilość','Data'], achievements, [0]);
 
 const fetchUserAchievements = async () => {
-  await getUserAchievements(page.value, limit.value + 1)
-      .then((res) => achievements.value = res.data);
+  await getUserAchievements({...pageState.value}).then((res) => set(achievements, res.data));
 };
 
 onMounted(fetchUserAchievements);
 </script>
 
 <template>
-  <main class="view">
+  <main>
     <Header></Header>
-    <List class="list"
-          :headers="['Nazwa', 'Opis', 'Ilość', 'Data']"
-          :items="achievements"
-          :excluded="[0]"
-    />
-    <div class="controls">
-      <Pagination v-bind="settings" @onPageChange="fetchUserAchievements"/>
-    </div>
+    <List v-bind="listState"/>
+    <Pagination v-bind="pageState" @onPageChange="fetchUserAchievements"/>
   </main>
-</template>
-
-<style scoped>
-.view {
-  @apply
-  flex
-  flex-col
-  relative
-}
-
-.controls {
-  @apply
-  absolute
-  flex
-  bottom-0
-}
-</style>
+</template> 

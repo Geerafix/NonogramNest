@@ -71,7 +71,7 @@ watch(paused, (newValue) => newValue ? pause() : resume());
 </script>
 
 <template>
-  <main class="view">
+  <main>
     <Header></Header>
     <Transition name="fade">
       <div class="game-instructions" v-if="!started">
@@ -97,11 +97,6 @@ watch(paused, (newValue) => newValue ? pause() : resume());
 </template>
 
 <style scoped>
-.view {
-  @apply
-  relative;
-}
-
 .game-instructions {
   @apply
   absolute

@@ -48,7 +48,7 @@ watch(() => props.started, (started) => {
       <BasicButton @click="emit('newGame')" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
         <Icon icon="fa-solid fa-plus"/>
       </BasicButton>
-      <Select :items="sizes" @select="setSize"></Select>
+      <Select :items="sizes" @onSelect="setSize"></Select>
     </div>
     <div v-else class="flex gap-2">
       <BasicButton @click="handleEndGame">
