@@ -5,69 +5,54 @@ import Actions from "@/components/user/game/Actions.vue";
 import Header from "@/components/shared/Header.vue"
 import Notification from '@/components/shared/Notification.vue';
 import Summary from '@/components/user/game/Summary.vue';
-import {set, useInterval} from '@vueuse/core';
-import {reactive, ref, watch} from 'vue';
+import {ref} from 'vue';
+import {useScore} from '@/composables/useScore';
 import {postPuzzle, postSolvedPuzzle} from '@/services/puzzleService';
-
-const {counter, reset, pause, resume} = useInterval(1000, {controls: true});
-
-const started = ref(false);
-const paused = ref(true);
-const nonogram = ref(null);
-
-const points = ref(null);
-
-const summary = ref(null);
+import {useNotification} from '@/composables/useNotification';
+import {useNonogram} from '@/composables/useNonogram';
 
 const notification = ref(null);
-const notificationData = reactive({message: '', status: true, time: 2500});
+const {notify} = useNotification(notification);
 
-const setSize = (size) => {
-  nonogram.value.nonogram.size = size;
-  set(points, Math.pow(size, 2) * size);
+const nonogram = ref(null);
+const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
+
+const summary = ref(null);
+const {setPoints, resetPoints, clearPoints, startTime, pauseTime, time, points, paused, started} = useScore();
+
+const setGame = (size) => {
+  setBoardSize(size);
+  setPoints(Math.pow(size, 2) * size);
 };
 
-const handleNewGame = () => {
-  set(started, true);
-  set(paused, false);
-  nonogram.value.newGame();
-  reset();
+const startGame = () => {
+  setNewBoard();
+  startTime();
 };
 
-const handlePause = () => {
-  paused.value = !paused.value;
-};
-
-const handleCheck = async () => {
-  const data = nonogram.value.checkSolution();
-  if (!data.isSolved) {
-    set(points, (points.value - data.lostPoints >= 0) ? points.value - data.lostPoints : 0);
-    Object.assign(notificationData, {status: false, message: `Twoje rozwiązanie jest niepoprawne. Tracisz ${data.lostPoints} pkt.`});
-    notification.value.start();
+const checkGame = async () => {
+  const {isSolved, lostPoints} = checkSolution();
+  if (!isSolved) {
+    const diff = (points.value - lostPoints >= 0) ? points.value - lostPoints : 0;
+    setPoints(diff);
+    notify(false, `Twoje rozwiązanie jest niepoprawne. Tracisz ${lostPoints} pkt.`);
   } else {
-    await postPuzzle(nonogram.value.nonogram.cluesX, nonogram.value.nonogram.cluesY, nonogram.value.nonogram.size)
-        .then((res) => {
-          nonogram.value.nonogram.id = res.data.id
-        });
-    await postSolvedPuzzle(nonogram.value.nonogram.id, counter.value, points.value);
+    const id = await postPuzzle(cluesX.value, cluesY.value, boardSize.value).then((res) => res.data.id);
+    await postSolvedPuzzle(id, time.value, points.value);
     summary.value.show(points.value);
-    handleEndGame();
+    endGame();
   }
 };
 
-const handleResetGame = () => {
-  counter.value = 0;
-  set(points, Math.pow(nonogram.value.nonogram.size, 2) * nonogram.value.nonogram.size);
-  nonogram.value.resetGame(2);
+const resetGame = () => {
+  resetBoard(2);
+  resetPoints();
 };
 
-const handleEndGame = () => {
-  set(started, false);
-  set(points, null);
-  nonogram.value.resetGame(1);
-}
-
-watch(paused, (newValue) => newValue ? pause() : resume());
+const endGame = () => {
+  resetBoard(1);
+  clearPoints();
+};
 </script>
 
 <template>
@@ -75,24 +60,22 @@ watch(paused, (newValue) => newValue ? pause() : resume());
     <Header></Header>
     <Transition name="fade">
       <div class="game-instructions" v-if="!started">
-        <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z plusem, aby rozpocząć grę.</p>
+        <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
       </div>
     </Transition>
     <Transition name="fade">
-      <Nonogram ref="nonogram" :started="started" :paused="paused"/>
+      <Nonogram ref="nonogram" v-bind="{started, paused}"/>
     </Transition>
     <div class="actions-container">
       <Transition name="slide-down-no-leave">
-                <span class="self-center text-xl" v-if="points && !started">
-                    {{ points }} pkt.
-                </span>
+        <span class="self-center text-xl" v-if="points && !started">{{points}} pkt.</span>
       </Transition>
-      <Actions :started="started" :paused="paused" @new-game="handleNewGame" @pause="handlePause" @check="handleCheck"
-               @size="setSize" @reset-game="handleResetGame" @end-game="handleEndGame"/>
-      <Score :time="counter" :points="points" :started="started"/>
+      <Actions v-bind="{started, paused}" @new-game="startGame" @pause="pauseTime" @check="checkGame"
+               @size="setGame" @reset-game="resetGame" @end-game="endGame"/>
+      <Score v-bind="{time, points, started}"/>
     </div>
     <Summary ref="summary"></Summary>
-    <Notification ref="notification" v-bind="notificationData"/>
+    <Notification ref="notification"/>
   </main>
 </template>
 

@@ -9,11 +9,11 @@ defineProps(['paused', 'started']);
 
 const nonogram = reactive({});
 
-const newGame = () => {
+const newBoard = () => {
   generateAndFindHints(nonogram, nonogram.size);
 };
 
-const resetGame = (option) => {
+const resetBoard = (option) => {
   switch (option) {
     case 1 :
       Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0});
@@ -31,9 +31,9 @@ const paintTile = (row, col) => {
   nonogram.answers[row][col] = (nonogram.answers[row][col] + 1) % 2;
 };
 
-defineExpose({nonogram, newGame, resetGame, paintTile, checkSolution});
+defineExpose({nonogram, newBoard, resetBoard, paintTile, checkSolution});
 
-onBeforeMount(resetGame);
+onBeforeMount(resetBoard);
 </script>
 
 <template>

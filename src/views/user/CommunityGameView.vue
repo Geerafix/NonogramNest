@@ -5,8 +5,9 @@ import Actions from "@/components/user/game/Actions.vue";
 import Notification from "@/components/shared/Notification.vue";
 import {getCommunityPuzzle} from "@/services/communityService.js";
 import {set} from "@vueuse/core";
-import {onMounted, ref, reactive} from "vue";
+import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
+import { useNotification } from "@/composables/useNotification";
 
 const started = ref(false);
 const paused = ref(true);
@@ -16,7 +17,7 @@ const route = useRoute();
 const router = useRouter();
 
 const notification = ref(null);
-const notificationData = reactive({message: '', status: true, time: 2500});
+const {notify} = useNotification(notification);
 
 const fetchCommunityGame = async () => {
   const communityPuzzle = await getCommunityPuzzle(route.params.id).then((res) => res.data);
@@ -37,8 +38,7 @@ const handlePause = () => {
 const handleCheck = async () => {
   const data = nonogram.value.checkSolution();
   if (!data.isSolved) {
-    Object.assign(notificationData, {status: false, message: 'Twoje rozwiązanie jest niepoprawne.'});
-    notification.value.start();
+    notify(false, 'Twoje rozwiązanie jest niepoprawne.');
   } else {
     handleEndGame();
   }
@@ -67,7 +67,7 @@ onMounted(fetchCommunityGame);
                  @reset-game="handleResetGame" @end-game="handleEndGame"/>
       </div>
     </Transition>
-    <Notification ref="notification" v-bind="notificationData"/>
+    <Notification ref="notification"/>
   </main>
 </template>
 

@@ -95,6 +95,7 @@ export function check(nonogram) {
             if (el !== checkY[rowIdx][colIdx]) counter += 1;
         });
     });
+    
     return {X, Y, counter};
 }
 

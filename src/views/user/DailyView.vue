@@ -8,99 +8,73 @@ import Notification from '@/components/shared/Notification.vue';
 import Score from '@/components/user/game/Score.vue';
 import Actions from '@/components/user/game/Actions.vue';
 import Summary from '@/components/user/game/Summary.vue';
-import {onBeforeUnmount, onMounted, reactive, ref, watch} from 'vue';
-import {set, useInterval} from '@vueuse/core';
+import {onBeforeUnmount, ref} from 'vue';
 import {getDailyChallenge, postDailyChallenge, updateDailyChallenge} from '@/services/dailyChallengeService';
 import {postPuzzle} from '@/services/puzzleService';
-
-const {counter, reset, pause, resume} = useInterval(1000, {controls: true});
-
-const summary = ref(null);
-
-const started = ref(false);
-const paused = ref(true);
-
-const nonogram = ref(null);
-const points = ref(0);
+import {useNotification} from '@/composables/useNotification';
+import {useNonogram} from '@/composables/useNonogram';
+import {useScore} from '@/composables/useScore';
 
 const notification = ref(null);
-const notificationData = reactive({message: '', status: true, time: 3000});
+const {notify} = useNotification(notification);
 
-const handleDailyChallenge = async () => {
+const nonogram = ref(null);
+const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
+
+const summary = ref(null);
+const {setPoints, resetPoints, clearPoints, startTime, setTime, pauseTime, time, points, paused, started} = useScore();
+
+const setDailyChallenge = async () => {
   const dailyChallenge = await getDailyChallenge().then((res) => res.data);
   if (!dailyChallenge) {
-    set(points, Math.pow(8, 2) * 8);
-    nonogram.value.nonogram.size = 8;
-    nonogram.value.newGame();
-    await postPuzzle(
-        nonogram.value.nonogram.cluesX,
-        nonogram.value.nonogram.cluesY,
-        nonogram.value.nonogram.size)
-        .then((res) => {
-          nonogram.value.nonogram.id = res.data.id
-        });
-
-    await postDailyChallenge(nonogram.value.nonogram.id, 0, points.value);
+    setPoints(Math.pow(8, 2) * 8);
+    setBoardSize(8);
+    setNewBoard();
+    const id = await postPuzzle(cluesX.value, cluesY.value, boardSize.value).then((res) => res.data.id);
+    await postDailyChallenge(id, time.value, points.value);
   } else if (dailyChallenge && !dailyChallenge.is_solved) {
-    set(points, dailyChallenge.points);
-    set(counter, dailyChallenge.time);
-    nonogram.value.nonogram.size = 8;
+    setPoints(dailyChallenge.points);
+    setTime(dailyChallenge.time);
+    setBoardSize(8);
     nonogram.value.nonogram.cluesX = JSON.parse(dailyChallenge.Puzzle.clues_x);
     nonogram.value.nonogram.cluesY = JSON.parse(dailyChallenge.Puzzle.clues_y);
     nonogram.value.nonogram.answers = JSON.parse(dailyChallenge.answers);
   } else {
-    notificationData.message = `Wykonano dzisiejsze wyzwanie. Wróć jutro.`;
-    notificationData.status = true;
-    notification.value.start();
+    notify(true, 'Wykonano dzisiejsze wyzwanie. Wróć jutro.');
     return;
   }
-  set(started, true);
+  startTime();
 };
 
-const handlePause = () => {
-  set(paused, !paused.value);
-};
-
-const handleCheck = async () => {
-  const data = nonogram.value.checkSolution();
-  if (!data.isSolved) {
-    set(points, (points.value - data.lostPoints >= 0) ? points.value - data.lostPoints : 0);
-    notificationData.message = `Twoje rozwiązanie jest niepoprawne. Tracisz ${data.lostPoints} pkt.`;
-    notificationData.status = false;
-    notification.value.start();
+const checkGame = async () => {
+  const {isSolved, lostPoints} = checkSolution();
+  if (!isSolved) {
+    const diff = (points.value - lostPoints >= 0) ? points.value - lostPoints : 0;
+    setPoints(diff);
+    notify(false, `Twoje rozwiązanie jest niepoprawne. Tracisz ${lostPoints} pkt.`);
   } else {
-    await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, true);
+    await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, true);
     summary.value.show(points.value);
-    handleEndGame();
+    endGame();
   }
 };
 
-const handleResetGame = () => {
-  counter.value = 0;
-  set(points, Math.pow(8, 2) * 8);
-  nonogram.value.resetGame(2);
+const resetGame = () => {
+  resetPoints();
+  resetBoard(2);
 };
 
-const handleEndGame = async () => {
-  await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
-  set(started, false);
-  set(paused, true);
-  set(points, null);
-  nonogram.value.resetGame(1);
-  pause();
+const endGame = async () => {
+  await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
+  clearPoints();
+  resetBoard(1);
 };
-
-onMounted(() => {
-  pause();
-});
 
 onBeforeUnmount(async () => {
   if (nonogram.value.nonogram.answers && points.value) {
-    await updateDailyChallenge(nonogram.value.nonogram.answers, counter.value, points.value, false);
+    await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
   }
 });
-
-watch(paused, (newValue) => newValue ? pause() : resume());
 </script>
 
 <template>
@@ -111,31 +85,26 @@ watch(paused, (newValue) => newValue ? pause() : resume());
         <Calendar/>
         <div class="flex justify-between">
           <Streak/>
-          <BasicButton class="" @click="handleDailyChallenge">Wykonaj</BasicButton>
+          <BasicButton @click="setDailyChallenge">Wykonaj</BasicButton>
         </div>
       </div>
     </Transition>
     <Transition name="fade">
-      <Nonogram ref="nonogram" :started="started" :paused="paused"/>
+      <Nonogram ref="nonogram" v-bind="{started, paused}"/>
     </Transition>
     <Transition name="slide-down-no-leave">
       <div class="actions" v-if="started">
-        <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck"
-                 @reset-game="handleResetGame" @end-game="handleEndGame"/>
-        <Score :time="counter" :points="points" :started="started"/>
+        <Actions v-bind="{started, paused}" @pause="pauseTime" @check="checkGame"
+                 @reset-game="resetGame" @end-game="endGame"/>
+        <Score v-bind="{time, points, started}"/>
       </div>
     </Transition>
     <Summary ref="summary"></Summary>
-    <Notification ref="notification" v-bind="notificationData"/>
+    <Notification ref="notification"/>
   </main>
 </template>
 
 <style scoped>
-.view {
-  @apply
-  relative
-}
-
 .daily-challenge-container {
   @apply
   grid

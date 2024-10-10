@@ -13,6 +13,7 @@ const emit = defineEmits([
   'pause',
   'endGame'
 ]);
+
 const props = defineProps([
   'started',
   'paused'
@@ -46,7 +47,7 @@ watch(() => props.started, (started) => {
   <TransitionGroup name="slide-down-no-leave">
     <div v-if="!props.started" class="flex gap-2">
       <BasicButton @click="emit('newGame')" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
-        <Icon icon="fa-solid fa-plus"/>
+        <Icon icon="fa-solid fa-gamepad"/>
       </BasicButton>
       <Select :items="sizes" @onSelect="setSize"></Select>
     </div>

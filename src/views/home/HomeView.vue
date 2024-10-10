@@ -4,22 +4,24 @@ import Header from '@/components/shared/Header.vue';
 import Nonogram from '@/components/user/game/Nonogram.vue';
 import {onMounted, ref, watch} from 'vue';
 import {useInterval} from '@vueuse/core';
+import {useNonogram} from '@/composables/useNonogram';
 
-const {counter, reset, pause, resume} = useInterval(1000, {controls: true});
+const {counter, resume} = useInterval(1000, {controls: true});
+
 const nonogram = ref(null);
-const size = 6;
+const {setNewBoard, setBoardSize, paintTile, answers} = useNonogram(nonogram);
 
 onMounted(() => {
-  nonogram.value.nonogram.size = size;
-  nonogram.value.newGame();
+  setBoardSize(6);
+  setNewBoard()
   resume();
 });
 
 watch(counter, () => {
-  const x = Math.floor(Math.random() * size);
-  const y = Math.floor(Math.random() * size);
-  if (nonogram.value.nonogram.answers[y][x] !== -1) {
-    nonogram.value.paintTile(y, x);
+  const x = Math.floor(Math.random() * 6);
+  const y = Math.floor(Math.random() * 6);
+  if (answers.value[y][x] !== -1) {
+    paintTile(x, y);
   }
 });
 </script>
