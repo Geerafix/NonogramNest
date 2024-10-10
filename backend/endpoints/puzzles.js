@@ -5,17 +5,6 @@ import {asyncHandler, authHandler, getPagination} from "../utils.js";
 
 import('../dbRelations.js');
 
-server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-
-    const puzzles = await Puzzle.findAll({
-        limit: limit,
-        offset: offset
-    });
-
-    res.json(puzzles);
-}));
-
 server.post('/puzzle', authHandler, asyncHandler(async (req, res) => {
     const puzzle = await Puzzle.create({
         clues_x: await req.body.cluesX,

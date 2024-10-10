@@ -44,18 +44,6 @@ server.post('/signup', asyncHandler(async (req, res, next) => {
     res.json({message: 'Zarejestrowano'});
 }));
 
-server.get('/users', authHandler, asyncHandler(async (req, res, next) => {
-    const {limit, offset} = getPagination(req);
-
-    const users = await User.findAll({
-        attributes: {exclude: ['password']},
-        limit: limit,
-        offset: offset
-    });
-
-    res.json(users);
-}));
-
 server.get('/profile', authHandler, asyncHandler(async (req, res, next) => {
     const user = await req.user;
 

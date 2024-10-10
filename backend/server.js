@@ -11,6 +11,7 @@ import('./endpoints/puzzles.js');
 import('./endpoints/communityPuzzles.js');
 import('./endpoints/dailyChallenge.js');
 import('./endpoints/achievements.js');
+import('./endpoints/adminPanel.js');
 
 dotenv.config({path: '../.env'});
 

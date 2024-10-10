@@ -5,6 +5,18 @@ const api = axios.create({baseURL: apiUrl, withCredentials: true});
 
 export function getUsers(page, limit) {
     return api.get('/users', {
-        params: {page: page, limit: limit}
+        params: {
+            page: page, 
+            limit: limit
+        }
+    });
+}
+
+export function getPuzzles(page, limit) {
+    return api.get('/puzzles', {
+        params: {
+            page: page,
+            limit: limit
+        }
     });
 }

@@ -3,27 +3,23 @@ import Pagination from '@/components/shared/Pagination.vue';
 import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
 import {getUsers} from '@/services/adminService';
-import {computed, onMounted, ref, watch} from 'vue';
+import {onMounted, ref} from 'vue';
+import {set} from '@vueuse/core';
+import {useList} from '@/composables/useList';
+import {usePagination} from '@/composables/usePagination';
 
-const page = ref(1);
-const limit = ref(10);
 const users = ref([]);
+const listState = useList(['Id','Email','Nazwa','Rola'], users);
 
-const settings = computed(() => ({
-  limit: limit.value,
-  page: page.value,
-  perpage: users.value.length,
-  prev: () => page.value -= 1,
-  next: () => page.value += 1
-}));
+const {pageState} = usePagination(1, 10, users);
 
 const fetchUsers = async () => {
-  await getUsers(page.value, limit.value).then((res) => {
-    users.value = res.data
-  });
+  await getUsers(pageState.value.page, pageState.value.limit).then((res) => set(users, res.data));
 };
 
-watch(page, fetchUsers);
+const manageUser = (user) => {
+
+};
 
 onMounted(fetchUsers);
 </script>
@@ -31,22 +27,11 @@ onMounted(fetchUsers);
 <template>
   <main class="flex flex-col">
     <Header></Header>
-    <List class="list" :headers="['Id','Nazwa użytkownika','Email','Rola']" :items="users"/>
-    <Pagination v-bind="settings"/>
+    <List class="list" v-bind="listState" @onListItemClick="manageUser"/>
+    <Pagination v-bind="pageState" @onPageChange="fetchUsers"/>
   </main>
 </template>
 
 <style scoped>
-.view {
-  @apply
-  flex
-  flex-col
-}
 
-.list {
-  @apply
-  h-full
-  pr-2
-  overflow-auto;
-}
 </style>

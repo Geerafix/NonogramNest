@@ -2,28 +2,24 @@
 import Pagination from "@/components/shared/Pagination.vue";
 import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
-import {getPuzzles} from "@/services/puzzleService.js";
-import {computed, onMounted, ref, watch} from "vue";
+import {usePagination} from "@/composables/usePagination";
+import {useList} from "@/composables/useList";
+import {getPuzzles} from "@/services/adminService";
+import {onMounted, ref} from "vue";
+import {set} from "@vueuse/core";
 
-const page = ref(1);
-const limit = ref(10);
 const puzzles = ref([]);
+const listState = useList(['Id','Wskazówki X','Wskazówki Y','Rozmiar'], puzzles);
 
-const settings = computed(() => ({
-  limit: limit.value,
-  page: page.value,
-  perpage: puzzles.value.length,
-  prev: () => page.value -= 1,
-  next: () => page.value += 1
-}));
+const {pageState} = usePagination(1, 10, puzzles);
 
 const fetchPuzzles = async () => {
-  await getPuzzles(page.value, limit.value).then((res) => {
-    puzzles.value = res.data
-  });
+  await getPuzzles(pageState.value.page, pageState.value.limit).then((res) => set(puzzles, res.data));
 }
 
-watch(page, fetchPuzzles);
+const managePuzzle = (user) => {
+
+};
 
 onMounted(fetchPuzzles);
 </script>
@@ -31,22 +27,11 @@ onMounted(fetchPuzzles);
 <template>
   <main class="flex flex-col">
     <Header></Header>
-    <List class="list" :headers="['Id','Wskazówki X','Wskazówki Y','Rozmiar']" :items="puzzles"/>
-    <Pagination v-bind="settings"/>
+    <List class="list" v-bind="listState" @onListItemClick="managePuzzle"/>
+    <Pagination v-bind="pageState" @onPageChange="fetchPuzzles"/>
   </main>
 </template>
 
 <style scoped>
-.view {
-  @apply
-  flex
-  flex-col
-}
 
-.list {
-  @apply
-  h-full
-  pr-2
-  overflow-auto;
-}
 </style>
