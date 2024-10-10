@@ -41,7 +41,7 @@ defineProps(['user']);
   max-sm:grid-rows-2
   gap-2
   p-2
-  w-fit
+  w-full
   h-fit
   bg-gray-600
   rounded-2xl
