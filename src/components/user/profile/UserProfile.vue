@@ -51,28 +51,6 @@ defineProps(['user']);
   select-none
 }
 
-.profile-icon {
-  @apply
-  flex
-  items-center
-  w-full
-  h-14
-  place-content-center
-  rounded-lg
-  text-gray-200
-  bg-gray-600
-  text-4xl
-  drop-shadow-sm
-  shadow-inner
-}
-
-.underlined {
-  @apply
-  my-2
-  border-b-2
-  border-gray-700/70
-}
-
 .numbers {
   @apply
   grid

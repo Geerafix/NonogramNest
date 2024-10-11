@@ -17,6 +17,7 @@ defineProps(['buttonText']);
   min-h-14
   min-w-14
   rounded-xl
+  items-center
   border-b-4
   bg-sky-800/90
   border-slate-800/60

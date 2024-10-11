@@ -1,0 +1,34 @@
+.profile-form-container {
+    @apply
+    absolute
+    place-items-center
+    grid
+    gap-4
+    w-fit
+    bg-black/20
+    p-8
+    shadow-sm
+    text-2xl
+    left-1/2
+    -translate-x-1/2
+    top-1/2
+    -translate-y-1/2
+    rounded-2xl
+    transition-all
+}
+.profile-form-actions {
+    @apply
+    flex
+    justify-between
+    gap-4
+}
+.profile-form-message {
+    @apply
+    absolute
+    left-1/2
+    -translate-x-1/2
+    text-xl
+    text-nowrap
+    translate-y-[calc(500%)]
+    select-none;
+}

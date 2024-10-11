@@ -1,29 +1,62 @@
 <script setup>
 import Header from '@/components/shared/Header.vue';
 import UserProfile from '@/components/user/profile/UserProfile.vue';
-import {onBeforeMount, ref} from 'vue';
+import RollButton from "@/components/shared/inputs/InfoButton.vue";
+import Notification from "@/components/shared/Notification.vue";
+import {useNotification} from "@/composables/useNotification.js";
+import {computed, onBeforeMount, ref} from 'vue';
 import {getUserProfile} from '@/services/userService';
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import {set} from "@vueuse/core";
+import {defineAsyncComponent} from "vue";
+import {profileButtons} from "@/store.js";
 
 const user = ref({});
+const component = ref('');
 
-onBeforeMount(async () => {
-  await getUserProfile().then((res) => user.value = res.data);
+const notification = ref(null);
+const {notify} = useNotification(notification);
+
+const changeForm = (name) => set(component, name);
+
+const onReject = () => set(component, '');
+const onResolve = (status, message) => {
+  set(component, '');
+  notify(status, message);
+};
+
+const styleOnForm = computed(() =>
+    component.value.length > 0 ? 'opacity-25 brightness-80 blur-sm pointer-events-none' : ''
+);
+
+const selectedForm = computed(() => {
+  if (component.value.length > 0) {
+    return defineAsyncComponent(() =>
+        import(`@/components/user/profile/${component.value}.vue`)
+    )
+  }
 });
+
+const fetchUserProfile = async () => {
+  await getUserProfile().then((res) => set(user, res.data));
+};
+
+onBeforeMount(fetchUserProfile);
 </script>
 
 <template>
   <main>
     <Header></Header>
-    <div class="grid gap-2 m-auto w-fit">
+    <div :class="['grid gap-2 m-auto w-fit', styleOnForm]">
       <UserProfile :user="user" class="mb-2"></UserProfile>
-      <div class="grid grid-cols-4 w-fit gap-2">
-        <BasicButton>Zmień nazwę</BasicButton>
-        <BasicButton>Zmień hasło</BasicButton>
-        <BasicButton>Zmień Email</BasicButton>
-        <BasicButton :style="{'backgroundColor': '#7C2C3B'}">Usuń konto</BasicButton>
+      <div :class="['flex gap-4 mx-auto']">
+        <RollButton v-for="button in profileButtons" :text="button.text" @click="changeForm(button.name)">
+          <Icon :icon="['fa-solid', button.icon]"/>
+        </RollButton>
       </div>
-      <BasicButton class="w-1/2">Wiadomość do administracji</BasicButton>
     </div>
+    <Transition name="fade" mode="out-in">
+      <component :is="selectedForm" @reject="onReject" @accept="onResolve"/>
+    </Transition>
+    <Notification ref="notification" />
   </main>
 </template>
