@@ -21,6 +21,7 @@ const changeForm = (name) => set(component, name);
 const onReject = () => set(component, '');
 const onResolve = (status, message) => {
   set(component, '');
+  fetchUserProfile();
   notify(status, message);
 };
 
@@ -55,7 +56,7 @@ onBeforeMount(fetchUserProfile);
       </div>
     </div>
     <Transition name="fade" mode="out-in">
-      <component :is="selectedForm" @reject="onReject" @accept="onResolve"/>
+      <component :is="selectedForm" @reject="onReject" @accept="onResolve" />
     </Transition>
     <Notification ref="notification" />
   </main>

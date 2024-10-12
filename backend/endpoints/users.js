@@ -6,6 +6,7 @@ import {UserProfile} from '../models/UserProfile.js';
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
 import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
+import {Message} from "../models/Message.js";
 
 dotenv.config({path: '../../.env'});
 
@@ -73,6 +74,76 @@ server.delete('/deleteUser', async (req, res) => {
 
     res.json();
 });
+
+server.put('/profile/username', authHandler, asyncHandler(async (req, res) => {
+    const user = await req.user;
+    const username = await req.body.username;
+
+    await User.update({
+        username: username,
+        }, {
+        where: {
+            user_id: user.user_id
+        }
+    });
+
+    res.json();
+}));
+
+server.put('/profile/password', authHandler, asyncHandler(async (req, res) => {
+    const user = await req.user;
+    const currentPassword = await req.body.currentPassword;
+    const newPassword = await req.body.newPassword;
+
+    const userData = await User.findOne({
+        where: {
+            user_id: user.user_id
+        }
+    });
+
+    if (userData && await argon2.verify(userData.password, currentPassword)) {
+        const hash = await argon2.hash(newPassword);
+        await User.update({
+            password: hash,
+        }, {
+            where: {
+                user_id: user.user_id
+            }
+        });
+        res.status(200).send();
+    } else {
+        res.status(404).send();
+    }
+}));
+
+server.put('/profile/email', authHandler, asyncHandler(async (req, res) => {
+    const user = await req.user;
+    const email = await req.body.email;
+
+    await User.update({
+        email: email,
+    }, {
+        where: {
+            user_id: user.user_id
+        }
+    });
+
+    res.json();
+}));
+
+server.post('/profile/message', authHandler, asyncHandler(async (req, res, next) => {
+    const user = await req.user;
+    const title = await req.body.title;
+    const content = await req.body.content;
+
+    await Message.create({
+        user_id: user.user_id,
+        title: title,
+        content: content
+    });
+
+    res.json();
+}));
 
 server.post('/logout', authHandler, asyncHandler(async (req, res) => {
     res.clearCookie('token');

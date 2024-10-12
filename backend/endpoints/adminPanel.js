@@ -4,6 +4,7 @@ import {CreatedPuzzle} from "../models/CreatedPuzzle.js";
 import {Puzzle} from "../models/Puzzle.js";
 import {User} from "../models/User.js";
 import {Op} from "sequelize";
+import {Message} from "../models/Message.js";
 
 server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
@@ -56,3 +57,30 @@ server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => 
 
     res.json(puzzles);
 }));
+
+server.get('/messages', authHandler, asyncHandler(async (req, res, next) => {
+    const {limit, offset} = getPagination(req);
+
+    const messages = await Message.findAll({
+        include: {
+          model: User,
+          attributes: [],
+        },
+        attributes: {
+            exclude: ['user_id'],
+            include: [
+                'User.username',
+                'title',
+                'content',
+                'date'
+            ]
+        },
+        order: [['date', 'ASC']],
+        limit: limit,
+        offset: offset,
+        raw: true
+    });
+
+    res.json(messages);
+}));
+

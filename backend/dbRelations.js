@@ -8,6 +8,8 @@ import {CreatedPuzzle} from "./models/CreatedPuzzle.js";
 import {UserAchievement} from "./models/UserAchievement.js";
 import {Achievement} from "./models/Achievement.js";
 import {Criterion} from "./models/Criterion.js";
+import {Message} from "./models/Message.js";
+import {sequelize} from "./server.js";
 
 User.hasMany(SolvedPuzzle, {foreignKey: 'user_id'});
 User.hasMany(DailyChallenge, {foreignKey: 'user_id'});
@@ -15,6 +17,7 @@ User.hasMany(CreatedPuzzle, {foreignKey: 'user_id'});
 User.hasOne(UserProfile, {foreignKey: 'user_id'});
 User.hasOne(Score, {foreignKey: 'user_id'});
 User.hasMany(UserAchievement, {foreignKey: 'user_id'});
+User.hasMany(Message, {foreignKey: 'user_id'});
 
 UserAchievement.belongsTo(User, {foreignKey: 'user_id'});
 
@@ -39,6 +42,8 @@ Achievement.hasMany(UserAchievement, {foreignKey: 'achievement_id'});
 Achievement.hasOne(Criterion, {foreignKey: 'criteria_id'});
 
 Criterion.belongsTo(Achievement, {foreignKey: 'criteria_id'});
+
+Message.belongsTo(User, {foreignKey: 'user_id'});
 
 // uncomment to migrate models
 

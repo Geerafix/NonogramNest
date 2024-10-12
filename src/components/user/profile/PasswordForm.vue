@@ -4,6 +4,7 @@ import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {reactive, ref} from "vue";
 import {useAsyncValidator} from "@vueuse/integrations/useAsyncValidator";
 import {set} from "@vueuse/core";
+import {updatePassword} from "@/services/userService.js";
 
 const emit = defineEmits(['accept', 'reject']);
 
@@ -30,8 +31,9 @@ const rules = {
 const {pass, errorFields} = useAsyncValidator(form, rules);
 const wasChecked = ref(false);
 
-const accept = () => {
+const accept = async () => {
   if (pass.value) {
+    await updatePassword(form.currentPassword, form.newPassword);
     emit('accept', true, 'Zmieniono hasło');
   } else {
     set(wasChecked, true)

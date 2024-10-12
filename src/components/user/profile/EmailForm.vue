@@ -4,6 +4,7 @@ import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {useAsyncValidator} from "@vueuse/integrations/useAsyncValidator";
 import {reactive, ref} from "vue";
 import {set} from "@vueuse/core";
+import {updateEmail} from "@/services/userService.js";
 
 const emit = defineEmits(['accept', 'reject']);
 
@@ -18,8 +19,9 @@ const rules = {
 const {pass} = useAsyncValidator(form, rules);
 const wasChecked = ref(false);
 
-const accept = () => {
+const accept = async () => {
   if (pass.value) {
+    await updateEmail(form.email);
     emit('accept', true, 'Zmieniono email');
   } else {
     set(wasChecked, true)

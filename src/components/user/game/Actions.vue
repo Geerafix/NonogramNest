@@ -64,7 +64,7 @@ watch(() => props.started, (started) => {
         <Icon v-else icon="fa-solid fa-stop"/>
       </BasicButton>
       <BasicButton @click="emit('check')" :disabled="paused"
-                   :style="{ backgroundColor: '#8f5333', opacity: paused ? 0.5 : 1 }">
+                   :style="{ backgroundColor: 'teal', opacity: paused ? 0.5 : 1 }">
         <Icon icon="fa-solid fa-check"/>
       </BasicButton>
     </div>

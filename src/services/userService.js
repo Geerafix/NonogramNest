@@ -26,6 +26,32 @@ export async function getUserProfile() {
     return api.get('/profile');
 }
 
+export async function updateUsername(username) {
+    return api.put('/profile/username', {
+        username: username
+    });
+}
+
+export async function updatePassword(currentPassword, newPassword) {
+    return api.put('/profile/password', {
+        currentPassword: currentPassword,
+        newPassword: newPassword
+    });
+}
+
+export async function updateEmail(email) {
+    return api.put('/profile/email', {
+        email: email
+    });
+}
+
+export async function postMessage(title, content) {
+    return api.post('/profile/message', {
+        title: title,
+        content: content
+    });
+}
+
 export async function getUserRole() {
     const res = await api.post('/role');
     return res.data.role;

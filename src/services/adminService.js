@@ -20,3 +20,12 @@ export function getPuzzles(page, limit) {
         }
     });
 }
+
+export function getMessages(page, limit) {
+    return api.get('/messages', {
+        params: {
+            page: page,
+            limit: limit
+        }
+    });
+}
