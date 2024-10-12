@@ -8,10 +8,12 @@ import {set} from "@vueuse/core";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import { useNotification } from "@/composables/useNotification";
+import {useNonogram} from "@/composables/useNonogram.js";
 
 const started = ref(false);
 const paused = ref(true);
 const nonogram = ref(null);
+const {checkSolution} = useNonogram(nonogram);
 
 const route = useRoute();
 const router = useRouter();
@@ -36,8 +38,8 @@ const handlePause = () => {
 };
 
 const handleCheck = async () => {
-  const data = nonogram.value.checkSolution();
-  if (!data.isSolved) {
+  const {isSolved} = checkSolution();
+  if (!isSolved) {
     notify(false, 'Twoje rozwiązanie jest niepoprawne.');
   } else {
     handleEndGame();

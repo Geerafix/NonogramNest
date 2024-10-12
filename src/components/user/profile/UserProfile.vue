@@ -3,7 +3,7 @@ defineProps(['user']);
 </script>
 
 <template>
-  <div class="user-profile-container">
+  <div class="user-profile-container pointer-events-none">
     <div class="grid gap-2 p-2 text-center bg-gray-700 rounded-xl">
       <div class="bg-gray-800/75 rounded-lg py-2 text-2xl font-normal content-center">
         <p>{{ user.username }}</p>

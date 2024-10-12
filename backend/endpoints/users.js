@@ -48,21 +48,22 @@ server.post('/signup', asyncHandler(async (req, res, next) => {
 server.get('/profile', authHandler, asyncHandler(async (req, res, next) => {
     const user = await req.user;
 
-    let userProfile = await UserProfile.findOne({
+    const userProfile = await UserProfile.findOne({
         include: {
             model: User,
-            attributes: ['username']
+            attributes: [],
+        },
+        attributes: {
+            exclude: ['user_id'],
+            include: [
+                'User.username',
+            ]
         },
         where: {
-            user_id: user.user_id
-        }
+            user_id: user.user_id,
+        },
+        raw: true
     });
-
-    userProfile = JSON.parse(JSON.stringify(userProfile));
-    if (userProfile) {
-        userProfile.username = userProfile.User.username;
-        delete userProfile.User;
-    }
 
     res.json(userProfile);
 }));

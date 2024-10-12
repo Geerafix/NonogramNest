@@ -27,17 +27,17 @@ const handleClearBoard = () => {
 const handleSubmitGame = async (name) => {
   if (isSizeSelected.value) {
     if (name.length > 0) {
-      board.value.clearBoard();
       set(isSizeSelected, false);
-      notify(true, 'Zapisano nonogram');
-      
+      notify(true, 'Zapisano planszę');
       const nonogram = generateGame(board.value.answers);
+
       await postCommunityPuzzle(name,
         nonogram.cluesX,
         nonogram.cluesY,
         board.value.answers.length,
         nonogram.excludedTiles
       );
+      board.value.clearBoard();
     } else {
       notify(false, 'Nie wpisano nazwy planszy');
     }

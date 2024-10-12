@@ -21,3 +21,11 @@ export function getRatingChallenge(page, limit) {
         }
     });
 }
+
+export function getRatingUser(user_id) {
+    return api.get('/rating/user', {
+        params: {
+            user_id: user_id
+        }
+    });
+}
