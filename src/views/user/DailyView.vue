@@ -14,7 +14,7 @@ import {postPuzzle} from '@/services/puzzleService';
 import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
 import {useScore} from '@/composables/useScore';
-import {getPointsBySize} from "@/scripts/puzzleScripts.js";
+import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
 
 const notification = ref(null);
 const {notify} = useNotification(notification);
@@ -54,8 +54,9 @@ const checkGame = async () => {
     setPoints(diff);
     notify(false, `Twoje rozwiązanie jest niepoprawne. Tracisz ${lostPoints} pkt.`);
   } else {
-    await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, true);
-    summary.value.show(points.value);
+    const bonus = calcTimeBonus(time.value, 8)
+    await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value + bonus, true);
+    summary.value.show(points.value, bonus);
     endGame();
   }
 };

@@ -162,8 +162,9 @@ export const getPointsBySize = (size) => {
 export const calcTimeBonus = (time, size) => {
     const perfectTime = Math.pow(size, 2);
     const maxPoints = getPointsBySize(size);
+    const penalty = (time - perfectTime) > 0 ? (1 + ((time - perfectTime) / 100)) : 1;
 
-    const bonus = Math.ceil((maxPoints * (Math.exp(perfectTime / time) / size)));
+    const bonus = Math.floor((maxPoints * (perfectTime/(time * penalty))));
 
     return Math.min(bonus, maxPoints);
 };
