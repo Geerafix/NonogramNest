@@ -1,18 +1,14 @@
 <script setup>
 import MenuButton from '../inputs/MenuButton.vue';
 import {useRoute, useRouter} from "vue-router";
+import {adminMenuButtons as routes} from "@/config.js";
 
 const route = useRoute();
 const router = useRouter();
 
-const routes = [
-  {name: 'ManageUsers', icon: 'fa-users', text: 'Użytkownicy'},
-  {name: 'ManagePuzzles', icon: 'fa-gamepad', text: 'Gry'},
-  {name: 'ManageAchievements', icon: 'fa-star', text: 'Osiągnięcia'},
-  {name: 'AdminMessages', icon: 'fa-message', text: 'Wiadomości'},
-];
-
-const colorByRoute = (index) => (route.name === routes[index].name ? 'rgb(31 41 55)' : '');
+const colorByRoute = (index) => (
+    route.name === routes[index].name ? 'rgb(31 41 55)' : ''
+);
 </script>
 
 <template>

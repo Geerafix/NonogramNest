@@ -14,6 +14,7 @@ import {postPuzzle} from '@/services/puzzleService';
 import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
 import {useScore} from '@/composables/useScore';
+import {getPointsBySize} from "@/scripts/puzzleScripts.js";
 
 const notification = ref(null);
 const {notify} = useNotification(notification);
@@ -27,7 +28,7 @@ const {setPoints, resetPoints, clearPoints, startTime, setTime, pauseTime, time,
 const setDailyChallenge = async () => {
   const dailyChallenge = await getDailyChallenge().then((res) => res.data);
   if (!dailyChallenge) {
-    setPoints(Math.pow(8, 2) * 8);
+    setPoints(getPointsBySize(8));
     setBoardSize(8);
     setNewBoard();
     const id = await postPuzzle(cluesX.value, cluesY.value, boardSize.value).then((res) => res.data.id);

@@ -23,6 +23,23 @@ export const ratingSearchBy = [
     { name: 'Nazwa', value: 'name' },
 ];
 
+export const adminMenuButtons = [
+    {name: 'ManageUsers', icon: 'fa-users', text: 'Użytkownicy'},
+    {name: 'ManagePuzzles', icon: 'fa-gamepad', text: 'Gry'},
+    {name: 'ManageAchievements', icon: 'fa-star', text: 'Osiągnięcia'},
+    {name: 'AdminMessages', icon: 'fa-message', text: 'Wiadomości'},
+];
+
+export const userMenuButtons = [
+    {name: 'Play', icon: 'fa-gamepad', text: 'Graj'},
+    {name: 'Challenge', icon: 'fa-calendar-days', text: 'Wyzwanie'},
+    {name: 'Creator', icon: 'fa-square-plus', text: 'Kreator'},
+    {name: 'Community', icon: 'fa-user-group', text: 'Społeczność'},
+    {name: 'Rating', icon: 'fa-chart-simple', text: 'Ranking'},
+    {name: 'Achievements', icon: 'fa-star', text: 'Osiągnięcia'},
+    {name: 'Profile', icon: 'fa-address-card', text: 'Profil'}
+];
+
 export const profileButtons = [
     { text: 'Zmień nazwę', icon: 'fa-signature', name: 'UsernameForm' },
     { text: 'Zmień hasło', icon: 'fa-lock', name: 'PasswordForm' },

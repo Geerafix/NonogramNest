@@ -54,10 +54,7 @@ server.get('/profile', authHandler, asyncHandler(async (req, res, next) => {
             attributes: [],
         },
         attributes: {
-            exclude: ['user_id'],
-            include: [
-                'User.username',
-            ]
+            include: ['User.username']
         },
         where: {
             user_id: user.user_id,

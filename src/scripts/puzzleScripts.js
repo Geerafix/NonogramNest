@@ -139,3 +139,31 @@ export function generateGame(answers) {
 
     return nonogram;
 }
+
+const points = [
+    { 5: 100 },
+    { 6: 150 },
+    { 7: 250 },
+    { 8: 500 },
+    { 9: 750 },
+    { 10: 1000 },
+    { 11: 1250 },
+    { 12: 1500 },
+    { 13: 2000 },
+    { 14: 2500 },
+    { 15: 3000 }
+];
+
+export const getPointsBySize = (size) => {
+    const p = points.find((el) => el[size] !== undefined);
+    return p ? p[size] : undefined;
+};
+
+export const calcTimeBonus = (time, size) => {
+    const perfectTime = Math.pow(size, 2);
+    const maxPoints = getPointsBySize(size);
+
+    const bonus = Math.ceil((maxPoints * (Math.exp(perfectTime / time) / size)));
+
+    return Math.min(bonus, maxPoints);
+};

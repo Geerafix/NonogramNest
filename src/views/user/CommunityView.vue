@@ -8,7 +8,7 @@ import Switch from '@/components/shared/inputs/Switch.vue';
 import {getCommunityPuzzles, getUserPuzzles} from '@/services/communityService.js';
 import {onBeforeMount, ref, watch} from 'vue';
 import {useRouter} from "vue-router";
-import {ratingSearchBy} from '@/store';
+import {ratingSearchBy} from '@/config.js';
 import {set} from '@vueuse/core';
 import { usePagination } from '@/composables/usePagination';
 import { useList } from '@/composables/useList';

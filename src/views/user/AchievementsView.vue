@@ -10,7 +10,7 @@ import {set} from '@vueuse/core';
 
 const achievements = ref([]);
 const {pageState} = usePagination(1, 10, achievements);
-const listState = useList(['Nazwa','Opis','Ilość','Data'], achievements, [0]);
+const listState = useList(['Nazwa','Opis','Data ukończenia'], achievements, [0,3]);
 
 const fetchUserAchievements = async () => {
   await getUserAchievements({...pageState.value}).then((res) => set(achievements, res.data));

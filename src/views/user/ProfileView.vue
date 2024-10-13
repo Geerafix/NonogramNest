@@ -8,7 +8,7 @@ import {computed, onBeforeMount, ref} from 'vue';
 import {getUserProfile} from '@/services/userService';
 import {set} from "@vueuse/core";
 import {defineAsyncComponent} from "vue";
-import {profileButtons} from "@/store.js";
+import {profileButtons} from "@/config.js";
 
 const user = ref({});
 const component = ref('');

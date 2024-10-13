@@ -10,6 +10,7 @@ import {useScore} from '@/composables/useScore';
 import {postPuzzle, postSolvedPuzzle} from '@/services/puzzleService';
 import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
+import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
 
 const notification = ref(null);
 const {notify} = useNotification(notification);
@@ -22,7 +23,7 @@ const {setPoints, resetPoints, clearPoints, startTime, pauseTime, time, points, 
 
 const setGame = (size) => {
   setBoardSize(size);
-  setPoints(Math.pow(size, 2) * size);
+  setPoints(getPointsBySize(size));
 };
 
 const startGame = () => {
@@ -38,8 +39,9 @@ const checkGame = async () => {
     notify(false, `Twoje rozwiązanie jest niepoprawne. Tracisz ${lostPoints} pkt.`);
   } else {
     const id = await postPuzzle(cluesX.value, cluesY.value, boardSize.value).then((res) => res.data.id);
-    await postSolvedPuzzle(id, time.value, points.value);
-    summary.value.show(points.value);
+    const bonus = calcTimeBonus(time.value, boardSize.value);
+    await postSolvedPuzzle(id, time.value, points.value + bonus);
+    summary.value.show(points.value, bonus);
     endGame();
   }
 };

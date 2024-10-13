@@ -6,14 +6,17 @@ import BasicButton from '@/components/shared/inputs/BasicButton.vue';
 const isDisplayed = ref(false);
 const target = ref(null)
 const points = ref(null);
+const bonus = ref(null);
 
-const show = (data) => {
-  set(points, data);
+const show = (p, b) => {
+  set(points, p);
+  set(bonus, b);
   set(isDisplayed, true);
 };
 
 const hide = () => {
-  set(points, 0);
+  set(points, null);
+  set(bonus, null);
   set(isDisplayed, false);
 };
 
@@ -30,8 +33,18 @@ defineExpose({isDisplayed, show, hide});
         <span>Gratulacje!</span>
       </div>
       <div class="score">
-        <span>Podsumowanie:</span>
-        <span><b>{{ points }}</b> pkt.</span>
+        <div class="flex justify-between">
+          <span>Punkty bazowe:</span>
+          <span><b>{{points}}</b></span>
+        </div>
+        <div class="flex justify-between pb-4">
+          <span>Bonus:</span>
+          <span><b>{{bonus}}</b></span>
+        </div>
+        <div class="text-right border-gray-600 border-t-2 pt-4">
+          <span>Razem: </span>
+          <span><b>{{points + bonus}}</b> pkt.</span>
+        </div>
       </div>
       <BasicButton @click="hide()">Potwierdź
         <Icon icon="fa-solid fa-check"/>
@@ -84,9 +97,8 @@ defineExpose({isDisplayed, show, hide});
   flex-col
   w-full
   gap-1
-  py-4
-  border-t-2
-  border-b-2
-  border-gray-700;
+  p-4
+  rounded-xl
+  bg-gray-700
 }
 </style>
