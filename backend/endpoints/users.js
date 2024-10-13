@@ -88,6 +88,21 @@ server.put('/profile/username', authHandler, asyncHandler(async (req, res) => {
     res.json();
 }));
 
+server.put('/profile/bio', authHandler, asyncHandler(async (req, res) => {
+    const user = await req.user;
+    const bio = await req.body.bio;
+
+    await UserProfile.update({
+        bio: bio,
+    }, {
+        where: {
+            user_id: user.user_id
+        }
+    });
+
+    res.json();
+}));
+
 server.put('/profile/password', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const currentPassword = await req.body.currentPassword;

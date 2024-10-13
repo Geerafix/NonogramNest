@@ -15,7 +15,7 @@ defineProps(['user']);
         <div class="bg-gray-800/50 rounded-lg content-center">UID: {{ user.user_id }}</div>
       </div>
       <div>
-        <textarea disabled class="bio">{{ user.bio }}</textarea>
+        <textarea disabled class="bio" :placeholder="user.bio > 0 ? '' : 'Brak opisu'">{{ user.bio }}</textarea>
       </div>
     </div>
     <div class="numbers">

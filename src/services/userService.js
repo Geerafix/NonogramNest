@@ -32,6 +32,12 @@ export async function updateUsername(username) {
     });
 }
 
+export async function updateBio(bio) {
+    return api.put('/profile/bio', {
+        bio: bio
+    });
+}
+
 export async function updatePassword(currentPassword, newPassword) {
     return api.put('/profile/password', {
         currentPassword: currentPassword,

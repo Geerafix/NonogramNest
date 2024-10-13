@@ -14,7 +14,7 @@ export const UserProfile = sequelize.define('UserProfile', {
     bio: {
         type: DataTypes.TEXT,
         allowNull: true,
-        defaultValue: 'No bio'
+        defaultValue: ''
     },
     solved_puzzles: {
         type: DataTypes.INTEGER,

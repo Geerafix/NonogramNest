@@ -42,7 +42,8 @@ export const userMenuButtons = [
 
 export const profileButtons = [
     { text: 'Zmień nazwę', icon: 'fa-signature', name: 'UsernameForm' },
+    { text: 'Zmień opis', icon: 'fa-pencil', name: 'BioForm' },
     { text: 'Zmień hasło', icon: 'fa-lock', name: 'PasswordForm' },
     { text: 'Zmień Email', icon: 'fa-envelope', name: 'EmailForm' },
-    { text: 'Kontakt z administracją', icon: 'fa-shield-alt', name: 'MessageForm' },
+    { text: 'Kontakt z administracją', icon: 'fa-message', name: 'MessageForm' },
 ];
