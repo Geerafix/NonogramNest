@@ -1,11 +1,19 @@
 <script setup>
-defineProps(['clues']);
+import {computed} from "vue";
+
+const props = defineProps(['clues']);
+
+const tileSize = computed(() => {
+  const len = props.clues.length;
+
+  return ((15/len + (len/15)) - 0.1) + 'rem';
+});
 </script>
 
 <template>
   <div class="xclues-container">
     <div v-for="ans in clues" class="content-end">
-      <div class="single-clue">
+      <div class="single-clue" :style="{'width': tileSize}">
         <div v-for="single in ans" class="text-xl">
           <p>{{ single }}</p>
         </div>
@@ -32,7 +40,7 @@ defineProps(['clues']);
   @apply
   flex
   flex-col
-  w-10
+
   rounded-sm
   text-center;
 }

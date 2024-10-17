@@ -100,7 +100,12 @@ onBeforeMount(resetBoard);
 
 .nonogram-container {
   @apply
-  relative
+  absolute
+  left-1/2
+  -translate-x-1/2
+  top-1/2
+  -translate-y-1/2
+  shadow-2xl
   font-thin
   font-sans;
 }

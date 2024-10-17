@@ -1,11 +1,19 @@
 <script setup>
-defineProps(['clues']);
+import {computed} from "vue";
+
+const props = defineProps(['clues']);
+
+const tileSize = computed(() => {
+  const len = props.clues.length;
+
+  return ((15/len + (len/15)) - 0.1) + 'rem';
+});
 </script>
 
 <template>
   <div class="yclues-container">
     <div v-for="ans in clues">
-      <div class="single-clue">
+      <div class="single-clue" :style="{'height': tileSize}">
         <div v-for="single in ans" class="text-xl">
           <p>&nbsp;{{ single }}&nbsp;</p>
         </div>
@@ -36,7 +44,6 @@ defineProps(['clues']);
   flex
   justify-end
   items-center
-  h-10
   rounded-sm
   text-center;
 }
