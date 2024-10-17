@@ -30,11 +30,6 @@ export function useScore() {
     const pauseTime = () => {
         set(paused, !paused.value);
         pause();
-    }; 
-
-    const resetPoints = () => {
-        set(counter, 0);
-        set(points, initialPoints.value);
     };
 
     const clearPoints = () => {
@@ -48,8 +43,7 @@ export function useScore() {
     onMounted(pause);
 
     return {
-        setPoints, 
-        resetPoints,
+        setPoints,
         clearPoints, 
         setTime,
         startTime,

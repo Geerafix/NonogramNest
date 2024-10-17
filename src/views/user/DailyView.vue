@@ -23,7 +23,7 @@ const nonogram = ref(null);
 const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
 
 const summary = ref(null);
-const {setPoints, resetPoints, clearPoints, startTime, setTime, pauseTime, time, points, paused, started} = useScore();
+const {setPoints, clearPoints, startTime, setTime, pauseTime, time, points, paused, started} = useScore();
 
 const setDailyChallenge = async () => {
   const dailyChallenge = await getDailyChallenge().then((res) => res.data);
@@ -61,15 +61,10 @@ const checkGame = async () => {
   }
 };
 
-const resetGame = () => {
-  resetPoints();
-  resetBoard(2);
-};
-
 const endGame = async () => {
   await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
   clearPoints();
-  resetBoard(1);
+  resetBoard();
 };
 
 onBeforeUnmount(async () => {
@@ -96,8 +91,7 @@ onBeforeUnmount(async () => {
     </Transition>
     <Transition name="slide-down-no-leave">
       <div class="actions" v-if="started">
-        <Actions v-bind="{started, paused}" @pause="pauseTime" @check="checkGame"
-                 @reset-game="resetGame" @end-game="endGame"/>
+        <Actions v-bind="{started, paused}" @pause="pauseTime" @check="checkGame" @end-game="endGame"/>
         <Score v-bind="{time, points, started}"/>
       </div>
     </Transition>

@@ -13,13 +13,8 @@ const newBoard = () => {
   generateAndFindHints(nonogram, nonogram.size);
 };
 
-const resetBoard = (option) => {
-  switch (option) {
-    case 1 :
-      Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0});
-    case 2 :
-      nonogram.answers = nonogram.answers.map(row => row.map((el) => el === -1 ? el : 0));
-  }
+const resetBoard = () => {
+    Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0});
 };
 
 const checkSolution = () => {

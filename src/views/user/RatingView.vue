@@ -37,7 +37,7 @@ const fetchUser = async (user) => {
 };
 
 const styleOnUserViewed = computed(() =>
-    viewedUser.value ? 'opacity-25 brightness-80 blur-sm' : ''
+    viewedUser.value ? 'opacity-25 brightness-80 blur-sm pointer-events-none' : ''
 );
 
 watch([size, mode], fetchRating)
@@ -49,7 +49,7 @@ onMounted(fetchRating);
   <main class="view" @click="viewedUser = null">
     <Header></Header>
     <div :class="[styleOnUserViewed]">
-      <List class="list" v-bind="listState" @onListItemClick="fetchUser" />
+      <List v-bind="listState" @onListItemClick="fetchUser" />
     </div>
     <div class="controls-container">
       <Pagination v-bind="pageState" @onPageChange="fetchRating"></Pagination>
@@ -65,18 +65,6 @@ onMounted(fetchRating);
 </template>
 
 <style scoped>
-.view {
-  @apply
-  flex
-  flex-col
-  relative
-}
-
-.list {
-  @apply
-  h-full
-}
-
 .controls {
   @apply
   absolute

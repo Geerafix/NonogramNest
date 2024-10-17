@@ -7,7 +7,6 @@ import {set} from '@vueuse/core'
 
 const emit = defineEmits([
   'newGame',
-  'resetGame',
   'check',
   'size',
   'pause',
@@ -34,10 +33,6 @@ const setSize = (data) => {
   }
 };
 
-const handleResetGame = () => {
-  emit('resetGame');
-};
-
 watch(() => props.started, (started) => {
   if (started === false) set(isSelected, false);
 });
@@ -54,9 +49,6 @@ watch(() => props.started, (started) => {
     <div v-else class="flex gap-2">
       <BasicButton @click="handleEndGame">
         <Icon icon="fa-solid fa-xmark"/>
-      </BasicButton>
-      <BasicButton @click="handleResetGame" :style="{ backgroundColor: 'teal' }">
-        <Icon icon="fa-solid fa-rotate"/>
       </BasicButton>
       <BasicButton @click="emit('pause')" :class="{ 'animate-pulse': paused }"
                    :style="{ backgroundColor: paused ? '#3C6961' : '#7C2C3B' }">

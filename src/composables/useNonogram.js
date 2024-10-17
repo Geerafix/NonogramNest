@@ -9,8 +9,8 @@ export function useNonogram(nonogram) {
         nonogram.value.newBoard();
     };
 
-    const resetBoard = (option) => {
-        nonogram.value.resetBoard(option);
+    const resetBoard = () => {
+        nonogram.value.resetBoard();
     };
 
     const checkSolution = () => {

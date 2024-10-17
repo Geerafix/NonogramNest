@@ -19,7 +19,7 @@ const nonogram = ref(null);
 const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
 
 const summary = ref(null);
-const {setPoints, resetPoints, clearPoints, startTime, pauseTime, time, points, paused, started} = useScore();
+const {setPoints, clearPoints, startTime, pauseTime, time, points, paused, started} = useScore();
 
 const setGame = (size) => {
   setBoardSize(size);
@@ -46,13 +46,8 @@ const checkGame = async () => {
   }
 };
 
-const resetGame = () => {
-  resetBoard(2);
-  resetPoints();
-};
-
 const endGame = () => {
-  resetBoard(1);
+  resetBoard();
   clearPoints();
 };
 </script>
@@ -73,7 +68,7 @@ const endGame = () => {
         <span class="self-center text-xl" v-if="points && !started">{{points}} pkt.</span>
       </Transition>
       <Actions v-bind="{started, paused}" @new-game="startGame" @pause="pauseTime" @check="checkGame"
-               @size="setGame" @reset-game="resetGame" @end-game="endGame"/>
+               @size="setGame" @end-game="endGame"/>
       <Score v-bind="{time, points, started}"/>
     </div>
     <Summary ref="summary"></Summary>
