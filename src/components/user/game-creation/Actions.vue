@@ -35,10 +35,10 @@ const setSize = (size) => {
       <Transition name=fade>
         <BasicInput v-model="name" placeholder="Nazwa..." v-show="isCreating"/>
       </Transition>
-      <BasicButton @click="emit('clearBoard')" :style="{ backgroundColor: 'teal' }">
+      <BasicButton @click="emit('clearBoard')" :style="{ backgroundColor: 'rgb(6 95 70)' }">
         <Icon icon="fa-solid fa-rotate"/>
       </BasicButton>
-      <BasicButton @click="submitNonogram" :style="{ backgroundColor: '#8f5333' }">
+      <BasicButton @click="submitNonogram" :style="{ backgroundColor: 'rgb(17 94 89)' }">
         <Icon icon="fa-solid fa-check"/>
       </BasicButton>
       <Select :items="sizes" @onSelect="setSize"></Select>

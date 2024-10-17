@@ -9,16 +9,16 @@ const props = defineProps([
 ]);
 
 const {pressed} = useMousePressed();
-const firstColour = ref();
+const firstColor = ref();
 
 const paintHover = (col, row) => {
-  if (pressed.value && props.answers[col][row] === firstColour.value) {
+  if (pressed.value && props.answers[col][row] === firstColor.value) {
     props.paint(col, row);
   }
 };
 
 const paintClick = (col, row) => {
-  set(firstColour, props.answers[col][row]);
+  set(firstColor, props.answers[col][row]);
   props.paint(col, row);
 };
 

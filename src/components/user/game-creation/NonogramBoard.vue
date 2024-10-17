@@ -1,15 +1,31 @@
 <script setup>
-import {set} from '@vueuse/core';
+import {set, useMousePressed} from '@vueuse/core';
 import {ref} from 'vue';
+
+const {pressed} = useMousePressed();
+const firstColor = ref();
+const firstButton = ref();
 
 const answers = ref([]);
 
-const paintTileAnswer = (row, col) => {
-  answers.value[row][col] = (answers.value[row][col] + 1) % 2;
+const paintTile = (row, col) => {
+  if (firstButton.value === 2) {
+    answers.value[row][col] = (answers.value[row][col] - 1) % 2;
+  } else {
+    answers.value[row][col] = (answers.value[row][col] + 1) % 2;
+  }
 };
 
-const paintTileExclude = (row, col) => {
-  answers.value[row][col] = (answers.value[row][col] - 1) % 2;
+const paintHover = (col, row) => {
+  if (pressed.value && answers.value[col][row] === firstColor.value) {
+    paintTile(col, row);
+  }
+};
+
+const paintClick = (col, row, event) => {
+  set(firstColor, answers.value[col][row]);
+  set(firstButton, event.button);
+  paintTile(col, row);
 };
 
 const setBoard = (size) => {
@@ -29,8 +45,9 @@ defineExpose({setBoard, clearBoard, answers});
       <div v-for="col in answers.length"
            :class="['cols', (answers[row-1] && answers[col-1][row-1] === -1) ? 'bg-gray-200/80' :
                                  ((answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')]"
-           @mousedown.left="paintTileAnswer(col - 1, row - 1)"
-           @contextmenu.prevent="paintTileExclude(col - 1, row - 1)">
+           @mousedown.prevent="paintClick(col - 1, row - 1, $event)"
+           @mouseover.prevent="paintHover(col - 1, row - 1)"
+           @contextmenu.prevent="">
       </div>
     </div>
   </main>

@@ -46,10 +46,6 @@ const handleCheck = async () => {
   }
 };
 
-const handleResetGame = () => {
-  nonogram.value.resetGame(2);
-};
-
 const handleEndGame = () => {
   router.push({name: 'Community'});
 }
@@ -65,8 +61,7 @@ onMounted(fetchCommunityGame);
     </Transition>
     <Transition name="slide-down-no-leave">
       <div class="actions" v-if="started">
-        <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck"
-                 @reset-game="handleResetGame" @end-game="handleEndGame"/>
+        <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @end-game="handleEndGame"/>
       </div>
     </Transition>
     <Notification ref="notification"/>
