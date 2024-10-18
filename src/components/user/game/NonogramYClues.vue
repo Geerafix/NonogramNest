@@ -5,8 +5,7 @@ const props = defineProps(['clues']);
 
 const tileSize = computed(() => {
   const len = props.clues.length;
-
-  return ((15/len + (len/15)) - 0.1) + 'rem';
+  return (0.8 + (15/len)) + 'rem';
 });
 </script>
 
@@ -40,7 +39,6 @@ const tileSize = computed(() => {
   @apply
   flex
   flex-col
-
   rounded-sm
   text-center;
 }

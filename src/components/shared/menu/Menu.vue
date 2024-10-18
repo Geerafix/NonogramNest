@@ -39,9 +39,9 @@ const computedScreen = computed(() => {
            @mouseover="toggleNavbar">
         <slot></slot>
         <div class="buttons-container">
-          <MenuButton buttonText="Ustawienia" @click="router.push({ name: computedRole });">
-            <Icon icon="fa-solid fa-gears" class="my-auto mx-auto"/>
-          </MenuButton>
+<!--          <MenuButton buttonText="Ustawienia" @click="router.push({ name: computedRole });">-->
+<!--            <Icon icon="fa-solid fa-gears" class="my-auto mx-auto"/>-->
+<!--          </MenuButton>-->
           <MenuButton buttonText="Wyloguj" @click="toggleLogout">
             <Icon icon="fa-solid fa-right-from-bracket" class="my-auto mx-auto"/>
           </MenuButton>

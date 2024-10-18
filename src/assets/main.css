@@ -60,11 +60,11 @@ body {
 	transition: all 0.3s;
 }
 .slide-left-enter-from {
-	transform: translateY(1rem);
+	transform: translateY(1rem) skewX(15deg);
 	opacity: 0;
 }
 .slide-left-leave-to {
-	transform: translateX(2rem);
+	transform: translateX(2rem) skewX(-15deg);
 	opacity: 0;
 } 
 

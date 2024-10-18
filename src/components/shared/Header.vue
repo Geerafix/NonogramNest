@@ -17,7 +17,7 @@ const route = useRoute();
   p-2
   w-full
   mx-auto
-  bg-gray-700/40
+  bg-gray-700/50
   rounded-lg
   rounded-ss-2xl
   rounded-ee-2xl

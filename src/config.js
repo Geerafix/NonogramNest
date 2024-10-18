@@ -23,6 +23,11 @@ export const ratingSearchBy = [
     { name: 'Nazwa', value: 'name' },
 ];
 
+export const usersSearchBy = [
+    { name: 'Email', value: 'email' },
+    { name: 'Nazwa', value: 'name' },
+];
+
 export const adminMenuButtons = [
     {name: 'ManageUsers', icon: 'fa-users', text: 'Użytkownicy'},
     {name: 'ManagePuzzles', icon: 'fa-gamepad', text: 'Gry'},

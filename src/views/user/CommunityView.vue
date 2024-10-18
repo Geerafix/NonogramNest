@@ -16,20 +16,20 @@ import { useList } from '@/composables/useList';
 const puzzles = ref([]);
 const search = ref('');
 const option = ref('name');
-const whose = ref(false);
+const whom = ref(false);
 
 const {pageState, pageReset} = usePagination(1, 10, puzzles);
 const listState = useList(['ID','Nazwa','Rozmiar','Twórca'], puzzles);
 const router = useRouter();
 
 const fetchPuzzles = async (switched) => {
-  set(whose, switched);
+  set(whom, switched);
   if (switched) {
     await getUserPuzzles(pageState.value.page, pageState.value.limit, search.value)
-      .then((res) => set(puzzles, res.data));
+        .then((res) => set(puzzles, res.data));
   } else {
     await getCommunityPuzzles(pageState.value.page, pageState.value.limit, search.value, option.value)
-      .then((res) => set(puzzles, res.data));
+        .then((res) => set(puzzles, res.data));
   }
 };
 
@@ -41,7 +41,7 @@ const setOption = (opt) => set(option, opt);
 
 watch([search, option], () => {
   pageReset();
-  fetchPuzzles(whose.value);
+  fetchPuzzles(whom.value);
 });
 
 onBeforeMount(fetchPuzzles);
@@ -51,13 +51,13 @@ onBeforeMount(fetchPuzzles);
   <main>
     <Header></Header>
     <List v-bind="listState" @onListItemClick="routeToSelectedGame"/>
-      <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whose)"></Pagination>
+      <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whom)"></Pagination>
       <div class="search-container">
         <BasicInput v-model="search" placeholder="Wyszukaj..."></BasicInput>
-        <Select v-if="!whose" :items="ratingSearchBy" @onSelect="setOption"></Select>
+        <Select v-if="!whom" :items="ratingSearchBy" @onSelect="setOption"></Select>
         <Switch @onSwitch="fetchPuzzles">
-          <Icon icon="fa-solid fa-user" class="icon-fix"/> 
-          <Icon icon="fa-solid fa-user-group" class="icon-fix"/>  
+          <Icon icon="fa-solid fa-user-group" class="icon-fix"/>
+          <Icon icon="fa-solid fa-user" class="icon-fix"/>
         </Switch>
       </div> 
   </main>
@@ -74,9 +74,9 @@ onBeforeMount(fetchPuzzles);
 }
 .icon-fix {
   @apply
-  my-auto 
-  mx-auto 
-  text-2xl 
+  my-auto
+  mx-auto
+  text-2xl
   text-gray-600
 }
 </style>

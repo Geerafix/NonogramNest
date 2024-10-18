@@ -1,8 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 
-defineProps(['buttonText']);
-
 const emit = defineEmits(['onSwitch']);
 
 const switched = ref(false);
@@ -10,7 +8,7 @@ const switched = ref(false);
 watch(switched, () => emit('onSwitch', switched.value));
 
 const restyleSwitched = computed(() => (
-    switched.value ? 'translate-x-full rounded-se-2xl rounded-ee-2xl border-l-4' : 'rounded-ss-2xl rounded-es-2xl border-r-4')
+    switched.value ? 'rounded-ss-2xl rounded-es-2xl border-r-4' : 'translate-x-full rounded-se-2xl rounded-ee-2xl border-l-4')
 );
 </script>
 

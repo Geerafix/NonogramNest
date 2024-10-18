@@ -19,9 +19,46 @@ server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
 
 server.get('/users', authHandler, asyncHandler(async (req, res, next) => {
     const {limit, offset} = getPagination(req);
+    const search = `%${req.query.search}%` || '%%';
+    const option = req.query.option;
 
     const users = await User.findAll({
         attributes: {exclude: ['password']},
+        where: {
+            role: 'user',
+            username: {[Op.iLike]: option === 'name' ? search : '%%'},
+            email: {[Op.iLike]: option === 'email' ? search : '%%'}
+        },
+        limit: limit,
+        offset: offset
+    });
+
+    res.json(users);
+}));
+
+server.get('/user', authHandler, asyncHandler(async (req, res, next) => {
+    const user_id = req.query.user_id;
+
+    const user = await User.findOne({
+        attributes: {exclude: ['password']},
+        where: {user_id: user_id}
+    });
+
+    res.json(user);
+}));
+
+server.get('/admins', authHandler, asyncHandler(async (req, res, next) => {
+    const {limit, offset} = getPagination(req);
+    const search = `%${req.query.search}%` || '%%';
+    const option = req.query.option;
+
+    const users = await User.findAll({
+        attributes: {exclude: ['password']},
+        where: {
+            role: 'admin',
+            username: {[Op.iLike]: option === 'name' ? search : '%%'},
+            email: {[Op.iLike]: option === 'email' ? search : '%%'},
+        },
         limit: limit,
         offset: offset
     });

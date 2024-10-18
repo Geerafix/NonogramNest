@@ -21,7 +21,6 @@ const paintClick = (col, row) => {
   set(firstColor, props.answers[col][row]);
   props.paint(col, row);
 };
-
 </script>
 
 <template>
@@ -60,7 +59,7 @@ const paintClick = (col, row) => {
   h-full
   border-gray-700
   border-[1px]
-  rounded-[2px]
+  rounded-[3px]
   text-center
   transition-all;
 }

@@ -56,6 +56,11 @@ defineExpose({setBoard, clearBoard, answers});
 <style scoped>
 .board {
   @apply
+  absolute
+  top-1/2
+  -translate-y-1/2
+  left-1/2
+  -translate-x-1/2
   grid
   grid-flow-col
   p-1
