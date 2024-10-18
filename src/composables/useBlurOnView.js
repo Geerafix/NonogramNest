@@ -1,11 +1,11 @@
 import {computed, watch} from "vue";
 import {useMousePressed} from "@vueuse/core";
 
-export function useBlurOnView(object) {
+export function useBlurOnView(object, closeable) {
     const {pressed} = useMousePressed();
 
     watch(pressed, () => {
-        if (object.value && pressed) {
+        if (object.value && pressed && closeable) {
             object.value = null;
         }
     });

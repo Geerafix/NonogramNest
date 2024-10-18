@@ -10,6 +10,7 @@ import {set} from '@vueuse/core';
 import {useList} from '@/composables/useList';
 import {usePagination} from '@/composables/usePagination';
 import UserProfile from "@/components/user/profile/UserProfile.vue";
+import {useBlurOnView} from "@/composables/useBlurOnView.js";
 
 const size = ref(null);
 const mode = ref(null);
@@ -18,6 +19,8 @@ const viewedUser = ref(null);
 
 const listState = useList(['UID','Nazwa','Punkty'], rating);
 const {pageState} = usePagination(1, 10, rating);
+
+const {blurred} = useBlurOnView(viewedUser, true);
 
 const setSize = (data) => set(size, data);
 const setMode = (data) => set(mode, data);
@@ -36,10 +39,6 @@ const fetchUser = async (user) => {
   await getRatingUser(user.user_id).then((res) => set(viewedUser, res.data));
 };
 
-const styleOnUserViewed = computed(() =>
-    viewedUser.value ? 'opacity-25 brightness-80 blur-sm pointer-events-none' : ''
-);
-
 watch([size, mode], fetchRating)
 
 onMounted(fetchRating);
@@ -48,7 +47,7 @@ onMounted(fetchRating);
 <template>
   <main class="view" @click="viewedUser = null">
     <Header></Header>
-    <div :class="[styleOnUserViewed]">
+    <div :class="[blurred]">
       <List v-bind="listState" @onListItemClick="fetchUser" />
     </div>
     <div class="controls-container">

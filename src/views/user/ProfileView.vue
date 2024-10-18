@@ -9,12 +9,15 @@ import {getUserProfile} from '@/services/userService';
 import {set} from "@vueuse/core";
 import {defineAsyncComponent} from "vue";
 import {profileButtons} from "@/config.js";
+import {useBlurOnView} from "@/composables/useBlurOnView.js";
 
 const user = ref({});
 const component = ref('');
 
 const notification = ref(null);
 const {notify} = useNotification(notification);
+
+const {blurred} = useBlurOnView(component, false);
 
 const changeForm = (name) => set(component, name);
 
@@ -25,12 +28,8 @@ const onResolve = (status, message) => {
   notify(status, message);
 };
 
-const styleOnForm = computed(() =>
-    component.value.length > 0 ? 'opacity-25 brightness-80 blur-sm pointer-events-none' : ''
-);
-
 const selectedForm = computed(() => {
-  if (component.value.length > 0) {
+  if (component.value) {
     return defineAsyncComponent(() =>
         import(`@/components/user/profile/${component.value}.vue`)
     )
@@ -47,7 +46,7 @@ onBeforeMount(fetchUserProfile);
 <template>
   <main>
     <Header></Header>
-    <div :class="['grid gap-2 m-auto w-fit', styleOnForm]">
+    <div :class="['grid gap-2 m-auto w-fit', blurred]">
       <UserProfile :user="user" class="mb-2"></UserProfile>
       <div :class="['flex gap-4 mx-auto']">
         <RollButton v-for="button in profileButtons" :text="button.text" @click="changeForm(button.name)">

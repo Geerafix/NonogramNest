@@ -22,7 +22,7 @@ const users = ref([]);
 const listState = useList(['Id','Email','Nazwa użytkownika','Rola'], users);
 const {pageState, pageReset} = usePagination(1, 10, users);
 
-const {blurred} = useBlurOnView(managedUser);
+const {blurred} = useBlurOnView(managedUser, false);
 
 const fetchUsers = async (switched) => {
   set(who, switched);
@@ -37,7 +37,6 @@ const fetchUsers = async (switched) => {
 
 const manageUser = async (user) => {
   await getUser(user.user_id).then((res) => set(managedUser, res.data));
-
 };
 
 const setOption = (opt) => set(option, opt);
