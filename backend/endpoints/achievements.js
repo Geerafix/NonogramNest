@@ -5,7 +5,7 @@ import {Achievement} from '../models/Achievement.js';
 import {Criterion} from '../models/Criterion.js';
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
 
-import('../dbRelations.js');
+import('../relations.js');
 
 server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);

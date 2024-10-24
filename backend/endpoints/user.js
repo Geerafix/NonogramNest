@@ -11,7 +11,7 @@ import {Message} from "../models/Message.js";
 dotenv.config({path: '../../.env'});
 
 const argon2 = pkg;
-import('../dbRelations.js');
+import('../relations.js');
 
 server.post('/signin', asyncHandler(async (req, res, next) => {
     const user = await User.findOne({

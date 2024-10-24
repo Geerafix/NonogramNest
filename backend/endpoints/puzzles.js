@@ -3,7 +3,7 @@ import {Puzzle} from '../models/Puzzle.js';
 import {SolvedPuzzle} from '../models/SolvedPuzzle.js';
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
 
-import('../dbRelations.js');
+import('../relations.js');
 
 server.post('/puzzle', authHandler, asyncHandler(async (req, res) => {
     const puzzle = await Puzzle.create({

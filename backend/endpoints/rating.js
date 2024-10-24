@@ -4,7 +4,7 @@ import {Score} from '../models/Score.js';
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
 import {UserProfile} from "../models/UserProfile.js";
 
-import('../dbRelations.js');
+import('../relations.js');
 
 server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
