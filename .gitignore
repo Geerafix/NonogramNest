@@ -28,5 +28,5 @@ coverage
 *.sw?
 
 *.tsbuildinfo
-backend/server.js
+api/server.js
 .env
