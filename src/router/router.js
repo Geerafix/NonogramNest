@@ -4,14 +4,16 @@ import {getUserRole} from '@/services/userService'
 const userRole = 'user';
 const adminRole = 'admin';
 
+const view = (owner, name) => (() => import(`@/views/${owner}/${name}View.vue`));
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        // HomeView
+        // Home View
         {
             path: '/',
             name: 'Home',
-            component: () => import('@/views/home/HomeView.vue'),
+            component: view('home', 'Home'),
             meta: {
                 hideMenu: true,
                 title: 'Nonogramy.pl'
@@ -20,7 +22,7 @@ const router = createRouter({
         {
             path: '/logowanie',
             name: 'SignIn',
-            component: () => import('@/views/home/SignInView.vue'),
+            component: view('home', 'SignIn'),
             meta: {
                 hideMenu: true,
                 title: 'Logowanie'
@@ -29,18 +31,18 @@ const router = createRouter({
         {
             path: '/rejestracja',
             name: 'SignUp',
-            component: () => import('@/views/home/SignUpView.vue'),
+            component: view('home', 'SignUp'),
             meta: {
                 hideMenu: true,
                 title: 'Rejestracja'
             },
         },
 
-        // UserView
+        // User View
         {
             path: '/graj',
             name: 'Play',
-            component: () => import('@/views/user/PlayView.vue'),
+            component: view('user', 'Play'),
             meta: {
                 pageOwner: userRole,
                 title: 'Graj'
@@ -49,7 +51,7 @@ const router = createRouter({
         {
             path: '/wyzwanie',
             name: 'Challenge',
-            component: () => import('@/views/user/DailyView.vue'),
+            component: view('user', 'Daily'),
             meta: {
                 pageOwner: userRole,
                 title: 'Codzienne wyzwanie'
@@ -58,7 +60,7 @@ const router = createRouter({
         {
             path: '/kreator',
             name: 'Creator',
-            component: () => import('@/views/user/CreateView.vue'),
+            component: view('user', 'Create'),
             meta: {
                 pageOwner: userRole,
                 title: 'Kreator nonogramów'
@@ -67,7 +69,7 @@ const router = createRouter({
         {
             path: '/spolecznosc',
             name: 'Community',
-            component: () => import('@/views/user/CommunityView.vue'),
+            component: view('user', 'Community'),
             meta: {
                 pageOwner: userRole,
                 title: 'Gry społeczności'
@@ -76,7 +78,7 @@ const router = createRouter({
         {
             path: '/spolecznosc/:id',
             name: 'CommunityGame',
-            component: () => import('@/views/user/CommunityGameView.vue'),
+            component: view('user', 'CommunityGame'),
             meta: {
                 pageOwner: userRole,
                 title: 'Gra społeczności'
@@ -85,7 +87,7 @@ const router = createRouter({
         {
             path: '/ranking',
             name: 'Rating',
-            component: () => import('@/views/user/RatingView.vue'),
+            component: view('user', 'Rating'),
             meta: {
                 pageOwner: userRole,
                 title: 'Ranking'
@@ -94,7 +96,7 @@ const router = createRouter({
         {
             path: '/osiagniecia',
             name: 'Achievements',
-            component: () => import('@/views/user/AchievementsView.vue'),
+            component: view('user', 'Achievements'),
             meta: {
                 pageOwner: userRole,
                 title: 'Osiągnięcia'
@@ -103,27 +105,18 @@ const router = createRouter({
         {
             path: '/profil',
             name: 'Profile',
-            component: () => import('@/views/user/ProfileView.vue'),
+            component: view('user', 'Profile'),
             meta: {
                 pageOwner: userRole,
                 title: 'Profil'
             },
         },
-        {
-            path: '/ustawienia',
-            name: 'UserSettings',
-            component: () => import('@/views/user/UserSettingsView.vue'),
-            meta: {
-                pageOwner: userRole,
-                title: 'Ustawienia'
-            },
-        },
 
-        // AdminView
+        // Admin View
         {
             path: '/uzytkownicy',
             name: 'ManageUsers',
-            component: () => import('@/views/admin/ManageUsersView.vue'),
+            component: view('admin', 'ManageUsers'),
             meta: {
                 pageOwner: adminRole,
                 title: 'Użytkownicy'
@@ -132,7 +125,7 @@ const router = createRouter({
         {
             path: '/gry',
             name: 'ManagePuzzles',
-            component: () => import('@/views/admin/ManagePuzzlesView.vue'),
+            component: view('admin', 'ManagePuzzles'),
             meta: {
                 pageOwner: adminRole,
                 title: 'Gry'
@@ -141,7 +134,7 @@ const router = createRouter({
         {
             path: '/osiagniecia',
             name: 'ManageAchievements',
-            component: () => import('@/views/admin/ManageAchievementsView.vue'),
+            component: view('admin', 'ManageAchievements'),
             meta: {
                 pageOwner: adminRole,
                 title: 'Osiągnięcia'
@@ -150,19 +143,10 @@ const router = createRouter({
         {
             path: '/wiadomosci',
             name: 'AdminMessages',
-            component: () => import('@/views/admin/AdminMessagesView.vue'),
+            component: view('admin', 'AdminMessages'),
             meta: {
                 pageOwner: adminRole,
                 title: 'Wiadomości'
-            },
-        },
-        {
-            path: '/ustawienia',
-            name: 'AdminSettings',
-            component: () => import('@/views/admin/AdminSettingsView.vue'),
-            meta: {
-                pageOwner: adminRole,
-                title: 'Ustawienia'
             },
         }
     ]
@@ -189,4 +173,4 @@ router.beforeEach(async (to, from) => {
     document.title = to.meta.title;
 });
 
-export default router
+export default router;

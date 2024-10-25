@@ -28,7 +28,7 @@ const filteredItem = (item) => (
 </script>
 
 <template>
-  <div v-if="props.items">
+  <div v-if="props.items" class="transition-all">
     <div v-if="headers" class="headers">
       <ListHeader>
         <li v-for="header in props.headers">
