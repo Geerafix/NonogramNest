@@ -4,22 +4,25 @@ import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
 import Switch from "@/components/shared/inputs/Switch.vue";
 import {getUsers, getAdmins, getUser} from '@/services/adminService';
-import {computed, onMounted, ref, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {useList} from '@/composables/useList';
 import {usePagination} from '@/composables/usePagination';
+import {useBlurOnView} from "@/composables/useBlurOnView.js";
 import {usersSearchBy} from "@/config.js";
 import Select from "@/components/shared/inputs/Select.vue";
 import BasicInput from "@/components/shared/inputs/BasicInput.vue";
-import {useBlurOnView} from "@/composables/useBlurOnView.js";
+import ManageUser from "@/components/admin/management/ManageUser.vue";
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 
 const search = ref('');
 const option = ref('name');
 const who = ref(false);
 const managedUser = ref(null);
 const users = ref([]);
+const rolledSearch = ref(false);
 
-const listState = useList(['Id','Email','Nazwa użytkownika','Rola'], users);
+const listState = useList(['UID','Email','Nazwa użytkownika','Rola'], users);
 const {pageState, pageReset} = usePagination(1, 10, users);
 
 const {blurred} = useBlurOnView(managedUser, false);
@@ -39,6 +42,11 @@ const manageUser = async (user) => {
   await getUser(user.user_id).then((res) => set(managedUser, res.data));
 };
 
+const onAccept = () => {
+  set(managedUser, null);
+  fetchUsers(who.value);
+}
+
 const setOption = (opt) => set(option, opt);
 
 watch([search, option], () => {
@@ -54,14 +62,30 @@ onMounted(fetchUsers);
     <Header></Header>
     <List :class="['list', blurred]" v-bind="listState" @onListItemClick="manageUser"/>
     <Pagination v-bind="pageState" @onPageChange="fetchUsers(who)"/>
-    <div class="search-container">
-      <BasicInput v-model="search" placeholder="Wyszukaj..." />
-      <Select :items="usersSearchBy" @onSelect="setOption"/>
-      <Switch @onSwitch="fetchUsers">
-        <Icon icon="fa-solid fa-user" class="icon-fix"/>
-        <Icon icon="fa-solid fa-user-secret" class="icon-fix"/>
-      </Switch>
-    </div>
+    <Transition name="slide-left-hidden">
+      <BasicButton v-if="!rolledSearch" @click="rolledSearch = !rolledSearch" class="absolute right-0 bottom-0">
+        <Icon icon="fa-solid fa-search" class="icon-fix"/>
+      </BasicButton>
+    </Transition>
+    <Transition name="slide-left-hidden">
+      <div class="search-container" v-if="rolledSearch">
+        <BasicButton @click="rolledSearch = false" v-if="rolledSearch">
+          <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
+        </BasicButton>
+        <BasicInput v-model="search" placeholder="Wyszukaj..." />
+        <Select :items="usersSearchBy" @onSelect="setOption"/>
+        <Switch @onSwitch="fetchUsers">
+          <Icon icon="fa-solid fa-user" class="icon-fix"/>
+          <Icon icon="fa-solid fa-user-secret" class="icon-fix"/>
+        </Switch>
+      </div>
+    </Transition>
+    <Transition name="fade">
+      <ManageUser v-if="managedUser"
+                  @accept="onAccept"
+                  @reject="managedUser = null"
+                  :managedUser="managedUser"/>
+    </Transition>
   </main>
 </template>
 
@@ -78,7 +102,6 @@ onMounted(fetchUsers);
   @apply
   my-auto
   mx-auto
-  text-2xl
-  text-gray-600
+  text-2xl;
 }
 </style>
