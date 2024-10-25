@@ -81,6 +81,23 @@ body {
 	opacity: 0;
 }
 
+.slide-left-hidden-enter-active{
+	transition: all 0.5s;
+}
+.slide-left-hidden-leave-active {
+	transition: all 0.25s;
+}
+.slide-left-hidden-enter-from {
+	transform: translateX(100%);
+	opacity: 0;
+	transition-timing-function: ease-in;
+}
+.slide-left-hidden-leave-to {
+	transform: translateX(100%);
+	opacity: 0;
+	transition-timing-function: ease-in;
+}
+
 main {
 	position: relative;
 }

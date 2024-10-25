@@ -1,6 +1,6 @@
 <script setup>
 import {set, useMousePressed} from '@vueuse/core';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 
 const {pressed} = useMousePressed();
 const firstColor = ref();
@@ -36,6 +36,11 @@ const clearBoard = () => {
   set(answers, answers.value.map((row) => row.map(() => 0)));
 };
 
+const tileSize = computed(() => {
+  const len = answers.value.length;
+  return (1.6 + (12/len)) + 'rem';
+});
+
 defineExpose({setBoard, clearBoard, answers});
 </script>
 
@@ -45,6 +50,7 @@ defineExpose({setBoard, clearBoard, answers});
       <div v-for="col in answers.length"
            :class="['cols', (answers[row-1] && answers[col-1][row-1] === -1) ? 'bg-gray-200/80' :
                                  ((answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')]"
+           :style="{'width': tileSize, 'height': tileSize}"
            @mousedown.prevent="paintClick(col - 1, row - 1, $event)"
            @mouseover.prevent="paintHover(col - 1, row - 1)"
            @contextmenu.prevent="">
@@ -76,12 +82,10 @@ defineExpose({setBoard, clearBoard, answers});
 
 .cols {
   @apply
-  w-10
-  h-10
   border-gray-700
   border-[1px]
-  rounded-[2px]
+  rounded-[3px]
   text-center
-  transition-all;
+  transition-colors;
 }
 </style>

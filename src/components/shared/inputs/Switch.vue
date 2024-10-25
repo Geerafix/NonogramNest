@@ -32,6 +32,7 @@ const restyleSwitched = computed(() => (
     rounded-2xl
     w-24
     h-14
+    text-gray-600;
 }
 .dot {
     @apply

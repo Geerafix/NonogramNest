@@ -1,5 +1,6 @@
 import './assets/main.css'
 import './components/user/profile/form-style.css'
+import './components/admin/management/management-style.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/router'
