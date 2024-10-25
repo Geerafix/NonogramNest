@@ -49,7 +49,12 @@ export function getPuzzles(page, limit) {
 }
 
 export function getAchievements(page, limit) {
-    return api.get('/admin/achievements');
+    return api.get('/admin/achievements', {
+        params: {
+            page: page,
+            limit: limit
+        }
+    });
 }
 
 export function getMessages(page, limit) {

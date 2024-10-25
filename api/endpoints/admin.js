@@ -89,9 +89,9 @@ server.get('/admins', authHandler, asyncHandler(async (req, res, next) => {
 }));
 
 server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => {
-    // const {limit, offset} = getPagination(req);
-    // const search = `%${req.query.search}%` || '%%';
-    // const option = req.query.option;
+    const {limit, offset} = getPagination(req);
+    const search = `%${req.query.search}%` || '%%';
+    const option = req.query.option;
 
     const puzzles = await Achievement.findAll({
         include: {
@@ -104,6 +104,8 @@ server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => 
                 'Criterion.criteria'
             ]
         },
+        limit: limit,
+        offset: offset,
         raw: true
     });
 

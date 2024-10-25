@@ -84,7 +84,7 @@ onMounted(fetchUsers);
       <ManageUser v-if="managedUser"
                   @accept="onAccept"
                   @reject="managedUser = null"
-                  :managedUser="managedUser"/>
+                  :user="managedUser"/>
     </Transition>
   </main>
 </template>

@@ -5,22 +5,22 @@ import {ref} from "vue";
 import {updateUser} from "@/services/adminService.js";
 import {set} from "@vueuse/core";
 
-const props = defineProps(['managedUser']);
+const props = defineProps(['user']);
 const emit = defineEmits(['accept', 'reject']);
 
-const email = ref(props.managedUser.email);
-const username = ref(props.managedUser.username);
-const role = ref(props.managedUser.role);
+const email = ref(props.user.email);
+const username = ref(props.user.username);
+const role = ref(props.user.role);
 const password = ref('');
 
 const error = ref(false);
 
 const accept = async () => {
   const updatedUser = {
-    user_id: props.managedUser.user_id,
+    user_id: props.user.user_id,
     username: username.value,
     email: email.value,
-    password: password.value.length > 0 ? password.value : props.managedUser.password,
+    password: password.value.length > 0 ? password.value : props.user.password,
     role: role.value
   }
   await updateUser(updatedUser)
@@ -38,26 +38,26 @@ const reject = () => {
 
 <template>
   <div>
-    <div class="user-form-container">
+    <div class="form-container">
       <div class="grid grid-cols-2 gap-4">
         <div class="item-row">
           <span>Nazwa</span>
-          <BasicInput :placeholder="managedUser.username" v-model="username" />
+          <BasicInput :placeholder="user.username" v-model="username" />
         </div>
         <div class="item-row">
           <span>Email</span>
-          <BasicInput :placeholder="managedUser.email" v-model="email" />
+          <BasicInput :placeholder="user.email" v-model="email" />
         </div>
         <div class="item-row">
           <span>Rola</span>
-          <BasicInput :placeholder="managedUser.role" v-model="role" />
+          <BasicInput :placeholder="user.role" v-model="role" />
         </div>
         <div class="item-row">
           <span>Hasło</span>
           <BasicInput placeholder="Nowe hasło..." v-model="password" />
         </div>
       </div>
-      <div class="user-form-actions">
+      <div class="form-actions">
         <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
         <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>
       </div>

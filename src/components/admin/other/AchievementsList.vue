@@ -11,11 +11,11 @@ const onClick = (achievement) => {
   <div class="container">
     <li v-for="achievement in achievements">
       <div class="item" @click="onClick(achievement)">
-        <div class="grid gap-4">
-          <div class="item-row !bg-gray-700 text-2xl">{{achievement.name}}</div>
-          <div class="flex gap-4">
-            <div class="item-row">{{achievement.type}}</div>
-            <div class="item-row">{{achievement.criteria}}</div>
+        <div class="grid gap-2">
+          <div class="item-row !bg-gray-700 text-2xl !p-3.5">{{achievement.name}}</div>
+          <div class="flex gap-2">
+            <div class="item-row text-center">{{achievement.type}}</div>
+            <div class="item-row text-center">{{achievement.criteria}}</div>
           </div>
         </div>
         <div class="item-row">{{achievement.description}}</div>
@@ -28,7 +28,7 @@ const onClick = (achievement) => {
 .container {
   @apply
   grid
-  gap-4
+  gap-2
   w-full
   list-none
   text-xl
@@ -37,18 +37,18 @@ const onClick = (achievement) => {
 }
 .item {
   @apply
-  p-4
+  p-2
   grid
-  gap-4
+  gap-2
   grid-cols-2
-  rounded-2xl
+  rounded-xl
   bg-gray-900/40
 }
 .item-row {
   @apply
   bg-gray-700/40
-  p-4
-  rounded-xl
+  p-2.5
+  rounded-lg
   w-full
   hover:brightness-[115%]
   transition-all

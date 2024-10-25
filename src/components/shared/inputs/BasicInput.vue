@@ -1,12 +1,10 @@
 <script setup>
-import {ref} from 'vue';
-
 defineProps([
   'placeholder',
   'type'
 ]);
 
-const value = ref('');
+const value = defineModel();
 </script>
 
 <template>

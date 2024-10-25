@@ -1,4 +1,4 @@
-.user-form-container {
+.form-container {
     @apply
     absolute
     place-items-center
@@ -16,7 +16,7 @@
     rounded-2xl
     transition-all;
 }
-.user-form-actions {
+.form-actions {
     @apply
     flex
     justify-between
@@ -43,7 +43,7 @@
 .item-row {
     @apply
     grid
-    gap-1
+    gap-1.5
     p-4
     w-full
     bg-black/20
