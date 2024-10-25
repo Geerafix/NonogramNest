@@ -5,6 +5,9 @@ import {Puzzle} from "../models/Puzzle.js";
 import {User} from "../models/User.js";
 import {Op} from "sequelize";
 import {Message} from "../models/Message.js";
+import * as argon2 from "argon2";
+import {Achievement} from "../models/Achievement.js";
+import {Criterion} from "../models/Criterion.js";
 
 server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
@@ -40,9 +43,28 @@ server.get('/user', authHandler, asyncHandler(async (req, res, next) => {
     const user_id = req.query.user_id;
 
     const user = await User.findOne({
-        attributes: {exclude: ['password']},
         where: {user_id: user_id}
     });
+
+    res.json(user);
+}));
+
+server.put('/user', authHandler, asyncHandler(async (req, res, next) => {
+    const user = await req.body.user;
+
+    const updatedUser = await User.findOne({
+        where: { user_id: user.user_id }
+    });
+
+    updatedUser.email = user.email;
+    updatedUser.username = user.username;
+    updatedUser.role = user.role;
+
+    if (user.password !== updatedUser.password) {
+        updatedUser.password = await argon2.hash(user.password);
+    }
+
+    await updatedUser.save();
 
     res.json(user);
 }));
@@ -67,28 +89,21 @@ server.get('/admins', authHandler, asyncHandler(async (req, res, next) => {
 }));
 
 server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-    const search = `%${req.query.search}%` || '%%';
-    const option = req.query.option;
-    const user = await req.user;
+    // const {limit, offset} = getPagination(req);
+    // const search = `%${req.query.search}%` || '%%';
+    // const option = req.query.option;
 
-    const puzzles = await CreatedPuzzle.findAll({
-        include: [{
-            model: Puzzle,
-            attributes: ['size']
-        }, {
-            model: User,
-            attributes: ['username'],
-            where: {
-                username: {[Op.iLike]: option === 'creator' ? search : '%%'},
-                user_id: {[Op.ne]: user.user_id}
-            }
-        }], 
-        where: {name: {[Op.iLike]: option === 'name' ? search : '%%'}},
-        attributes: ['created_id', 'name'],
-        limit: limit,
-        offset: offset,
-        order: [['created_id', 'ASC']],
+    const puzzles = await Achievement.findAll({
+        include: {
+            model: Criterion,
+            attributes: [],
+        },
+        attributes: {
+            include: [
+                'Criterion.type',
+                'Criterion.criteria'
+            ]
+        },
         raw: true
     });
 

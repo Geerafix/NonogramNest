@@ -33,6 +33,12 @@ export function getUser(user_id) {
     });
 }
 
+export function updateUser(user) {
+    return api.put('/user', {
+        user: user
+    });
+}
+
 export function getPuzzles(page, limit) {
     return api.get('/puzzles', {
         params: {
@@ -40,6 +46,10 @@ export function getPuzzles(page, limit) {
             limit: limit
         }
     });
+}
+
+export function getAchievements(page, limit) {
+    return api.get('/admin/achievements');
 }
 
 export function getMessages(page, limit) {
