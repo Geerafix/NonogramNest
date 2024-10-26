@@ -46,7 +46,7 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <div class="form-container">
+  <div class="signup-container">
     <form @submit.prevent="onSubmit">
       <BasicInput v-model="form.username" placeholder="Nazwa użytkownika"/>
       <BasicInput v-model="form.email" placeholder="Email"/>
@@ -65,10 +65,14 @@ const onSubmit = () => {
 </template>
 
 <style scoped>
-.form-container {
+.signup-container {
   @apply
   flex
   flex-col
+  bg-black/20 w-fit
+  mx-auto
+  p-4
+  rounded-2xl
   gap-10;
 }
 
@@ -79,7 +83,6 @@ form {
   justify-items-center
   w-fit
   mx-auto
-  mt-9;
 }
 
 .error {

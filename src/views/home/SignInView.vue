@@ -4,8 +4,8 @@ import Header from '@/components/shared/Header.vue';
 </script>
 
 <template>
-  <div class="h-full text-white">
+  <main>
     <Header></Header>
-    <SignInForm/>
-  </div>
+    <SignInForm />
+  </main>
 </template>

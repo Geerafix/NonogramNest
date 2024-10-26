@@ -36,7 +36,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <div class="form-container">
+  <div class="signin-container">
     <form @submit.prevent="onSubmit">
       <BasicInput v-model="form.login" placeholder="Login lub Email"/>
       <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off"/>
@@ -53,10 +53,14 @@ const onSubmit = async () => {
 </template>
 
 <style scoped>
-.form-container {
+.signin-container {
   @apply
   flex
   flex-col
+  bg-black/20 w-fit
+  mx-auto
+  p-4
+  rounded-2xl
   gap-10;
 }
 
@@ -66,8 +70,7 @@ form {
   gap-4
   justify-items-center
   w-fit
-  mx-auto
-  mt-9;
+  mx-auto;
 }
 
 .error {

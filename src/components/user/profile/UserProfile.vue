@@ -3,22 +3,22 @@ defineProps(['user']);
 </script>
 
 <template>
-  <div class="user-profile-container pointer-events-none">
-    <div class="grid gap-2 p-2 text-center bg-gray-700 rounded-xl">
-      <div class="bg-gray-800/75 rounded-lg py-2 text-2xl font-normal content-center">
+  <div class="user-profile-container">
+    <div class="info-col">
+      <div class="info">
         <p>{{ user.username }}</p>
       </div>
-      <div class="grid grid-cols-[1fr_1fr] gap-2">
-        <div class="bg-gray-800/50 rounded-lg content-center py-2">
+      <div class="grid grid-cols-[auto_1fr] gap-2 [&_div]:!h-full">
+        <div class="pfp" @click="open">
           <Icon icon="fa-solid fa-user" class="my-auto mx-auto text-5xl"/>
         </div>
-        <div class="bg-gray-800/50 rounded-lg content-center">UID: {{ user.user_id }}</div>
+        <div class="bg-gray-800/50 rounded-lg content-center p-2">UID: {{ user.user_id }}</div>
       </div>
       <div>
-        <textarea disabled class="bio" :placeholder="user.bio > 0 ? '' : 'Brak opisu'">{{ user.bio }}</textarea>
+        <textarea disabled class="bio" :placeholder="user.bio ? '' : 'Brak opisu'">{{ user.bio }}</textarea>
       </div>
     </div>
-    <div class="numbers">
+    <div class="stats-col">
       <div class="item-container">Rozwiązane gry</div>
       <div class="item">{{ user.solved_puzzles }}</div>
       <div class="item-container">Rozwiązane wyzwania</div>
@@ -26,7 +26,7 @@ defineProps(['user']);
       <div class="item-container">Suma punktów</div>
       <div class="item">{{ user.total_points }}</div>
       <div class="item-container">Łączny czas gry</div>
-      <div class="item">{{ (user.total_play_time / 3600).toFixed(2) }} g.</div>
+      <div class="item">{{ (user.total_play_time / 3600).toFixed(2) }} h</div>
       <div class="item-container">Data rejestracji</div>
       <div class="item">{{ new Date(user.register_date).toLocaleDateString() }}r</div>
     </div>
@@ -51,10 +51,15 @@ defineProps(['user']);
   select-none
 }
 
-.numbers {
+.info-col {
+  @apply
+  grid gap-2 p-2 text-center bg-gray-700 rounded-xl
+}
+
+.stats-col {
   @apply
   grid
-  grid-cols-[min-content_1fr]
+  grid-cols-[min-content_auto]
   gap-2
   p-2
   bg-gray-700
@@ -72,15 +77,16 @@ defineProps(['user']);
   to-gray-600/50
   rounded-lg
   pr-2;
-
 }
 
 .item {
   @apply
   p-2
+  w-full
   bg-gray-600
   rounded-lg
   text-right
+  content-center
   drop-shadow-sm
   shadow-inner;
 }
@@ -89,12 +95,29 @@ defineProps(['user']);
   @apply
   bg-gray-800/50
   w-full
-  h-full
+  min-h-full
   p-2
   rounded-lg
   text-wrap
   resize-none
   outline-none
+}
 
+.info {
+  @apply
+  bg-gray-800/75 rounded-lg py-2 text-2xl font-normal content-center
+}
+
+.pfp {
+  @apply
+  flex
+  justify-center
+  p-2
+  bg-gray-800/50
+  rounded-lg
+  [&>img]:rounded-md
+  [&>*]:!h-20
+  [&>*]:!w-20
+  cursor-pointer
 }
 </style>

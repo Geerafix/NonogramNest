@@ -137,6 +137,7 @@ onBeforeMount(handleMonthChange);
   px-2
   gap-1
   bg-gray-700
+  text-xl
   shadow-inner;
 }
 
