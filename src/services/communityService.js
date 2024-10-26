@@ -24,7 +24,6 @@ export function getUserPuzzles(page, limit, search) {
     });
 }
 
-
 export function getCommunityPuzzle(id) {
     return api.get('/community/puzzle', {
         params: {

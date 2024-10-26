@@ -1,10 +1,8 @@
 import {sequelize} from '../server.js';
 import {DataTypes, Op} from 'sequelize';
-
 import {UserProfile} from './UserProfile.js';
 import {Score} from './Score.js';
 import {Achievement} from "./Achievement.js";
-import {Criterion} from "./Criterion.js";
 import {UserAchievement} from "./UserAchievement.js";
 
 export const DailyChallenge = sequelize.define('DailyChallenge', {
@@ -66,13 +64,11 @@ export const DailyChallenge = sequelize.define('DailyChallenge', {
                 userProfile.total_points += solved_challenge.points;
                 userProfile.total_play_time += solved_challenge.time;
 
-                const achieved = await Achievement.findAll({
-                    include: [{model: Criterion}]
-                });
+                const achieved = await Achievement.findAll();
 
                 for (const element of achieved) {
-                    const type = JSON.parse(JSON.stringify(element.Criterion.type));
-                    const criteria = element.Criterion.criteria;
+                    const type = JSON.parse(JSON.stringify(element.type));
+                    const criteria = element.criteria;
                     if (userProfile[type] >= criteria) {
                         await UserAchievement.findOrCreate({
                             where: {

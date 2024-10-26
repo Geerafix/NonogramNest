@@ -7,10 +7,6 @@ export const Achievement = sequelize.define('Achievement', {
         autoIncrement: true,
         primaryKey: true,
     },
-    criteria_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     name: {
         type: DataTypes.TEXT,
         allowNull: false
@@ -18,22 +14,32 @@ export const Achievement = sequelize.define('Achievement', {
     description: {
         type: DataTypes.TEXT,
         allowNull: false
-    }
+    },
+    type: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    criteria: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
 }, {
     tableName: 'Achievements',
     timestamps: false,
     hooks: {
         async afterSync(options) {
             await Achievement.create({
-                criteria_id: 1,
                 name: 'Początkujący I',
-                description: 'Ukończ 1 nonogram.'
+                description: 'Ukończ 1 nonogram.',
+                type: 'solved_puzzles',
+                criteria: 1
             });
 
             await Achievement.create({
-                criteria_id: 2,
                 name: 'Początkujący II',
-                description: 'Ukończ 2 nonogramy.'
+                description: 'Ukończ 2 nonogramy.',
+                type: 'solved_puzzles',
+                criteria: 2
             });
         }
     }

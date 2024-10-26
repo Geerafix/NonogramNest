@@ -7,7 +7,6 @@ import {Score} from "./models/Score.js";
 import {CreatedPuzzle} from "./models/CreatedPuzzle.js";
 import {UserAchievement} from "./models/UserAchievement.js";
 import {Achievement} from "./models/Achievement.js";
-import {Criterion} from "./models/Criterion.js";
 import {Message} from "./models/Message.js";
 import {sequelize} from "./server.js";
 
@@ -39,9 +38,6 @@ CreatedPuzzle.belongsTo(User, {foreignKey: 'user_id'});
 CreatedPuzzle.belongsTo(Puzzle, {foreignKey: 'puzzle_id'});
 
 Achievement.hasMany(UserAchievement, {foreignKey: 'achievement_id'});
-Achievement.hasOne(Criterion, {foreignKey: 'criteria_id'});
-
-Criterion.belongsTo(Achievement, {foreignKey: 'criteria_id'});
 
 Message.belongsTo(User, {foreignKey: 'user_id'});
 

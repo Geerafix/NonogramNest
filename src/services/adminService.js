@@ -57,6 +57,26 @@ export function getAchievements(page, limit) {
     });
 }
 
+export function postAchievement(achievement) {
+    return api.post('/admin/achievement', {
+        achievement: achievement
+    });
+}
+
+export function updateAchievement(achievement) {
+    return api.put('/admin/achievement', {
+        achievement: achievement
+    });
+}
+
+export function deleteAchievement(achievement_id) {
+    return api.delete('/admin/achievement', {
+        params: {
+            achievement_id: achievement_id
+        }
+    });
+}
+
 export function getMessages(page, limit) {
     return api.get('/messages', {
         params: {

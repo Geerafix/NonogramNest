@@ -7,7 +7,6 @@ import {Op} from "sequelize";
 import {Message} from "../models/Message.js";
 import * as argon2 from "argon2";
 import {Achievement} from "../models/Achievement.js";
-import {Criterion} from "../models/Criterion.js";
 
 server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
@@ -93,23 +92,50 @@ server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => 
     const search = `%${req.query.search}%` || '%%';
     const option = req.query.option;
 
-    const puzzles = await Achievement.findAll({
-        include: {
-            model: Criterion,
-            attributes: [],
-        },
-        attributes: {
-            include: [
-                'Criterion.type',
-                'Criterion.criteria'
-            ]
-        },
+    const achievements = await Achievement.findAll({
         limit: limit,
         offset: offset,
         raw: true
     });
 
-    res.json(puzzles);
+    res.json(achievements);
+}));
+
+server.post('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
+    const achievement = await req.body.achievement;
+
+    await Achievement.create({
+        name: achievement.name,
+        description: achievement.description,
+        type: achievement.type,
+        criteria: achievement.criteria
+    });
+
+    res.json();
+}));
+
+server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
+    const achievement = await req.body.achievement;
+
+    await Achievement.update({
+        name: achievement.name,
+        description: achievement.description,
+        type: achievement.type,
+        criteria: achievement.criteria
+        }, {
+        where: {
+            achievement_id: achievement.id
+        }
+    });
+
+    res.json();
+}));
+
+server.delete('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
+    const id = req.query.achievement_id;
+    await Achievement.destroy({where: {achievement_id: id}});
+
+    res.json();
 }));
 
 server.get('/messages', authHandler, asyncHandler(async (req, res, next) => {

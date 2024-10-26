@@ -8,6 +8,8 @@ import {onMounted, ref} from "vue";
 import {getAchievements} from "@/services/adminService.js";
 import {usePagination} from "@/composables/usePagination.js";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import {FontAwesomeIcon as Icon} from "@fortawesome/vue-fontawesome";
 
 const achievements = ref([]);
 
@@ -25,6 +27,17 @@ const getAchievement = async (achievement) => {
   set(manageAchievement, achievement);
 };
 
+const onAccept = () => {
+  fetchAchievements();
+  set(manageAchievement, null);
+}
+
+const onReject = () => set(manageAchievement, null);
+
+const newAchievement = () => {
+  set(manageAchievement, {});
+};
+
 onMounted(fetchAchievements)
 </script>
 
@@ -32,11 +45,10 @@ onMounted(fetchAchievements)
   <main>
     <Header></Header>
     <AchievementsList :achievements="achievements" @onListItemClick="getAchievement" :class="blurred"/>
-    <ManageAchievement v-if="manageAchievement" @reject="manageAchievement = null" :achievement="manageAchievement"/>
+    <ManageAchievement v-if="manageAchievement" @accept="onAccept" @reject="onReject" :achievement="manageAchievement"/>
+    <BasicButton class="absolute right-0 bottom-0" @click="newAchievement">
+      <Icon icon="fa-solid fa-plus" class="icon-fix"/>
+    </BasicButton>
     <Pagination v-bind="pageState" @onPageChange="fetchAchievements" />
   </main>
 </template>
-
-<style scoped>
-
-</style>
