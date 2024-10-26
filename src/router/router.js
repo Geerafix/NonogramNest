@@ -143,7 +143,7 @@ const router = createRouter({
         {
             path: '/wiadomosci',
             name: 'AdminMessages',
-            component: view('admin', 'AdminMessages'),
+            component: view('admin', 'ManageMessages'),
             meta: {
                 pageOwner: adminRole,
                 title: 'Wiadomości'
