@@ -4,7 +4,7 @@ const apiUrl = `http://${import.meta.env.VITE_SERVER_NETWORK}:${import.meta.env.
 const api = axios.create({baseURL: apiUrl, withCredentials: true});
 
 export function getUsers(search, option, page, limit) {
-    return api.get('/users', {
+    return api.get('/admin/users', {
         params: {
             search: search,
             option: option,
@@ -15,7 +15,7 @@ export function getUsers(search, option, page, limit) {
 }
 
 export function getAdmins(search, option, page, limit) {
-    return api.get('/admins', {
+    return api.get('/admin/admins', {
         params: {
             search: search,
             option: option,
@@ -26,7 +26,7 @@ export function getAdmins(search, option, page, limit) {
 }
 
 export function getUser(user_id) {
-    return api.get('/user', {
+    return api.get('/admin/user', {
         params: {
             user_id: user_id
         }
@@ -34,13 +34,13 @@ export function getUser(user_id) {
 }
 
 export function updateUser(user) {
-    return api.put('/user', {
+    return api.put('/admin/user', {
         user: user
     });
 }
 
 export function deleteUser(userId) {
-    return api.delete('/deleteUser', {
+    return api.delete('/admin/deleteUser', {
         params: {
             userId: userId
         }
@@ -48,7 +48,7 @@ export function deleteUser(userId) {
 }
 
 export function getPuzzles(page, limit) {
-    return api.get('/puzzles', {
+    return api.get('/admin/puzzles', {
         params: {
             page: page,
             limit: limit
@@ -86,7 +86,7 @@ export function deleteAchievement(achievement_id) {
 }
 
 export function getMessages(page, limit) {
-    return api.get('/messages', {
+    return api.get('/admin/messages', {
         params: {
             page: page,
             limit: limit
@@ -96,7 +96,7 @@ export function getMessages(page, limit) {
 
 
 export function deleteMessage(messageId) {
-    return api.delete('/message', {
+    return api.delete('/admin/message', {
         params: {
             messageId: messageId
         }

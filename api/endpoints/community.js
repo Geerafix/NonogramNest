@@ -1,9 +1,9 @@
 import {server} from "../server.js";
+import {Op} from "sequelize";
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
 import {CreatedPuzzle} from "../models/CreatedPuzzle.js";
 import {Puzzle} from "../models/Puzzle.js";
 import {User} from "../models/User.js";
-import {Op} from "sequelize";
 
 server.get('/community/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
@@ -14,17 +14,17 @@ server.get('/community/puzzles', authHandler, asyncHandler(async (req, res) => {
     const puzzles = await CreatedPuzzle.findAll({
         include: [{
             model: Puzzle,
-            attributes: ['size']
+            attributes: []
         }, {
             model: User,
-            attributes: ['username'],
+            attributes: [],
             where: {
                 username: {[Op.iLike]: option === 'creator' ? search : '%%'},
                 user_id: {[Op.ne]: user.user_id}
             }
         }], 
         where: {name: {[Op.iLike]: option === 'name' ? search : '%%'}},
-        attributes: ['created_id', 'name'],
+        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username'],
         limit: limit,
         offset: offset,
         order: [['created_id', 'ASC']],
@@ -82,16 +82,14 @@ server.get('/user/puzzles', authHandler, asyncHandler(async (req, res) => {
     const puzzles = await CreatedPuzzle.findAll({
         include: [{
             model: Puzzle,
-            attributes: ['size']
+            attributes: []
         }, {
             model: User,
-            attributes: ['username'],
-            where: {
-                user_id: user.user_id
-            }
+            attributes: [],
+            where: {user_id: user.user_id}
         }], 
         where: {name: {[Op.iLike]: search}},
-        attributes: ['created_id', 'name'],
+        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username'],
         limit: limit,
         offset: offset,
         order: [['created_id', 'ASC']],

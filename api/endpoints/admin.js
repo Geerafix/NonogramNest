@@ -1,14 +1,14 @@
 import {server} from "../server.js";
+import {Op} from "sequelize";
+import * as argon2 from "argon2";
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
 import {CreatedPuzzle} from "../models/CreatedPuzzle.js";
 import {Puzzle} from "../models/Puzzle.js";
 import {User} from "../models/User.js";
-import {Op} from "sequelize";
 import {Message} from "../models/Message.js";
-import * as argon2 from "argon2";
 import {Achievement} from "../models/Achievement.js";
 
-server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
+server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
 
     const puzzles = await Puzzle.findAll({
@@ -19,7 +19,7 @@ server.get('/puzzles', authHandler, asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.get('/users', authHandler, asyncHandler(async (req, res, next) => {
+server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const search = `%${req.query.search}%` || '%%';
     const option = req.query.option;
@@ -38,24 +38,22 @@ server.get('/users', authHandler, asyncHandler(async (req, res, next) => {
     res.json(users);
 }));
 
-server.get('/user', authHandler, asyncHandler(async (req, res, next) => {
+server.get('/admin/user', authHandler, asyncHandler(async (req, res) => {
     const user_id = req.query.user_id;
 
-    const user = await User.findOne({
-        where: {user_id: user_id}
-    });
+    const user = await User.findOne({where: {user_id: user_id}});
 
     res.json(user);
 }));
 
-server.delete('/deleteUser', async (req, res) => {
+server.delete('/admin/deleteUser', async (req, res) => {
     const userId = req.query.userId;
     await User.destroy({where: {user_id: userId}});
 
     res.json();
 });
 
-server.put('/user', authHandler, asyncHandler(async (req, res, next) => {
+server.put('/admin/user', authHandler, asyncHandler(async (req, res) => {
     const user = await req.body.user;
 
     const updatedUser = await User.findOne({
@@ -75,7 +73,7 @@ server.put('/user', authHandler, asyncHandler(async (req, res, next) => {
     res.json(user);
 }));
 
-server.get('/admins', authHandler, asyncHandler(async (req, res, next) => {
+server.get('/admin/admins', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const search = `%${req.query.search}%` || '%%';
     const option = req.query.option;
@@ -96,8 +94,6 @@ server.get('/admins', authHandler, asyncHandler(async (req, res, next) => {
 
 server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
-    const search = `%${req.query.search}%` || '%%';
-    const option = req.query.option;
 
     const achievements = await Achievement.findAll({
         limit: limit,
@@ -130,9 +126,7 @@ server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
         type: achievement.type,
         criteria: achievement.criteria
         }, {
-        where: {
-            achievement_id: achievement.id
-        }
+        where: {achievement_id: achievement.id}
     });
 
     res.json();
@@ -140,12 +134,13 @@ server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
 
 server.delete('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const id = req.query.achievement_id;
+    
     await Achievement.destroy({where: {achievement_id: id}});
 
     res.json();
 }));
 
-server.get('/messages', authHandler, asyncHandler(async (req, res, next) => {
+server.get('/admin/messages', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
 
     const messages = await Message.findAll({
@@ -155,12 +150,7 @@ server.get('/messages', authHandler, asyncHandler(async (req, res, next) => {
         },
         attributes: {
             exclude: ['user_id'],
-            include: [
-                'User.username',
-                'title',
-                'content',
-                'date'
-            ]
+            include: ['User.username', 'title', 'content', 'date']
         },
         order: [['date', 'ASC']],
         limit: limit,
@@ -171,7 +161,7 @@ server.get('/messages', authHandler, asyncHandler(async (req, res, next) => {
     res.json(messages);
 }));
 
-server.delete('/message', authHandler, asyncHandler(async (req, res, next) => {
+server.delete('/admin/message', authHandler, asyncHandler(async (req, res) => {
     const messageId = req.query.messageId;
     const messages = await Message.destroy({where: {id: messageId}});
 

@@ -1,7 +1,7 @@
 import {server} from '../server.js';
 import {Puzzle} from '../models/Puzzle.js';
 import {SolvedPuzzle} from '../models/SolvedPuzzle.js';
-import {asyncHandler, authHandler, getPagination} from "../utils.js";
+import {asyncHandler, authHandler} from "../utils.js";
 
 import('../relations.js');
 

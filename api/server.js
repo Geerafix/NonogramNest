@@ -5,13 +5,13 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import {errorHandler} from "./utils.js";
 
-import('./endpoints/user.js');
 import('./endpoints/rating.js');
 import('./endpoints/puzzles.js');
 import('./endpoints/community.js');
 import('./endpoints/challenge.js');
-import('./endpoints/achievements.js');
+import('./endpoints/user.js');
 import('./endpoints/admin.js');
+import('./endpoints/auth.js');
 
 dotenv.config({path: '../.env'});
 

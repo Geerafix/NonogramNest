@@ -1,51 +1,42 @@
 import {server} from '../server.js';
 import {Op} from 'sequelize';
 import * as pkg from 'argon2';
+import dotenv from "dotenv";
+import {asyncHandler, authHandler, getPagination} from "../utils.js";
 import {User} from '../models/User.js';
 import {UserProfile} from '../models/UserProfile.js';
-import {asyncHandler, authHandler, getPagination} from "../utils.js";
-import jwt from 'jsonwebtoken';
-import dotenv from "dotenv";
 import {Message} from "../models/Message.js";
+import {Achievement} from "../models/Achievement.js";
+import {UserAchievement} from "../models/UserAchievement.js";
 
 dotenv.config({path: '../../.env'});
 
 const argon2 = pkg;
 import('../relations.js');
 
-server.post('/signin', asyncHandler(async (req, res, next) => {
-    const user = await User.findOne({
-        where: {[Op.or]: [{username: await req.body.username}, {email: await req.body.username}]}
-    });
+server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
+    const {limit, offset} = getPagination(req);
+    const user = await req.user;
 
-    if (user && await argon2.verify(user.password, await req.body.password)) {
-        const token = jwt.sign(
-            JSON.stringify(user),
-            process.env.JWT_SECRET,
-        );
-        res.cookie('token', token, {httpOnly: true});
-        res.status(200).json(token);
-    } else {
-        res.status(404).send({msg: 'Nieprawidłowa nazwa użytkownika lub hasło'});
-    }
+    const achievements = await Achievement.findAll({
+        include: {
+            model: UserAchievement,
+            attributes: [],
+            where: {[Op.and]: [{user_id: {[Op.not]: null}}, {user_id: user.user_id}]},
+            duplicating: false
+        },
+        attributes: {include: ['UserAchievements.date_achieved']},
+        order: [['name', 'ASC']],
+        limit: limit,
+        offset: offset,
+        raw: true
+    }); 
+
+    res.json(achievements);
 }));
 
-server.post('/signup', asyncHandler(async (req, res, next) => {
-    const email = await req.body.email;
-    const username = await req.body.username;
-    const password = await req.body.password;
 
-    const hash = await argon2.hash(password);
-    await User.create({
-        email: email,
-        username: username,
-        password: hash
-    });
-
-    res.json({message: 'Zarejestrowano'});
-}));
-
-server.get('/profile', authHandler, asyncHandler(async (req, res, next) => {
+server.get('/profile', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
 
     const userProfile = await UserProfile.findOne({
@@ -53,12 +44,8 @@ server.get('/profile', authHandler, asyncHandler(async (req, res, next) => {
             model: User,
             attributes: [],
         },
-        attributes: {
-            include: ['User.username']
-        },
-        where: {
-            user_id: user.user_id,
-        },
+        attributes: {include: ['User.username']},
+        where: {user_id: user.user_id},
         raw: true
     });
 
@@ -69,13 +56,7 @@ server.put('/profile/username', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const username = await req.body.username;
 
-    await User.update({
-        username: username,
-        }, {
-        where: {
-            user_id: user.user_id
-        }
-    });
+    await User.update({username: username}, {where: {user_id: user.user_id}});
 
     res.json();
 }));
@@ -84,13 +65,7 @@ server.put('/profile/bio', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const bio = await req.body.bio;
 
-    await UserProfile.update({
-        bio: bio,
-    }, {
-        where: {
-            user_id: user.user_id
-        }
-    });
+    await UserProfile.update({bio: bio}, {where: {user_id: user.user_id}});
 
     res.json();
 }));
@@ -100,21 +75,12 @@ server.put('/profile/password', authHandler, asyncHandler(async (req, res) => {
     const currentPassword = await req.body.currentPassword;
     const newPassword = await req.body.newPassword;
 
-    const userData = await User.findOne({
-        where: {
-            user_id: user.user_id
-        }
-    });
+    const userData = await User.findOne({where: {user_id: user.user_id}});
 
     if (userData && await argon2.verify(userData.password, currentPassword)) {
         const hash = await argon2.hash(newPassword);
-        await User.update({
-            password: hash,
-        }, {
-            where: {
-                user_id: user.user_id
-            }
-        });
+        await User.update({password: hash}, {where: {user_id: user.user_id}});
+
         res.status(200).send();
     } else {
         res.status(404).send();
@@ -125,18 +91,12 @@ server.put('/profile/email', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const email = await req.body.email;
 
-    await User.update({
-        email: email,
-    }, {
-        where: {
-            user_id: user.user_id
-        }
-    });
+    await User.update({email: email}, {where: {user_id: user.user_id}});
 
     res.json();
 }));
 
-server.post('/profile/message', authHandler, asyncHandler(async (req, res, next) => {
+server.post('/profile/message', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const title = await req.body.title;
     const content = await req.body.content;
@@ -158,9 +118,7 @@ server.post('/logout', authHandler, asyncHandler(async (req, res) => {
 server.post('/role', authHandler, asyncHandler(async (req, res) => {
     const user = req.user;
 
-    if (!user) {
-        res.json({role: ''})
-    }
+    if (!user) res.json({role: ''})
 
     res.json({role: user.role});
 }));

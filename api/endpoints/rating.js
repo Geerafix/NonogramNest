@@ -12,11 +12,12 @@ server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
 
     const column = !Number.isNaN(size) ? `size_${size}` : 'classic_sum';
     const rating = await User.findAll({
-        attributes: ['user_id', 'username'],
         include: {
             model: Score,
-            attributes: [column]
+            attributes: [],
+            duplicating: false
         },
+        attributes: ['user_id', 'username', 'Score.classic_sum'],
         order: [[Score, column, 'DESC']],
         limit: limit,
         offset: offset,
@@ -30,11 +31,12 @@ server.get('/rating/challenges', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
 
     const rating = await User.findAll({
-        attributes: ['user_id', 'username'],
         include: {
             model: Score,
-            attributes: ['challenge_sum'],
+            attributes: [],
+            duplicating: false
         },
+        attributes: ['user_id', 'username', 'Score.challenge_sum'],
         order: [[Score, 'challenge_sum', 'DESC']],
         limit: limit,
         offset: offset,
@@ -44,22 +46,18 @@ server.get('/rating/challenges', authHandler, asyncHandler(async (req, res) => {
     res.json(rating);
 }));
 
-server.get('/rating/user', authHandler, asyncHandler(async (req, res) => {
-    const user_id = await req.query.user_id;
+server.get('/rating/profile', authHandler, asyncHandler(async (req, res) => {
+    const user_id = req.query.user_id;
 
-    const userProfile = await UserProfile.findOne({
+    const profile = await UserProfile.findOne({
         include: {
             model: User,
             attributes: [],
         },
-        attributes: {
-            include: ['User.username']
-        },
-        where: {
-            user_id: user_id,
-        },
+        attributes: {include: ['User.username']},
+        where: {user_id: user_id},
         raw: true
     });
 
-    res.json(userProfile);
+    res.json(profile);
 }));

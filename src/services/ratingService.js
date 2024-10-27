@@ -23,7 +23,7 @@ export function getRatingChallenge(page, limit) {
 }
 
 export function getRatingUser(user_id) {
-    return api.get('/rating/user', {
+    return api.get('/rating/profile', {
         params: {
             user_id: user_id
         }
