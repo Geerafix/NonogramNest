@@ -69,7 +69,7 @@ const delUser = async () => {
         <BasicButton @click="reject">
           <Icon icon="fa-solid fa-xmark"/>
         </BasicButton>
-        <BasicButton @click="accept">
+        <BasicButton @click="accept" class="!bg-teal-900">
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>

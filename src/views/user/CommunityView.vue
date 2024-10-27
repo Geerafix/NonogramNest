@@ -5,18 +5,20 @@ import BasicInput from '@/components/shared/inputs/BasicInput.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
 import Switch from '@/components/shared/inputs/Switch.vue';
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import {ratingSearchBy} from '@/config.js';
 import {getCommunityPuzzles, getUserPuzzles} from '@/services/communityService.js';
 import {onBeforeMount, ref, watch} from 'vue';
 import {useRouter} from "vue-router";
-import {ratingSearchBy} from '@/config.js';
 import {set} from '@vueuse/core';
-import { usePagination } from '@/composables/usePagination';
-import { useList } from '@/composables/useList';
+import {usePagination} from '@/composables/usePagination';
+import {useList} from '@/composables/useList';
 
 const puzzles = ref([]);
 const search = ref('');
 const option = ref('name');
 const whom = ref(false);
+const rolledSearch = ref(false);
 
 const {pageState, pageReset} = usePagination(1, 10, puzzles);
 const listState = useList(['ID','Nazwa','Rozmiar','Twórca'], puzzles);
@@ -51,15 +53,25 @@ onBeforeMount(fetchPuzzles);
   <main>
     <Header></Header>
     <List v-bind="listState" @onListItemClick="routeToSelectedGame"/>
-      <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whom)"></Pagination>
-      <div class="search-container">
+    <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whom)"></Pagination>
+    <Transition name="slide-left-hidden">
+      <BasicButton v-if="!rolledSearch" @click="rolledSearch = !rolledSearch" class="absolute right-0 bottom-0">
+        <Icon icon="fa-solid fa-search" class="icon-fix"/>
+      </BasicButton>
+    </Transition>
+    <Transition name="slide-left-hidden">
+      <div class="search-container" v-show="rolledSearch">
+        <BasicButton @click="rolledSearch = false">
+          <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
+        </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..."></BasicInput>
-        <Select v-if="!whom" :items="ratingSearchBy" @onSelect="setOption"></Select>
+        <Select v-if="!whom" :items="ratingSearchBy" @onSelect="setOption" />
         <Switch @onSwitch="fetchPuzzles">
           <Icon icon="fa-solid fa-user-group" class="icon-fix"/>
           <Icon icon="fa-solid fa-user" class="icon-fix"/>
         </Switch>
-      </div> 
+      </div>
+    </Transition>
   </main>
 </template>
 
@@ -77,7 +89,6 @@ onBeforeMount(fetchPuzzles);
   my-auto
   mx-auto
   text-2xl
-  text-gray-600
 }
 </style>
 

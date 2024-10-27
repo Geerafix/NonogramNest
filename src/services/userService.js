@@ -43,6 +43,15 @@ export async function postMessage(title, content) {
     });
 }
 
+export function getUserAchievements(page, limit) {
+    return api.get('/user/achievements', {
+        params: {
+            page: page, 
+            limit: limit
+        }
+    });
+}
+
 export async function getUserRole() {
     const res = await api.post('/role');
     return res.data.role;

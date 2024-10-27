@@ -22,11 +22,15 @@ server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
         include: {
             model: UserAchievement,
             attributes: [],
-            where: {[Op.and]: [{user_id: {[Op.not]: null}}, {user_id: user.user_id}]},
+            where: {[Op.or]: [{user_id: null}, {user_id: user.user_id}]},
+            required: false,
             duplicating: false
         },
-        attributes: {include: ['UserAchievements.date_achieved']},
-        order: [['name', 'ASC']],
+        attributes: {
+            include: ['UserAchievements.date_achieved'],
+            exclude: ['type', 'criteria']
+        },
+        order: [[{model: UserAchievement}, 'date_achieved', 'DESC NULLS LAST']],
         limit: limit,
         offset: offset,
         raw: true
