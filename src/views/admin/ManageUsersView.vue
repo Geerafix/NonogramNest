@@ -3,17 +3,19 @@ import Pagination from '@/components/shared/Pagination.vue';
 import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
 import Switch from "@/components/shared/inputs/Switch.vue";
+import Select from "@/components/shared/inputs/Select.vue";
+import BasicInput from "@/components/shared/inputs/BasicInput.vue";
+import ManageUser from "@/components/admin/management/ManageUser.vue";
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import Notification from "@/components/shared/Notification.vue";
 import {getUsers, getAdmins, getUser} from '@/services/adminService';
 import {onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {useList} from '@/composables/useList';
 import {usePagination} from '@/composables/usePagination';
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
+import {useNotification} from "@/composables/useNotification.js";
 import {usersSearchBy} from "@/config.js";
-import Select from "@/components/shared/inputs/Select.vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
-import ManageUser from "@/components/admin/management/ManageUser.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 
 const search = ref('');
 const option = ref('name');
@@ -26,6 +28,9 @@ const listState = useList(['UID','Email','Nazwa użytkownika','Rola'], users);
 const {pageState, pageReset} = usePagination(1, 10, users);
 
 const {blurred} = useBlurOnView(managedUser, false);
+
+const notification = ref();
+const {notify} = useNotification(notification);
 
 const fetchUsers = async (switched) => {
   set(who, switched);
@@ -42,9 +47,10 @@ const manageUser = async (user) => {
   await getUser(user.user_id).then((res) => set(managedUser, res.data));
 };
 
-const onAccept = () => {
+const onAccept = (status, message) => {
   set(managedUser, null);
   fetchUsers(who.value);
+  notify(status, message);
 }
 
 const setOption = (opt) => set(option, opt);
@@ -83,6 +89,7 @@ onMounted(fetchUsers);
     <Transition name="fade">
       <ManageUser v-if="managedUser" @accept="onAccept" @reject="managedUser = null" :user="managedUser"/>
     </Transition>
+    <Notification ref="notification" />
   </main>
 </template>
 

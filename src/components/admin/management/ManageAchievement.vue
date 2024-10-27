@@ -24,10 +24,11 @@ const accept = async () => {
 
     if (props.achievement.achievement_id) {
       await updateAchievement(achievement);
+      emit('accept', true, 'Zaktualizowano osiągnięcie');
     } else {
       await postAchievement(achievement);
+      emit('accept', true, 'Dodano nowe osiągnięcie');
     }
-    emit('accept');
 };
 
 const reject = () => {
@@ -36,7 +37,7 @@ const reject = () => {
 
 const delAchievement = async () => {
     await deleteAchievement(props.achievement.achievement_id);
-    emit('accept');
+    emit('accept', false, 'Usunięto osiągnięcie');
 };
 </script>
 

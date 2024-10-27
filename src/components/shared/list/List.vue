@@ -45,6 +45,9 @@ const filteredItem = (item) => (
         </ListItem>
       </li>
     </div>
+    <div v-if="props.items.length === 0" class="no-info">
+      Brak dostępnych informacji
+    </div>
   </div>
 </template>
 
@@ -61,5 +64,15 @@ const filteredItem = (item) => (
   list-none
   grid
   gap-2;
+}
+.no-info {
+  @apply
+  opacity-20
+  italic
+  text-2xl
+    mt-4
+  w-fit
+  mx-auto
+  text-nowrap
 }
 </style>

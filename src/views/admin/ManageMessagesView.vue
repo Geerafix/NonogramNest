@@ -2,12 +2,14 @@
 import Header from '@/components/shared/Header.vue';
 import MessagesList from "@/components/admin/other/MessagesList.vue";
 import Pagination from "@/components/shared/Pagination.vue";
+import ManageMessage from "@/components/admin/management/ManageMessage.vue";
+import Notification from "@/components/shared/Notification.vue";
 import {onMounted, ref} from "vue";
 import {set} from "@vueuse/core";
 import {deleteMessage, getMessages} from "@/services/adminService.js";
 import {usePagination} from "@/composables/usePagination.js";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
-import ManageMessage from "@/components/admin/management/ManageMessage.vue";
+import {useNotification} from "@/composables/useNotification.js";
 
 const messages = ref([]);
 const messageId = ref(null);
@@ -15,6 +17,9 @@ const messageId = ref(null);
 const {pageState} = usePagination(1, 10, messages);
 
 const {blurred} = useBlurOnView(messageId, false);
+
+const notification = ref();
+const {notify} = useNotification(notification);
 
 const fetchMessages = async () => {
   await getMessages(pageState.value.page, pageState.value.limit)
@@ -25,10 +30,11 @@ const saveId = (id) => {
   set(messageId, id);
 };
 
-const delMessage = async () => {
+const delMessage = async (status, message) => {
   await deleteMessage(messageId.value);
   set(messageId, null);
   fetchMessages();
+  notify(status, message)
 };
 
 onMounted(fetchMessages);
@@ -40,5 +46,6 @@ onMounted(fetchMessages);
     <MessagesList :messages="messages" @onListItemClick="saveId" :class="[blurred]" />
     <ManageMessage v-if="messageId" @reject="messageId = null" @accept="delMessage" />
     <Pagination v-bind="pageState" @onPageChange="fetchMessages"></Pagination>
+    <Notification ref="notification" />
   </main>
 </template>

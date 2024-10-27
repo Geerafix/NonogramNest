@@ -27,7 +27,7 @@ const accept = async () => {
       .then(res => set(error, false))
       .catch(err => set(error, true));
   if (!error.value) {
-    emit('accept');
+    emit('accept', true, 'Zaktualizowano dane użytkownika');
   }
 };
 
@@ -37,7 +37,7 @@ const reject = () => {
 
 const delUser = async () => {
   await deleteUser(props.user.user_id);
-  emit('accept');
+  emit('accept', false, 'Usunięto użytkownika');
 };
 </script>
 

@@ -21,6 +21,9 @@ const onClick = (achievement) => {
         <div class="item-row">{{achievement.description}}</div>
       </div>
     </li>
+    <div v-if="achievements.length === 0" class="no-info">
+      Brak dostępnych informacji
+    </div>
   </div>
 </template>
 
@@ -53,5 +56,15 @@ const onClick = (achievement) => {
   hover:brightness-[115%]
   transition-all
   text-wrap
+}
+.no-info {
+  @apply
+  opacity-20
+  italic
+  text-2xl
+  mt-4
+  w-fit
+  mx-auto
+  text-nowrap
 }
 </style>

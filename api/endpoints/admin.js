@@ -118,7 +118,7 @@ server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => 
     res.json(achievements);
 }));
 
-server.post('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
+server.post('/admin/achievement', authHandler, async (req, res) => {
     const achievement = await req.body.achievement;
 
     await Achievement.create({
@@ -129,7 +129,7 @@ server.post('/admin/achievement', authHandler, asyncHandler(async (req, res) => 
     });
 
     res.json();
-}));
+});
 
 server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const achievement = await req.body.achievement;

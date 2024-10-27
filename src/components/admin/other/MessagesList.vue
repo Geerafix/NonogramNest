@@ -19,6 +19,9 @@ const onClick = (id) => {
         <textarea class="item-row resize-none pointer-events-none">{{message.content}}</textarea>
       </div>
     </li>
+    <div v-if="messages.length === 0" class="no-info">
+      Brak wiadomości
+    </div>
   </div>
 </template>
 
@@ -53,5 +56,15 @@ const onClick = (id) => {
   hover:brightness-[115%]
   transition-all
   text-wrap
+}
+.no-info {
+  @apply
+  opacity-20
+  italic
+  text-2xl
+  mt-4
+  w-fit
+  mx-auto
+  text-nowrap
 }
 </style>

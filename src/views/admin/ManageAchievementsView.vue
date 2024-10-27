@@ -9,6 +9,8 @@ import {onMounted, ref} from "vue";
 import {getAchievements} from "@/services/adminService.js";
 import {usePagination} from "@/composables/usePagination.js";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
+import Notification from "@/components/shared/Notification.vue";
+import {useNotification} from "@/composables/useNotification.js";
 
 const achievements = ref([]);
 
@@ -16,6 +18,9 @@ const manageAchievement = ref(null);
 const {blurred} = useBlurOnView(manageAchievement, false);
 
 const {pageState} = usePagination(1, 10, achievements);
+
+const notification = ref();
+const {notify} = useNotification(notification);
 
 const fetchAchievements = async () => {
   await getAchievements(pageState.value.page, pageState.value.limit)
@@ -26,9 +31,10 @@ const getAchievement = async (achievement) => {
   set(manageAchievement, achievement);
 };
 
-const onAccept = () => {
+const onAccept = (status, message) => {
   fetchAchievements();
   set(manageAchievement, null);
+  notify(status, message);
 }
 
 const onReject = () => set(manageAchievement, null);
@@ -49,5 +55,6 @@ onMounted(fetchAchievements)
       <Icon icon="fa-solid fa-plus" class="icon-fix"/>
     </BasicButton>
     <Pagination v-bind="pageState" @onPageChange="fetchAchievements" />
+    <Notification ref="notification"/>
   </main>
 </template>

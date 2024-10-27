@@ -8,7 +8,7 @@ import {set} from "@vueuse/core";
 const emit = defineEmits(['accept', 'reject']);
 
 const accept = async () => {
-    emit('accept');
+    emit('accept', false, 'Usunięto wiadomość');
 };
 
 const reject = () => {
