@@ -1,9 +1,13 @@
 <script setup>
 import {ref} from 'vue';
 import {set} from '@vueuse/core';
+import {onClickOutside} from "@vueuse/core";
 
 const props = defineProps(['items']);
 const emit = defineEmits(['onSelect']);
+
+const target = ref(null);
+onClickOutside(target, event => set(expanded, false));
 
 const selected = ref(props.items[props.items.length - 1].name);
 const expanded = ref(false);
@@ -16,7 +20,7 @@ const onSelect = (item) => {
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition name="fade" ref="target">
     <div>
       <Transition name="fade" mode="out-in">
         <ul v-if="expanded">
