@@ -48,6 +48,13 @@ server.get('/user', authHandler, asyncHandler(async (req, res, next) => {
     res.json(user);
 }));
 
+server.delete('/deleteUser', async (req, res) => {
+    const userId = req.query.userId;
+    await User.destroy({where: {user_id: userId}});
+
+    res.json();
+});
+
 server.put('/user', authHandler, asyncHandler(async (req, res, next) => {
     const user = await req.body.user;
 
@@ -160,6 +167,13 @@ server.get('/messages', authHandler, asyncHandler(async (req, res, next) => {
         offset: offset,
         raw: true
     });
+
+    res.json(messages);
+}));
+
+server.delete('/message', authHandler, asyncHandler(async (req, res, next) => {
+    const messageId = req.query.messageId;
+    const messages = await Message.destroy({where: {id: messageId}});
 
     res.json(messages);
 }));

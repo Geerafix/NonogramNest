@@ -2,14 +2,16 @@
 defineProps(['messages']);
 const emit = defineEmits(['onListItemClick']);
 
-
+const onClick = (id) => {
+  emit('onListItemClick', id)
+};
 </script>
 
 <template>
   <div class="container">
     <li v-for="message in messages">
-      <div class="item" @click="">
-        <div class="grid grid-cols-[60%_1fr_1fr] gap-2 h-14 [&>*]:!content-center">
+      <div class="item" @click="onClick(message.id)">
+        <div class="grid grid-cols-[60%_1fr_1fr] gap-2 h-14 [&>*]:!content-center [&>*]:!text-nowrap">
           <div class="item-row text-left text-2xl !bg-gray-700">{{message.title}}</div>
           <div class="item-row !bg-gray-700/20">Od: {{message.username}}</div>
           <div class="item-row !bg-gray-700/20">Data: {{new Date(message.date).toLocaleDateString()}} r.</div>
@@ -31,9 +33,7 @@ const emit = defineEmits(['onListItemClick']);
   cursor-pointer
   transition-all
   overflow-auto
-
   max-h-[calc(100vh-11rem)]
-
 }
 .item {
   @apply

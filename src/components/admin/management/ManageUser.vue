@@ -2,7 +2,7 @@
 import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import BasicInput from "@/components/shared/inputs/BasicInput.vue";
 import {ref} from "vue";
-import {updateUser} from "@/services/adminService.js";
+import {deleteUser, updateUser} from "@/services/adminService.js";
 import {set} from "@vueuse/core";
 
 const props = defineProps(['user']);
@@ -34,6 +34,11 @@ const accept = async () => {
 const reject = () => {
   emit('reject');
 };
+
+const delUser = async () => {
+  await deleteUser(props.user.user_id);
+  emit('accept');
+};
 </script>
 
 <template>
@@ -58,8 +63,15 @@ const reject = () => {
         </div>
       </div>
       <div class="form-actions">
-        <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
-        <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>
+        <BasicButton @click="delUser" class="!bg-red-600/70">
+          <Icon icon="fa-solid fa-trash"/>
+        </BasicButton>
+        <BasicButton @click="reject">
+          <Icon icon="fa-solid fa-xmark"/>
+        </BasicButton>
+        <BasicButton @click="accept">
+          <Icon icon="fa-solid fa-check"/>
+        </BasicButton>
       </div>
       <Transition name="fade">
         <span v-if="error" class="error-message">Nazwa lub Email już istnieje</span>

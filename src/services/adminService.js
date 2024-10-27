@@ -39,6 +39,14 @@ export function updateUser(user) {
     });
 }
 
+export function deleteUser(userId) {
+    return api.delete('/deleteUser', {
+        params: {
+            userId: userId
+        }
+    });
+}
+
 export function getPuzzles(page, limit) {
     return api.get('/puzzles', {
         params: {
@@ -82,6 +90,15 @@ export function getMessages(page, limit) {
         params: {
             page: page,
             limit: limit
+        }
+    });
+}
+
+
+export function deleteMessage(messageId) {
+    return api.delete('/message', {
+        params: {
+            messageId: messageId
         }
     });
 }

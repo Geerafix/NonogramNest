@@ -65,14 +65,6 @@ server.get('/profile', authHandler, asyncHandler(async (req, res, next) => {
     res.json(userProfile);
 }));
 
-server.delete('/deleteUser', async (req, res) => {
-    const user = await req.user;
-
-    await User.destroy({where: {user_id: user.user_id}});
-
-    res.json();
-});
-
 server.put('/profile/username', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const username = await req.body.username;
