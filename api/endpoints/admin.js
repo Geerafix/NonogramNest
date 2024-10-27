@@ -10,10 +10,24 @@ import {Achievement} from "../models/Achievement.js";
 
 server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
+    const search = `%${req.query.search}%` || '%%';
+    const option = req.query.option;
 
-    const puzzles = await Puzzle.findAll({
+    const puzzles = await CreatedPuzzle.findAll({
+        include: [{
+            model: Puzzle,
+            attributes: []
+        }, {
+            model: User,
+            attributes: [],
+            where: {username: {[Op.iLike]: option === 'creator' ? search : '%%'}}
+        }],
+        where: {name: {[Op.iLike]: option === 'name' ? search : '%%'}},
+        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'is_public'],
+        order: [['date', 'DESC']],
         limit: limit,
-        offset: offset
+        offset: offset,
+        raw: true
     });
 
     res.json(puzzles);

@@ -69,7 +69,7 @@ onMounted(fetchUsers);
     </Transition>
     <Transition name="slide-left-hidden">
       <div class="search-container" v-if="rolledSearch">
-        <BasicButton @click="rolledSearch = false" v-if="rolledSearch">
+        <BasicButton @click="rolledSearch = false">
           <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
         </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..." />
@@ -81,10 +81,7 @@ onMounted(fetchUsers);
       </div>
     </Transition>
     <Transition name="fade">
-      <ManageUser v-if="managedUser"
-                  @accept="onAccept"
-                  @reject="managedUser = null"
-                  :user="managedUser"/>
+      <ManageUser v-if="managedUser" @accept="onAccept" @reject="managedUser = null" :user="managedUser"/>
     </Transition>
   </main>
 </template>

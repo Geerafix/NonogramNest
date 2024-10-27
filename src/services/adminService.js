@@ -47,9 +47,11 @@ export function deleteUser(userId) {
     });
 }
 
-export function getPuzzles(page, limit) {
+export function getPuzzles(page, limit, search, option) {
     return api.get('/admin/puzzles', {
         params: {
+            search: search,
+            option: option,
             page: page,
             limit: limit
         }
