@@ -41,20 +41,23 @@ const tileSize = computed(() => {
   return (1.6 + (12/len)) + 'rem';
 });
 
+const colorTile = (row, col) => (
+    (answers.value[row-1] && answers.value[col-1][row-1] === -1) ? 'bg-gray-200/80' :
+    ((answers.value[row-1] && answers.value[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')
+);
+
 defineExpose({setBoard, clearBoard, answers});
 </script>
 
 <template>
-  <main class="board">
+  <main :class="['board', {'opacity-0': answers.length === 0}]">
     <div class="rows" v-for="row in answers.length">
       <div v-for="col in answers.length"
-           :class="['cols', (answers[row-1] && answers[col-1][row-1] === -1) ? 'bg-gray-200/80' :
-                                 ((answers[row-1] && answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')]"
+           :class="['cols', colorTile(row, col)]"
            :style="{'width': tileSize, 'height': tileSize}"
            @mousedown.prevent="paintClick(col - 1, row - 1, $event)"
            @mouseover.prevent="paintHover(col - 1, row - 1)"
-           @contextmenu.prevent="">
-      </div>
+           @contextmenu.prevent=""/>
     </div>
   </main>
 </template>
@@ -70,16 +73,15 @@ defineExpose({setBoard, clearBoard, answers});
   grid
   grid-flow-col
   p-1
+  transition-opacity
   bg-gray-700
   rounded-sm;
 }
-
 .rows {
   @apply
   grid
   grid-flow-row;
 }
-
 .cols {
   @apply
   border-gray-700

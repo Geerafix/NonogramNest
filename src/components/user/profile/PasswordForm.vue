@@ -48,9 +48,9 @@ const reject = () => {
 <template>
   <div>
     <div class="profile-form-container">
-      <BasicInput placeholder="Aktualne hasło..." type="password" v-model="form.currentPassword"></BasicInput>
-      <BasicInput placeholder="Nowe hasło..." type="password" v-model="form.newPassword"></BasicInput>
-      <BasicInput placeholder="Potwierdź hasło..." type="password" v-model="form.confirmPassword"></BasicInput>
+      <BasicInput placeholder="Aktualne hasło..." type="password" v-model="form.currentPassword" />
+      <BasicInput placeholder="Nowe hasło..." type="password" v-model="form.newPassword" />
+      <BasicInput placeholder="Potwierdź hasło..." type="password" v-model="form.confirmPassword" />
       <div class="profile-form-actions">
         <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
         <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>

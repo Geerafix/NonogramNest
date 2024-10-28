@@ -7,23 +7,25 @@ defineProps(['achievements']);
 const {showBox, hideBox, message, isHovered} = useTrailingBox();
 
 const date = (date_achieved) => (
-    date_achieved ? new Date(date_achieved).toLocaleDateString().concat(' r.') : 'Nieosiągnięto'
+    date_achieved ? (new Date(date_achieved).toLocaleDateString()).concat(' r.') : 'Nieosiągnięto'
 );
 </script>
 
 <template>
   <div class="container">
-    <li v-for="achievement in achievements">
+    <li v-for="(achievement) in achievements">
       <div :class="['item', {'opacity-50': !achievement.date_achieved}]">
-        <div class="name-date">
-          <div class="item-row" @mouseenter="showBox('Nazwa')" @mouseleave="hideBox">
+        <div class="grid grid-cols-[1fr_25%] gap-2">
+          <div class="item-row bg-gradient-to-r from-gray-700"
+               @mouseenter="showBox('Nazwa')" @mouseleave="hideBox">
             {{achievement.name}}
           </div>
-          <div class="item-row" @mouseenter="showBox('Data osiągnięcia')" @mouseleave="hideBox">
+          <div class="date-achieved bg-gradient-to-l"
+               @mouseenter="showBox('Data osiągnięcia')" @mouseleave="hideBox">
             {{date(achievement.date_achieved)}}
           </div>
         </div>
-        <div class="item-row" @mouseenter="showBox('Opis')" @mouseleave="hideBox">
+        <div class="item-row bg-gradient-to-l from-gray-700/25" @mouseenter="showBox('Opis')" @mouseleave="hideBox">
           {{achievement.description}}
         </div>
       </div>
@@ -35,27 +37,24 @@ const date = (date_achieved) => (
 <style scoped>
 .container {
   @apply
-  grid
-  gap-2
-  w-full
+  gap-4
+  columns-2
   list-none
   text-xl
   transition-all
+  h-fit;
 }
-.name-date {
+li {
   @apply
-  grid
-  gap-2
-  [&>*]:!bg-gray-700
-  [&>*]:!p-3.5
+  mb-4
+  break-inside-avoid
 }
 .item {
   @apply
   p-2
-  grid
-  gap-2
-  grid-cols-2
+  grid gap-2
   rounded-xl
+  select-none
   bg-gray-900/40
 }
 .item-row {
@@ -68,4 +67,12 @@ const date = (date_achieved) => (
   transition-all
   text-wrap
 }
+.date-achieved {
+    @apply
+    item-row
+    content-center
+    text-center
+    bg-gradient-to-b
+}
+
 </style>

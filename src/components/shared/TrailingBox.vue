@@ -25,6 +25,7 @@ const { x, y } = useMouse();
   border-slate-800/60
   shadow-md
   text-xl
+    text-nowrap
   absolute
   transition-opacity
 }

@@ -67,8 +67,8 @@ const endGame = () => {
       <Transition name="slide-right-no-leave">
         <span class="self-center text-xl" v-if="points && !started">{{points}} pkt.</span>
       </Transition>
-      <Actions v-bind="{started, paused}" @new-game="startGame" @pause="pauseTime" @check="checkGame"
-               @size="setGame" @end-game="endGame"/>
+      <Actions v-bind="{started, paused}"
+               @new-game="startGame" @pause="pauseTime" @check="checkGame" @size="setGame" @end-game="endGame"/>
       <Score v-bind="{time, points, started}"/>
     </div>
     <Summary ref="summary"></Summary>

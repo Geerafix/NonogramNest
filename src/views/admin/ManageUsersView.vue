@@ -9,7 +9,7 @@ import ManageUser from "@/components/admin/management/ManageUser.vue";
 import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import Notification from "@/components/shared/Notification.vue";
 import {getUsers, getAdmins, getUser} from '@/services/adminService';
-import {onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {useList} from '@/composables/useList';
 import {usePagination} from '@/composables/usePagination';
@@ -60,6 +60,10 @@ watch([search, option], () => {
   fetchUsers(who.value);
 });
 
+const slideHideSelect = computed(() =>
+    (who.value ? 'max-w-0 -mr-2 opacity-0' : 'max-w-36').concat(' transition-all')
+);
+
 onMounted(fetchUsers);
 </script>
 
@@ -79,7 +83,7 @@ onMounted(fetchUsers);
           <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
         </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..." />
-        <Select :items="usersSearchBy" @onSelect="setOption"/>
+        <Select :class="[slideHideSelect]" :items="usersSearchBy" @onSelect="setOption"/>
         <Switch @onSwitch="fetchUsers">
           <Icon icon="fa-solid fa-user" class="icon-fix"/>
           <Icon icon="fa-solid fa-user-secret" class="icon-fix"/>
@@ -87,7 +91,7 @@ onMounted(fetchUsers);
       </div>
     </Transition>
     <Transition name="fade">
-      <ManageUser v-if="managedUser" @accept="onAccept" @reject="managedUser = null" :user="managedUser"/>
+      <ManageUser v-if="managedUser" :user="managedUser" @accept="onAccept" @reject="managedUser = null"/>
     </Transition>
     <Notification ref="notification" />
   </main>

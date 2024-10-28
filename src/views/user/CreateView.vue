@@ -17,7 +17,7 @@ const isSizeSelected = ref(false);
 
 const handleNewBoard = (size) => {
   board.value.setBoard(size);
-  set(isSizeSelected, true);
+  set(isSizeSelected, size !== null ? size : null);
 };
 
 const handleClearBoard = () => {
@@ -28,7 +28,7 @@ const handleSubmitGame = async (name) => {
   if (isSizeSelected.value) {
     if (name.length > 0) {
       set(isSizeSelected, false);
-      notify(true, 'Zapisano planszę');
+      notify(true, 'Wysłano planszę do weryfikacji');
       const nonogram = generateGame(board.value.answers);
 
       await postCommunityPuzzle(name,
@@ -48,7 +48,7 @@ const handleSubmitGame = async (name) => {
 </script>
 
 <template>
-  <main class="view">
+  <main>
     <Header></Header>
     <Transition name="fade" v-if="!isSizeSelected">
       <div class="game-instructions">
@@ -58,8 +58,7 @@ const handleSubmitGame = async (name) => {
     <Transition name="fade">
       <NonogramBoard ref="board" v-show="isSizeSelected"></NonogramBoard>
     </Transition>
-    <Actions class="actions" 
-            :isCreating="isSizeSelected"
+    <Actions class="actions" :isCreating="isSizeSelected"
             @new-board="handleNewBoard" 
             @clear-board="handleClearBoard"
             @submit="handleSubmitGame">

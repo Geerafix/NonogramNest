@@ -23,25 +23,22 @@ const submitNonogram = () => {
   set(name, '');
 };
 
-const setSize = (size) => {
-  emit('newBoard', size);
-};
-
+const setSize = (size) => emit('newBoard', size);
 </script>
 
 <template>
-  <Transition name="slide-down-no-leave">
-    <div class="flex gap-2">
-      <Transition name=fade>
+  <Transition name="slide-down-no-leave" class="flex gap-2">
+    <div>
+      <Transition name=slide-right>
         <BasicInput v-model="name" placeholder="Nazwa..." v-show="isCreating"/>
       </Transition>
-      <BasicButton @click="emit('clearBoard')" class="!bg-teal-800">
+      <BasicButton @click="emit('clearBoard')">
         <Icon icon="fa-solid fa-rotate"/>
       </BasicButton>
-      <BasicButton @click="submitNonogram" class="!bg-teal-800">
+      <BasicButton @click="submitNonogram">
         <Icon icon="fa-solid fa-check"/>
       </BasicButton>
-      <Select :items="sizes" @onSelect="setSize"></Select>
+      <Select :items="sizes" @onSelect="setSize" />
     </div>
   </Transition>
 </template>

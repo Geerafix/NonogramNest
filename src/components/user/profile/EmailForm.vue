@@ -5,6 +5,7 @@ import {useAsyncValidator} from "@vueuse/integrations/useAsyncValidator";
 import {reactive, ref} from "vue";
 import {set} from "@vueuse/core";
 import {updateEmail} from "@/services/userService.js";
+import TextArea from "@/components/shared/inputs/TextArea.vue";
 
 const emit = defineEmits(['accept', 'reject']);
 
@@ -36,7 +37,7 @@ const reject = () => {
 <template>
   <div>
     <div class="profile-form-container">
-      <BasicInput placeholder="Nowy email..." v-model="form.email"></BasicInput>
+      <BasicInput placeholder="Nowy email..." v-model="form.email" />
       <div class="profile-form-actions">
         <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
         <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>

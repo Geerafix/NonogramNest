@@ -36,7 +36,7 @@ const reject = () => {
 <template>
   <div>
     <div class="profile-form-container">
-      <BasicInput placeholder="Nowa nazwa..." v-model="form.username"></BasicInput>
+      <BasicInput placeholder="Nowa nazwa..." v-model="form.username" />
       <div class="profile-form-actions">
         <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
         <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>

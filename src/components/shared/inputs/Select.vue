@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import {set} from '@vueuse/core';
 import {onClickOutside} from "@vueuse/core";
 
@@ -22,7 +22,7 @@ const onSelect = (item) => {
 <template>
   <Transition name="fade" ref="target">
     <div>
-      <Transition name="fade" mode="out-in">
+      <Transition name="slide-up-faster" mode="out-in">
         <ul v-if="expanded">
           <li v-for="item in props.items" @click="onSelect(item)">
             <div :class="['item', {'selected': selected === item.name }]">{{ item.name }}</div>
@@ -55,6 +55,7 @@ const onSelect = (item) => {
   transition-all
   outline-none
   text-nowrap
+  z-0
   cursor-pointer;
 }
 
@@ -77,6 +78,7 @@ ul {
   rounded-2xl
   border-b-4
   bg-cyan-800
+  z-20
   border-slate-800/60;
 }
 

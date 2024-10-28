@@ -39,7 +39,11 @@ const fetchUser = async (user) => {
   await getRatingUser(user.user_id).then((res) => set(viewedUser, res.data));
 };
 
-watch([size, mode], fetchRating)
+watch([size, mode], fetchRating);
+
+const slideHideSelect = computed(() =>
+    (mode.value === 'challenge' ? 'max-w-0 -mr-2 opacity-0' : 'max-w-36').concat(' transition-all')
+);
 
 onMounted(fetchRating);
 </script>
@@ -53,10 +57,8 @@ onMounted(fetchRating);
     <div class="controls-container">
       <Pagination v-bind="pageState" @onPageChange="fetchRating"></Pagination>
       <div class="controls">
-        <Transition name="slide-right">
-          <Select :items="sizes" @onSelect="setSize" :class="['test']" v-if="mode !== 'challenge'"/>
-        </Transition>
         <Select :items="modes" @onSelect="setMode"/>
+        <Select :class="[slideHideSelect]" :items="sizes" @onSelect="setSize"/>
       </div>
     </div>
     <Transition name="slide-up">

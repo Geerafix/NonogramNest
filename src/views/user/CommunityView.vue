@@ -8,7 +8,7 @@ import Switch from '@/components/shared/inputs/Switch.vue';
 import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {ratingSearchBy} from '@/config.js';
 import {getCommunityPuzzles, getUserPuzzles} from '@/services/communityService.js';
-import {onBeforeMount, ref, watch} from 'vue';
+import {computed, onBeforeMount, ref, watch} from 'vue';
 import {useRouter} from "vue-router";
 import {set} from '@vueuse/core';
 import {usePagination} from '@/composables/usePagination';
@@ -46,6 +46,10 @@ watch([search, option], () => {
   fetchPuzzles(whom.value);
 });
 
+const slideHideSelect = computed(() =>
+    (whom.value ? 'max-w-0 -mr-2 opacity-0' : 'max-w-36').concat(' transition-all')
+);
+
 onBeforeMount(fetchPuzzles);
 </script>
 
@@ -61,11 +65,11 @@ onBeforeMount(fetchPuzzles);
     </Transition>
     <Transition name="slide-left-hidden">
       <div class="search-container" v-show="rolledSearch">
-        <BasicButton @click="rolledSearch = false">
+        <BasicButton @click="(rolledSearch = false)">
           <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
         </BasicButton>
-        <BasicInput v-model="search" placeholder="Wyszukaj..."></BasicInput>
-        <Select v-if="!whom" :items="ratingSearchBy" @onSelect="setOption" />
+        <BasicInput v-model="search" placeholder="Wyszukaj..."/>
+        <Select :class="[slideHideSelect]" :items="ratingSearchBy" @onSelect="setOption"/>
         <Switch @onSwitch="fetchPuzzles">
           <Icon icon="fa-solid fa-user-group" class="icon-fix"/>
           <Icon icon="fa-solid fa-user" class="icon-fix"/>

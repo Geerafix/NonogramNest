@@ -76,16 +76,10 @@ onBeforeUnmount(async () => {
 </script>
 
 <template>
-  <main class="view">
+  <main>
     <Header></Header>
     <Transition name="fade">
-      <div class="daily-challenge-container" v-if="!started">
-        <Calendar/>
-        <div class="flex justify-between">
-          <Streak/>
-          <BasicButton @click="setDailyChallenge">Wykonaj</BasicButton>
-        </div>
-      </div>
+        <Calendar v-if="!started" />
     </Transition>
     <Transition name="fade">
       <Nonogram ref="nonogram" v-bind="{started, paused}"/>
@@ -97,6 +91,12 @@ onBeforeUnmount(async () => {
       </div>
     </Transition>
     <Summary ref="summary"></Summary>
+    <Transition name="slide-down-no-leave">
+      <div class="flex gap-2 absolute right-0 bottom-0" v-if="!started">
+        <Streak/>
+        <BasicButton @click="setDailyChallenge">Wykonaj</BasicButton>
+      </div>
+    </Transition>
     <Notification ref="notification"/>
   </main>
 </template>

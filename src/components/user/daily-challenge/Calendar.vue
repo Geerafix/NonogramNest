@@ -70,9 +70,10 @@ onBeforeMount(handleMonthChange);
   @apply
   flex
   flex-col
-  w-full
+  w-min
   min-w-96
   mx-auto
+    mt-6
   max-w-md
   border-b-4
   bg-gray-600
