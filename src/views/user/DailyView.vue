@@ -36,6 +36,7 @@ const setDailyChallenge = async () => {
   } else if (dailyChallenge && !dailyChallenge.is_solved) {
     setPoints(dailyChallenge.points);
     setTime(dailyChallenge.time);
+    console.log(dailyChallenge.time);
     setBoardSize(8);
     nonogram.value.nonogram.cluesX = JSON.parse(dailyChallenge.Puzzle.clues_x);
     nonogram.value.nonogram.cluesY = JSON.parse(dailyChallenge.Puzzle.clues_y);

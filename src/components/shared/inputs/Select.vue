@@ -46,7 +46,7 @@ const onSelect = (item) => {
   px-3
   rounded-xl
   min-h-14
-  min-w-32
+  min-w-36
   bg-cyan-800
   border-slate-800/60
   hover:rounded-[20px]
@@ -71,7 +71,7 @@ ul {
   flex
   flex-col
   gap-1.5
-  min-w-32
+  min-w-36
   absolute
   bottom-16
   rounded-2xl
@@ -84,6 +84,7 @@ li {
   @apply
   text-center
   text-xl
+  w-full
   rounded-2xl
   shadow-black
   hover:bg-cyan-900/70

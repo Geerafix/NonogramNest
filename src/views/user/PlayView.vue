@@ -64,7 +64,7 @@ const endGame = () => {
       <Nonogram ref="nonogram" v-bind="{started, paused}"/>
     </Transition>
     <div class="actions-container">
-      <Transition name="slide-down-no-leave">
+      <Transition name="slide-right-no-leave">
         <span class="self-center text-xl" v-if="points && !started">{{points}} pkt.</span>
       </Transition>
       <Actions v-bind="{started, paused}" @new-game="startGame" @pause="pauseTime" @check="checkGame"

@@ -33,7 +33,9 @@ onBeforeMount(resetBoard);
 
 <template>
   <main class="nonogram-container" v-if="started">
-    <div class="paused-info" v-if="paused">Gra wstrzymana</div>
+    <Transition name="fade">
+      <div class="paused-info" v-if="paused">Gra wstrzymana</div>
+    </Transition>
     <div :class="['nonogram-components', {'paused-filter': paused }]">
       <div class="blank-area">
         <div class="size-info">{{ nonogram.size }} x {{ nonogram.size }}</div>
@@ -86,7 +88,7 @@ onBeforeMount(resetBoard);
   p-4
   top-1/2
   left-1/2
-  -translate-x-1/2
+  -translate-x-[50%]
   -translate-y-1/2
   border-b-4
   bg-gray-600

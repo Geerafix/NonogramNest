@@ -11,7 +11,7 @@ export function useBlurOnView(object, closeable) {
     });
 
     const blurred = computed(() =>
-        object.value ? 'opacity-25 brightness-80 blur-sm pointer-events-none' : ''
+        object.value ? 'opacity-25 brightness-80 blur-sm pointer-events-none transition-all' : 'transition-all'
     );
 
     return {blurred};

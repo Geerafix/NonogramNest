@@ -44,7 +44,9 @@ onMounted(fetchMessages);
   <main>
     <Header></Header>
     <MessagesList :messages="messages" @onListItemClick="saveId" :class="[blurred]" />
-    <ManageMessage v-if="messageId" @reject="messageId = null" @accept="delMessage" />
+    <Transition name="fade">
+      <ManageMessage v-if="messageId" @reject="messageId = null" @accept="delMessage" />
+    </Transition>
     <Pagination v-bind="pageState" @onPageChange="fetchMessages"></Pagination>
     <Notification ref="notification" />
   </main>

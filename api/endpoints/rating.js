@@ -17,7 +17,7 @@ server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
             attributes: [],
             duplicating: false
         },
-        attributes: ['user_id', 'username', 'Score.classic_sum'],
+        attributes: ['user_id', 'username', `Score.${column}`],
         order: [[Score, column, 'DESC']],
         limit: limit,
         offset: offset,

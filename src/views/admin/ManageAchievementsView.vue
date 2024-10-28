@@ -50,7 +50,9 @@ onMounted(fetchAchievements)
   <main>
     <Header></Header>
     <AchievementsList :achievements="achievements" @onListItemClick="getAchievement" :class="blurred"/>
-    <ManageAchievement v-if="manageAchievement" @accept="onAccept" @reject="onReject" :achievement="manageAchievement"/>
+    <Transition name="fade">
+      <ManageAchievement v-if="manageAchievement" @accept="onAccept" @reject="onReject" :achievement="manageAchievement"/>
+    </Transition>
     <BasicButton class="absolute right-0 bottom-0" @click="newAchievement">
       <Icon icon="fa-solid fa-plus" class="icon-fix"/>
     </BasicButton>

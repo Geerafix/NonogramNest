@@ -45,7 +45,7 @@ onMounted(fetchRating);
 </script>
 
 <template>
-  <main class="view" @click="viewedUser = null">
+  <main>
     <Header></Header>
     <div :class="[blurred]">
       <List v-bind="listState" @onListItemClick="fetchUser" />
@@ -53,11 +53,13 @@ onMounted(fetchRating);
     <div class="controls-container">
       <Pagination v-bind="pageState" @onPageChange="fetchRating"></Pagination>
       <div class="controls">
+        <Transition name="slide-right">
+          <Select :items="sizes" @onSelect="setSize" :class="['test']" v-if="mode !== 'challenge'"/>
+        </Transition>
         <Select :items="modes" @onSelect="setMode"/>
-        <Select :items="sizes" @onSelect="setSize" :class="['test', { 'hidden': mode === 'challenge' }]"/>
       </div>
     </div>
-    <Transition name="fade">
+    <Transition name="slide-up">
       <UserProfile v-if="viewedUser" :user="viewedUser" class="viewed-user"/>
     </Transition>
   </main>
@@ -76,12 +78,8 @@ onMounted(fetchRating);
 
 .viewed-user {
   @apply
-  absolute
-  top-1/2
-  -translate-y-1/2
-  left-1/2
-  -translate-x-1/2
-  max-w-fit
+  mx-auto
+  w-fit
 }
 </style>
 

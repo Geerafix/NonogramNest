@@ -46,7 +46,7 @@ onBeforeMount(fetchUserProfile);
 <template>
   <main>
     <Header></Header>
-    <div :class="['grid gap-2 m-auto w-fit', blurred]">
+    <div :class="['grid gap-2', blurred]">
       <UserProfile :user="user" class="mb-2"></UserProfile>
       <div :class="['flex gap-4 mx-auto']">
         <RollButton v-for="button in profileButtons" :text="button.text" @click="changeForm(button.name)">
@@ -54,7 +54,7 @@ onBeforeMount(fetchUserProfile);
         </RollButton>
       </div>
     </div>
-    <Transition name="fade" mode="out-in">
+    <Transition name="slide-up" mode="out-in">
       <component :is="selectedForm" @reject="onReject" @accept="onResolve" />
     </Transition>
     <Notification ref="notification" />

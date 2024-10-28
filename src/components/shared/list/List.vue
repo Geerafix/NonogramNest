@@ -56,6 +56,7 @@ const filteredItem = (item) => (
   @apply
   sticky
   top-0
+  transition-all
   list-none;
 }
 
