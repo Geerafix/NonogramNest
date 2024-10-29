@@ -4,6 +4,7 @@ import {Sequelize} from 'sequelize';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
 import {errorHandler} from "./utils.js";
+import { WebSocketServer } from 'ws';
 
 import('./endpoints/rating.js');
 import('./endpoints/puzzles.js');
@@ -35,5 +36,14 @@ server.use(cookieParser());
 server.use(cors({ origin: true, credentials: true }));
 
 server.use(errorHandler);
+
+export const wss = new WebSocketServer({ port: 3001 });
+
+wss.on("connection", function connection(ws) {
+  ws.on("message", function message(data) {
+    console.log("received: %s", data);
+  });
+  ws.send("something");
+});
 
 server.listen(server_port, () => { console.log("Server (re)started") });

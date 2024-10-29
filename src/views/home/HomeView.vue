@@ -2,9 +2,10 @@
 import BasicButton from '@/components/shared/inputs/BasicButton.vue';
 import Header from '@/components/shared/Header.vue';
 import Nonogram from '@/components/user/game/Nonogram.vue';
-import {onMounted, ref, watch} from 'vue';
+import {onMounted, ref, watch, watchEffect} from 'vue';
 import {useInterval} from '@vueuse/core';
 import {useNonogram} from '@/composables/useNonogram';
+import {useWebSocket} from "@vueuse/core";
 
 const {counter, resume} = useInterval(1000, {controls: true});
 
@@ -27,7 +28,7 @@ watch(counter, () => {
 </script>
 
 <template>
-  <div class="view">
+  <main>
     <Header></Header>
     <div class="flex flex-col gap-4">
       <BasicButton buttonText="Logowanie" class="login" @click="$router.push({ name: 'SignIn' })">
@@ -40,27 +41,10 @@ watch(counter, () => {
       </div>
       <Nonogram ref="nonogram" :started="true"/>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped>
-.view {
-  @apply
-  h-full
-  text-white
-  relative;
-}
-
-.home-container {
-  @apply
-  grid
-  grid-cols-[min-content_min-content]
-  gap-2
-  w-min
-  ml-auto
-  mt-4;
-}
-
 .slogan {
   @apply
   flex
@@ -69,7 +53,6 @@ watch(counter, () => {
   text-2xl
   text-center;
 }
-
 .login {
   @apply
   absolute

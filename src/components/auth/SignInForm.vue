@@ -57,9 +57,9 @@ const onSubmit = async () => {
   @apply
   flex
   flex-col
-  bg-black/20 w-fit
+  w-fit
   mx-auto
-  p-4
+  p-2
   rounded-2xl
   gap-10;
 }

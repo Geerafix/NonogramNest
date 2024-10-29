@@ -45,6 +45,15 @@ body {
   	opacity: 0;
 }
 
+.fetch-fade-enter-active,
+.fetch-fade-leave-active {
+	transition: all 0.25s ease-in-out;
+}
+.fetch-fade-enter-from,
+.fetch-fade-leave-to {
+	opacity: 0;
+}
+
 .slide-right-enter-active,
 .slide-right-leave-active {
 	transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
