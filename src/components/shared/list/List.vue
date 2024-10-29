@@ -28,7 +28,7 @@ const filteredItem = (item) => (
 </script>
 
 <template>
-  <div v-if="props.items" class="transition-all">
+  <div v-if="props.items" class="container">
     <div v-if="headers" class="headers">
       <ListHeader>
         <li v-for="header in props.headers">
@@ -36,22 +36,27 @@ const filteredItem = (item) => (
         </li>
       </ListHeader>
     </div>
-    <div class="items">
-      <li v-for="item in props.items">
-        <ListItem @click="onListItemClick(item)">
-          <li v-for="(value, key, index) of filteredItem(item)">
-            <Item :value="shortenedValue(value)"/>
-          </li>
-        </ListItem>
-      </li>
-    </div>
-    <div v-if="props.items.length === 0" class="no-info">
-      Brak dostępnych informacji
-    </div>
+    <Transition name="fade-slower" mode="out-in">
+      <div class="items" :key="props.items">
+        <li v-for="item in props.items">
+          <ListItem @click="onListItemClick(item)">
+            <li v-for="value of filteredItem(item)">
+              <Item :value="shortenedValue(value)"/>
+            </li>
+          </ListItem>
+        </li>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <style scoped>
+.container {
+  @apply
+  relative
+  max-h-[calc(100vh-10.4rem)]
+  overflow-auto
+}
 .headers {
   @apply
   sticky
@@ -59,21 +64,10 @@ const filteredItem = (item) => (
   transition-all
   list-none;
 }
-
 .items {
   @apply
   list-none
   grid
   gap-2;
-}
-.no-info {
-  @apply
-  opacity-20
-  italic
-  text-2xl
-    mt-4
-  w-fit
-  mx-auto
-  text-nowrap
 }
 </style>

@@ -12,8 +12,8 @@ export function useTrailingBox() {
         set(message, null);
     };
 
-    const cMessage = computed(() => message.value)
-    const cHovered = computed(() => message.value !== null)
+    const cMessage = computed(() => message.value);
+    const cHovered = computed(() => message.value !== null);
 
     return {
         showBox,

@@ -14,7 +14,7 @@ const calendar = reactive({
   firstDay: 0,
   days: 0
 });
-const streakDays = ref([]);
+const streakDays = ref();
 
 const prevMonth = () => {
   calendar.month = (calendar.month === 0) ? 11 : calendar.month - 1;
@@ -27,7 +27,7 @@ const nextMonth = () => {
 
 const handleMonthChange = async () => {
   const streak = await getDailies(calendar.month, calendar.year).then((res) => res.data);
-  set(streakDays, streak)
+  set(streakDays, streak);
   calendar.firstDay = (new Date(calendar.year, calendar.month, 1).getDay() + 6) % 7;
   calendar.days = new Date(calendar.year, calendar.month + 1, 0).getDate();
 }
@@ -42,27 +42,29 @@ onBeforeMount(handleMonthChange);
 </script>
 
 <template>
-  <div class="calendar-container">
-    <div class="calendar-header">
-      <MenuButton class="max-w-1" @click="prevMonth">
-        <Icon icon="fa-solid fa-caret-left" class="icon-adjust"/>
-      </MenuButton>
-      <div class="date-info">{{ monthsNames[calendar.month] }} {{ calendar.year }}</div>
-      <MenuButton class="max-w-1" @click="nextMonth">
-        <Icon icon="fa-solid fa-caret-right" class="icon-adjust"/>
-      </MenuButton>
-    </div>
-    <div class="days-name-container">
-      <div v-for="dayName of daysNames" class="day-name">{{ dayName }}</div>
-    </div>
-    <div class="days-container">
-      <div v-for="day in calendar.firstDay"></div>
-      <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]">
-        <span>{{ day }}</span>
-        <div v-if="streakDays.includes(day)" class="indicator"></div>
+  <Transition name="fade-slower">
+    <div class="calendar-container" v-if="streakDays">
+      <div class="calendar-header">
+        <MenuButton class="max-w-1" @click="prevMonth">
+          <Icon icon="fa-solid fa-caret-left" class="icon-adjust"/>
+        </MenuButton>
+        <div class="date-info">{{ monthsNames[calendar.month] }} {{ calendar.year }}</div>
+        <MenuButton class="max-w-1" @click="nextMonth">
+          <Icon icon="fa-solid fa-caret-right" class="icon-adjust"/>
+        </MenuButton>
+      </div>
+      <div class="days-name-container">
+        <div v-for="dayName of daysNames" class="day-name">{{ dayName }}</div>
+      </div>
+      <div class="days-container">
+        <div v-for="day in calendar.firstDay"></div>
+        <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]">
+          <span>{{ day }}</span>
+          <div v-if="streakDays.includes(day)" class="indicator"></div>
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>

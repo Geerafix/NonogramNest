@@ -1,19 +1,20 @@
 <script setup>
 import {getStreak} from '@/services/dailyChallengeService.js';
 import {onMounted, ref} from 'vue';
+import {set} from "@vueuse/core";
 
 const streak = ref(null);
 
-onMounted(async () => {
-  streak.value = await getStreak().then((res) => res.data);
-});
+onMounted(async () => await getStreak().then((res) => set(streak, res.data)));
 </script>
 
 <template>
-  <div class="streak">
-    <Icon class="flame" icon="fa-solid fa-fire"/>
-    <span> Dzień {{ streak }}</span>
-  </div>
+  <Transition name="fetch-fade">
+    <div class="streak" v-if="!Number.isNaN(parseInt(streak))">
+      <Icon class="flame" icon="fa-solid fa-fire"/>
+      <span> Dzień {{ streak }}</span>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>

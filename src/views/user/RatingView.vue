@@ -61,7 +61,7 @@ onMounted(fetchRating);
         <Select :class="[slideHideSelect]" :items="sizes" @onSelect="setSize"/>
       </div>
     </div>
-    <Transition name="slide-up">
+    <Transition name="fade">
       <UserProfile v-if="viewedUser" :user="viewedUser" class="viewed-user"/>
     </Transition>
   </main>
@@ -80,8 +80,11 @@ onMounted(fetchRating);
 
 .viewed-user {
   @apply
-  mx-auto
-  w-fit
+  absolute
+  left-1/2
+  -translate-x-1/2
+  top-1/2
+  -translate-y-1/2
 }
 </style>
 

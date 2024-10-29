@@ -28,16 +28,15 @@ const {setPoints, clearPoints, startTime, setTime, pauseTime, time, points, paus
 const setDailyChallenge = async () => {
   const dailyChallenge = await getDailyChallenge().then((res) => res.data);
   if (!dailyChallenge) {
-    setPoints(getPointsBySize(8));
-    setBoardSize(8);
+    setPoints(getPointsBySize(10));
+    setBoardSize(10);
     setNewBoard();
     const id = await postPuzzle(cluesX.value, cluesY.value, boardSize.value).then((res) => res.data.id);
     await postDailyChallenge(id, time.value, points.value);
   } else if (dailyChallenge && !dailyChallenge.is_solved) {
     setPoints(dailyChallenge.points);
     setTime(dailyChallenge.time);
-    console.log(dailyChallenge.time);
-    setBoardSize(8);
+    setBoardSize(10);
     nonogram.value.nonogram.cluesX = JSON.parse(dailyChallenge.Puzzle.clues_x);
     nonogram.value.nonogram.cluesY = JSON.parse(dailyChallenge.Puzzle.clues_y);
     nonogram.value.nonogram.answers = JSON.parse(dailyChallenge.answers);
@@ -78,7 +77,7 @@ onBeforeUnmount(async () => {
 <template>
   <main>
     <Header></Header>
-    <Transition name="fade">
+    <Transition name="fetch-fade">
         <Calendar v-if="!started" />
     </Transition>
     <Transition name="fade">
@@ -102,17 +101,6 @@ onBeforeUnmount(async () => {
 </template>
 
 <style scoped>
-.daily-challenge-container {
-  @apply
-  grid
-  absolute
-  left-1/2
-  -translate-x-1/2
-  items-center
-  w-fit
-  gap-4;
-}
-
 .actions {
   @apply
   absolute

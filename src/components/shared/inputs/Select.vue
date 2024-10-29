@@ -22,7 +22,7 @@ const onSelect = (item) => {
 <template>
   <Transition name="fade" ref="target">
     <div>
-      <Transition name="slide-up-faster" mode="out-in">
+      <Transition name="slide-up-faster">
         <ul v-if="expanded">
           <li v-for="item in props.items" @click="onSelect(item)">
             <div :class="['item', {'selected': selected === item.name }]">{{ item.name }}</div>

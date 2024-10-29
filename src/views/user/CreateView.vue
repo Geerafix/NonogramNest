@@ -52,17 +52,16 @@ const handleSubmitGame = async (name) => {
     <Header></Header>
     <Transition name="fade" v-if="!isSizeSelected">
       <div class="game-instructions">
-        <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z plusem, aby rozpocząć tworzenie gry.</p>
+        <p>Wybierz rozmiar planszy nonogramu,<br>aby rozpocząć tworzenie gry.</p>
       </div>
     </Transition>
     <Transition name="fade">
-      <NonogramBoard ref="board" v-show="isSizeSelected"></NonogramBoard>
+      <NonogramBoard ref="board" v-show="isSizeSelected" />
     </Transition>
     <Actions class="actions" :isCreating="isSizeSelected"
-            @new-board="handleNewBoard" 
+            @new-board="handleNewBoard"
             @clear-board="handleClearBoard"
-            @submit="handleSubmitGame">
-    </Actions>
+            @submit="handleSubmitGame" />
     <Notification ref="notification" />
   </main>
 </template>

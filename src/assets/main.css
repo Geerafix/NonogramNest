@@ -38,11 +38,18 @@ body {
 .fade-leave-active {
   	transition: all 0.1s ease-in-out;
 }
-.fade-enter-from {
-	opacity: 0;
-}
+.fade-enter-from,
 .fade-leave-to {
   	opacity: 0;
+}
+
+.fade-slower-enter-active,
+.fade-slower-leave-active {
+	transition: all 0.15s ease-in-out;
+}
+.fade-slower-enter-from,
+.fade-slower-leave-to {
+	opacity: 0;
 }
 
 .fetch-fade-enter-active,

@@ -1,18 +1,14 @@
 <script setup>
-import {useElementSize, useMouse} from "@vueuse/core";
-import {ref} from "vue";
+import {useMouse} from "@vueuse/core";
+
 defineProps(['message', 'isHovered']);
 
-const box = ref();
-const {width} = useElementSize(box);
-
-const { x, y } = useMouse();
+const {x, y} = useMouse();
 </script>
 
 <template>
   <Transition name="fade">
-    <div v-if="isHovered" ref="box" class="trailing-box"
-         :style="{'top': (y+2)+'px', 'left': ((x-width/2)-20)+'px'}">
+    <div v-if="isHovered" class="trailing-box" :style="{'top': (y+20)+'px', 'left': (x+4) + 'px'}">
       {{message}}
     </div>
   </Transition>
@@ -21,18 +17,18 @@ const { x, y } = useMouse();
 <style scoped>
 .trailing-box {
   @apply
+  fixed
   w-fit
   h-min
   px-3
   py-2
+  max-w-96
+  text-xl
+  shadow-md
   bg-slate-700
   rounded-xl
   border-b-4
   border-slate-800/60
-  shadow-md
-  text-xl
-  max-w-96
-  absolute
-  transition-opacity
+  -translate-x-1/2
 }
 </style>

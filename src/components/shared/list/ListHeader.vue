@@ -13,8 +13,8 @@
   @apply
   grid
   grid-cols-[repeat(auto-fit,minmax(0,1fr))]
+  bg-gray-900/60
   gap-2
-  bg-gray-900/40
   p-2
   mb-2
   rounded-md

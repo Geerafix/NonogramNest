@@ -12,42 +12,43 @@ const date = (date_achieved) => (
 </script>
 
 <template>
-  <div class="container">
-    <li v-for="(achievement) in achievements">
-      <div :class="['item', {'opacity-50': !achievement.date_achieved}]">
-        <div class="grid grid-cols-[1fr_25%] gap-2">
-          <div class="item-row bg-gradient-to-r from-gray-700"
-               @mouseenter="showBox('Nazwa')" @mouseleave="hideBox">
-            {{achievement.name}}
+  <Transition name="fade-slower">
+    <div class="container" :key="achievements">
+      <li v-for="(achievement) in achievements">
+        <div :class="['item', {'opacity-50': !achievement.date_achieved}]">
+          <div class="grid grid-cols-[1fr_25%] gap-2">
+            <div class="item-row bg-gradient-to-r from-gray-700"
+                 @mouseenter="showBox('Nazwa')" @mouseleave="hideBox">
+              {{achievement.name}}
+            </div>
+            <div class="date-achieved bg-gradient-to-l"
+                 @mouseenter="showBox('Data osiągnięcia')" @mouseleave="hideBox">
+              {{date(achievement.date_achieved)}}
+            </div>
           </div>
-          <div class="date-achieved bg-gradient-to-l"
-               @mouseenter="showBox('Data osiągnięcia')" @mouseleave="hideBox">
-            {{date(achievement.date_achieved)}}
+          <div class="item-row bg-gradient-to-l from-gray-700/25" @mouseenter="showBox('Opis')" @mouseleave="hideBox">
+            {{achievement.description}}
           </div>
         </div>
-        <div class="item-row bg-gradient-to-l from-gray-700/25" @mouseenter="showBox('Opis')" @mouseleave="hideBox">
-          {{achievement.description}}
-        </div>
-      </div>
-    </li>
-  </div>
+      </li>
+    </div>
+  </Transition>
   <TrailingBox :message="message" :isHovered="isHovered" />
 </template>
 
 <style scoped>
 .container {
   @apply
+  grid
+  grid-cols-2
   gap-4
+  h-fit
   columns-2
   list-none
   text-xl
   transition-all
-  h-fit;
-}
-li {
-  @apply
-  mb-4
-  break-inside-avoid
+  max-h-[calc(100vh-10.4rem)]
+  overflow-auto;
 }
 .item {
   @apply

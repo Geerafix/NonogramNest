@@ -56,7 +56,7 @@ onBeforeMount(fetchUserProfile);
         </div>
       </div>
     </Transition>
-    <Transition name="slide-up" mode="out-in">
+    <Transition name="slide-up">
       <component :is="selectedForm" @reject="onReject" @accept="onResolve" />
     </Transition>
     <Notification ref="notification" />
