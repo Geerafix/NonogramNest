@@ -45,7 +45,7 @@ onBeforeMount(fetchUserProfile);
 
 <template>
   <main>
-    <Header></Header>
+    <Header/>
     <Transition name="fetch-fade" :class="['grid gap-2', blurred]">
       <div v-if="user">
         <UserProfile :user="user" class="mb-2"></UserProfile>

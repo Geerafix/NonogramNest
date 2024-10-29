@@ -2,7 +2,7 @@
 import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import Select from "@/components/shared/inputs/Select.vue";
 import {sizes} from "@/config.js";
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {set} from '@vueuse/core'
 
 const emit = defineEmits([

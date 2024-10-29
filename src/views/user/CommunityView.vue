@@ -6,13 +6,13 @@ import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
 import Switch from '@/components/shared/inputs/Switch.vue';
 import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import {ratingSearchBy} from '@/config.js';
-import {getCommunityPuzzles, getUserPuzzles} from '@/services/communityService.js';
-import {computed, onBeforeMount, ref, watch} from 'vue';
-import {useRouter} from "vue-router";
 import {set} from '@vueuse/core';
-import {usePagination} from '@/composables/usePagination';
+import {useRouter} from "vue-router";
+import {computed, onBeforeMount, ref, watch} from 'vue';
+import {ratingSearchBy} from '@/config.js';
 import {useList} from '@/composables/useList';
+import {usePagination} from '@/composables/usePagination';
+import {getCommunityPuzzles, getUserPuzzles} from '@/services/communityService.js';
 
 const puzzles = ref([]);
 const search = ref('');
@@ -55,11 +55,11 @@ onBeforeMount(fetchPuzzles);
 
 <template>
   <main>
-    <Header></Header>
+    <Header/>
     <List v-bind="listState" @onListItemClick="routeToSelectedGame"/>
-    <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whom)"></Pagination>
+    <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whom)"/>
     <Transition name="slide-left-hidden">
-      <BasicButton v-if="!rolledSearch" @click="rolledSearch = !rolledSearch" class="absolute right-0 bottom-0">
+      <BasicButton v-if="!rolledSearch" @click="rolledSearch = !rolledSearch" class="search-roll">
         <Icon icon="fa-solid fa-search" class="icon-fix"/>
       </BasicButton>
     </Transition>
@@ -93,6 +93,10 @@ onBeforeMount(fetchPuzzles);
   my-auto
   mx-auto
   text-2xl
+}
+.search-roll {
+  @apply
+  absolute right-0 bottom-0
 }
 </style>
 

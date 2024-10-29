@@ -33,6 +33,18 @@ server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
+server.get('/admin/puzzle', authHandler, async (req, res) => {
+    const id = await req.body.puzzleId;
+
+    res.json();
+});
+
+server.put('/admin/puzzle', authHandler, async (req, res) => {
+    const puzzle = await req.body.puzzle;
+
+    res.json();
+});
+
 server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const search = `%${req.query.search}%` || '%%';

@@ -76,7 +76,7 @@ onBeforeUnmount(async () => {
 
 <template>
   <main>
-    <Header></Header>
+    <Header/>
     <Transition name="fetch-fade">
         <Calendar v-if="!started" />
     </Transition>
@@ -89,9 +89,9 @@ onBeforeUnmount(async () => {
         <Score v-bind="{time, points, started}"/>
       </div>
     </Transition>
-    <Summary ref="summary"></Summary>
+    <Summary ref="summary" />
     <Transition name="slide-down-no-leave">
-      <div class="flex gap-2 absolute right-0 bottom-0" v-if="!started">
+      <div class="controls" v-if="!started">
         <Streak/>
         <BasicButton @click="setDailyChallenge">Wykonaj</BasicButton>
       </div>
@@ -106,9 +106,17 @@ onBeforeUnmount(async () => {
   absolute
   flex
   flex-wrap-reverse
+  gap-2
   justify-end
   bottom-0
+  right-0
+}
+.controls {
+  @apply
+  flex
   gap-2
-  w-full;
+  absolute
+  right-0
+  bottom-0
 }
 </style>

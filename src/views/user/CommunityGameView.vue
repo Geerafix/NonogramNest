@@ -7,7 +7,7 @@ import {getCommunityPuzzle} from "@/services/communityService.js";
 import {set} from "@vueuse/core";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import { useNotification } from "@/composables/useNotification";
+import {useNotification} from "@/composables/useNotification";
 import {useNonogram} from "@/composables/useNonogram.js";
 
 const started = ref(false);
@@ -46,16 +46,14 @@ const handleCheck = async () => {
   }
 };
 
-const handleEndGame = () => {
-  router.push({name: 'Community'});
-}
+const handleEndGame = () => (router.push({name: 'Community'}));
 
 onMounted(fetchCommunityGame);
 </script>
 
 <template>
-  <main class="view">
-    <Header></Header>
+  <main>
+    <Header/>
     <Transition name="fade">
       <Nonogram ref="nonogram" :started="started" :paused="paused"/>
     </Transition>

@@ -23,7 +23,10 @@ server.get('/community/puzzles', authHandler, asyncHandler(async (req, res) => {
                 user_id: {[Op.ne]: user.user_id}
             }
         }], 
-        where: {name: {[Op.iLike]: option === 'name' ? search : '%%'}},
+        where: {
+            name: {[Op.iLike]: option === 'name' ? search : '%%'},
+            is_public: true
+        },
         attributes: ['created_id', 'name', 'Puzzle.size', 'User.username'],
         limit: limit,
         offset: offset,

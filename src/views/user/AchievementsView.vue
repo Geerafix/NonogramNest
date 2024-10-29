@@ -2,10 +2,10 @@
 import Header from '@/components/shared/Header.vue';
 import Pagination from "@/components/shared/Pagination.vue";
 import UserAchievementsList from "@/components/user/other/UserAchievementsList.vue";
+import {set} from '@vueuse/core';
 import {usePagination} from '@/composables/usePagination';
 import {getUserAchievements} from '@/services/userService';
 import {onMounted, ref} from 'vue';
-import {set} from '@vueuse/core';
 
 const achievements = ref([]);
 const {pageState} = usePagination(1, 10, achievements);
@@ -20,7 +20,7 @@ onMounted(fetchUserAchievements);
 
 <template>
   <main>
-    <Header></Header>
+    <Header/>
     <UserAchievementsList :achievements="achievements" />
     <Pagination v-bind="pageState" @onPageChange="fetchUserAchievements"/>
   </main>

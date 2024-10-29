@@ -31,3 +31,11 @@
     translate-y-[calc(500%)]
     select-none;
 }
+
+.header-info {
+    @apply
+    flex
+    justify-between
+    w-full
+    [&>*]:my-auto
+}

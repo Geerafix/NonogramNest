@@ -7,7 +7,7 @@ import {postCommunityPuzzle} from '@/services/communityService.js';
 import {generateGame} from '@/scripts/puzzleScripts';
 import {ref} from 'vue';
 import {set} from '@vueuse/core';
-import { useNotification } from '@/composables/useNotification';
+import {useNotification} from '@/composables/useNotification';
 
 const board = ref(null);
 const notification = ref(null);
@@ -28,28 +28,22 @@ const handleSubmitGame = async (name) => {
   if (isSizeSelected.value) {
     if (name.length > 0) {
       set(isSizeSelected, false);
-      notify(true, 'Wysłano planszę do weryfikacji');
+      notify(true, 'Wysłano planszę do weryfikacji.');
       const nonogram = generateGame(board.value.answers);
-
-      await postCommunityPuzzle(name,
-        nonogram.cluesX,
-        nonogram.cluesY,
-        board.value.answers.length,
-        nonogram.excludedTiles
-      );
+      await postCommunityPuzzle(name, nonogram.cluesX, nonogram.cluesY, board.value.answers.length, nonogram.excludedTiles);
       board.value.clearBoard();
     } else {
-      notify(false, 'Nie wpisano nazwy planszy');
+      notify(false, 'Nie wpisano nazwy planszy.');
     }
   } else {
-    notify(false, 'Nie wybrano rozmiaru planszy');
+    notify(false, 'Nie wybrano rozmiaru planszy.');
   }
 };
 </script>
 
 <template>
   <main>
-    <Header></Header>
+    <Header/>
     <Transition name="fade" v-if="!isSizeSelected">
       <div class="game-instructions">
         <p>Wybierz rozmiar planszy nonogramu,<br>aby rozpocząć tworzenie gry.</p>
@@ -58,20 +52,12 @@ const handleSubmitGame = async (name) => {
     <Transition name="fade">
       <NonogramBoard ref="board" v-show="isSizeSelected" />
     </Transition>
-    <Actions class="actions" :isCreating="isSizeSelected"
-            @new-board="handleNewBoard"
-            @clear-board="handleClearBoard"
-            @submit="handleSubmitGame" />
+    <Actions class="actions" :isCreating="isSizeSelected" @new-board="handleNewBoard" @clear-board="handleClearBoard" @submit="handleSubmitGame" />
     <Notification ref="notification" />
   </main>
 </template>
 
 <style scoped>
-.view {
-  @apply
-  relative
-}
-
 .game-instructions {
   @apply
   absolute
@@ -81,16 +67,6 @@ const handleSubmitGame = async (name) => {
   font-sans
   text-center;
 }
-
-.board {
-  @apply
-  grid
-  grid-cols-[min-content_1fr]
-  w-fit
-  mx-auto
-  z-10;
-}
-
 .actions {
   @apply
   absolute

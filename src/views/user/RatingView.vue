@@ -50,12 +50,12 @@ onMounted(fetchRating);
 
 <template>
   <main>
-    <Header></Header>
+    <Header/>
     <div :class="[blurred]">
-      <List v-bind="listState" @onListItemClick="fetchUser" />
+      <List v-bind="listState" @onListItemClick="fetchUser"/>
     </div>
     <div class="controls-container">
-      <Pagination v-bind="pageState" @onPageChange="fetchRating"></Pagination>
+      <Pagination v-bind="pageState" @onPageChange="fetchRating"/>
       <div class="controls">
         <Select :items="modes" @onSelect="setMode"/>
         <Select :class="[slideHideSelect]" :items="sizes" @onSelect="setSize"/>
@@ -75,9 +75,7 @@ onMounted(fetchRating);
   right-0
   flex
   gap-2
-  place-self-end
 }
-
 .viewed-user {
   @apply
   absolute

@@ -2,7 +2,7 @@ import {set, useInterval} from "@vueuse/core";
 import {onMounted, ref, watch} from "vue";
 
 export function useScore() {
-    const {counter, pause, resume} = useInterval(1000, {controls: true});
+    const {counter, pause, resume, reset} = useInterval(1000, {controls: true});
 
     const initialPoints = ref(null);
     const points = ref(null);
@@ -38,6 +38,8 @@ export function useScore() {
     };
 
     watch(paused, (newValue) => newValue ? pause() : resume());
+
+    watch(started, (newValue) => newValue === false ? reset() : pause());
 
     onMounted(pause);
 

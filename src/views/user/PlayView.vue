@@ -54,8 +54,8 @@ const endGame = () => {
 
 <template>
   <main>
-    <Header></Header>
-    <Transition name="fade">
+    <Header/>
+    <Transition name="fade" mode="out-in">
       <div class="game-instructions" v-if="!started">
         <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
       </div>
@@ -71,7 +71,7 @@ const endGame = () => {
                @new-game="startGame" @pause="pauseTime" @check="checkGame" @size="setGame" @end-game="endGame"/>
       <Score v-bind="{time, points, started}"/>
     </div>
-    <Summary ref="summary"></Summary>
+    <Summary ref="summary" />
     <Notification ref="notification"/>
   </main>
 </template>
@@ -79,22 +79,17 @@ const endGame = () => {
 <style scoped>
 .game-instructions {
   @apply
-  absolute
-  w-full
   text-2xl
-  font-thin
-  font-sans
   text-center;
 }
-
 .actions-container {
   @apply
   flex
   flex-wrap-reverse
+  justify-end
   absolute
   bottom-0
-  justify-end
-  w-full
+  right-0
   gap-2;
 }
 </style>

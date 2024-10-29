@@ -66,7 +66,7 @@ const onSubmit = () => {
         <component :is="errorFields?.password ? IconInvalid : IconValid"
             @mouseover="showBox(rules.password.message)" @mouseleave="hideBox"/>
 
-        <BasicInput v-model="form.confirmPassword" placeholder="Powtórz hasło" type="password" autocomplete="off"/>
+        <BasicInput v-model="form.confirmPassword" placeholder="Potwierdź hasło" type="password" autocomplete="off"/>
         <component v-if="(!errorFields?.password)" :is="(errorFields?.confirmPassword) ? IconInvalid : IconValid"
                    @mouseover="showBox(rules.confirmPassword.message)" @mouseleave="hideBox"/>
       </div>
