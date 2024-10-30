@@ -51,8 +51,7 @@ onMounted(fetchPuzzles);
 </script>
 
 <template>
-  <main class="flex flex-col">
-    <Header />
+  <main>
     <List :class="['list', blurred]" v-bind="listState" @onListItemClick="managePuzzle"/>
     <Pagination v-bind="pageState" @onPageChange="fetchPuzzles"/>
     <Transition name="slide-left-hidden">

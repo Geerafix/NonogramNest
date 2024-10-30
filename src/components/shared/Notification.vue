@@ -1,9 +1,9 @@
 <script setup>
-import {computed, reactive, onBeforeMount, onMounted} from 'vue';
+import {computed, reactive, onBeforeMount} from 'vue';
 import {useTimeout} from '@vueuse/core'
 
-const settings = reactive({status: false, message: '', time: 2500})
-const {ready, start, stop} = useTimeout(settings.time, {controls: true})
+const settings = reactive({status: false, message: '', time: 2500});
+const {ready, start, stop} = useTimeout(settings.time, {controls: true});
 
 const notificationColor = computed(() => settings.status ? 'bg-teal-900' : 'bg-[#7C2C3B]');
 
@@ -29,8 +29,8 @@ onBeforeMount(stop);
 .notification {
   @apply
   absolute
-  top-0
-  right-0
+  top-[5.5rem]
+  right-4
   min-h-14
   max-w-96
   px-4

@@ -45,7 +45,6 @@ onMounted(fetchAchievements)
 
 <template>
   <main>
-    <Header></Header>
     <AchievementsList :achievements="achievements" @onListItemClick="getAchievement" :class="blurred"/>
     <Transition name="fade">
       <ManageAchievement v-if="manageAchievement" @accept="onAccept" @reject="onReject" :achievement="manageAchievement"/>

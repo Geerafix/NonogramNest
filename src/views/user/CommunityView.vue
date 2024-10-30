@@ -52,7 +52,6 @@ onBeforeMount(fetchPuzzles);
 
 <template>
   <main>
-    <Header/>
     <List v-bind="listState" @onListItemClick="routeToSelectedGame"/>
     <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whom)"/>
     <Transition name="slide-left-hidden">

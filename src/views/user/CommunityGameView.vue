@@ -39,6 +39,7 @@ const handleCheck = async () => {
   if (!isSolved) {
     notify(false, 'Twoje rozwiązanie jest niepoprawne.');
   } else {
+    notify(true, 'Rozwiązano nonogram społeczności.');
     handleEndGame();
   }
 };
@@ -50,7 +51,6 @@ onMounted(fetchCommunityGame);
 
 <template>
   <main>
-    <Header/>
     <Transition name="fade">
       <Nonogram ref="nonogram" :started="started" :paused="paused"/>
     </Transition>

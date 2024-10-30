@@ -24,7 +24,10 @@ onMounted(() => {
     </Transition>
     <RouterView class="router-container" v-slot="{ Component }">
       <Transition name="fade" mode="out-in">
-        <component :is="Component"/>
+        <div class="view" :key="Component">
+          <Header/>
+          <component :is="Component"/>
+        </div>
       </Transition>
     </RouterView>
     <Notification ref="notification"/>
@@ -42,11 +45,16 @@ onMounted(() => {
   text-white
   sm:gap-4;
 }
-
 .router-container {
   @apply
   h-full
   w-full
   z-auto;
+}
+.view {
+  @apply
+  grid
+  grid-rows-[auto_1fr]
+  w-full
 }
 </style>

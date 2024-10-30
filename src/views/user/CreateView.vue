@@ -42,7 +42,6 @@ const handleSubmitGame = async (name) => {
 
 <template>
   <main>
-    <Header/>
     <Transition name="fade" v-if="!isSizeSelected">
       <div class="game-instructions">
         <p>Wybierz rozmiar planszy nonogramu,<br>aby rozpocząć tworzenie gry.</p>

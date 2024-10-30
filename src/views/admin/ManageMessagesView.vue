@@ -39,7 +39,6 @@ onMounted(fetchMessages);
 
 <template>
   <main>
-    <Header></Header>
     <MessagesList :messages="messages" @onListItemClick="saveId" :class="[blurred]" />
     <Transition name="fade">
       <ManageMessage v-if="messageId" @reject="messageId = null" @accept="delMessage" />

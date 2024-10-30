@@ -72,7 +72,6 @@ onBeforeUnmount(async () => {
 
 <template>
   <main>
-    <Header/>
     <Transition name="fetch-fade">
         <Calendar v-if="!started" />
     </Transition>

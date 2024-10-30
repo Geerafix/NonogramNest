@@ -4,7 +4,6 @@ import SignUpForm from '@/components/auth/SignUpForm.vue'
 
 <template>
   <main>
-    <Header/>
     <SignUpForm/>
   </main>
 </template>

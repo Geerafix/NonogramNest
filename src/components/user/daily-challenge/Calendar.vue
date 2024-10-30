@@ -42,7 +42,7 @@ onBeforeMount(handleMonthChange);
 </script>
 
 <template>
-  <Transition name="fade-slower">
+  <Transition name="fetch-fade" mode="out-in">
     <div class="calendar-container" v-if="streakDays">
       <div class="calendar-header">
         <MenuButton class="max-w-1" @click="prevMonth">
@@ -75,7 +75,7 @@ onBeforeMount(handleMonthChange);
   w-min
   min-w-96
   mx-auto
-  mt-6
+  mt-2
   max-w-md
   border-b-4
   bg-gray-600

@@ -62,9 +62,11 @@ body {
 	opacity: 0;
 }
 
-.fetch-fade-enter-active,
-.fetch-fade-leave-active {
+.fetch-fade-enter-active {
 	transition: all 0.25s ease-in-out;
+}
+.fetch-fade-leave-active {
+	transition: all 0.1s ease-in-out;
 }
 .fetch-fade-enter-from,
 .fetch-fade-leave-to {

@@ -64,7 +64,6 @@ onMounted(fetchUsers);
 
 <template>
   <main>
-    <Header></Header>
     <List :class="['list', blurred]" v-bind="listState" @onListItemClick="manageUser"/>
     <Pagination v-bind="pageState" @onPageChange="fetchUsers(who)"/>
     <Transition name="slide-left-hidden">

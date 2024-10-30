@@ -12,7 +12,9 @@ defineProps(['headerName']);
 .header {
   @apply
   p-2
-  bg-gray-700
+  bg-gradient-to-b
+  from-gray-700
+  to-gray-700/85
   rounded-md
   transition
   ease-[1s]

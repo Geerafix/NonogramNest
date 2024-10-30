@@ -78,6 +78,8 @@ onBeforeMount(resetBoard);
   @apply
   filter
   blur-sm
+  transition-all
+  duration-300
   brightness-[0.9];
 }
 
@@ -88,7 +90,7 @@ onBeforeMount(resetBoard);
   p-4
   top-1/2
   left-1/2
-  -translate-x-[50%]
+  -translate-x-1/2
   -translate-y-1/2
   border-b-4
   bg-gray-600
@@ -97,21 +99,20 @@ onBeforeMount(resetBoard);
   text-2xl
   text-nowrap
   rounded-xl
-  select-none;
+  select-none
+  duration-150;
 }
-
 .nonogram-container {
   @apply
   absolute
   left-1/2
   -translate-x-1/2
-  top-1/2
-  -translate-y-1/2
+  top-[15%]
+  -translate-y-[15%]
   shadow-2xl
   font-thin
   font-sans;
 }
-
 .nonogram-components {
   @apply
   grid
@@ -119,6 +120,7 @@ onBeforeMount(resetBoard);
   gap-0.5
   w-fit
   mx-auto
-  z-10;
+  z-10
+  transition-all;
 }
 </style>

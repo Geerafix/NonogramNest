@@ -8,16 +8,16 @@ const onClick = (id) => {
 </script>
 
 <template>
-  <Transition name="fade-slower" mode="out-in">
+  <Transition name="fade-slower">
     <div class="container" :key="messages">
       <li v-for="message in messages">
         <div class="item" @click="onClick(message.id)">
-          <div class="grid grid-cols-[60%_1fr_1fr] gap-2 h-14 [&>*]:!content-center [&>*]:!text-nowrap">
-            <div class="item-row text-left text-2xl !bg-gray-700">{{message.title}}</div>
-            <div class="item-row !bg-gray-700/20">Od: {{message.username}}</div>
+          <div class="primary-info">
+            <div class="item-row text-left text-2xl bg-gradient-to-r from-gray-700">{{message.title}}</div>
+            <div class="item-row !bg-gray-700/20 bg-gradient-to-r">Od: {{message.username}}</div>
             <div class="item-row !bg-gray-700/20">Data: {{new Date(message.date).toLocaleDateString()}} r.</div>
           </div>
-          <textarea class="item-row resize-none pointer-events-none">{{message.content}}</textarea>
+          <textarea class="content">{{message.content}}</textarea>
         </div>
       </li>
       <div v-if="messages.length === 0" class="no-info">
@@ -30,8 +30,8 @@ const onClick = (id) => {
 <style scoped>
 .container {
   @apply
-  grid
-  gap-2
+  columns-2
+    gap-4
   w-full
   list-none
   text-xl
@@ -39,6 +39,11 @@ const onClick = (id) => {
   transition-all
   max-h-[calc(100vh-10.4rem)]
   overflow-auto
+}
+li {
+  @apply
+  break-inside-avoid
+  mb-4
 }
 .item {
   @apply
@@ -62,12 +67,28 @@ const onClick = (id) => {
 .no-info {
   @apply
   absolute
-  top-20
   left-1/2
   -translate-x-1/2
   opacity-20
   italic
   text-2xl
   text-nowrap
+}
+.primary-info {
+  @apply
+  grid
+  grid-cols-[1fr_auto_auto]
+  gap-2
+  h-14
+  [&>*]:!content-center
+  [&>*]:!text-nowrap
+}
+.content {
+  @apply
+  item-row
+  resize-none
+  cursor-pointer
+  bg-gradient-to-r
+  from-gray-800
 }
 </style>

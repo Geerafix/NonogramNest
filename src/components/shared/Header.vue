@@ -16,6 +16,7 @@ const route = useRoute();
   mb-4
   p-2
   w-full
+    h-min
   mx-auto
   bg-gray-700/50
   rounded-lg

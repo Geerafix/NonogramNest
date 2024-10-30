@@ -49,7 +49,6 @@ onMounted(fetchRating);
 
 <template>
   <main>
-    <Header/>
     <div :class="[blurred]">
       <List v-bind="listState" @onListItemClick="fetchUser"/>
     </div>

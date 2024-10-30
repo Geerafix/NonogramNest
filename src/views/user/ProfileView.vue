@@ -42,11 +42,10 @@ onBeforeMount(fetchUserProfile);
 
 <template>
   <main>
-    <Header/>
-    <Transition name="fetch-fade" :class="['grid gap-2', blurred]">
+    <Transition name="fetch-fade" :class="['grid gap-2 mt-2', blurred]">
       <div v-if="user">
         <UserProfile :user="user" class="mb-2"></UserProfile>
-        <div :class="['flex gap-4 mx-auto']">
+        <div :class="['flex gap-3 mx-auto mt-2']">
           <RollButton v-for="button in profileButtons" :text="button.text" @click="changeForm(button.name)">
             <Icon :icon="['fa-solid', button.icon]"/>
           </RollButton>

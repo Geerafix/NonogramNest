@@ -4,7 +4,6 @@ import SignInForm from '@/components/auth/SignInForm.vue'
 
 <template>
   <main>
-    <Header/>
     <SignInForm />
   </main>
 </template>

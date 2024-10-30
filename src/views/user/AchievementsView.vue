@@ -19,7 +19,6 @@ onMounted(fetchUserAchievements);
 
 <template>
   <main>
-    <Header/>
     <UserAchievementsList :achievements="achievements" />
     <Pagination v-bind="pageState" @onPageChange="fetchUserAchievements"/>
   </main>

@@ -27,7 +27,6 @@ watch(counter, () => {
 
 <template>
   <main>
-    <Header></Header>
     <div class="flex flex-col gap-4">
       <BasicButton buttonText="Logowanie" class="login" @click="$router.push({ name: 'SignIn' })">
         <Icon icon="fa-solid fa-right-to-bracket" class="my-auto mx-auto"/>

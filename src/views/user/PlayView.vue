@@ -51,7 +51,6 @@ const endGame = () => {
 
 <template>
   <main>
-    <Header/>
     <Transition name="fade" mode="out-in">
       <div class="game-instructions" v-if="!started">
         <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
