@@ -26,7 +26,7 @@ server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
             name: {[Op.iLike]: option === 'name' ? search : '%%'},
             is_public: false
         },
-        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'is_public', 'Puzzle.excluded_tiles'],
+        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'Puzzle.excluded_tiles'],
         order: [['date', 'DESC']],
         limit: limit,
         offset: offset,
@@ -75,7 +75,8 @@ server.put('/admin/puzzle', authHandler, async (req, res) => {
 server.delete('/admin/puzzle', authHandler, async (req, res) => {
     const id = req.query.puzzleId;
 
-    await CreatedPuzzle.destroy({where: {created_id: id}});
+    const createdPuzzle = await CreatedPuzzle.findOne({where: {created_id: id}});
+    await Puzzle.destroy({where: {puzzle_id: createdPuzzle.puzzle_id}});
  
     res.json();
 });

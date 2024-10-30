@@ -17,7 +17,7 @@ import {useBlurOnView} from "@/composables/useBlurOnView.js";
 import {useNotification} from "@/composables/useNotification.js";
 
 const puzzles = ref([]);
-const listState = useList(['ID','Nazwa','Rozmiar','Użytkownik','Publiczna?'], puzzles, [5]);
+const listState = useList(['ID','Nazwa','Rozmiar','Użytkownik'], puzzles, [4]);
 
 const search = ref('');
 const option = ref('name');
@@ -42,7 +42,7 @@ const setOption = (opt) => set(option, opt);
 
 const onAccept = (status, message) => {
   set(managedPuzzle, null);
-  fetchPuzzles()
+  fetchPuzzles();
   notify(status, message);
 }
 
@@ -74,8 +74,8 @@ onMounted(fetchPuzzles);
       </div>
     </Transition>
     <ManagePuzzle v-if="managedPuzzle" @accept="onAccept" @reject="managedPuzzle = null"
-                  :id="managedPuzzle.created_id"
-                  :puzzle="JSON.parse(managedPuzzle.excluded_tiles)" />
+                  :id="managedPuzzle?.created_id"
+                  :puzzle="JSON.parse(managedPuzzle?.excluded_tiles)" />
     <Notification ref="notification"/>
   </main>
 </template>

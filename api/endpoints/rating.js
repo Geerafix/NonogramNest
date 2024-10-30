@@ -17,6 +17,7 @@ server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
             attributes: [],
             duplicating: false
         },
+        where: {role: 'user'},
         attributes: ['user_id', 'username', `Score.${column}`],
         order: [[Score, column, 'DESC']],
         limit: limit,
@@ -36,6 +37,7 @@ server.get('/rating/challenges', authHandler, asyncHandler(async (req, res) => {
             attributes: [],
             duplicating: false
         },
+        where: {role: 'user'},
         attributes: ['user_id', 'username', 'Score.challenge_sum'],
         order: [[Score, 'challenge_sum', 'DESC']],
         limit: limit,

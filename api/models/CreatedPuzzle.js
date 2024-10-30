@@ -32,10 +32,5 @@ export const CreatedPuzzle = sequelize.define('CreatedPuzzle', {
     }
 }, {
     tableName: 'CreatedPuzzles',
-    timestamps: false,
-    hooks: {
-        afterDestroy: async (created, options) => {
-            await Puzzle.destroy({where: {puzzle_id: created.puzzle_id}});
-        }
-    }
+    timestamps: false
 });
