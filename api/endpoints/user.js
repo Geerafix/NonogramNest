@@ -39,6 +39,15 @@ server.get('/user/achievements', authHandler, asyncHandler(async (req, res) => {
     res.json(achievements);
 }));
 
+server.get('/user/achievements/count', authHandler, asyncHandler(async (req, res) => {
+    const user = req.user;
+
+    const count = await Achievement.count({
+        include: {model: UserAchievement, where: {user_id: user.user_id}}
+    });
+
+    res.json(count);
+}));
 
 server.get('/profile', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;

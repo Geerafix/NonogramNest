@@ -52,6 +52,10 @@ export function getUserAchievements(page, limit) {
     });
 }
 
+export function getAchievementCount() {
+    return api.get('/user/achievements/count');
+}
+
 export async function getUserRole() {
     const res = await api.post('/role');
     return res.data.role;

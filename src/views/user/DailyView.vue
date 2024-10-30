@@ -12,8 +12,11 @@ import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
 import {useScore} from '@/composables/useScore';
 import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
+import {achievementWatcher} from "@/composables/achievementWatcher.js";
 
 const {notify} = useNotification();
+
+const {watcher} = achievementWatcher();
 
 const nonogram = ref(null);
 const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
@@ -55,6 +58,7 @@ const checkGame = async () => {
     summary.value.show(points.value, bonus);
     endGame();
   }
+  await watcher();
 };
 
 const endGame = async () => {
