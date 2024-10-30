@@ -1,8 +1,6 @@
 <script setup>
-import Header from '@/components/shared/Header.vue';
 import UserProfile from '@/components/user/profile/UserProfile.vue';
 import RollButton from "@/components/shared/inputs/InfoButton.vue";
-import Notification from "@/components/shared/Notification.vue";
 import {useNotification} from "@/composables/useNotification.js";
 import {computed, onBeforeMount, ref} from 'vue';
 import {getUserProfile} from '@/services/userService';

@@ -1,9 +1,7 @@
 <script setup>
 import TextArea from "@/components/shared/inputs/TextArea.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {ref} from "vue";
 import {updateBio} from "@/services/userService";
-import IconInvalid from "@/components/auth/IconInvalid.vue";
 
 const emit = defineEmits(['accept', 'reject']);
 

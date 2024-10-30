@@ -1,6 +1,4 @@
 <script setup>
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
 import Select from "@/components/shared/inputs/Select.vue";
 import {sizes} from "@/config.js";
 import { set } from "@vueuse/core";

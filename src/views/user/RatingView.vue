@@ -1,5 +1,4 @@
 <script setup>
-import Header from '@/components/shared/Header.vue';
 import Pagination from '@/components/shared/Pagination.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';

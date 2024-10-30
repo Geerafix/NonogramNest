@@ -1,6 +1,5 @@
 <script setup>
 import NonogramBoard from "@/components/user/game-creation/NonogramBoard.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {onMounted, ref} from "vue";
 import {deletePuzzle, updatePuzzle} from "@/services/adminService.js";
 

@@ -1,9 +1,7 @@
 <script setup>
-import Header from '@/components/shared/Header.vue';
 import Pagination from "@/components/shared/Pagination.vue";
 import AchievementsList from "@/components/admin/other/AchievementsList.vue";
 import ManageAchievement from "@/components/admin/management/ManageAchievement.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {set} from "@vueuse/core";
 import {onMounted, ref} from "vue";
 import {getAchievements} from "@/services/adminService.js";

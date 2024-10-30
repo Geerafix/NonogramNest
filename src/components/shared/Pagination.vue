@@ -1,5 +1,4 @@
 <script setup>
-import BasicButton from '@/components/shared/inputs/BasicButton.vue';
 import {computed, watch} from 'vue';
 
 const props = defineProps([

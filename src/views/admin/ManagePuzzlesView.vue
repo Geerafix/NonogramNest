@@ -1,12 +1,8 @@
 <script setup>
 import Pagination from "@/components/shared/Pagination.vue";
-import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
 import Select from "@/components/shared/inputs/Select.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
 import ManagePuzzle from "@/components/admin/management/ManagePuzzle.vue";
-import Notification from "@/components/shared/Notification.vue";
 import {usePagination} from "@/composables/usePagination";
 import {useList} from "@/composables/useList";
 import {getPuzzle, getPuzzles} from "@/services/adminService";

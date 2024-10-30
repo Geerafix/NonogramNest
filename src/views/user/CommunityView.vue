@@ -1,11 +1,8 @@
 <script setup>
-import Header from '@/components/shared/Header.vue';
 import Pagination from '@/components/shared/Pagination.vue';
-import BasicInput from '@/components/shared/inputs/BasicInput.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
 import Switch from '@/components/shared/inputs/Switch.vue';
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {set} from '@vueuse/core';
 import {useRouter} from "vue-router";
 import {computed, onBeforeMount, ref, watch} from 'vue';

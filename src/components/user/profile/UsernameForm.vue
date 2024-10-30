@@ -1,13 +1,11 @@
 <script setup>
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import IconInvalid from "@/components/auth/IconInvalid.vue";
+import IconValid from "@/components/auth/IconValid.vue";
+import TrailingBox from "@/components/shared/TrailingBox.vue";
 import {useAsyncValidator} from "@vueuse/integrations/useAsyncValidator";
 import {reactive, ref, watch} from "vue";
 import {set} from "@vueuse/core";
 import {updateUsername} from "@/services/userService.js";
-import IconInvalid from "@/components/auth/IconInvalid.vue";
-import IconValid from "@/components/auth/IconValid.vue";
-import TrailingBox from "@/components/shared/TrailingBox.vue";
 import {useTrailingBox} from "@/composables/useTrailingBox.js";
 
 const emit = defineEmits(['accept', 'reject']);

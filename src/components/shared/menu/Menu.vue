@@ -4,7 +4,6 @@ import {postLogOut} from '@/services/userService.js';
 import {computed, ref} from 'vue';
 import {useWindowSize} from '@vueuse/core';
 import {useRoute, useRouter} from 'vue-router';
-import BasicButton from '../inputs/BasicButton.vue';
 
 const route = useRoute();
 const router = useRouter();

@@ -1,8 +1,6 @@
 <script setup>
-import Header from '@/components/shared/Header.vue';
 import Actions from '@/components/user/game-creation/Actions.vue';
 import NonogramBoard from '@/components/user/game-creation/NonogramBoard.vue';
-import Notification from '@/components/shared/Notification.vue';
 import {postCommunityPuzzle} from '@/services/communityService.js';
 import {generateGame} from '@/scripts/puzzleScripts';
 import {ref} from 'vue';

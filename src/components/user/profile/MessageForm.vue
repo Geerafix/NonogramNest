@@ -1,8 +1,6 @@
 <script setup>
 import TextArea from "@/components/shared/inputs/TextArea.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import {ref} from "vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
 import {postMessage} from "@/services/userService.js";
 
 const emit = defineEmits(['accept', 'reject']);

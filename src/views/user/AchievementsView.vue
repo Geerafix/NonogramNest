@@ -1,5 +1,4 @@
 <script setup>
-import Header from '@/components/shared/Header.vue';
 import Pagination from "@/components/shared/Pagination.vue";
 import UserAchievementsList from "@/components/user/other/UserAchievementsList.vue";
 import {set} from '@vueuse/core';

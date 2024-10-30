@@ -1,11 +1,8 @@
 <script setup>
-import BasicButton from '@/components/shared/inputs/BasicButton.vue';
-import Header from '@/components/shared/Header.vue';
 import Nonogram from '@/components/user/game/Nonogram.vue';
-import {onMounted, ref, watch, watchEffect} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {useInterval} from '@vueuse/core';
 import {useNonogram} from '@/composables/useNonogram';
-import {useWebSocket} from "@vueuse/core";
 
 const {counter, resume} = useInterval(1000, {controls: true});
 

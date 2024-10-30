@@ -1,10 +1,4 @@
 <script setup>
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
-import {ref} from "vue";
-import {updateUser} from "@/services/adminService.js";
-import {set} from "@vueuse/core";
-
 const emit = defineEmits(['accept', 'reject']);
 
 const accept = async () => {

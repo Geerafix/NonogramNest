@@ -1,6 +1,4 @@
 <script setup>
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
 import {ref} from "vue";
 import {deleteUser, updateUser} from "@/services/adminService.js";
 import {set} from "@vueuse/core";

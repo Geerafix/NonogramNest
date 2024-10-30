@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from 'vue';
+import {ref} from 'vue';
 import {set} from '@vueuse/core';
 import {onClickOutside} from "@vueuse/core";
 

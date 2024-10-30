@@ -1,9 +1,7 @@
 <script setup>
-import Header from '@/components/shared/Header.vue';
 import MessagesList from "@/components/admin/other/MessagesList.vue";
 import Pagination from "@/components/shared/Pagination.vue";
 import ManageMessage from "@/components/admin/management/ManageMessage.vue";
-import Notification from "@/components/shared/Notification.vue";
 import {onMounted, ref} from "vue";
 import {set} from "@vueuse/core";
 import {deleteMessage, getMessages} from "@/services/adminService.js";

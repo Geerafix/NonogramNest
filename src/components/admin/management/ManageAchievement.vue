@@ -1,6 +1,4 @@
 <script setup>
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
 import TextArea from "@/components/shared/inputs/TextArea.vue";
 import {ref} from "vue";
 import {deleteAchievement, postAchievement, updateAchievement} from "@/services/adminService.js";
