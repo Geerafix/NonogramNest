@@ -24,10 +24,10 @@ const accept = async () => {
 
     if (props.achievement.achievement_id) {
       await updateAchievement(achievement);
-      emit('accept', true, 'Zaktualizowano osiągnięcie');
+      emit('accept', true, 'Zaktualizowano osiągnięcie.');
     } else {
       await postAchievement(achievement);
-      emit('accept', true, 'Dodano nowe osiągnięcie');
+      emit('accept', true, 'Dodano nowe osiągnięcie.');
     }
 };
 
@@ -37,7 +37,7 @@ const reject = () => {
 
 const delAchievement = async () => {
     await deleteAchievement(props.achievement.achievement_id);
-    emit('accept', false, 'Usunięto osiągnięcie');
+    emit('accept', false, 'Usunięto osiągnięcie.');
 };
 </script>
 
@@ -57,7 +57,7 @@ const delAchievement = async () => {
             </div>
             <div class="item-row">
               <span>Ilość</span>
-              <BasicInput :placeholder="achievement.criteria || 'Ilość...'" v-model="criteria" />
+              <BasicInput :placeholder="achievement.criteria || 'Ilość...'" v-model="criteria" type="number" />
             </div>
           </div>
         </div>

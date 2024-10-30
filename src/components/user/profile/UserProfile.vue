@@ -5,14 +5,14 @@ defineProps(['user']);
 <template>
   <div class="user-profile-container">
     <div class="info-col">
-      <div class="info">
-        <p>{{ user.username }}</p>
-      </div>
       <div class="grid grid-cols-[auto_1fr] gap-2 [&_div]:!h-full">
-        <div class="pfp" @click="open">
-          <Icon icon="fa-solid fa-user" class="my-auto mx-auto text-5xl"/>
+        <div class="p-2 aspect-square bg-gray-800/80  rounded-lg">
+          <Icon icon="fa-solid fa-user" class="my-auto mx-auto text-5xl h-full"/>
         </div>
-        <div class="bg-gray-800/50 rounded-lg content-center p-2">UID: {{ user.user_id }}</div>
+        <div class="grid gap-2">
+          <div class="info">{{ user.username }}</div>
+          <div class="bg-gray-800/50 rounded-lg content-center px-2">UID: {{ user.user_id }}</div>
+        </div>
       </div>
       <div>
         <textarea disabled class="bio" :placeholder="user.bio ? '' : 'Brak opisu'">{{ user.bio }}</textarea>
@@ -106,7 +106,11 @@ defineProps(['user']);
 
 .info {
   @apply
-  bg-gray-800/75 rounded-lg py-2 text-2xl font-normal content-center
+  bg-gray-800/75
+  rounded-lg
+  text-2xl
+  font-normal
+  content-center
 }
 
 .pfp {

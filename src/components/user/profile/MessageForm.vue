@@ -22,8 +22,10 @@ const reject = () => {
 <template>
   <div>
     <div class="profile-form-container">
+      <span class="w-full">Tytuł</span>
       <BasicInput placeholder="Tytuł..." v-model="title" :style="{'width': '100%'}" />
-      <TextArea placeholder="Wiadomość do administracji..." v-model="message" />
+      <span class="w-full mt-2">Treść</span>
+      <TextArea placeholder="Opisz swój problem..." v-model="message" />
       <div class="profile-form-actions">
         <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
         <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>

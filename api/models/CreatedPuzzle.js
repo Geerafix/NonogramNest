@@ -1,5 +1,6 @@
 import {sequelize} from '../server.js';
 import {DataTypes} from 'sequelize';
+import {Puzzle} from './Puzzle.js';
 
 export const CreatedPuzzle = sequelize.define('CreatedPuzzle', {
     created_id: {
@@ -32,4 +33,9 @@ export const CreatedPuzzle = sequelize.define('CreatedPuzzle', {
 }, {
     tableName: 'CreatedPuzzles',
     timestamps: false,
+    hooks: {
+        afterDestroy: async (created, options) => {
+            await Puzzle.destroy({where: {puzzle_id: created.puzzle_id}});
+        }
+    }
 });

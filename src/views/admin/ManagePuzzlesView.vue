@@ -2,36 +2,49 @@
 import Pagination from "@/components/shared/Pagination.vue";
 import Header from '@/components/shared/Header.vue';
 import List from '@/components/shared/list/List.vue';
+import Select from "@/components/shared/inputs/Select.vue";
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import BasicInput from "@/components/shared/inputs/BasicInput.vue";
+import ManagePuzzle from "@/components/admin/management/ManagePuzzle.vue";
+import Notification from "@/components/shared/Notification.vue";
 import {usePagination} from "@/composables/usePagination";
 import {useList} from "@/composables/useList";
-import {getPuzzles} from "@/services/adminService";
+import {getPuzzle, getPuzzles} from "@/services/adminService";
 import {onMounted, ref, watch} from "vue";
 import {set} from "@vueuse/core";
 import {ratingSearchBy} from "@/config.js";
-import Select from "@/components/shared/inputs/Select.vue";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import Switch from "@/components/shared/inputs/Switch.vue";
-import BasicInput from "@/components/shared/inputs/BasicInput.vue";
+import {useBlurOnView} from "@/composables/useBlurOnView.js";
+import {useNotification} from "@/composables/useNotification.js";
 
 const puzzles = ref([]);
-const listState = useList(['ID','Nazwa','Rozmiar','Użytkownik','Publiczna?'], puzzles);
+const listState = useList(['ID','Nazwa','Rozmiar','Użytkownik','Publiczna?'], puzzles, [5]);
 
 const search = ref('');
 const option = ref('name');
 const rolledSearch = ref(false);
+const managedPuzzle = ref();
 
+const notification = ref();
+const {notify} = useNotification(notification);
 const {pageState, pageReset} = usePagination(1, 10, puzzles);
+const {blurred} = useBlurOnView(managedPuzzle, false);
 
 const fetchPuzzles = async () => {
   await getPuzzles(pageState.value.page, pageState.value.limit, search.value, option.value)
       .then((res) => set(puzzles, res.data));
 }
 
-const managePuzzle = (user) => {
-
+const managePuzzle = async (puzzle) => {
+  await getPuzzle(puzzle.created_id).then((res) => set(managedPuzzle, res.data));
 };
 
 const setOption = (opt) => set(option, opt);
+
+const onAccept = (status, message) => {
+  set(managedPuzzle, null);
+  fetchPuzzles()
+  notify(status, message);
+}
 
 watch([search, option], () => {
   pageReset();
@@ -43,8 +56,8 @@ onMounted(fetchPuzzles);
 
 <template>
   <main class="flex flex-col">
-    <Header></Header>
-    <List class="list" v-bind="listState" @onListItemClick="managePuzzle"/>
+    <Header />
+    <List :class="['list', blurred]" v-bind="listState" @onListItemClick="managePuzzle"/>
     <Pagination v-bind="pageState" @onPageChange="fetchPuzzles"/>
     <Transition name="slide-left-hidden">
       <BasicButton v-if="!rolledSearch" @click="rolledSearch = !rolledSearch" class="absolute right-0 bottom-0">
@@ -60,6 +73,10 @@ onMounted(fetchPuzzles);
         <Select :items="ratingSearchBy" @onSelect="setOption" />
       </div>
     </Transition>
+    <ManagePuzzle v-if="managedPuzzle" @accept="onAccept" @reject="managedPuzzle = null"
+                  :id="managedPuzzle.created_id"
+                  :puzzle="JSON.parse(managedPuzzle.excluded_tiles)" />
+    <Notification ref="notification"/>
   </main>
 </template>
 

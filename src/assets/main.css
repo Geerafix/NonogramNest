@@ -24,13 +24,23 @@
 	background: rgb(75 85 99 / 1);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
 html, body, #app {
 	height: 100%;
 	width: 100%;
 }
 
 body {
-	font-family: Hauss, sans-serif; 
+	font-family: Hauss, sans-serif;
 	font-weight: lighter;
 }
 

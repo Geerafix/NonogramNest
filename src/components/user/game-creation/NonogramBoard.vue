@@ -38,7 +38,7 @@ const clearBoard = () => {
 
 const tileSize = computed(() => {
   const len = answers.value.length;
-  return (1.6 + (12/len)) + 'rem';
+  return (1.2 + (15/len)) + 'rem';
 });
 
 const colorTile = (row, col) => (

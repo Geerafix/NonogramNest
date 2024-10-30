@@ -33,12 +33,13 @@ export const User = sequelize.define('User', {
     tableName: 'Users',
     timestamps: false,
     hooks: {
-        afterCreate: (user, options) => {
-            UserProfile.create({user_id: user.user_id});
-            Score.create({user_id: user.user_id});
+        afterCreate: async (user, options) => {
+            await UserProfile.create({user_id: user.user_id});
+            await Score.create({user_id: user.user_id});
         },
-        afterDestroy: (user, options) => {
-            UserProfile.destroy({where: {user_id: user.user_id}});
+        afterDestroy: async (user, options) => {
+            await UserProfile.destroy({where: {user_id: user.user_id}});
+            await Score.destroy({user_id: user.user_id});
         }
     }
 });

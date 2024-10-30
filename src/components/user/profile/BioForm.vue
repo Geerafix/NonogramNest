@@ -22,7 +22,7 @@ const reject = () => {
 <template>
   <div>
     <div class="profile-form-container">
-      <span class="w-full">Opis</span>
+      <span class="w-full">Nowy opis</span>
       <TextArea placeholder="Opis..." v-model="bio" />
       <div class="profile-form-actions">
         <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>

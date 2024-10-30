@@ -44,7 +44,10 @@ server.get('/community/puzzle', authHandler, asyncHandler(async (req, res) => {
         include: [{
             model: CreatedPuzzle,
             attributes: [],
-            where: {created_id: id}
+            where: {
+                created_id: id,
+                is_public: true
+            }
         }],
     });
 
@@ -91,7 +94,10 @@ server.get('/user/puzzles', authHandler, asyncHandler(async (req, res) => {
             attributes: [],
             where: {user_id: user.user_id}
         }], 
-        where: {name: {[Op.iLike]: search}},
+        where: {
+            name: {[Op.iLike]: search},
+            is_public: true
+        },
         attributes: ['created_id', 'name', 'Puzzle.size', 'User.username'],
         limit: limit,
         offset: offset,

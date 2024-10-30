@@ -58,6 +58,29 @@ export function getPuzzles(page, limit, search, option) {
     });
 }
 
+export function getPuzzle(puzzleId) {
+    return api.get('/admin/puzzle', {
+        params: {
+            puzzleId: puzzleId
+        }
+    });
+}
+
+export function updatePuzzle(puzzleId, board) {
+    return api.put('/admin/puzzle', {
+        puzzleId: puzzleId,
+        board: board
+    });
+}
+
+export function deletePuzzle(puzzleId) {
+    return api.delete('/admin/puzzle', {
+        params: {
+            puzzleId: puzzleId
+        }
+    });
+}
+
 export function getAchievements(page, limit) {
     return api.get('/admin/achievements', {
         params: {

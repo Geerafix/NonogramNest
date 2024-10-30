@@ -22,8 +22,11 @@ server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
             attributes: [],
             where: {username: {[Op.iLike]: option === 'creator' ? search : '%%'}}
         }],
-        where: {name: {[Op.iLike]: option === 'name' ? search : '%%'}},
-        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'is_public'],
+        where: {
+            name: {[Op.iLike]: option === 'name' ? search : '%%'},
+            is_public: false
+        },
+        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'is_public', 'Puzzle.excluded_tiles'],
         order: [['date', 'DESC']],
         limit: limit,
         offset: offset,
@@ -32,16 +35,48 @@ server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
 
     res.json(puzzles);
 }));
-
+ 
 server.get('/admin/puzzle', authHandler, async (req, res) => {
-    const id = await req.body.puzzleId;
+    const id = req.query.puzzleId || 6;
+ 
+    const puzzle = await CreatedPuzzle.findOne({
+        include: {
+            model: Puzzle,
+            attributes: []
+        },
+        where: {
+            created_id: id
+        },
+        attributes: {
+            include: ['Puzzle.excluded_tiles']
+        },
+        raw: true
+    }); 
 
-    res.json();
+    res.json(puzzle);
 });
 
 server.put('/admin/puzzle', authHandler, async (req, res) => {
-    const puzzle = await req.body.puzzle;
+    const id = await req.body.puzzleId;
+    const board = await req.body.board;
 
+    const createdPuzzle = await CreatedPuzzle.findOne({where: {created_id: id}});
+    const puzzle = await Puzzle.findOne({where: {puzzle_id: createdPuzzle.puzzle_id}})
+
+    createdPuzzle.is_public = true;
+    puzzle.excluded_tiles = JSON.stringify(board);
+
+    await puzzle.save();
+    await createdPuzzle.save();
+ 
+    res.json();
+});
+
+server.delete('/admin/puzzle', authHandler, async (req, res) => {
+    const id = req.query.puzzleId;
+
+    await CreatedPuzzle.destroy({where: {created_id: id}});
+ 
     res.json();
 });
 

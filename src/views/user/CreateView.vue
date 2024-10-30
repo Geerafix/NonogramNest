@@ -29,8 +29,9 @@ const handleSubmitGame = async (name) => {
     if (name.length > 0) {
       set(isSizeSelected, false);
       notify(true, 'Wysłano planszę do weryfikacji.');
-      const nonogram = generateGame(board.value.answers);
-      await postCommunityPuzzle(name, nonogram.cluesX, nonogram.cluesY, board.value.answers.length, nonogram.excludedTiles);
+      const dCopy = JSON.parse(JSON.stringify(board.value.answers));
+      const nonogram = generateGame(dCopy);
+      await postCommunityPuzzle(name, nonogram.cluesX, nonogram.cluesY, board.value.answers.length, board.value.answers);
       board.value.clearBoard();
     } else {
       notify(false, 'Nie wpisano nazwy planszy.');
