@@ -13,8 +13,7 @@ import {useNonogram} from '@/composables/useNonogram';
 import {useScore} from '@/composables/useScore';
 import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
 
-const notification = ref(null);
-const {notify} = useNotification(notification);
+const {notify} = useNotification();
 
 const nonogram = ref(null);
 const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
@@ -93,7 +92,6 @@ onBeforeUnmount(async () => {
         <BasicButton @click="setDailyChallenge">Wykonaj</BasicButton>
       </div>
     </Transition>
-    <Notification ref="notification"/>
   </main>
 </template>
 

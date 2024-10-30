@@ -16,8 +16,7 @@ const {checkSolution} = useNonogram(nonogram);
 const route = useRoute();
 const router = useRouter();
 
-const notification = ref(null);
-const {notify} = useNotification(notification);
+const {notify} = useNotification();
 
 const fetchCommunityGame = async () => {
   const communityPuzzle = await getCommunityPuzzle(route.params.id).then((res) => res.data);
@@ -60,7 +59,6 @@ onMounted(fetchCommunityGame);
         <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @end-game="handleEndGame"/>
       </div>
     </Transition>
-    <Notification ref="notification"/>
   </main>
 </template>
 

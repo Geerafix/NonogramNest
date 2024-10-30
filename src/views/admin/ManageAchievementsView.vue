@@ -17,8 +17,7 @@ const {blurred} = useBlurOnView(manageAchievement, false);
 
 const {pageState} = usePagination(1, 10, achievements);
 
-const notification = ref();
-const {notify} = useNotification(notification);
+const {notify} = useNotification();
 
 const fetchAchievements = async () => {
   await getAchievements(pageState.value.page, pageState.value.limit)
@@ -55,6 +54,5 @@ onMounted(fetchAchievements)
       <Icon icon="fa-solid fa-plus" class="icon-fix"/>
     </BasicButton>
     <Pagination v-bind="pageState" @onPageChange="fetchAchievements" />
-    <Notification ref="notification"/>
   </main>
 </template>

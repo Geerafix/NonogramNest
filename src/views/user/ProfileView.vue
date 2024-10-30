@@ -12,8 +12,7 @@ import {useBlurOnView} from "@/composables/useBlurOnView.js";
 const user = ref(null);
 const component = ref('');
 
-const notification = ref(null);
-const {notify} = useNotification(notification);
+const {notify} = useNotification();
 
 const {blurred} = useBlurOnView(component, false);
 
@@ -57,6 +56,5 @@ onBeforeMount(fetchUserProfile);
     <Transition name="slide-up">
       <component :is="selectedForm" @reject="onReject" @accept="onResolve" />
     </Transition>
-    <Notification ref="notification" />
   </main>
 </template>

@@ -22,6 +22,7 @@ watch(counter, () => {
     paintTile(x, y);
   }
 });
+
 </script>
 
 <template>

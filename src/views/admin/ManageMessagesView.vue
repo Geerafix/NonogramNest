@@ -16,8 +16,7 @@ const {pageState} = usePagination(1, 10, messages);
 
 const {blurred} = useBlurOnView(messageId, false);
 
-const notification = ref();
-const {notify} = useNotification(notification);
+const {notify} = useNotification();
 
 const fetchMessages = async () => {
   await getMessages(pageState.value.page, pageState.value.limit)
@@ -46,6 +45,5 @@ onMounted(fetchMessages);
       <ManageMessage v-if="messageId" @reject="messageId = null" @accept="delMessage" />
     </Transition>
     <Pagination v-bind="pageState" @onPageChange="fetchMessages"></Pagination>
-    <Notification ref="notification" />
   </main>
 </template>

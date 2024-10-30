@@ -10,8 +10,7 @@ import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
 import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
 
-const notification = ref(null);
-const {notify} = useNotification(notification);
+const {notify} = useNotification();
 
 const nonogram = ref(null);
 const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
@@ -70,7 +69,6 @@ const endGame = () => {
       <Score v-bind="{time, points, started}"/>
     </div>
     <Summary ref="summary" />
-    <Notification ref="notification"/>
   </main>
 </template>
 

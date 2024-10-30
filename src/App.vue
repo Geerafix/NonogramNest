@@ -3,22 +3,23 @@ import Menu from '@/components/shared/menu/Menu.vue';
 import MenuUserItems from '@/components/shared/menu/MenuUserItems.vue';
 import MenuAdminItems from '@/components/shared/menu/MenuAdminItems.vue';
 import {useRoute} from 'vue-router';
-import {computed} from 'vue';
+import {computed, onMounted, ref, provide} from 'vue';
 
 const route = useRoute();
-const computedUser = computed(() => {
-  return route.meta.pageOwner === 'user';
-});
-const computedAdmin = computed(() => {
-  return route.meta.pageOwner === 'admin';
+const user = computed(() => route.meta.pageOwner === 'user');
+const admin = computed(() => route.meta.pageOwner === 'admin');
+
+const notification = ref();
+onMounted(() => {
+  provide('show', notification.value.show);
 });
 </script>
 
 <template>
   <main class="app-container">
     <Transition name="fade" mode="out-in">
-      <Menu v-if="computedUser || computedAdmin" v-slot="{ Component }">
-        <component :is="computedAdmin ? MenuAdminItems : (computedUser ? MenuUserItems : Component)"/>
+      <Menu v-if="user || admin" v-slot="{ Component }">
+        <component :is="admin ? MenuAdminItems : (user ? MenuUserItems : Component)"/>
       </Menu>
     </Transition>
     <RouterView class="router-container" v-slot="{ Component }">
@@ -26,6 +27,7 @@ const computedAdmin = computed(() => {
         <component :is="Component"/>
       </Transition>
     </RouterView>
+    <Notification ref="notification"/>
   </main>
 </template>
 

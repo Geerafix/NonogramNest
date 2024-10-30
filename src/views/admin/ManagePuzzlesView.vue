@@ -20,8 +20,8 @@ const option = ref('name');
 const rolledSearch = ref(false);
 const managedPuzzle = ref();
 
-const notification = ref();
-const {notify} = useNotification(notification);
+
+const {notify} = useNotification();
 const {pageState, pageReset} = usePagination(1, 10, puzzles);
 const {blurred} = useBlurOnView(managedPuzzle, false);
 
@@ -72,7 +72,6 @@ onMounted(fetchPuzzles);
     <ManagePuzzle v-if="managedPuzzle" @accept="onAccept" @reject="managedPuzzle = null"
                   :id="managedPuzzle?.created_id"
                   :puzzle="JSON.parse(managedPuzzle?.excluded_tiles)" />
-    <Notification ref="notification"/>
   </main>
 </template>
 

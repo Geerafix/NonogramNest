@@ -8,8 +8,8 @@ import {set} from '@vueuse/core';
 import {useNotification} from '@/composables/useNotification';
 
 const board = ref(null);
-const notification = ref(null);
-const {notify} = useNotification(notification);
+
+const {notify} = useNotification();
 
 const isSizeSelected = ref(false);
 
@@ -52,7 +52,6 @@ const handleSubmitGame = async (name) => {
       <NonogramBoard ref="board" v-show="isSizeSelected" />
     </Transition>
     <Actions class="actions" :isCreating="isSizeSelected" @new-board="handleNewBoard" @clear-board="handleClearBoard" @submit="handleSubmitGame" />
-    <Notification ref="notification" />
   </main>
 </template>
 

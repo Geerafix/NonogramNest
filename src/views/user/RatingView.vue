@@ -2,13 +2,13 @@
 import Pagination from '@/components/shared/Pagination.vue';
 import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
+import UserProfile from "@/components/user/profile/UserProfile.vue";
 import {modes, sizes} from '@/config.js';
 import {getRatingChallenge, getRatingClassic, getRatingUser} from '@/services/ratingService';
 import {computed, onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {useList} from '@/composables/useList';
 import {usePagination} from '@/composables/usePagination';
-import UserProfile from "@/components/user/profile/UserProfile.vue";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
 
 const size = ref(null);

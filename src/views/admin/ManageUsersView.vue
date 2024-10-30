@@ -25,8 +25,7 @@ const {pageState, pageReset} = usePagination(1, 10, users);
 
 const {blurred} = useBlurOnView(managedUser, false);
 
-const notification = ref();
-const {notify} = useNotification(notification);
+const {notify} = useNotification();
 
 const fetchUsers = async (switched) => {
   set(who, switched);
@@ -89,7 +88,6 @@ onMounted(fetchUsers);
     <Transition name="fade">
       <ManageUser v-if="managedUser" :user="managedUser" @accept="onAccept" @reject="managedUser = null"/>
     </Transition>
-    <Notification ref="notification" />
   </main>
 </template>
 
