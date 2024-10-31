@@ -71,7 +71,7 @@ const onSubmit = () => {
       <span v-if="error" class="error">Użytkownik już istnieje</span>
       <BasicButton buttonText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass"/>
     </form>
-    <span class="mx-auto text-lg">
+    <span class="mx-auto text-xl">
       Przejdź do
       <a class="login-link" @click="router.push({ name: 'SignIn' })"><b>strony logowania</b></a>
     </span>

@@ -41,7 +41,7 @@ const onSubmit = async () => {
       <BasicButton buttonText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass"/>
       <span v-if="error" class="error">Nieprawidłowe dane logowania</span>
     </form>
-    <span class="mx-auto text-lg">
+    <span class="mx-auto text-xl">
       Nie masz konta?
       <a class="register-link"
          @click="router.push({ name: 'SignUp' })"><b>Zarejestruj się</b>
