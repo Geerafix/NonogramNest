@@ -6,7 +6,7 @@ dotenv.config({path: "../.env"});
 export const getPagination = (req) => {
     const page = !Number.isNaN(parseInt(req.query.page)) ? parseInt(req.query.page) : 1;
     const limit = !Number.isNaN(parseInt(req.query.limit)) ? parseInt(req.query.limit) : Number.MAX_SAFE_INTEGER;
-    const offset = (page - 1) * limit;
+    const offset = (page - 1) * (limit - 1);
 
     return {page, limit, offset};
 };

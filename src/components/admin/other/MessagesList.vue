@@ -8,7 +8,7 @@ const onClick = (id) => {
 </script>
 
 <template>
-  <Transition name="fade-slower">
+  <Transition name="fade-slower" mode="out-in">
     <div class="container" :key="messages">
       <li v-for="message in messages">
         <div class="item" @click="onClick(message.id)">

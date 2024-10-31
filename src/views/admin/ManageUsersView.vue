@@ -21,7 +21,7 @@ const users = ref([]);
 const rolledSearch = ref(false);
 
 const listState = useList(['UID','Email','Nazwa użytkownika','Rola'], users);
-const {pageState, pageReset} = usePagination(1, 10, users);
+const {pageState, pageReset} = usePagination(1, users);
 
 const {blurred} = useBlurOnView(managedUser, false);
 

@@ -17,7 +17,7 @@ const option = ref('name');
 const whom = ref(false);
 const rolledSearch = ref(false);
 
-const {pageState, pageReset} = usePagination(1, 10, puzzles);
+const {pageState, pageReset} = usePagination(1, puzzles);
 const listState = useList(['ID','Nazwa','Rozmiar','Twórca'], puzzles);
 const router = useRouter();
 

@@ -7,7 +7,7 @@ import {getUserAchievements} from '@/services/userService';
 import {onMounted, ref} from 'vue';
 
 const achievements = ref([]);
-const {pageState} = usePagination(1, 10, achievements);
+const {pageState} = usePagination(1, achievements);
 
 const fetchUserAchievements = async () => {
   await getUserAchievements(pageState.value.page, pageState.value.limit)

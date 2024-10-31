@@ -12,7 +12,7 @@ import {useNotification} from "@/composables/useNotification.js";
 const messages = ref([]);
 const messageId = ref(null);
 
-const {pageState} = usePagination(1, 10, messages);
+const {pageState} = usePagination(1, messages);
 
 const {blurred} = useBlurOnView(messageId, false);
 

@@ -7,7 +7,6 @@ import {onMounted, ref} from "vue";
 import {getAchievements} from "@/services/adminService.js";
 import {usePagination} from "@/composables/usePagination.js";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
-import Notification from "@/components/shared/Notification.vue";
 import {useNotification} from "@/composables/useNotification.js";
 
 const achievements = ref([]);
@@ -15,7 +14,7 @@ const achievements = ref([]);
 const manageAchievement = ref(null);
 const {blurred} = useBlurOnView(manageAchievement, false);
 
-const {pageState} = usePagination(1, 10, achievements);
+const {pageState} = usePagination(1, achievements);
 
 const {notify} = useNotification();
 

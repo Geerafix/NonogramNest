@@ -4,11 +4,10 @@ import {set} from "@vueuse/core";
 
 export const achievementWatcher = () => {
     const showNotification = inject('show');
-    let achievementCount = ref();
+    const achievementCount = ref();
 
     onMounted(async () => {
         await getAchievementCount().then((res) => set(achievementCount, res.data));
-        console.log(achievementCount.value)
     });
 
     const watcher = async () => {
@@ -16,7 +15,7 @@ export const achievementWatcher = () => {
             const count = parseInt(res.data);
 
             if (achievementCount.value !== count) {
-                showNotification(true, 'Zdobyto nowe osiągnięcie.');
+                showNotification(true, 'Zdobyto nowe osiągnięcie.', 3000);
             }
         });
     };

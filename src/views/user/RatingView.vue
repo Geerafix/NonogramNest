@@ -17,7 +17,7 @@ const rating = ref([]);
 const viewedUser = ref(null);
 
 const listState = useList(['UID','Nazwa','Punkty'], rating);
-const {pageState} = usePagination(1, 10, rating);
+const {pageState} = usePagination(1, rating);
 
 const {blurred} = useBlurOnView(viewedUser, true);
 

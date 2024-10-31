@@ -20,9 +20,8 @@ const option = ref('name');
 const rolledSearch = ref(false);
 const managedPuzzle = ref();
 
-
 const {notify} = useNotification();
-const {pageState, pageReset} = usePagination(1, 10, puzzles);
+const {pageState, pageReset} = usePagination(1, puzzles);
 const {blurred} = useBlurOnView(managedPuzzle, false);
 
 const fetchPuzzles = async () => {
