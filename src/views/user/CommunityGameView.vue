@@ -39,8 +39,8 @@ const handleCheck = async () => {
   if (!isSolved) {
     notify(false, 'Twoje rozwiązanie jest niepoprawne.');
   } else {
-    notify(true, 'Rozwiązano nonogram społeczności.');
-    handleEndGame();
+    await handleEndGame();
+    notify(true, 'Rozwiązano nonogram.', 4000);
   }
 };
 

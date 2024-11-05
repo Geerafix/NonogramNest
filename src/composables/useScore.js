@@ -39,7 +39,14 @@ export function useScore() {
 
     watch(paused, (newValue) => newValue ? pause() : resume());
 
-    watch(started, (newValue) => newValue === false ? reset() : pause());
+    watch(started, (newValue) => {
+        if (!newValue) {
+            pause();
+            reset();
+        } else {
+            resume();
+        }
+    }, {immediate: true});
 
     onMounted(pause);
 

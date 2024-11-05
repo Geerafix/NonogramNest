@@ -1,22 +1,20 @@
 <script setup>
 import Nonogram from '@/components/user/game/Nonogram.vue';
 import {onMounted, ref, watch} from 'vue';
-import {useInterval, useTimeout} from '@vueuse/core';
+import {useInterval} from '@vueuse/core';
 import {useNonogram} from '@/composables/useNonogram';
 
-const {counter, resume} = useInterval(700, {controls: true});
+const {counter, resume} = useInterval(750, {controls: true});
 
 const nonogram = ref(null);
 const {setNewBoard, setBoardSize, paintTile, answers} = useNonogram(nonogram);
 
 const size = 10;
 
-const iterator = ref(0);
-
 watch(counter, () => {
   const x = Math.floor(Math.random() * size);
   const y = Math.floor(Math.random() * size);
-  if (answers.value[y][x] !== -1) {
+  if (answers.value[y][x] !== -1 &&  counter.value % 1 === 0) {
     paintTile(x, y);
   }
 });
@@ -25,17 +23,7 @@ onMounted(() => {
   setBoardSize(size);
   setNewBoard()
   resume();
-  displaySlogan();
 });
-
-const displaySlogan = () => {
-  setTimeout(() => {
-    iterator.value += 1;
-    if (iterator.value < 4) {
-      displaySlogan();
-    }
-  }, 1000);
-};
 </script>
 
 <template>
@@ -51,9 +39,21 @@ const displaySlogan = () => {
     <div class="grid grid-cols-[min-content_1fr] mt-14 mx-auto">
       <Nonogram ref="nonogram" :started="true" class="board-style"/>
       <div class="slogan">
-        <p :class="{'!opacity-100': iterator > 0}">Rozwiązuj nonogramy.</p>
-        <p :class="{'!opacity-100': iterator > 1}">Wykonuj codzienne wyzwania.</p>
-        <p :class="{'!opacity-100': iterator > 2}">Wspinaj się po szczeblach rankingu.</p>
+        <p :class="{'!opacity-100': counter > 0}">
+          <Icon icon="fa-solid fa-chess-board" class="text-zinc-200"/>&nbsp; Rozwiązuj nonogramy.
+        </p>
+        <p :class="{'!opacity-100': counter > 1}">
+          <Icon icon="fa-solid fa-star" class="text-yellow-100"/>&nbsp; Zdobywaj osiągnięcia.
+        </p>
+        <p :class="{'!opacity-100': counter > 2}">
+          <Icon icon="fa-solid fa-trophy" class="text-orange-100"/>&nbsp; Wykonuj codzienne wyzwania.
+        </p>
+        <p :class="{'!opacity-100': counter > 3}">
+          <Icon icon="fa-solid fa-chart-simple" class="text-red-100"/>&nbsp; Wspinaj się po szczeblach rankingu.
+        </p>
+        <p :class="{'!opacity-100': counter > 4}">
+          <Icon icon="fa-solid fa-user-check" class="text-green-100"/>&nbsp; Zarejestruj się już dziś!
+        </p>
       </div>
     </div>
   </main>
@@ -62,15 +62,18 @@ const displaySlogan = () => {
 <style scoped>
 .slogan {
   @apply
-  flex
-  flex-col
-  gap-5
-  text-5xl
-    my-auto
-    ml-16
-  [&>*]:transition-opacity
+  grid
+  gap-8
+  text-[2.5rem]
+  my-auto
+  ml-16
+  [&>*]:transition-all
+  [&>*]:w-fit
+  select-none
   italic
+  text-gray-100
   text-wrap
+  z-0
   text-left;
 }
 .login {
@@ -79,8 +82,15 @@ const displaySlogan = () => {
   grid
   gap-4
   top-4
+  p-4
   right-4
-  [&>*]:!bg-gray-600
+  place-content-end
+  [&>*]:!bg-slate-600
+  [&>*]:!w-fit
+  from-slate-800/50
+  bg-gradient-to-l
+  rounded-xl
+  z-50
   max-sm:bottom-0;
 }
 .board-style{
@@ -93,7 +103,6 @@ const displaySlogan = () => {
   !-translate-y-[0]
   place-content-center
   shadow-none
-
 }
 p {
   @apply

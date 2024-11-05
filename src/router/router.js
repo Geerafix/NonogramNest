@@ -16,7 +16,7 @@ const router = createRouter({
             component: view('home', 'Home'),
             meta: {
                 hideMenu: true,
-                title: 'Nonogramy.pl'
+                title: 'NonogramNest'
             },
         },
         {

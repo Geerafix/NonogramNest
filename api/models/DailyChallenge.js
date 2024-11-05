@@ -45,15 +45,6 @@ export const DailyChallenge = sequelize.define('DailyChallenge', {
     tableName: 'DailyChallenges',
     timestamps: false,
     hooks: {
-        afterCreate: async (solved_challenge, options) => {
-            await Score.update({
-                challenge_sum: sequelize.literal(`challenge_sum + ${solved_challenge.points}`),
-            }, {
-                where: {
-                    user_id: solved_challenge.user_id
-                }
-            });
-        },
         afterUpdate: async (solved_challenge, options) => {
             if (solved_challenge.is_solved === true) {
                 const userProfile = await UserProfile.findOne({

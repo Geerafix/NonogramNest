@@ -4,16 +4,20 @@ import {computed} from "vue";
 
 const route = useRoute();
 
-const headers = ['/', '/logowanie', '/rejestracja'];
+const headers = ['Home', 'SignIn', 'SignUp'];
 const style = '!text-left !text-5xl !p-5 !bg-gradient-to-r from-slate-700/80 italic';
 
-const styleOnHome = computed(() => headers.includes(route.path) ? style : '')
+const styleOnHome = computed(() => headers.includes(route.name) ? style : '')
 </script>
 
 <template>
-  <h1 :class="['header', styleOnHome]">
+  <div :class="['header', styleOnHome]">
     {{ route.meta.title }}
-  </h1>
+    <div v-if="headers.includes(route.name)"
+      class="opacity-10 absolute -translate-y-[34.7%] -right-20 scale-75 -skew-x-12">
+      <img src="../../../public/header2.png">
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -32,6 +36,8 @@ const styleOnHome = computed(() => headers.includes(route.path) ? style : '')
   text-center
   font-thin
   font-sans
+  relative
+  overflow-hidden
   select-none;
 }
 </style>

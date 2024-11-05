@@ -7,6 +7,7 @@ import {postSignUp} from '@/services/authService.js';
 import {useTrailingBox} from "@/composables/useTrailingBox.js";
 import {useAsyncValidator} from '@vueuse/integrations/useAsyncValidator';
 import {reactive, ref} from 'vue';
+import {useNotification} from "@/composables/useNotification.js";
 
 const router = useRouter();
 const error = ref(false);
@@ -36,11 +37,13 @@ const rules = {
 }
 const {pass, errorFields} = useAsyncValidator(form, rules);
 const {showBox, hideBox, message, isHovered} = useTrailingBox();
+const {notify} = useNotification()
 
 const onSubmit = () => {
   postSignUp(form.email, form.username, form.password)
     .then(() => {
       router.push('/logowanie');
+      notify(true, 'Zarejestrowano.', 4000);
     })
     .catch(() => {
       error.value = true;

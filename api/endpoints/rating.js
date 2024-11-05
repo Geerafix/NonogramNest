@@ -1,4 +1,4 @@
-import {server} from '../server.js';
+import {sequelize, server} from '../server.js';
 import {User} from '../models/User.js';
 import {Score} from '../models/Score.js';
 import {asyncHandler, authHandler, getPagination} from "../utils.js";
@@ -18,7 +18,9 @@ server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
             duplicating: false
         },
         where: {role: 'user'},
-        attributes: ['user_id', 'username', `Score.${column}`],
+        attributes: ['user_id', 'username', `Score.${column}`,
+            [sequelize.literal(`(RANK() OVER (ORDER BY ${column} DESC))`), 'rank']
+        ],
         order: [[Score, column, 'DESC']],
         limit: limit,
         offset: offset,
@@ -38,7 +40,9 @@ server.get('/rating/challenges', authHandler, asyncHandler(async (req, res) => {
             duplicating: false
         },
         where: {role: 'user'},
-        attributes: ['user_id', 'username', 'Score.challenge_sum'],
+        attributes: ['user_id', 'username', 'Score.challenge_sum',
+            [sequelize.literal('(RANK() OVER (ORDER BY challenge_sum DESC))'), 'rank']
+        ],
         order: [[Score, 'challenge_sum', 'DESC']],
         limit: limit,
         offset: offset,

@@ -13,11 +13,13 @@ export function generateAndFindHints(nonogram, size) {
     nonogram.excludedTiles = Array.from(Array(size), () => Array(size).fill(0));
     nonogram.board = Array.from(Array(size), () => Array(size).fill().map(() => Math.floor(Math.random() * 2)));
 
+    const pR = getExcludedProbability(size);
+
     nonogram.answers = Array.from(Array(size), () => Array(size).fill(0));
     nonogram.answers = nonogram.answers.map((row, rowIdx) =>
         row.map((col, colIdx) =>
-            nonogram.board[rowIdx][colIdx] !== 1 ? Math.floor(Math.random() * 2) * -1 : col
-        ));
+            nonogram.board[rowIdx][colIdx] !== 1 ? (Math.random() <= pR ? 1 : 0) * -1 : col
+    ));
 
     nonogram.board.forEach((row, rowIdx) => {
         nonogram.cluesX[rowIdx] = [];
@@ -139,6 +141,25 @@ export function generateGame(answers) {
 
     return nonogram;
 }
+
+const pR = [
+    { 5: 0.20 },
+    { 6: 0.21 },
+    { 7: 0.23 },
+    { 8: 0.25 },
+    { 9: 0.28 },
+    { 10: 0.31 },
+    { 11: 0.35 },
+    { 12: 0.39 },
+    { 13: 0.43 },
+    { 14: 0.47 },
+    { 15: 0.51 }
+];
+
+export const getExcludedProbability = (size) => {
+    const p = pR.find((el) => el[size] !== undefined);
+    return p ? p[size] : undefined;
+};
 
 const points = [
     { 5: 100 },

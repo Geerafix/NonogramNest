@@ -25,7 +25,7 @@ export function usePagination(initialPage, initialItems) {
           pass.value = false;
         }
 
-        if (initialItems.value.length === 0 && page.value > 0) {
+        if (initialItems.value.length === 0 && page.value > 1) {
             page.value -= 1;
         }
     });
