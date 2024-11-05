@@ -95,6 +95,30 @@ body {
 	opacity: 0;
 }
 
+.slide-right-smooth-enter-active,
+.slide-right-smooth-leave-active {
+	transition: all 0.3s ease-in-out;
+}
+.slide-right-smooth-enter-from,
+.slide-right-smooth-leave-to {
+	transform: translateX(-50px);
+	filter: blur(2px);
+	opacity: 0;
+}
+
+.slide-left-right-enter-active,
+.slide-left-right-leave-active {
+	transition: all 0.2s ease-in-out;
+}
+.slide-left-right-enter-from {
+	transform: translateX(-30px);
+	opacity: 0;
+}
+.slide-left-right-leave-to {
+	transform: translateX(30px);
+	opacity: 0;
+}
+
 .slide-left-enter-active,
 .slide-left-leave-active {
 	transition: all 0.3s;

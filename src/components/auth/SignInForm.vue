@@ -25,7 +25,7 @@ const {pass} = useAsyncValidator(form, rules);
 const onSubmit = async () => {
   await postSignIn(form.login, form.password)
       .then(() => {
-        router.go('/');
+        router.push('/');
       })
       .catch(() => {
         error.value = true;

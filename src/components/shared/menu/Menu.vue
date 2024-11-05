@@ -32,9 +32,9 @@ const computedScreen = computed(() => {
 </script>
 
 <template>
-  <div class="relative">
-    <TransitionGroup name="slide-right">
-      <div v-if="!computedScreen" key="1" class="menu" @click="visible = !visible"
+  <div class="relative transition-all">
+    <Transition name="slide-right-smooth" mode="out-in">
+      <div v-if="!computedScreen" class="menu" @click="visible = !visible"
            @mouseover="toggleNavbar">
         <slot></slot>
         <div class="buttons-container">
@@ -46,8 +46,8 @@ const computedScreen = computed(() => {
           </MenuButton>
         </div>
       </div>
-    </TransitionGroup>
-    <BasicButton key="2" class="expand-button" @click="visible = !visible">
+    </Transition>
+    <BasicButton class="expand-button" @click="visible = !visible">
       <div :class="{ '-rotate-180': visible }" class="transition-all ease-out flex">
         <Icon v-if="visible" icon="fa-solid fa-bars" class="my-auto mx-auto"/>
         <Icon v-else icon="fa-solid fa-reply" class="my-auto mx-auto"/>
