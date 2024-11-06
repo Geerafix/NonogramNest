@@ -66,7 +66,7 @@ onBeforeMount(fetchPuzzles);
         </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..."/>
         <Select :class="[slideHideSelect]" :items="ratingSearchBy" @onSelect="setOption"/>
-        <Switch @onSwitch="fetchPuzzles">
+        <Switch @onSwitch="fetchPuzzles" :displayed="whom ? 'Moje gry' : 'Gry użytkowników'">
           <Icon icon="fa-solid fa-user-group" class="icon-fix"/>
           <Icon icon="fa-solid fa-user" class="icon-fix"/>
         </Switch>

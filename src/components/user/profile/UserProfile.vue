@@ -37,7 +37,7 @@ defineProps(['user']);
 .user-profile-container {
   @apply
   grid
-  sm:grid-cols-2
+  sm:grid-cols-[24rem_24rem]
   max-sm:grid-rows-2
   gap-2
   p-2

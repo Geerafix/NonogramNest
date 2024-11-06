@@ -1,7 +1,9 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
+import {useElementHover} from "@vueuse/core";
 
 const emit = defineEmits(['onSwitch']);
+const props = defineProps(['displayed'])
 
 const switched = ref(false);
 
@@ -10,15 +12,24 @@ watch(switched, () => emit('onSwitch', switched.value));
 const restyleSwitched = computed(() => (
     switched.value ? 'rounded-ss-2xl rounded-es-2xl border-r-4' : 'translate-x-full rounded-se-2xl rounded-ee-2xl border-l-4')
 );
+
+const element = ref();
+const elementHover = useElementHover(element);
 </script>
 
 <template>
-    <div class="w-fit relative">
-        <button class="switch" @click="switched = !switched">
-            <div :class="['dot', restyleSwitched]"></div>
-            <slot></slot>
-        </button>
+  <Transition name="slide-left-hidden" mode="out-in">
+    <div class="info" v-show="elementHover">
+      <span class="text-gray-300">Wyświetlanie:</span><br>
+      {{displayed}}
     </div>
+  </Transition>
+  <div class="w-fit relative" ref="element">
+      <button class="switch" @click="switched = !switched">
+          <div :class="['dot', restyleSwitched]"></div>
+          <slot></slot>
+      </button>
+  </div>
 </template>
 
 <style scoped>
@@ -32,6 +43,8 @@ const restyleSwitched = computed(() => (
     rounded-2xl
     w-24
     h-14
+    transition-all
+    hover:bg-gray-400/90
     text-gray-600;
 }
 .dot {
@@ -46,5 +59,19 @@ const restyleSwitched = computed(() => (
     drop-shadow-md
     ease-in-out
     duration-[75ms]
+}
+.info {
+  @apply
+  p-2
+  absolute
+  right-0
+  bottom-[calc(100%+0.5rem)]
+  transition-all
+  text-xl
+  shadow-md
+  bg-slate-700
+  rounded-xl
+  border-b-4
+  border-slate-800/60
 }
 </style>

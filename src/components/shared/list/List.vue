@@ -18,10 +18,6 @@ const onListItemClick = (item) => {
   emit('onListItemClick', item);
 };
 
-const shortenedValue = (val) => (
-    val && val.length > 15 ? val.slice(0, 15).concat('...') : val
-);
-
 const filteredItem = (item) => (
     Object.fromEntries(Object.entries(item).filter((key, idx) => !props.excluded?.includes(idx)))
 );
@@ -41,7 +37,7 @@ const filteredItem = (item) => (
         <li v-for="item in props.items">
           <ListItem @click="onListItemClick(item)">
             <li v-for="value of filteredItem(item)">
-              <Item :value="shortenedValue(value)"/>
+              <Item :value="value" class="truncate ..."/>
             </li>
           </ListItem>
         </li>

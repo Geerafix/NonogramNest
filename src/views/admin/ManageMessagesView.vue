@@ -30,7 +30,7 @@ const saveId = (id) => {
 const delMessage = async (status, message) => {
   await deleteMessage(messageId.value);
   set(messageId, null);
-  fetchMessages();
+  await fetchMessages();
   notify(status, message)
 };
 

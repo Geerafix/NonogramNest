@@ -90,5 +90,6 @@ li {
   cursor-pointer
   bg-gradient-to-r
   from-gray-800
+  outline-0
 }
 </style>

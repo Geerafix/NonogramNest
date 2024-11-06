@@ -74,7 +74,7 @@ onMounted(fetchUsers);
         </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..." />
         <Select :items="usersSearchBy" @onSelect="setOption"/>
-        <Switch @onSwitch="fetchUsers">
+        <Switch @onSwitch="fetchUsers" :displayed="who ? 'Admini' : 'Użytkownicy'">
           <Icon icon="fa-solid fa-user" class="icon-fix"/>
           <Icon icon="fa-solid fa-user-secret" class="icon-fix"/>
         </Switch>

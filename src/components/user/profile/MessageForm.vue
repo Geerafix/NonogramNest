@@ -23,7 +23,7 @@ const reject = () => {
       <span class="w-full">Tytuł</span>
       <BasicInput placeholder="Tytuł..." v-model="title" :style="{'width': '100%'}" />
       <span class="w-full mt-2">Treść</span>
-      <TextArea placeholder="Opisz swój problem..." v-model="message" />
+      <TextArea placeholder="Opisz swój problem..." v-model="message" class="!w-[30rem]"/>
       <div class="profile-form-actions">
         <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
         <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>

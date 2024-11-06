@@ -139,12 +139,16 @@ server.get('/admin/admins', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
     const search = `%${req.query.search}%` || '%%';
     const option = req.query.option;
+    const user = await req.user;
 
     const users = await User.findAll({
         attributes: {exclude: ['password']},
         where: {
             role: 'admin',
-            username: {[Op.iLike]: option === 'name' ? search : '%%'},
+            [Op.and]: [
+                {username: {[Op.iLike]: option === 'name' ? search : '%%'}},
+                {user_id: {[Op.ne]: user.user_id}}
+            ],
             email: {[Op.iLike]: option === 'email' ? search : '%%'},
         },
         limit: limit,
