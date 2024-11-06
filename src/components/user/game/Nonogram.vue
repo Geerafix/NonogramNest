@@ -8,6 +8,7 @@ import {onBeforeMount, reactive} from 'vue';
 defineProps(['paused', 'started']);
 
 const nonogram = reactive({});
+const indexes = reactive({x: null, y: null});
 
 const newBoard = () => {
   generateAndFindHints(nonogram, nonogram.size);
@@ -22,11 +23,19 @@ const checkSolution = () => {
   return {isSolved: (isSolved.X && isSolved.Y), lostPoints: isSolved.counter};
 };
 
-const paintTile = (row, col) => {
+const paintAnswer = (row, col) => {
   nonogram.answers[row][col] = (nonogram.answers[row][col] + 1) % 2;
 };
 
-defineExpose({nonogram, newBoard, resetBoard, paintTile, checkSolution});
+const paintExclude = (row, col) => {
+  nonogram.answers[row][col] = (nonogram.answers[row][col] - 1) % 2;
+};
+
+defineExpose({nonogram, newBoard, resetBoard, paintAnswer, checkSolution});
+
+const highlight = (col, row) => {
+  Object.assign(indexes, {x: col, y: row});
+};
 
 onBeforeMount(resetBoard);
 </script>
@@ -40,12 +49,14 @@ onBeforeMount(resetBoard);
       <div class="blank-area">
         <div class="size-info">{{ nonogram.size }} x {{ nonogram.size }}</div>
       </div>
-      <NonogramYClues :clues="nonogram.cluesY"/>
-      <NonogramXClues :clues="nonogram.cluesX"/>
+      <NonogramYClues :clues="nonogram.cluesY" :highlightedIdx="indexes.y"/>
+      <NonogramXClues :clues="nonogram.cluesX" :highlightedIdx="indexes.x"/>
       <NonogramBoard
           :answers="nonogram.answers"
           :size="nonogram.size"
-          :paint="!paused ? paintTile : () => {}"
+          :paintAnswer="!paused ? paintAnswer : null"
+          :paintExclude="!paused ? paintExclude : null"
+          v-on="{highlight: !paused ? highlight : null}"
       />
     </div>
   </main>
@@ -100,6 +111,7 @@ onBeforeMount(resetBoard);
   text-nowrap
   rounded-xl
   select-none
+    shadow-2xl
   duration-150;
 }
 .nonogram-container {

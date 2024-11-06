@@ -7,7 +7,7 @@ import {useNonogram} from '@/composables/useNonogram';
 const {counter, resume} = useInterval(750, {controls: true});
 
 const nonogram = ref(null);
-const {setNewBoard, setBoardSize, paintTile, answers} = useNonogram(nonogram);
+const {setNewBoard, setBoardSize, paintAnswer, answers} = useNonogram(nonogram);
 
 const size = 10;
 
@@ -15,7 +15,7 @@ watch(counter, () => {
   const x = Math.floor(Math.random() * size);
   const y = Math.floor(Math.random() * size);
   if (answers.value[y][x] !== -1 &&  counter.value % 1 === 0) {
-    paintTile(x, y);
+    paintAnswer(x, y);
   }
 });
 

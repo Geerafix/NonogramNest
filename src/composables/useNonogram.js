@@ -18,8 +18,8 @@ export function useNonogram(nonogram) {
         return {isSolved: solution.isSolved, lostPoints: solution.lostPoints}
     };
 
-    const paintTile = (x, y) => {
-        nonogram.value.paintTile(y, x);
+    const paintAnswer = (x, y) => {
+        nonogram.value.paintAnswer(y, x);
     };
 
     const cluesX = computed(() => nonogram.value?.nonogram?.cluesX);
@@ -35,7 +35,7 @@ export function useNonogram(nonogram) {
         setBoardSize, 
         setNewBoard, 
         checkSolution,
-        resetBoard, 
-        paintTile
+        resetBoard,
+        paintAnswer
     };
 }

@@ -42,7 +42,7 @@ const tileSize = computed(() => {
 });
 
 const colorTile = (row, col) => (
-    (answers.value[row-1] && answers.value[col-1][row-1] === -1) ? 'bg-gray-200/80' :
+    (answers.value[row-1] && answers.value[col-1][row-1] === -1) ? 'bg-white relative x' :
     ((answers.value[row-1] && answers.value[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')
 );
 
@@ -89,5 +89,28 @@ defineExpose({setBoard, clearBoard, answers});
   rounded-[3px]
   text-center
   transition-colors;
+}
+.x::after {
+  @apply
+  bg-gray-700
+  content-[""]
+  rounded-xl
+  w-1 h-full
+  rotate-45
+  left-1/2 -translate-x-1/2
+  top-1/2 -translate-y-1/2
+  absolute;
+}
+
+.x::before {
+  @apply
+  bg-gray-700
+  content-[""]
+  rounded-xl
+  w-1 h-full
+  -rotate-45
+  left-1/2 -translate-x-1/2
+  top-1/2 -translate-y-1/2
+  absolute;
 }
 </style>

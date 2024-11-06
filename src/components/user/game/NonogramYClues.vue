@@ -1,17 +1,22 @@
 <script setup>
 import {computed} from "vue";
 
-const props = defineProps(['clues']);
+const props = defineProps(['clues', 'highlightedIdx']);
 
 const tileSize = computed(() => {
   const len = props.clues.length;
   return (0.8 + (15/len)) + 'rem';
 });
+
+const highlightedStyle = computed(() =>
+    'bg-gray-700 rounded-sm rounded-tr-lg shadow-inner'
+);
 </script>
 
 <template>
   <div class="xclues-container">
-    <div v-for="ans in clues" class="content-end">
+    <div v-for="(ans, idx) in clues" class="content-end"
+         :class="[highlightedIdx === idx ? highlightedStyle : '']">
       <div class="single-clue" :style="{'width': tileSize}">
         <div v-for="single in ans" class="text-xl">
           <p>{{ single }}</p>
