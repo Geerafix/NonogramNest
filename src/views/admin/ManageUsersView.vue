@@ -55,10 +55,6 @@ watch([search, option], () => {
   fetchUsers(who.value);
 });
 
-const slideHideSelect = computed(() =>
-    (who.value ? 'max-w-0 -mr-2 opacity-0' : 'max-w-36').concat(' transition-all')
-);
-
 onMounted(fetchUsers);
 </script>
 
@@ -77,7 +73,7 @@ onMounted(fetchUsers);
           <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
         </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..." />
-        <Select :class="[slideHideSelect]" :items="usersSearchBy" @onSelect="setOption"/>
+        <Select :items="usersSearchBy" @onSelect="setOption"/>
         <Switch @onSwitch="fetchUsers">
           <Icon icon="fa-solid fa-user" class="icon-fix"/>
           <Icon icon="fa-solid fa-user-secret" class="icon-fix"/>

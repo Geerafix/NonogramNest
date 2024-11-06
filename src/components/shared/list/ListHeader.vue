@@ -11,14 +11,15 @@
 <style scoped>
 .headers {
   @apply
+  sticky
   grid
   grid-cols-[repeat(auto-fit,minmax(0,1fr))]
-  bg-gray-900/60
+  bg-gray-900/75
   gap-2
   p-2
   mb-2
-  rounded-md
+  rounded-xl
   text-center
-  select-none;
+  select-none
 }
 </style>

@@ -14,16 +14,17 @@ const overItem = ref(false);
 <style scoped>
 .list-item {
   @apply
+  relative
   grid
   grid-cols-[repeat(auto-fit,minmax(0,1fr))]
   gap-2
   p-2
-  bg-gray-900/40
-  rounded-lg
+  bg-gray-900/50
+  rounded-xl
   text-center
   transition-all
   text-xl
   ease-in
-  cursor-pointer;
+  cursor-pointer
 }
 </style>

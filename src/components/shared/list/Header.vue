@@ -14,8 +14,8 @@ defineProps(['headerName']);
   p-2
   bg-gradient-to-b
   from-gray-700
-  to-gray-700/85
-  rounded-md
+  to-gray-700
+  rounded-lg
   transition
   ease-[1s]
   text-2xl

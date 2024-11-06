@@ -16,8 +16,8 @@ const overItem = ref(false);
 .item {
   @apply
   p-1
-  bg-gray-700/40
-  rounded-md
+  bg-gray-700/50
+  rounded-lg
   cursor-pointer
   transition
   ease-[1s]

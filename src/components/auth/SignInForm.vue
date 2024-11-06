@@ -3,9 +3,9 @@ import {reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {postSignIn} from '@/services/authService.js';
 import {useAsyncValidator} from '@vueuse/integrations/useAsyncValidator';
+import {useNotification} from "@/composables/useNotification.js";
 
 const router = useRouter();
-const error = ref(false);
 const form = reactive({
   login: '',
   password: ''
@@ -21,6 +21,7 @@ const rules = {
   }
 }
 const {pass} = useAsyncValidator(form, rules);
+const {notify} = useNotification();
 
 const onSubmit = async () => {
   await postSignIn(form.login, form.password)
@@ -28,7 +29,7 @@ const onSubmit = async () => {
         router.push('/');
       })
       .catch(() => {
-        error.value = true;
+        notify(false, 'Nieprawidłowe dane logowania.');
       });
 };
 </script>
@@ -39,7 +40,6 @@ const onSubmit = async () => {
       <BasicInput v-model="form.login" placeholder="Login lub Email"/>
       <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off"/>
       <BasicButton buttonText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass"/>
-      <span v-if="error" class="error">Nieprawidłowe dane logowania</span>
     </form>
     <span class="mx-auto text-xl">
       Nie masz konta?
