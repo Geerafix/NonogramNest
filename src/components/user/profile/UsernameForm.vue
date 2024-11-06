@@ -50,7 +50,7 @@ const reject = () => {
         <BasicButton @click="reject">
           <Icon icon="fa-solid fa-xmark"/>
         </BasicButton>
-        <BasicButton @click="accept" :class="{'opacity-50': !pass}" :disabled="!pass">
+        <BasicButton @click="accept" :class="[{'opacity-50': !pass}, '!bg-teal-900']" :disabled="!pass">
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>

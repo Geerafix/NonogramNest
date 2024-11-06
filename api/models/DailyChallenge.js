@@ -77,6 +77,14 @@ export const DailyChallenge = sequelize.define('DailyChallenge', {
                     }
                 }
 
+                await Score.update({
+                    challenge_sum: sequelize.literal(`challenge_sum + ${solved_challenge.points}`),
+                }, {
+                    where: {
+                        user_id: solved_challenge.user_id
+                    }
+                });
+
                 await userProfile.save();
             }
         },

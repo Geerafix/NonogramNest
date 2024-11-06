@@ -53,7 +53,7 @@ const checkGame = async () => {
     setPoints(diff);
     notify(false, `Twoje rozwiązanie jest niepoprawne. Tracisz ${lostPoints} pkt.`);
   } else {
-    const bonus = calcTimeBonus(time.value, 8)
+    const bonus = calcTimeBonus(time.value, 8);
     await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value + bonus, true);
     summary.value.show(points.value, bonus);
     endGame();
@@ -62,7 +62,6 @@ const checkGame = async () => {
 };
 
 const endGame = async () => {
-  await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
   clearPoints();
   resetBoard();
 };

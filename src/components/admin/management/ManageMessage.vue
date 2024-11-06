@@ -14,8 +14,12 @@ const reject = () => {
   <div class="form-container">
     <span>Usunąć wiadomość?</span>
     <div class="form-actions">
-      <BasicButton @click="reject"><Icon icon="fa-solid fa-xmark"/></BasicButton>
-      <BasicButton @click="accept"><Icon icon="fa-solid fa-check"/></BasicButton>
+      <BasicButton @click="reject">
+        <Icon icon="fa-solid fa-xmark"/>
+      </BasicButton>
+      <BasicButton @click="accept" class="!bg-teal-900">
+        <Icon icon="fa-solid fa-check"/>
+      </BasicButton>
     </div>
   </div>
 </template>
