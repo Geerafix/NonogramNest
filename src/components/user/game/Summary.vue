@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue';
 import {onClickOutside, set} from '@vueuse/core'
+import MenuButton from "@/components/shared/inputs/MenuButton.vue";
 
 const isDisplayed = ref(false);
 const target = ref(null)
@@ -37,17 +38,17 @@ defineExpose({isDisplayed, show, hide});
           <span><b>{{points}}</b></span>
         </div>
         <div class="flex justify-between pb-4">
-          <span>Bonus:</span>
+          <span>Bonus za czas:</span>
           <span><b>{{bonus}}</b></span>
         </div>
         <div class="text-right border-gray-600 border-t-2 pt-4">
-          <span>Razem: </span>
-          <span><b>{{points + bonus}}</b> pkt.</span>
+          <span>Razem punktów: </span>
+          <span><b>{{points + bonus}}</b></span>
         </div>
       </div>
-      <BasicButton @click="hide()">Potwierdź
-        <Icon icon="fa-solid fa-check"/>
-      </BasicButton>
+      <MenuButton @click="hide()" buttonText="Potwierdź" class="!w-fit !text-2xl">
+        <Icon icon="fa-solid fa-check" class="my-auto mx-auto"/>
+      </MenuButton>
     </div>
   </Transition>
 </template>
@@ -65,7 +66,7 @@ defineExpose({isDisplayed, show, hide});
   -translate-y-1/2
   gap-4
   min-h-14
-  py-2
+  py-4
   px-4
   border-b-4
   bg-gray-600
