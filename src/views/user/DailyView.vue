@@ -31,7 +31,7 @@ const setDailyChallenge = async () => {
     setBoardSize(10);
     setNewBoard();
     const id = await postPuzzle(cluesX.value, cluesY.value, boardSize.value).then((res) => res.data.id);
-    await postDailyChallenge(id, time.value, points.value);
+    await postDailyChallenge(id, time.value, points.value, nonogram.value.nonogram.answers);
   } else if (dailyChallenge && !dailyChallenge.is_solved) {
     setPoints(dailyChallenge.points);
     setTime(dailyChallenge.time);
@@ -53,22 +53,23 @@ const checkGame = async () => {
     setPoints(diff);
     notify(false, `Twoje rozwiązanie jest niepoprawne. Tracisz ${lostPoints} pkt.`);
   } else {
-    const bonus = calcTimeBonus(time.value, 8);
+    const bonus = calcTimeBonus(time.value, 10);
     await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value + bonus, true);
     summary.value.show(points.value, bonus);
-    endGame();
+    await endGame();
   }
   await watcher();
 };
 
 const endGame = async () => {
+  await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
   clearPoints();
   resetBoard();
 };
 
 onBeforeUnmount(async () => {
   if (nonogram.value.nonogram.answers && points.value) {
-    await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
+    await endGame();
   }
 });
 </script>

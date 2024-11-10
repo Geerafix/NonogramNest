@@ -43,4 +43,4 @@ Message.belongsTo(User, {foreignKey: 'user_id'});
 
 // uncomment to migrate models
 
-// await sequelize.sync({ force: true });
+// await sequelize.sync({ alter: true });

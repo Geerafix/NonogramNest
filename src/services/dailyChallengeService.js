@@ -7,11 +7,12 @@ export function getDailyChallenge() {
     return api.get('/challenge');
 }
 
-export function postDailyChallenge(puzzleId, time, points) {
+export function postDailyChallenge(puzzleId, time, points, answers) {
     return api.post('/challenge', {
         puzzleId: puzzleId,
         time: time,
         points: points,
+        answers: answers
     });
 }
 

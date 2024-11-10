@@ -2,12 +2,16 @@
 import UserProfile from '@/components/user/profile/UserProfile.vue';
 import RollButton from "@/components/shared/inputs/InfoButton.vue";
 import {useNotification} from "@/composables/useNotification.js";
-import {computed, onBeforeMount, ref} from 'vue';
-import {getUserProfile} from '@/services/userService';
-import {set} from "@vueuse/core";
+import {computed, onBeforeMount, reactive, ref, watch, watchEffect} from 'vue';
+import {getUserProfile, updatePfp} from '@/services/userService';
+import {set, useFileDialog, watchDeep} from "@vueuse/core";
 import {defineAsyncComponent} from "vue";
 import {profileButtons} from "@/config.js";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
+
+const { files, open, reset, onCancel, onChange } = useFileDialog({
+  accept: 'image/*'
+})
 
 const user = ref(null);
 const component = ref('');
@@ -37,6 +41,18 @@ const fetchUserProfile = async () => {
   await getUserProfile().then((res) => set(user, res.data));
 };
 
+onChange(async (files) => {
+  if (files[0]) {
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = async (res) => {
+      await updatePfp(res.target.result.split(',')[1]);
+      await fetchUserProfile();
+      notify(true, 'Zmieniono zdjęcie profilowe.');
+    };
+  }
+});
+
 onBeforeMount(fetchUserProfile);
 </script>
 
@@ -46,6 +62,9 @@ onBeforeMount(fetchUserProfile);
       <div v-if="user">
         <UserProfile :user="user" class="mb-2"/>
         <div :class="['flex gap-3 mx-auto mt-2']">
+          <RollButton text="Zmień profilowe" @click="open">
+            <Icon icon="'fa-solid fa-image"/>
+          </RollButton>
           <RollButton v-for="button in profileButtons" :text="button.text" @click="changeForm(button.name)">
             <Icon :icon="['fa-solid', button.icon]"/>
           </RollButton>

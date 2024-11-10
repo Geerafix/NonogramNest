@@ -29,7 +29,7 @@ server.post('/challenge', authHandler, asyncHandler(async (req, res) => {
     const puzzle_id = await req.body.puzzleId;
     const time = await req.body.time;
     const points = await req.body.points;
-    const answers = Array.from(Array(8), () => Array(8).fill(0));
+    const answers = await req.body.answers
 
     const dailyChallenge = await DailyChallenge.create({
         puzzle_id: puzzle_id,

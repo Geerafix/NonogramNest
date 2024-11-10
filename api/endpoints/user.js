@@ -49,7 +49,7 @@ server.get('/user/achievements/count', authHandler, asyncHandler(async (req, res
     res.json(count);
 }));
 
-server.get('/profile', authHandler, asyncHandler(async (req, res) => {
+server.get('/profile', authHandler, async (req, res) => {
     const user = await req.user;
 
     const userProfile = await UserProfile.findOne({
@@ -63,13 +63,22 @@ server.get('/profile', authHandler, asyncHandler(async (req, res) => {
     });
 
     res.json(userProfile);
-}));
+});
 
 server.put('/profile/username', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const username = await req.body.username;
 
     await User.update({username: username}, {where: {user_id: user.user_id}});
+
+    res.json();
+}));
+
+server.put('/profile/pfp', authHandler, asyncHandler(async (req, res) => {
+    const user = await req.user;
+    const pfp = await req.body.pfp;
+
+    await UserProfile.update({pfp: pfp}, {where: {user_id: user.user_id}});
 
     res.json();
 }));

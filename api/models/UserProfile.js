@@ -11,6 +11,10 @@ export const UserProfile = sequelize.define('UserProfile', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    pfp: {
+        type: DataTypes.BLOB,
+        allowNull: true
+    },
     bio: {
         type: DataTypes.TEXT,
         allowNull: true,

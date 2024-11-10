@@ -1,13 +1,30 @@
 <script setup>
-defineProps(['user']);
+import {ref, watchEffect} from "vue";
+import {watchDeep} from "@vueuse/core";
+
+const props = defineProps(['user']);
+
+const source = ref('');
+
+watchEffect( () => {
+  if (props.user?.pfp?.data) {
+    const bytes = new Uint8Array(props.user.pfp.data);
+    let ascii = "";
+    for (let i = 0; i < bytes.length; i++) {
+      ascii += String.fromCharCode(bytes[i]);
+    }
+    source.value = ('data:image/png;base64,').concat(ascii);
+  }
+})
 </script>
 
 <template>
   <div class="user-profile-container">
     <div class="info-col">
       <div class="grid grid-cols-[auto_1fr] gap-2 [&_div]:!h-full">
-        <div class="p-2 aspect-square bg-gray-800/80  rounded-lg">
-          <Icon icon="fa-solid fa-user" class="my-auto mx-auto text-5xl h-full"/>
+        <div class="p-2 aspect-square bg-gray-800/80 rounded-lg h-min w-min content-center">
+          <img v-if="user.pfp?.data?.length" :src="source" class="rounded-md"/>
+          <Icon v-else icon="fa-solid fa-user" class="my-auto mx-auto h-full"/>
         </div>
         <div class="grid gap-2">
           <div class="info">{{ user.username }}</div>

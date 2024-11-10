@@ -36,8 +36,8 @@ const paintClick = (col, row, event) => {
 };
 
 const colorTile = (row, col) => (
-    (props.answers[row-1] && props.answers[col-1][row-1] === -1) ? 'bg-white relative x' :
-    ((props.answers[row-1] && props.answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')
+    (props?.answers[row-1] && props?.answers[col-1][row-1] === -1) ? 'bg-white relative x' :
+    ((props?.answers[row-1] && props?.answers[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')
 );
 </script>
 

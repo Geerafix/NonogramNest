@@ -12,9 +12,9 @@ const date = (date_achieved) => (
 </script>
 
 <template>
-  <Transition name="fade-slower">
+  <Transition name="fade-slower" mode="out-in">
     <div class="container" :key="achievements">
-      <li v-for="(achievement) in achievements">
+      <li v-for="achievement in achievements">
         <div :class="['item', {'opacity-30': !achievement.date_achieved}]">
           <div class="grid grid-cols-[1fr_25%] gap-2">
             <div class="item-row bg-gradient-to-r from-gray-700"

@@ -30,6 +30,12 @@ export async function updatePassword(currentPassword, newPassword) {
     });
 }
 
+export async function updatePfp(pfp) {
+    return api.put('/profile/pfp', {
+        pfp: pfp
+    });
+}
+
 export async function updateEmail(email) {
     return api.put('/profile/email', {
         email: email
