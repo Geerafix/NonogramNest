@@ -42,6 +42,11 @@ const fetchUserProfile = async () => {
 };
 
 onChange(async (files) => {
+  if (files[0].size > 51200) {
+    notify(false, 'Rozmiar zdjęcia przekracza dopuszczalny limit 50 kB.');
+    return;
+  }
+
   if (files[0]) {
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
