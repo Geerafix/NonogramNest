@@ -3,6 +3,7 @@ import {DataTypes} from 'sequelize';
 
 import {UserProfile} from './UserProfile.js';
 import {Score} from './Score.js';
+import * as argon2 from "argon2";
 
 export const User = sequelize.define('User', {
     user_id: {

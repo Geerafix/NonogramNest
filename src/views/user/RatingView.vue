@@ -26,7 +26,7 @@ const setMode = (data) => set(mode, data);
 
 const fetchRating = async () => {
   if (mode.value === 'challenge') {
-    await getRatingChallenge({...pageState.value})
+    await getRatingChallenge(pageState.value.page, pageState.value.limit)
         .then((res) => set(rating, res.data));
   } else {
     await getRatingClassic(pageState.value.page, pageState.value.limit, size.value)

@@ -72,8 +72,7 @@ onBeforeMount(handleMonthChange);
   @apply
   flex
   flex-col
-  w-min
-  min-w-96
+  w-3/4
   mx-auto
   mt-2
   max-w-md
@@ -99,8 +98,8 @@ onBeforeMount(handleMonthChange);
   w-full
   h-full
   rounded-xl
-  bg-gray-700/25
-  text-xl
+  bg-gray-700/50
+  text-2xl
   text-center
   shadow-inner
   content-center;
@@ -118,8 +117,8 @@ onBeforeMount(handleMonthChange);
   @apply
   relative
   min-w-12
-  h-12
-  p-2
+  h-14
+  content-center
   rounded-lg
   border-gray-800/40
   bg-gray-800/15
@@ -148,7 +147,7 @@ onBeforeMount(handleMonthChange);
   @apply
   pointer-events-none
   cursor-auto
-  mx-auto
+  text-center
 }
 
 .today {
