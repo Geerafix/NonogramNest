@@ -1,3 +1,11 @@
+export const sloganTexts = [
+    {text: 'Rozwiązuj nonogramy.', icon: 'chess-board', color: 'text-zinc-300'},
+    {text: 'Wykonuj codzienne wyzwania.', icon: 'trophy', color: 'text-orange-200'},
+    {text: 'Zdobywaj osiągnięcia.', icon: 'star', color: 'text-yellow-200'},
+    {text: 'Wspinaj się po szczeblach rankingu.', icon: 'chart-simple', color: 'text-red-200'},
+    {text: 'Zarejestruj się już dziś!', icon: 'user-check', color: 'text-green-200'},
+];
+
 export const sizes = [
     { name: '15 x 15', value: 15 },
     { name: '14 x 14', value: 14 },
@@ -14,8 +22,9 @@ export const sizes = [
 ];
 
 export const modes = [
-    { name: 'Wyzwanie', value: 'challenge' },
     { name: 'Klasyczny', value: 'classic' },
+    { name: 'Wyzwanie', value: 'challenge' },
+    { name: 'Wszystkie' },
 ];
 
 export const ratingSearchBy = [

@@ -130,6 +130,21 @@ sequelize.addHook('afterBulkSync', async (options) => {
         name: 'Obieżyświat', description: 'Ukończ 365 nonogramów w trybie codzienne wyzwanie.',
         type: 'solved_challenges', criteria: 365
     });
+
+    await Achievement.create({
+        name: 'Zbieracz punktów (I)', description: 'Zdobądź 1000 punktów.',
+        type: 'total_points', criteria: 1000
+    });
+
+    await Achievement.create({
+        name: 'Zbieracz punktów (II)', description: 'Zdobądź 5000 punktów.',
+        type: 'total_points', criteria: 5000
+    });
+
+    await Achievement.create({
+        name: 'Zbieracz punktów (III)', description: 'Zdobądź 10000 punktów.',
+        type: 'total_points', criteria: 10000
+    });
 });
 
 // uncomment to migrate models and insert test data

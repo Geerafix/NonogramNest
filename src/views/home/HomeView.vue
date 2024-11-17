@@ -1,5 +1,6 @@
 <script setup>
 import Nonogram from '@/components/user/game/Nonogram.vue';
+import {sloganTexts} from "@/config.js";
 import {onMounted, ref, watch} from 'vue';
 import {useInterval} from '@vueuse/core';
 import {useNonogram} from '@/composables/useNonogram';
@@ -7,16 +8,14 @@ import {useNonogram} from '@/composables/useNonogram';
 const {counter, resume} = useInterval(750, {controls: true});
 
 const nonogram = ref(null);
-const {setNewBoard, setBoardSize, paintAnswer, answers} = useNonogram(nonogram);
+const {setNewBoard, setBoardSize, paintAnswer, paintExclude} = useNonogram(nonogram);
 
-const size = 10;
+const size = 12;
 
 watch(counter, () => {
   const x = Math.floor(Math.random() * size);
   const y = Math.floor(Math.random() * size);
-  if (answers.value[y][x] !== -1 &&  counter.value % 1 === 0) {
-    paintAnswer(x, y);
-  }
+  (counter.value % 4 === 0 ? paintExclude : paintAnswer)(x, y);
 });
 
 onMounted(() => {
@@ -30,29 +29,18 @@ onMounted(() => {
   <main class="bg-gradient-to-b from-gray-700/40 to-gray-700/20 rounded-xl">
     <div class="login">
       <BasicButton buttonText="Logowanie" @click="$router.push({ name: 'SignIn' })">
-        <Icon icon="fa-solid fa-right-to-bracket" class="my-auto mx-auto"/>
+        <Icon icon="fa-solid fa-right-to-bracket" class="my-auto ml-1"/>
       </BasicButton>
       <BasicButton button-text="Rejestracja" @click="$router.push({ name: 'SignUp' })">
-        <Icon icon="fa-solid fa-user-plus" class="my-auto mx-auto"/>
+        <Icon icon="fa-solid fa-user-plus" class="my-auto ml-1"/>
       </BasicButton>
     </div>
-    <div class="grid grid-cols-[min-content_1fr] mt-14 mx-auto">
+    <div class="grid grid-cols-[min-content_1fr] mt-14">
       <Nonogram ref="nonogram" :started="true" class="board-style"/>
       <div class="slogan">
-        <p :class="{'!opacity-100': counter > 0}">
-          <Icon icon="fa-solid fa-chess-board" class="text-zinc-200"/>&nbsp; Rozwiązuj nonogramy.
-        </p>
-        <p :class="{'!opacity-100': counter > 1}">
-          <Icon icon="fa-solid fa-star" class="text-yellow-100"/>&nbsp; Zdobywaj osiągnięcia.
-        </p>
-        <p :class="{'!opacity-100': counter > 2}">
-          <Icon icon="fa-solid fa-trophy" class="text-orange-100"/>&nbsp; Wykonuj codzienne wyzwania.
-        </p>
-        <p :class="{'!opacity-100': counter > 3}">
-          <Icon icon="fa-solid fa-chart-simple" class="text-red-100"/>&nbsp; Wspinaj się po szczeblach rankingu.
-        </p>
-        <p :class="{'!opacity-100': counter > 4}">
-          <Icon icon="fa-solid fa-user-check" class="text-green-100"/>&nbsp; Zarejestruj się już dziś!
+        <p v-for="(el, idx) in sloganTexts" :class="[{'!opacity-100': counter > idx}, 'slogan-element']">
+          <Icon :icon="['fa-solid', `fa-${el.icon}`]" :class="[el.color, 'icon-style']"/>
+          <span class="bg-gradient-to-r from-gray-700/70 rounded-xl px-4 py-2">{{el.text}}</span>
         </p>
       </div>
     </div>
@@ -63,18 +51,34 @@ onMounted(() => {
 .slogan {
   @apply
   grid
-  gap-8
-  text-[2.5rem]
+  gap-5
+  text-[2.25rem]
   my-auto
-  ml-16
+  ml-14
   [&>*]:transition-all
   [&>*]:w-fit
   select-none
   italic
+  z-0
   text-gray-100
   text-wrap
-  z-0
   text-left;
+}
+.slogan-element{
+  @apply
+  grid
+  grid-cols-[auto_1fr]
+  gap-4
+}
+.icon-style{
+  @apply
+  w-10
+  my-auto
+  px-3
+  h-full
+  bg-gradient-to-l
+  from-gray-700/70
+  rounded-xl
 }
 .login {
   @apply

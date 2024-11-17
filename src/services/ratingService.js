@@ -22,6 +22,15 @@ export function getRatingChallenge(page, limit) {
     });
 }
 
+export function getAllRating(page, limit) {
+    return api.get('/rating/all', {
+        params: {
+            page: page,
+            limit: limit
+        }
+    });
+}
+
 export function getRatingUser(user_id) {
     return api.get('/rating/profile', {
         params: {

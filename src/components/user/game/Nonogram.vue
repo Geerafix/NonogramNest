@@ -31,7 +31,7 @@ const paintExclude = (row, col) => {
   nonogram.answers[row][col] = (nonogram.answers[row][col] - 1) % 2;
 };
 
-defineExpose({nonogram, newBoard, resetBoard, paintAnswer, checkSolution});
+defineExpose({nonogram, newBoard, resetBoard, paintAnswer, paintExclude, checkSolution});
 
 const highlight = (col, row) => {
   Object.assign(indexes, {x: col, y: row});

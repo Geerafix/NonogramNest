@@ -58,6 +58,10 @@ export function getUserAchievements(page, limit) {
     });
 }
 
+export function getAchievedCount() {
+    return api.get('/user/achieved');
+}
+
 export function getAchievementCount() {
     return api.get('/user/achievements/count');
 }

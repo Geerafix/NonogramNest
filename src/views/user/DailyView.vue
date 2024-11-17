@@ -1,12 +1,12 @@
 <script setup>
 import Calendar from '@/components/user/daily-challenge/Calendar.vue';
-import Streak from '@/components/user/daily-challenge/Streak.vue';
+import Streak from '@/components/user/daily-challenge/StreakMultiplier.vue';
 import Nonogram from '@/components/user/game/Nonogram.vue';
 import Score from '@/components/user/game/Score.vue';
 import Actions from '@/components/user/game/Actions.vue';
 import Summary from '@/components/user/game/Summary.vue';
 import {onBeforeUnmount, ref} from 'vue';
-import {getDailyChallenge, postDailyChallenge, updateDailyChallenge} from '@/services/dailyChallengeService';
+import {getDailyChallenge, getStreak, postDailyChallenge, updateDailyChallenge} from '@/services/dailyChallengeService';
 import {postPuzzle} from '@/services/puzzleService';
 import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
@@ -54,15 +54,17 @@ const checkGame = async () => {
     notify(false, `Twoje rozwiązanie jest niepoprawne. Tracisz ${lostPoints} pkt.`);
   } else {
     const bonus = calcTimeBonus(time.value, 10);
-    await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value + bonus, true);
-    summary.value.show(points.value, bonus);
+    await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, true, bonus);
+
+    const streak = await getStreak().then(res => res.data) - 1;
+    const streakPoints = (streak / 100) * getPointsBySize(boardSize.value);
+    summary.value.show(points.value + streakPoints, bonus);
     await endGame();
   }
   await watcher();
 };
 
 const endGame = async () => {
-  await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
   clearPoints();
   resetBoard();
 };
@@ -72,6 +74,8 @@ onBeforeUnmount(async () => {
     await endGame();
   }
 });
+
+
 </script>
 
 <template>

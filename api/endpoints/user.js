@@ -49,6 +49,19 @@ server.get('/user/achievements/count', authHandler, asyncHandler(async (req, res
     res.json(count);
 }));
 
+server.get('/user/achieved', authHandler, asyncHandler(async (req, res) => {
+    const user = req.user;
+
+    const count = await Achievement.count({
+        include: {model: UserAchievement, where: {user_id: user.user_id}}
+    });
+    const all = await Achievement.count();
+
+    // const percent = ((count/all) * 100).toFixed(0).concat('%');
+
+    res.json(count + '/' + all);
+}));
+
 server.get('/profile', authHandler, async (req, res) => {
     const user = await req.user;
 

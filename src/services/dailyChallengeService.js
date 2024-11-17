@@ -16,11 +16,12 @@ export function postDailyChallenge(puzzleId, time, points, answers) {
     });
 }
 
-export function updateDailyChallenge(answers, time, points, isSolved) {
+export function updateDailyChallenge(answers, time, points, isSolved, bonus) {
     return api.put('/challenge', {
         answers: answers,
         time: time,
         points: points,
+        bonus: bonus,
         isSolved: isSolved
     });
 }

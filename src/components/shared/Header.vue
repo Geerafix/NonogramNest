@@ -1,11 +1,11 @@
 <script setup>
 import {useRoute} from 'vue-router';
-import {computed, onMounted, ref, watch} from "vue";
+import {computed, onMounted, ref} from "vue";
 
 const route = useRoute();
 
 const headers = ['Home', 'SignIn', 'SignUp'];
-const style = '!text-left !text-5xl !p-5 !bg-gradient-to-r from-slate-700/80 italic';
+const style = '!text-left !text-5xl !p-5';
 
 const styleOnHome = computed(() => headers.includes(route.name) ? style : '');
 
@@ -19,11 +19,15 @@ onMounted(() => {
 <template>
   <div :class="['header', styleOnHome]">
     <Transition name="slide-right-smooth" mode="out-in">
-      <h1 v-show="onMountAnimate">{{ route.meta.title }}</h1>
+      <h1 v-show="onMountAnimate" class="flex gap-4">
+        <div v-if="headers.includes(route.name)" @click="$router.push('/')">
+          <img src="/favicon.png" class="logo-style"/>
+        </div>{{ route.meta.title }}
+      </h1>
     </Transition>
-    <div v-if="headers.includes(route.name)"
+    <div
       class="opacity-10 absolute -translate-y-[34.7%] -right-20 scale-75 -skew-x-12">
-      <img src="../../../public/header2.png">
+      <img src="/header2.png">
     </div>
   </div>
 </template>
@@ -46,6 +50,23 @@ onMounted(() => {
   text-center
   relative
   overflow-hidden
+  !bg-gradient-to-r
+  from-gray-600/80
+  italic
+  pl-3
   select-none;
+}
+.logo-style {
+  @apply
+  h-12
+  rounded-full
+  cursor-pointer
+  transition-all;
+}
+.logo-style:hover {
+  @apply
+  shadow-lg
+  shadow-gray-500
+  brightness-110
 }
 </style>

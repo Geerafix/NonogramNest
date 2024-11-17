@@ -39,7 +39,9 @@ const onSubmit = async () => {
     <form @submit.prevent="onSubmit">
       <BasicInput v-model="form.login" placeholder="Login lub Email"/>
       <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off"/>
-      <BasicButton buttonText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass"/>
+      <BasicButton buttonText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass">
+        <Icon icon="fa-solid fa-right-to-bracket" class="my-auto ml-px"/>
+      </BasicButton>
     </form>
     <span class="mx-auto text-xl">
       Nie masz konta?
@@ -53,12 +55,8 @@ const onSubmit = async () => {
 <style scoped>
 .signin-container {
   @apply
-  flex
-  flex-col
-  w-fit
-  mx-auto
-  p-2
-  rounded-2xl
+  grid
+  pt-2
   gap-10;
 }
 
@@ -69,12 +67,6 @@ form {
   justify-items-center
   w-fit
   mx-auto;
-}
-
-.error {
-  @apply
-  text-red-500/70
-  text-xl;
 }
 
 .register-link {

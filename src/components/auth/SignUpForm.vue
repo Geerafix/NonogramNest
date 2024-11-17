@@ -10,7 +10,6 @@ import {reactive, ref} from 'vue';
 import {useNotification} from "@/composables/useNotification.js";
 
 const router = useRouter();
-const error = ref(false);
 const form = reactive({
   email: '',
   username: '',
@@ -46,7 +45,7 @@ const onSubmit = () => {
       notify(true, 'Zarejestrowano.', 4000);
     })
     .catch(() => {
-      error.value = true;
+      notify(false, 'Użytkownik już istnieje.', 4000);
     });
 };
 </script>
@@ -71,8 +70,9 @@ const onSubmit = () => {
         <component v-if="(!errorFields?.password)" :is="(errorFields?.confirmPassword) ? IconInvalid : IconValid"
                    @mouseover="showBox(rules.confirmPassword.message)" @mouseleave="hideBox"/>
       </div>
-      <span v-if="error" class="error">Użytkownik już istnieje</span>
-      <BasicButton buttonText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass"/>
+      <BasicButton buttonText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass">
+        <Icon icon="fa-solid fa-user-plus" class="my-auto ml-1"/>
+      </BasicButton>
     </form>
     <span class="mx-auto text-xl">
       Przejdź do
@@ -109,12 +109,6 @@ form {
   grid-cols-[1fr_0]
   gap-4
   [&>*]:my-auto
-}
-
-.error {
-  @apply
-  text-red-500/70
-  text-xl;
 }
 
 .login-link {

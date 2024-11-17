@@ -22,6 +22,10 @@ export function useNonogram(nonogram) {
         nonogram.value.paintAnswer(y, x);
     };
 
+    const paintExclude = (x, y) => {
+        nonogram.value.paintExclude(y, x);
+    };
+
     const cluesX = computed(() => nonogram.value?.nonogram?.cluesX);
     const cluesY = computed(() => nonogram.value?.nonogram?.cluesY);
     const answers = computed(() => nonogram.value?.nonogram?.answers);
@@ -36,6 +40,7 @@ export function useNonogram(nonogram) {
         setNewBoard, 
         checkSolution,
         resetBoard,
-        paintAnswer
+        paintAnswer,
+        paintExclude
     };
 }

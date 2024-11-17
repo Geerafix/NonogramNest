@@ -3,6 +3,7 @@ import {Op} from "sequelize";
 import {asyncHandler, authHandler} from "../utils.js";
 import {DailyChallenge} from "../models/DailyChallenge.js";
 import {Puzzle} from "../models/Puzzle.js";
+import {getPointsBySize} from "../../src/scripts/puzzleScripts.js";
 
 server.get('/challenges', authHandler, asyncHandler(async (req, res) => {
     const user = req.user;
@@ -42,10 +43,11 @@ server.post('/challenge', authHandler, asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.put('/challenge', authHandler, asyncHandler(async (req, res) => {
+server.put('/challenge', authHandler, (async (req, res) => {
     const user = await req.user;
     const time = await req.body.time;
     const points = await req.body.points;
+    const bonus = await req.body.bonus;
     const is_solved = await req.body.isSolved;
     const answers = await req.body.answers;
     const today = new Date();
@@ -58,7 +60,11 @@ server.put('/challenge', authHandler, asyncHandler(async (req, res) => {
     dailyChallenge.time = time;
     dailyChallenge.points = points;
 
-    if (is_solved) dailyChallenge.is_solved = true;
+    if (is_solved) {
+        const streak = await getStreak(user);
+        dailyChallenge.is_solved = true;
+        dailyChallenge.points = (parseFloat(points + (getPointsBySize(answers.length) * (streak / 100))) + bonus);
+    }
 
     await dailyChallenge.save();
 
@@ -66,28 +72,9 @@ server.put('/challenge', authHandler, asyncHandler(async (req, res) => {
 }));
 
 server.get('/challenge/streak', authHandler, asyncHandler(async (req, res) => {
-    let streakCount = 0;
-    let yesterday = new Date(Date.now() - 86400000);
-
     const user = req.user;
-
-    let streak = await DailyChallenge.findOne({
-        where: {[Op.and]: [{user_id: user.user_id}, {date: new Date()}, {is_solved: true}]}
-    });
-
-    if (streak !== null) streakCount += 1;
-
-    while (streak = await DailyChallenge.findOne({
-        where: {[Op.and]: [{user_id: user.user_id}, {date: yesterday}, {is_solved: true}]}
-    }) !== null) {
-        streakCount += 1;
-        yesterday.setDate(yesterday.getDate() - 1);
-        streak = await DailyChallenge.findOne({
-            where: {[Op.and]: [{user_id: user.user_id}, {date: yesterday}, {is_solved: true}]}
-        });
-    }
-
-    res.json(streakCount);
+    const streak = await getStreak(user);
+    res.json(streak);
 }));
 
 server.get('/challenge/dailies', authHandler, asyncHandler(async (req, res) => {
@@ -110,3 +97,20 @@ server.get('/challenge/dailies', authHandler, asyncHandler(async (req, res) => {
 
     res.json(dailyDays);
 }));
+
+const getStreak = async (user) => {
+    const dailyDays = await DailyChallenge.findAll({
+        where: {user_id: user.user_id},
+        order: [['date', 'DESC']]
+    });
+
+    if (dailyDays.length === 0) return 0;
+
+    let streak = dailyDays[0].is_solved ? 1 : 0;
+    for (const day of dailyDays.slice(1)) {
+        if (day.is_solved) ++streak;
+        else break;
+    }
+
+    return streak;
+}

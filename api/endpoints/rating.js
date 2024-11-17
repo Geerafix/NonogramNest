@@ -52,6 +52,28 @@ server.get('/rating/challenges', authHandler, asyncHandler(async (req, res) => {
     res.json(rating);
 }));
 
+server.get('/rating/all', authHandler, asyncHandler(async (req, res) => {
+    const {limit, offset} = getPagination(req);
+
+    const rating = await User.findAll({
+        include: {
+            model: UserProfile,
+            attributes: [],
+            duplicating: false
+        },
+        where: {role: 'user'},
+        attributes: ['user_id', 'username', 'UserProfile.total_points',
+            [sequelize.literal('(RANK() OVER (ORDER BY total_points DESC))'), 'rank']
+        ],
+        order: [[UserProfile, 'total_points', 'DESC']],
+        limit: limit,
+        offset: offset,
+        raw: true
+    });
+
+    res.json(rating);
+}));
+
 server.get('/rating/profile', authHandler, asyncHandler(async (req, res) => {
     const user_id = req.query.user_id;
 

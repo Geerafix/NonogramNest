@@ -1,6 +1,5 @@
 import {sequelize} from '../server.js';
 import {DataTypes} from 'sequelize';
-import {Puzzle} from './Puzzle.js';
 
 export const CreatedPuzzle = sequelize.define('CreatedPuzzle', {
     created_id: {

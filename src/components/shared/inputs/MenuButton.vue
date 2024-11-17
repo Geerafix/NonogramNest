@@ -33,7 +33,6 @@ const computedWidth = computed(() => width.value > 100);
   hover:text-white
   hover:shadow-gray-700/50
   hover:shadow-md
-  hover:rounded-[1.25rem]
   transition-all
   select-none
   text-lg

@@ -4,7 +4,7 @@ import Select from '@/components/shared/inputs/Select.vue';
 import List from '@/components/shared/list/List.vue';
 import UserProfile from "@/components/user/profile/UserProfile.vue";
 import {modes, sizes} from '@/config.js';
-import {getRatingChallenge, getRatingClassic, getRatingUser} from '@/services/ratingService';
+import {getAllRating, getRatingChallenge, getRatingClassic, getRatingUser} from '@/services/ratingService';
 import {computed, onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {useList} from '@/composables/useList';
@@ -28,8 +28,11 @@ const fetchRating = async () => {
   if (mode.value === 'challenge') {
     await getRatingChallenge(pageState.value.page, pageState.value.limit)
         .then((res) => set(rating, res.data));
-  } else {
+  } else if (mode.value === 'classic') {
     await getRatingClassic(pageState.value.page, pageState.value.limit, size.value)
+        .then((res) => set(rating, res.data));
+  } else {
+    await getAllRating(pageState.value.page, pageState.value.limit, size.value)
         .then((res) => set(rating, res.data));
   }
 };
@@ -41,7 +44,7 @@ const fetchUser = async (user) => {
 watch([size, mode], fetchRating);
 
 const slideHideSelect = computed(() =>
-    (mode.value === 'challenge' ? 'max-w-0 -mr-2 opacity-0' : 'max-w-36').concat(' transition-all')
+    (mode.value !== 'classic' ? 'max-w-0 -mr-2 opacity-0' : 'max-w-36').concat(' transition-all')
 );
 
 onMounted(fetchRating);
