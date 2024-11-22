@@ -49,7 +49,7 @@ onMounted(fetchAchievements)
       <ManageAchievement v-if="manageAchievement" @accept="onAccept" @reject="onReject" :achievement="manageAchievement"/>
     </Transition>
     <BasicButton class="absolute right-0 bottom-0" @click="newAchievement">
-      <Icon icon="fa-solid fa-plus" class="icon-fix"/>
+      Nowe <Icon icon="fa-solid fa-plus" class="icon-fix"/>
     </BasicButton>
     <Pagination v-bind="pageState" @onPageChange="fetchAchievements" />
   </main>

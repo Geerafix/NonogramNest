@@ -6,13 +6,20 @@ import Score from '@/components/user/game/Score.vue';
 import Actions from '@/components/user/game/Actions.vue';
 import Summary from '@/components/user/game/Summary.vue';
 import {onBeforeUnmount, ref} from 'vue';
-import {getDailyChallenge, getStreak, postDailyChallenge, updateDailyChallenge} from '@/services/dailyChallengeService';
+import {
+  getDailyChallenge,
+  getDailyChallengeInfo,
+  getStreak,
+  postDailyChallenge,
+  updateDailyChallenge
+} from '@/services/dailyChallengeService';
 import {postPuzzle} from '@/services/puzzleService';
 import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
 import {useScore} from '@/composables/useScore';
 import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
 import {achievementWatcher} from "@/composables/achievementWatcher.js";
+import HelpChallenge from "@/components/user/other/HelpChallenge.vue";
 
 const {notify} = useNotification();
 
@@ -69,19 +76,27 @@ const endGame = async () => {
   resetBoard();
 };
 
+const displayChallengeInfo = async (date) => {
+  const { data: info } = await getDailyChallengeInfo(date);
+
+  if (info) {
+    notify(true, `W tym dniu rozwiązano wyzwanie z punktacją ${info.points} w czasie ${info.time}.`);
+  } else {
+    notify(false, `W tym dniu nie rozwiązano wyzwania.`);
+  }
+}
+
 onBeforeUnmount(async () => {
   if (nonogram.value.nonogram.answers && points.value) {
     await endGame();
   }
 });
-
-
 </script>
 
 <template>
   <main>
     <Transition name="fetch-fade">
-        <Calendar v-if="!started" />
+        <Calendar v-if="!started" @onClickedDay="displayChallengeInfo"/>
     </Transition>
     <Transition name="fade">
       <Nonogram ref="nonogram" v-bind="{started, paused}"/>
@@ -101,6 +116,7 @@ onBeforeUnmount(async () => {
         </BasicButton>
       </div>
     </Transition>
+    <HelpChallenge/>
   </main>
 </template>
 

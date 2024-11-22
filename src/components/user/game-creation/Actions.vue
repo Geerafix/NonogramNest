@@ -27,15 +27,17 @@ const setSize = (size) => emit('newBoard', size);
 <template>
   <Transition name="slide-down-no-leave" class="flex gap-2">
     <div>
-      <Transition name=slide-right>
-        <BasicInput v-model="name" placeholder="Nazwa..." v-show="isCreating"/>
+      <Transition name="slide-right">
+        <div class="flex gap-2" v-show="isCreating">
+          <BasicInput v-model="name" placeholder="Nazwa..."/>
+          <BasicButton @click="emit('clearBoard')">
+            <Icon icon="fa-solid fa-rotate"/>
+          </BasicButton>
+          <BasicButton @click="submitNonogram">
+            <Icon icon="fa-solid fa-check"/>
+          </BasicButton>
+        </div>
       </Transition>
-      <BasicButton @click="emit('clearBoard')">
-        <Icon icon="fa-solid fa-rotate"/>
-      </BasicButton>
-      <BasicButton @click="submitNonogram">
-        <Icon icon="fa-solid fa-check"/>
-      </BasicButton>
       <Select :items="sizes" @onSelect="setSize" />
     </div>
   </Transition>

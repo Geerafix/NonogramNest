@@ -30,12 +30,14 @@ watch(() => props.page, () => emit('onPageChange'));
 <template>
   <div class="pagination">
     <BasicButton @click="handlePrevPage" :disabled="computedPrevPage"
-                 :class="{'opacity-30': computedPrevPage}">
+                 :class="{'opacity-30 pointer-events-none': computedPrevPage}">
       <Icon icon="fa-solid fa-arrow-left"/>
     </BasicButton>
-    <div class="page">{{ page }}</div>
+    <Transition name="slide-left" mode="out-in">
+      <div class="page" :key="page">{{ page }}</div>
+    </Transition>
     <BasicButton @click="handleNextPage" :disabled="computedNextPage"
-                 :class="{'opacity-30': computedNextPage}">
+                 :class="{'opacity-30 pointer-events-none': computedNextPage}">
       <Icon icon="fa-solid fa-arrow-right"/>
     </BasicButton>
   </div>
@@ -52,7 +54,6 @@ watch(() => props.page, () => emit('onPageChange'));
   absolute
   bottom-0;
 }
-
 .page {
   @apply
   w-14

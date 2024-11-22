@@ -31,7 +31,7 @@ onMounted(() => {
     <Pagination v-bind="pageState" @onPageChange="fetchUserAchievements"/>
     <Transition name="fade" mode="out-in">
       <div class="achieved-count" v-if="count">
-        <span>{{count}}</span>
+        <span>Osiągnięto: {{count}}</span>
         <Icon icon="'fa-solid fa-star" class="ml-4 text-yellow-300"/>
       </div>
     </Transition>
@@ -42,7 +42,7 @@ onMounted(() => {
 .achieved-count {
   @apply
   bg-gradient-to-r
-  from-gray-700/50
+  from-gray-700/60
   to-gray-700
   rounded-xl
   absolute
@@ -53,5 +53,7 @@ onMounted(() => {
   px-4
   content-center
   select-none
+  border-b-4
+  border-slate-800/50
 }
 </style>

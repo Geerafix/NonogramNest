@@ -29,8 +29,10 @@ const onSelect = (item) => {
           </li>
         </ul>
       </Transition>
-      <div class="select" @click="expanded = !expanded">
-        <div class="my-auto mr-3">{{ selected }}</div>
+      <div class="select overflow-hidden" @click="expanded = !expanded">
+        <Transition name="slide-left" mode="out-in">
+          <div class="my-auto mr-3" :key="selected">{{ selected }}</div>
+        </Transition>
         <Icon icon="fa-solid fa-chevron-up" :class="['icon', { '-rotate-180': expanded }]"/>
       </div>
     </div>
@@ -51,7 +53,7 @@ const onSelect = (item) => {
   border-slate-800/60
   hover:rounded-[20px]
   border-b-4
-  text-xl
+  text-[1.35rem]
   transition-all
   outline-none
   text-nowrap

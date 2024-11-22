@@ -10,6 +10,7 @@ import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
 import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
 import {achievementWatcher} from "@/composables/achievementWatcher.js";
+import HelpClassic from "@/components/user/other/HelpClassic.vue";
 
 const {notify} = useNotification();
 
@@ -71,6 +72,7 @@ const endGame = () => {
                @new-game="startGame" @pause="pauseTime" @check="checkGame" @size="setGame" @end-game="endGame"/>
       <Score v-bind="{time, points, started}"/>
     </div>
+    <HelpClassic/>
     <Summary ref="summary" />
   </main>
 </template>
