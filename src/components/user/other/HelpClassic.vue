@@ -1,0 +1,83 @@
+<script setup>
+import {ref} from "vue";
+import {onClickOutside} from "@vueuse/core";
+
+const target = ref(null);
+const isDisplayed = ref(false);
+onClickOutside(target, _ => isDisplayed.value = false);
+</script>
+
+<template>
+  <div ref="target">
+    <div class="question-icon" @click="isDisplayed = !isDisplayed">
+      <Icon icon="fa-solid fa-question"/>
+    </div>
+    <Transition name="fade-slower" mode="out-in">
+      <div class="information" v-if="isDisplayed">
+        <h1 class="rules-header">Zasady gry</h1>
+        <div>
+          <h1>1. Cel</h1>
+          <p>
+            • Uzupełnij siatkę, zaznaczając pola, aby odtworzyć ukryty obrazek na podstawie
+              podanych wskazówek liczbowych.
+          </p>
+        </div>
+        <div>
+          <h1>2. Wskazówki liczbowe</h1>
+          <p>
+            • Liczby na krawędziach wierszy i kolumn oznaczają długość ciągów wypełnionych pól.<br>
+            • Kolejność liczb odpowiada kolejności ciągów w danym wierszu lub kolumnie.<br>
+            • Między ciągami musi być przynajmniej jedno puste pole.
+          </p>
+        </div>
+        <div>
+          <h1>3. Zaznaczanie pól</h1>
+          <p>
+            • Wypełnione pola oznaczaj kolorem czarnym (LPM).<br>
+            • Pola wyłączone z gry zaznaczaj symbolem „x” (PPM).
+          </p>
+        </div>
+        <div>
+          <h1>4. Logika i eliminacja</h1>
+          <p>
+            • Analizuj wskazówki i używaj logiki, aby wykluczać niemożliwe opcje.<br>
+            • Rozwiązuj krok po kroku, sprawdzając wiersze i kolumny na zmianę.
+          </p>
+        </div>
+        <div>
+          <h1>5. Poprawność</h1>
+          <p>
+            • Rozwiązanie musi spełniać wszystkie wskazówki dla wierszy i kolumn.<br>
+            • Wypełniona siatka tworzy kompletny obraz.<br>
+            • Gdy jesteś pewien rozwiązania, zatwierdź je, aby ukończyć łamigłówkę.
+          </p>
+        </div>
+        <div>
+          <h1>6. Punktacja</h1>
+          <p>
+            • Za poprawne rozwiązanie planszy otrzymujesz punkty bazowe.<br>
+            • Zatwierdzenie niepoprawnego rozwiązania powoduje utratę punktów.<br>
+            • Jeśli ukończysz planszę w czasie perfekcyjnym, krótszym niż (rozmiar planszy)<sup class="text-sm">2</sup> sekund,
+            otrzymasz dodatkowe punkty bonusowe równe punktom bazowym za daną planszę.
+          </p>
+        </div>
+        <div>
+          <h1>7. Stopień trudności</h1>
+          <p>
+            • Rozmiar siatki i złożoność wskazówek wpływają na poziom trudności łamigłówki.
+          </p>
+        </div>
+        <div>
+          <h1>8. Opcje w grze</h1>
+          <p>
+            • Grę możesz wznawiać, zatrzymywać lub anulować planszę w dowolnym momencie.
+          </p>
+        </div>
+        <div class="italic text-2xl text-right mx-4">Miłej gry! ツ</div>
+        <div></div>
+      </div>
+    </Transition>
+  </div>
+</template>
+
+<style scoped src="./help-style.css"/>

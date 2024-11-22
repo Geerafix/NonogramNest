@@ -1,0 +1,56 @@
+.question-icon {
+    @apply
+    absolute right-0 top-0
+    text-3xl
+    text-white/50
+    hover:text-white
+    cursor-pointer
+    transition-all
+}
+.information {
+    @apply
+    grid
+    gap-3
+    px-3
+    pt-3
+    absolute
+    top-12
+    max-h-96
+    max-w-[48rem]
+    overflow-y-scroll
+    right-0
+    transition-all
+    text-xl
+    shadow-2xl
+    bg-slate-700
+    rounded-xl
+    border-b-4
+    border-slate-800/60
+}
+.rules-header {
+    @apply
+    text-2xl
+    text-center
+    rounded-lg
+    bg-slate-600/90
+    shadow-inner
+    !not-italic
+}
+h1 {
+    @apply
+    p-2
+    px-3
+    italic
+    bg-gradient-to-r
+    from-slate-800/70
+    to-slate-800/60
+    rounded-t-lg
+    font-normal
+}
+p {
+    @apply
+    bg-slate-800/30
+    rounded-b-lg
+    p-3
+    shadow-inner
+}
