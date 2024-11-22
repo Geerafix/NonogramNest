@@ -96,7 +96,9 @@ onBeforeUnmount(async () => {
     <Transition name="slide-down-no-leave">
       <div class="controls" v-if="!started">
         <Streak/>
-        <BasicButton @click="setDailyChallenge">Wykonaj</BasicButton>
+        <BasicButton @click="setDailyChallenge">
+          Wykonaj <Icon icon="fa-solid fa-calendar-check" class="ml-0.5"/>
+        </BasicButton>
       </div>
     </Transition>
   </main>

@@ -14,14 +14,14 @@ const multiplier = computed(() => (1 + (streak.value / 100)));
   <Transition name="fetch-fade" mode="out-in">
     <div class="flex gap-2">
       <div class="tile" v-if="!Number.isNaN(parseInt(streak))" key="0">
-        <Icon class="icon" icon="fa-solid fa-fire"/>
         <span> Dzień: {{ streak }}</span>
+        <Icon class="icon" icon="fa-solid fa-fire"/>
       </div>
-      <div class="tile" v-if="!Number.isNaN(parseInt(multiplier))">
-        <Icon class="icon" icon="fa-solid fa-coins" key="1"/>
+      <div class="tile" v-if="!Number.isNaN(parseInt(multiplier))" key="1">
         <span>
           Mnożnik: <Icon class="icon w-2 h-min mb-1" icon="fa-solid fa-x"/>{{ multiplier }}
         </span>
+        <Icon class="icon" icon="fa-solid fa-coins"/>
       </div>
     </div>
   </Transition>
@@ -32,26 +32,19 @@ const multiplier = computed(() => (1 + (streak.value / 100)));
   @apply
   flex
   gap-2
-  h-fit
+  h-14
   w-fit
-  p-3
+  [&>*]:my-auto
+    px-3
   border-b-4
   bg-cyan-900
   border-b-gray-800/50
   text-xl
-    content-center
   rounded-xl;
 }
-
 .icon {
   @apply
-  text-3xl
-  mr-1
+  text-2xl
   drop-shadow-md;
-}
-
-span {
-  @apply
-  text-center;
 }
 </style>

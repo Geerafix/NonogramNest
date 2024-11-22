@@ -1,5 +1,5 @@
 import {server} from "../server.js";
-import {Op} from "sequelize";
+import {DATEONLY, Op} from "sequelize";
 import {asyncHandler, authHandler} from "../utils.js";
 import {DailyChallenge} from "../models/DailyChallenge.js";
 import {Puzzle} from "../models/Puzzle.js";
@@ -99,16 +99,36 @@ server.get('/challenge/dailies', authHandler, asyncHandler(async (req, res) => {
 }));
 
 const getStreak = async (user) => {
-    const dailyDays = await DailyChallenge.findAll({
+    let streak = 0;
+    const today = new Date();
+    const yesterday = new Date(today).setDate(today.getDate() - 1); 
+    const todayDateonly = today.toLocaleDateString();
+    const yesterdayDateonly = new Date(yesterday).toLocaleDateString();
+
+    let dailyDays = await DailyChallenge.findAll({
         where: {user_id: user.user_id},
         order: [['date', 'DESC']]
     });
 
     if (dailyDays.length === 0) return 0;
 
-    let streak = dailyDays[0].is_solved ? 1 : 0;
-    for (const day of dailyDays.slice(1)) {
-        if (day.is_solved) ++streak;
+    const firstDailyDateonly = new Date(dailyDays[0].date).toLocaleDateString();
+
+    if (![yesterdayDateonly, todayDateonly].includes(firstDailyDateonly)) return 0;
+
+    if (firstDailyDateonly === todayDateonly) {
+        if (dailyDays[0].is_solved){
+            ++streak;
+        }
+        dailyDays = dailyDays.slice(1);
+    }
+    
+    let acc = new Date(dailyDays[0] ? dailyDays[0].date : null);
+    for (const challenge of dailyDays) {
+        if (challenge.is_solved && new Date(challenge.date).getDate() == acc.getDate()) {
+            ++streak;
+            acc = new Date(acc.setDate(acc.getDate() - 1));
+        }
         else break;
     }
 
