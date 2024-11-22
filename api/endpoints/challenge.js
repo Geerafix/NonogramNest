@@ -98,6 +98,19 @@ server.get('/challenge/dailies', authHandler, asyncHandler(async (req, res) => {
     res.json(dailyDays);
 }));
 
+server.get('/challenge/info', authHandler, asyncHandler(async (req, res) => {
+    const user = req.user;
+    const date = req.query.date;
+
+    console.log(date)
+
+    const challenge = await DailyChallenge.findOne({
+        where: {[Op.and]: [{user_id: user.user_id}, {date: date}]}
+    });
+
+    res.json(challenge);
+}));
+
 const getStreak = async (user) => {
     let streak = 0;
     const today = new Date();

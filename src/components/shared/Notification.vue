@@ -18,8 +18,8 @@ onBeforeMount(stop);
 </script>
 
 <template>
-  <Transition name="slide-left">
-    <div v-if="!ready" :class="['notification', notificationColor]">
+  <Transition name="slide-left" mode="out-in">
+    <div v-if="!ready" :class="['notification', notificationColor]" :key="settings.message">
       {{ settings.message }}
     </div>
   </Transition>

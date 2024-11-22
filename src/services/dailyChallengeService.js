@@ -35,3 +35,9 @@ export function getDailies(month, year) {
 export function getStreak() {
     return api.get('/challenge/streak');
 }
+
+export function getDailyChallengeInfo(date) {
+    return api.get('/challenge/info', {
+        params: {date: date}
+    });
+}

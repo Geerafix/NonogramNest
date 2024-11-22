@@ -4,6 +4,8 @@ import {computed, onBeforeMount, reactive, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {getDailies} from '@/services/dailyChallengeService.js'
 
+const emit = defineEmits(['onClickedDay']);
+
 const daysNames = ['Pon', 'Wto', 'Śro', 'Czw', 'Pią', 'Sob', 'Nie'];
 const monthsNames = [
   'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'
@@ -36,6 +38,10 @@ const currentYear = computed(() =>
     calendar.year === new Date().getFullYear() && calendar.month === new Date().getMonth()
 );
 
+const clickedDay = (day) => {
+  emit('onClickedDay', new Date(calendar.year, calendar.month, day));
+};
+
 watch(() => calendar.month, handleMonthChange);
 
 onBeforeMount(handleMonthChange);
@@ -48,7 +54,11 @@ onBeforeMount(handleMonthChange);
         <MenuButton class="max-w-1" @click="prevMonth">
           <Icon icon="fa-solid fa-caret-left" class="icon-adjust"/>
         </MenuButton>
-        <div class="date-info">{{ monthsNames[calendar.month] }} {{ calendar.year }}</div>
+        <div class="date-info">
+          <Transition name="fade" mode="out-in">
+            <span :key="calendar.month">{{ monthsNames[calendar.month] }} {{ calendar.year }}</span>
+          </Transition>
+        </div>
         <MenuButton class="max-w-1" @click="nextMonth">
           <Icon icon="fa-solid fa-caret-right" class="icon-adjust"/>
         </MenuButton>
@@ -58,7 +68,7 @@ onBeforeMount(handleMonthChange);
       </div>
       <div class="days-container">
         <div v-for="day in calendar.firstDay"></div>
-        <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]">
+        <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]" @click="clickedDay(day)">
           <span>{{ day }}</span>
           <div v-if="streakDays.includes(day)" class="indicator"></div>
         </div>
