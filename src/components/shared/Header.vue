@@ -54,6 +54,7 @@ onMounted(() => {
   from-gray-600/80
   italic
   pl-3
+  z-50
   select-none;
 }
 .logo-style {

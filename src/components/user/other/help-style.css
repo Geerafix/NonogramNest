@@ -6,26 +6,31 @@
     hover:text-white
     cursor-pointer
     transition-all
+    hover:rotate-12
+    hover:scale-125
+    z-10
 }
 .information {
     @apply
     grid
-    gap-3
+    gap-2
     px-3
     pt-3
     absolute
     top-12
-    max-h-96
-    max-w-[48rem]
+    max-h-[75%]
+    w-8/12
     overflow-y-scroll
     right-0
     transition-all
     text-xl
-    shadow-2xl
+    shadow-around
     bg-slate-700
     rounded-xl
+    rounded-tr-[0.5rem]
     border-b-4
     border-slate-800/60
+    z-10
 }
 .rules-header {
     @apply
@@ -53,4 +58,16 @@ p {
     rounded-b-lg
     p-3
     shadow-inner
+}
+
+.blurred-background {
+    @apply
+    fixed
+    h-full
+    w-full
+    top-0
+    left-0
+    backdrop-blur-md
+    backdrop-brightness-95
+    z-0
 }

@@ -26,7 +26,7 @@ defineExpose({isDisplayed, show, hide});
 </script>
 
 <template>
-  <Transition name="fade">
+  <TransitionGroup name="fade" mode="out-in" tag="div">
     <div ref="target" class="summary" v-if="isDisplayed">
       <div class="info">
         <span>Twoje rozwiązanie jest poprawne.</span>
@@ -50,7 +50,8 @@ defineExpose({isDisplayed, show, hide});
         <Icon icon="fa-solid fa-check" class="my-auto mx-auto"/>
       </MenuButton>
     </div>
-  </Transition>
+    <div v-if="isDisplayed" class="blurred-background"/>
+  </TransitionGroup>
 </template>
 
 <style scoped>
@@ -81,6 +82,7 @@ defineExpose({isDisplayed, show, hide});
   tracking-wide
   select-none
   z-10
+  shadow-around
   max-sm:w-full;
 }
 
@@ -100,5 +102,16 @@ defineExpose({isDisplayed, show, hide});
   p-4
   rounded-xl
   bg-gray-700
+}
+.blurred-background {
+  @apply
+  fixed
+  h-full
+  w-full
+  top-0
+  left-0
+  backdrop-blur-md
+  backdrop-brightness-95
+  z-0
 }
 </style>

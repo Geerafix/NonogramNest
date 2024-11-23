@@ -19,7 +19,7 @@ const overItem = ref(false);
   grid-cols-[repeat(auto-fit,minmax(0,1fr))]
   gap-2
   p-2
-  bg-gray-900/50
+  bg-gray-900/45
   rounded-xl
   text-center
   transition-all

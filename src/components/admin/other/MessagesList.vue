@@ -31,13 +31,13 @@ const onClick = (id) => {
 .container {
   @apply
   columns-2
-    gap-4
-  w-full
+  gap-4
   list-none
   text-xl
   cursor-pointer
   transition-all
   max-h-[calc(100vh-10.4rem)]
+  max-w-full
   overflow-auto
 }
 li {

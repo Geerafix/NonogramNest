@@ -48,6 +48,7 @@ const date = (date_achieved) => (
   text-xl
   transition-all
   max-h-[calc(100vh-10.4rem)]
+  max-w-full
   overflow-auto;
 }
 .item {

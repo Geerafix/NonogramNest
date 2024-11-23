@@ -51,6 +51,7 @@ const filteredItem = (item) => (
   @apply
   relative
   max-h-[calc(100vh-10.4rem)]
+  max-w-full
   overflow-auto
 }
 .headers {
@@ -58,6 +59,7 @@ const filteredItem = (item) => (
   sticky
   top-0
   transition-all
+  z-50
   list-none;
 }
 .items {

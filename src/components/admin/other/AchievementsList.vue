@@ -36,6 +36,7 @@ const onClick = (achievement) => {
   cursor-pointer
   transition-all
   max-h-[calc(100vh-10.4rem)]
+  max-w-full
   overflow-auto
 }
 .item {

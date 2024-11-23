@@ -20,6 +20,7 @@ const overItem = ref(false);
   rounded-lg
   cursor-pointer
   transition
+  truncate
   ease-[1s]
 }
 </style>

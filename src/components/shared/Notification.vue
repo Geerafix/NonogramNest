@@ -45,7 +45,7 @@ onBeforeMount(stop);
   text-2xl
   text-wrap
   tracking-wide
-  z-10
+  z-50
   max-sm:w-full;
 }
 </style>

@@ -1,18 +1,14 @@
 <script setup>
 import {ref} from "vue";
-import {onClickOutside} from "@vueuse/core";
-
-const target = ref(null);
 const isDisplayed = ref(false);
-onClickOutside(target, _ => isDisplayed.value = false);
 </script>
 
 <template>
-  <div ref="target">
+  <div>
     <div class="question-icon" @click="isDisplayed = !isDisplayed">
       <Icon icon="fa-solid fa-question"/>
     </div>
-    <Transition name="fade-slower" mode="out-in">
+    <TransitionGroup name="fade" mode="out-in" tag="div">
       <div class="information" v-if="isDisplayed">
         <h1 class="rules-header">Zasady gry</h1>
         <div>
@@ -34,7 +30,7 @@ onClickOutside(target, _ => isDisplayed.value = false);
           <h1>3. Zaznaczanie pól</h1>
           <p>
             • Wypełnione pola oznaczaj kolorem czarnym (LPM).<br>
-            • Pola wyłączone z gry zaznaczaj symbolem „x” (PPM).
+            • Pola wyłączone z gry zaznaczaj symbolem ⨯ (PPM).
           </p>
         </div>
         <div>
@@ -76,7 +72,8 @@ onClickOutside(target, _ => isDisplayed.value = false);
         <div class="italic text-2xl text-right mx-4">Miłej gry! ツ</div>
         <div></div>
       </div>
-    </Transition>
+      <div v-if="isDisplayed" class="blurred-background"/>
+    </TransitionGroup>
   </div>
 </template>
 

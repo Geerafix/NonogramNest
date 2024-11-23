@@ -16,6 +16,7 @@ defineProps(['headerName']);
   from-gray-700
   to-gray-700
   rounded-lg
+  truncate
   transition
   ease-[1s]
   text-2xl

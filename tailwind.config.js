@@ -2,7 +2,11 @@
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        around: '0 0 30px rgba(10, 10, 10, 0.1)'
+      },
+    },
   },
   plugins: [],
   future: {

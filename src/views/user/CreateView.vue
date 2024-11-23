@@ -6,6 +6,7 @@ import {generateGame} from '@/scripts/puzzleScripts';
 import {ref} from 'vue';
 import {set} from '@vueuse/core';
 import {useNotification} from '@/composables/useNotification';
+import HelpCreate from "@/components/user/other/HelpCreate.vue";
 
 const board = ref(null);
 
@@ -51,6 +52,7 @@ const handleSubmitGame = async (name) => {
       <NonogramBoard ref="board" v-show="isSizeSelected" />
     </Transition>
     <Actions class="actions" :isCreating="isSizeSelected" @new-board="handleNewBoard" @clear-board="handleClearBoard" @submit="handleSubmitGame" />
+    <HelpCreate/>
   </main>
 </template>
 

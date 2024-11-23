@@ -22,7 +22,6 @@ import {achievementWatcher} from "@/composables/achievementWatcher.js";
 import HelpChallenge from "@/components/user/other/HelpChallenge.vue";
 
 const {notify} = useNotification();
-
 const {watcher} = achievementWatcher();
 
 const nonogram = ref(null);
@@ -66,12 +65,14 @@ const checkGame = async () => {
     const streak = await getStreak().then(res => res.data) - 1;
     const streakPoints = (streak / 100) * getPointsBySize(boardSize.value);
     summary.value.show(points.value + streakPoints, bonus);
-    await endGame();
+    clearPoints();
+    resetBoard();
   }
   await watcher();
 };
 
 const endGame = async () => {
+  await updateDailyChallenge(nonogram.value.nonogram.answers, time.value, points.value, false);
   clearPoints();
   resetBoard();
 };
@@ -80,16 +81,14 @@ const displayChallengeInfo = async (date) => {
   const { data: info } = await getDailyChallengeInfo(date);
 
   if (info) {
-    notify(true, `W tym dniu rozwiązano wyzwanie z punktacją ${info.points} w czasie ${info.time}.`);
+    notify(true, `W tym dniu rozwiązano wyzwanie z punktacją ${info.points} w czasie ${info.time} s.`);
   } else {
     notify(false, `W tym dniu nie rozwiązano wyzwania.`);
   }
 }
 
 onBeforeUnmount(async () => {
-  if (nonogram.value.nonogram.answers && points.value) {
-    await endGame();
-  }
+  if (points.value) await endGame();
 });
 </script>
 

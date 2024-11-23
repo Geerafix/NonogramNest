@@ -6,11 +6,15 @@ export function useNonogram(nonogram) {
     };
 
     const setNewBoard = () => {
-        nonogram.value.newBoard();
+        if (nonogram.value) {
+            nonogram.value.newBoard();
+        }
     };
 
     const resetBoard = () => {
-        nonogram.value.resetBoard();
+        if (nonogram.value) {
+            nonogram.value.resetBoard();
+        }
     };
 
     const checkSolution = () => {
