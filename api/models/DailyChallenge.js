@@ -88,5 +88,25 @@ export const DailyChallenge = sequelize.define('DailyChallenge', {
                 await userProfile.save();
             }
         },
+        afterDestroy: async (solved_challenge, options) => {
+            if (solved_challenge.is_solved === true) {
+                const profile = await UserProfile.findOne({
+                    where: {user_id: solved_challenge.user_id}
+                });
+
+                const score = await Score.findOne({
+                    where: {user_id: solved_challenge.user_id}
+                });
+
+                profile.total_points -= solved_challenge.points;
+                profile.total_play_time -= solved_challenge.time;
+                profile.solved_challenges -= 1;
+
+                score.challenge_sum -= solved_challenge.points;
+
+                await profile.save();
+                await score.save();
+            }
+        }
     }
 });

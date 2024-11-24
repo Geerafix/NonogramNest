@@ -65,7 +65,7 @@ const delAchievement = async () => {
           <TextArea :placeholder="achievement.description || 'Opis...'" v-model="description" />
         </div>
       </div>
-      <Actions @delete="delAchievement" @reject="reject" @accept="accept"/>
+      <Actions @delete="delAchievement" @reject="reject" @accept="accept" class="col-span-2"/>
     </div>
   </div>
 </template>

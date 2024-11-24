@@ -158,6 +158,48 @@ server.get('/admin/user/created', authHandler, asyncHandler(async (req, res) => 
     res.json(created);
 }));
 
+server.delete('/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
+    const {userId, contentId} = req.query;
+
+    await SolvedPuzzle.destroy({
+        where: {
+            user_id: userId,
+            solved_id: contentId
+        },
+        individualHooks: true
+    });
+
+    res.json();
+}));
+
+server.delete('/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
+    const {userId, contentId} = req.query;
+
+    await DailyChallenge.destroy({
+        where: {
+            user_id: userId,
+            daily_id: contentId
+        },
+        individualHooks: true
+    });
+
+    res.json();
+}));
+
+server.delete('/admin/user/created', authHandler, asyncHandler(async (req, res) => {
+    const {userId, contentId} = req.query;
+
+    await CreatedPuzzle.destroy({
+        where: {
+            user_id: userId,
+            created_id: contentId
+        },
+        individualHooks: true
+    });
+
+    res.json();
+}));
+
 server.delete('/admin/deleteUser', async (req, res) => {
     const userId = req.query.userId;
 

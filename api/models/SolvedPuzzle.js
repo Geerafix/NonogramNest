@@ -84,6 +84,29 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
             });
 
             await userProfile.save();
+        },
+        afterDestroy: async (solved_puzzle, options) => {
+            const puzzle = await Puzzle.findOne({
+                where: {puzzle_id: solved_puzzle.puzzle_id}
+            })
+
+            const profile = await UserProfile.findOne({
+                where: {user_id: solved_puzzle.user_id}
+            });
+
+            const score = await Score.findOne({
+                where: {user_id: solved_puzzle.user_id}
+            });
+
+            profile.total_points -= solved_puzzle.points;
+            profile.total_play_time -= solved_puzzle.time;
+            profile.solved_puzzles -= 1;
+
+            score.classic_sum -= solved_puzzle.points;
+            score[`size_${puzzle.size}`] -= solved_puzzle.points;
+
+            await profile.save();
+            await score.save();
         }
     }
 });

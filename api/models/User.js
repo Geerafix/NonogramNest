@@ -3,7 +3,6 @@ import {DataTypes} from 'sequelize';
 
 import {UserProfile} from './UserProfile.js';
 import {Score} from './Score.js';
-import * as argon2 from "argon2";
 
 export const User = sequelize.define('User', {
     user_id: {
@@ -40,7 +39,7 @@ export const User = sequelize.define('User', {
         },
         afterDestroy: async (user, options) => {
             await UserProfile.destroy({where: {user_id: user.user_id}});
-            await Score.destroy({user_id: user.user_id});
+            await Score.destroy({where: {user_id: user.user_id}});
         }
     }
 });

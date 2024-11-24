@@ -96,6 +96,33 @@ export function getUserCreatedPuzzles(userId, page, limit) {
     });
 }
 
+export function deleteUserClassicScore(userId, contentId) {
+    return api.delete('/admin/user/classic', {
+        params: {
+            userId: userId,
+            contentId: contentId
+        }
+    });
+}
+
+export function deleteUserChallengeScore(userId, contentId) {
+    return api.delete('/admin/user/challenge', {
+        params: {
+            userId: userId,
+            contentId: contentId
+        }
+    });
+}
+
+export function deleteUserCreatedPuzzle(userId, contentId) {
+    return api.delete('/admin/user/created', {
+        params: {
+            userId: userId,
+            contentId: contentId
+        }
+    });
+}
+
 export function updatePuzzle(puzzleId, board) {
     return api.put('/admin/puzzle', {
         puzzleId: puzzleId,

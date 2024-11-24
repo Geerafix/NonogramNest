@@ -1,5 +1,6 @@
 <script setup>
 const emit = defineEmits(['accept', 'reject']);
+defineProps(['message'])
 
 const accept = async () => {
     emit('accept', false, 'Usunięto wiadomość.');
@@ -12,7 +13,7 @@ const reject = () => {
 
 <template>
   <div class="form-container">
-    <span>Usunąć wiadomość?</span>
+    <span>{{message}}</span>
     <div class="form-actions">
       <BasicButton @click="reject">
         <Icon icon="fa-solid fa-xmark"/>

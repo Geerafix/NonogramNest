@@ -1,7 +1,7 @@
 <script setup>
 import MessagesList from "@/components/admin/other/MessagesList.vue";
 import Pagination from "@/components/shared/Pagination.vue";
-import ManageMessage from "@/components/admin/management/ManageMessage.vue";
+import ManagePopup from "@/components/admin/management/ManagePopup.vue";
 import {onMounted, ref} from "vue";
 import {set} from "@vueuse/core";
 import {deleteMessage, getMessages} from "@/services/adminService.js";
@@ -41,7 +41,7 @@ onMounted(fetchMessages);
   <main>
     <MessagesList :messages="messages" @onListItemClick="saveId" :class="[blurred]" />
     <Transition name="fade">
-      <ManageMessage v-if="messageId" @reject="messageId = null" @accept="delMessage" />
+      <ManagePopup v-if="messageId" message="Usunąć wiadomość?" @reject="messageId = null" @accept="delMessage" />
     </Transition>
     <Pagination v-bind="pageState" @onPageChange="fetchMessages"></Pagination>
   </main>

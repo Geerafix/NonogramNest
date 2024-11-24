@@ -93,7 +93,7 @@ const delUser = async () => {
           <Icon :icon="['fa-solid', `fa-${el.icon}`]" class="order-first mx-auto"/>
         </BasicButton>
       </div>
-      <Actions @delete="delUser" @reject="reject" @accept="accept"/>
+      <Actions @delete="delUser" @reject="reject" @accept="accept" class="col-span-2"/>
       <Transition name="fade">
         <span v-if="error" class="error-message">Nazwa lub Email już istnieje</span>
       </Transition>
