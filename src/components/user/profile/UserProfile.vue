@@ -1,6 +1,5 @@
 <script setup>
 import {ref, watchEffect} from "vue";
-import {watchDeep} from "@vueuse/core";
 
 const props = defineProps(['user']);
 
@@ -49,7 +48,7 @@ watchEffect( () => {
       <div class="item-container">Łączny czas gry</div>
       <div class="item">{{ (user.total_play_time / 3600).toFixed(2) }} h</div>
       <div class="item-container">Data rejestracji</div>
-      <div class="item">{{new Date(user.register_date.toString()).toLocaleDateString()}}r</div>
+      <div class="item">{{new Date(user?.register_date?.toString()).toLocaleDateString()}}r</div>
     </div>
   </div>
 </template>

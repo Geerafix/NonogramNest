@@ -7,6 +7,8 @@ import {Puzzle} from "../models/Puzzle.js";
 import {User} from "../models/User.js";
 import {Message} from "../models/Message.js";
 import {Achievement} from "../models/Achievement.js";
+import {SolvedPuzzle} from "../models/SolvedPuzzle.js";
+import {DailyChallenge} from "../models/DailyChallenge.js";
 
 server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {limit, offset} = getPagination(req);
@@ -94,7 +96,8 @@ server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
             email: {[Op.iLike]: option === 'email' ? search : '%%'}
         },
         limit: limit,
-        offset: offset
+        offset: offset,
+        order: [['user_id', 'ASC']]
     });
 
     res.json(users);
@@ -108,8 +111,56 @@ server.get('/admin/user', authHandler, asyncHandler(async (req, res) => {
     res.json(user);
 }));
 
+server.get('/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
+    const {limit, offset} = getPagination(req);
+    const userId = req.query.userId;
+
+    const classic = await SolvedPuzzle.findAll({
+        where: {user_id: userId},
+        attributes: ['solved_id', 'points', 'time'],
+        order: [['solved_id', 'DESC']],
+        offset: offset,
+        limit: limit,
+    });
+
+    res.json(classic);
+}));
+
+server.get('/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
+    const {limit, offset} = getPagination(req);
+    const userId = req.query.userId;
+
+    const challenges = await DailyChallenge.findAll({
+        where: {[Op.and]: [{user_id: userId}, {is_solved: true}]},
+        attributes: ['daily_id', 'points', 'time', 'date'],
+        order: [['daily_id', 'DESC']],
+        offset: offset,
+        limit: limit
+    });
+
+    res.json(challenges);
+}));
+
+server.get('/admin/user/created', authHandler, asyncHandler(async (req, res) => {
+    const {limit, offset} = getPagination(req);
+    const userId = req.query.userId;
+
+    const created = await CreatedPuzzle.findAll({
+        include: [{model: Puzzle, attributes: []}, {model: User, attributes: []}],
+        where: {user_id: userId},
+        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'date'],
+        order: [['date', 'DESC']],
+        offset: offset,
+        limit: limit,
+        raw: true
+    });
+
+    res.json(created);
+}));
+
 server.delete('/admin/deleteUser', async (req, res) => {
     const userId = req.query.userId;
+
     await User.destroy({where: {user_id: userId}});
 
     res.json();

@@ -66,6 +66,36 @@ export function getPuzzle(puzzleId) {
     });
 }
 
+export function getUserClassicScores(userId, page, limit) {
+    return api.get('/admin/user/classic', {
+        params: {
+            userId: userId,
+            page: page,
+            limit: limit
+        }
+    });
+}
+
+export function getUserChallengeScores(userId, page, limit) {
+    return api.get('/admin/user/challenge', {
+        params: {
+            userId: userId,
+            page: page,
+            limit: limit
+        }
+    });
+}
+
+export function getUserCreatedPuzzles(userId, page, limit) {
+    return api.get('/admin/user/created', {
+        params: {
+            userId: userId,
+            page: page,
+            limit: limit
+        }
+    });
+}
+
 export function updatePuzzle(puzzleId, board) {
     return api.put('/admin/puzzle', {
         puzzleId: puzzleId,

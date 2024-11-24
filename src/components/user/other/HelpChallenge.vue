@@ -22,7 +22,7 @@ const isDisplayed = ref(false);
           <p>
             • Za systematyczne, codzienne rozwiązywanie plansz zwiększa się Twój streak, który jest liczony od pierwszego dnia, w którym wykonasz wyzwanie.<br>
             • Z każdym rozwiązanym wyzwaniem mnożnik punktów jest zwiększany.<br>
-            • Po rozwiązaniu wyzwania punkty bazowe są mnożone przez aktualny mnożnik.
+            • Po rozwiązaniu wyzwania maksymalna możliwa liczba punktów bazowych jest mnożona i dodawana do końcowej punktacji.
           </p>
         </div>
         <div>

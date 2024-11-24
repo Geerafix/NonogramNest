@@ -2,6 +2,7 @@
 import TextArea from "@/components/shared/inputs/TextArea.vue";
 import {ref} from "vue";
 import {deleteAchievement, postAchievement, updateAchievement} from "@/services/adminService.js";
+import Actions from "@/components/admin/management/Actions.vue";
 
 const props = defineProps(['achievement']);
 const emit = defineEmits(['accept', 'reject']);
@@ -64,17 +65,7 @@ const delAchievement = async () => {
           <TextArea :placeholder="achievement.description || 'Opis...'" v-model="description" />
         </div>
       </div>
-      <div class="form-actions">
-        <BasicButton @click="delAchievement" class="!bg-red-600/70" v-if="achievement.achievement_id">
-          <Icon icon="fa-solid fa-trash"/>
-        </BasicButton>
-        <BasicButton @click="reject">
-          <Icon icon="fa-solid fa-xmark"/>
-        </BasicButton>
-        <BasicButton @click="accept" class="!bg-teal-900">
-          <Icon icon="fa-solid fa-check"/>
-        </BasicButton>
-      </div>
+      <Actions @delete="delAchievement" @reject="reject" @accept="accept"/>
     </div>
   </div>
 </template>

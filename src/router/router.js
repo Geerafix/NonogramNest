@@ -128,7 +128,7 @@ const router = createRouter({
             component: view('admin', 'ManagePuzzles'),
             meta: {
                 pageOwner: adminRole,
-                title: 'Gry'
+                title: 'Oczekujące gry'
             },
         },
         {

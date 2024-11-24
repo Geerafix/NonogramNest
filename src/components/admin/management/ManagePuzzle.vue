@@ -2,6 +2,7 @@
 import NonogramBoard from "@/components/user/game-creation/NonogramBoard.vue";
 import {onMounted, ref} from "vue";
 import {deletePuzzle, updatePuzzle} from "@/services/adminService.js";
+import Actions from "@/components/admin/management/Actions.vue";
 
 const props = defineProps(['id', 'puzzle']);
 const emit = defineEmits(['accept', 'reject']);
@@ -29,16 +30,6 @@ onMounted(() => board.value.answers = props.puzzle);
 <template>
   <div class="form-container">
     <NonogramBoard ref="board" class="!relative pointer-events-none"/>
-    <div class="form-actions">
-      <BasicButton @click="delPuzzle" class="!bg-red-600/70">
-        <Icon icon="fa-solid fa-trash"/>
-      </BasicButton>
-      <BasicButton @click="reject">
-        <Icon icon="fa-solid fa-xmark"/>
-      </BasicButton>
-      <BasicButton @click="accept" class="!bg-teal-900">
-        <Icon icon="fa-solid fa-check"/>
-      </BasicButton>
-    </div>
+    <Actions @delete="delPuzzle" @reject="reject" @accept="accept"/>
   </div>
 </template>

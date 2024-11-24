@@ -2,7 +2,7 @@
 const emit = defineEmits(['accept', 'reject']);
 
 const accept = async () => {
-    emit('accept', false, 'Usunięto wiadomość');
+    emit('accept', false, 'Usunięto wiadomość.');
 };
 
 const reject = () => {

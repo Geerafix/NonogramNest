@@ -7,9 +7,11 @@ import {useTrailingBox} from "@/composables/useTrailingBox.js";
 import IconInvalid from "@/components/auth/IconInvalid.vue";
 import IconValid from "@/components/auth/IconValid.vue";
 import TrailingBox from "@/components/shared/TrailingBox.vue";
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import Actions from "@/components/admin/management/Actions.vue";
 
 const props = defineProps(['user']);
-const emit = defineEmits(['accept', 'reject']);
+const emit = defineEmits(['accept', 'reject', 'view']);
 
 const error = ref(false);
 const form = reactive({
@@ -18,6 +20,7 @@ const form = reactive({
   role: props.user.role,
   password: ''
 });
+const fieldsHeaders = ['Nazwa', 'E-mail', 'Rola', 'Hasło'];
 const rules = {
   username: {
     min: 5, max: 20, required: true,
@@ -41,6 +44,12 @@ const rules = {
 }
 const {pass, errorFields} = useAsyncValidator(form, rules);
 const {showBox, hideBox, message, isHovered} = useTrailingBox();
+const content = [
+  {name: 'T. klasyczny', view: 'classic', icon: 'chess-board'},
+  {name: 'T. wyzwania', view: 'challenge', icon: 'trophy'},
+  {name: 'Plansze', view: 'created', icon: 'pen-to-square'},
+  {name: 'Profil', view: 'profile', icon: 'address-card'},
+];
 
 const accept = async () => {
   const updatedUser = {
@@ -58,9 +67,7 @@ const accept = async () => {
   }
 };
 
-const reject = () => {
-  emit('reject');
-};
+const reject = () => emit('reject');
 
 const delUser = async () => {
   await deleteUser(props.user.user_id);
@@ -70,52 +77,23 @@ const delUser = async () => {
 
 <template>
   <div>
-    <div class="form-container">
+    <div class="form-container grid-cols-[auto_auto] gap-4">
       <div class="grid grid-cols-2 gap-4">
-        <div class="item-row">
+        <div class="item-row" v-for="(field, key, idx) of form">
           <div class="header-info">
-            <span>Nazwa</span>
-            <component :is="errorFields?.username ? IconInvalid : IconValid"
-                       @mouseover="showBox(rules.username.message)" @mouseleave="hideBox"/>
+            <span>{{fieldsHeaders[idx]}}</span>
+            <component :is="errorFields?.[key] ? IconInvalid : IconValid" @mouseover="showBox(rules[key].message)" @mouseleave="hideBox"/>
           </div>
-          <BasicInput :placeholder="form.username" v-model="form.username" />
-        </div>
-        <div class="item-row">
-          <div class="header-info">
-            <span>E-mail</span>
-            <component :is="errorFields?.email ? IconInvalid : IconValid"
-                       @mouseover="showBox(rules.email.message)" @mouseleave="hideBox"/>
-          </div>
-          <BasicInput :placeholder="form.email" v-model="form.email" />
-        </div>
-        <div class="item-row">
-          <div class="header-info">
-            <span>Rola</span>
-            <component :is="errorFields?.role ? IconInvalid : IconValid"
-                       @mouseover="showBox(rules.role.message)" @mouseleave="hideBox"/>
-          </div>
-          <BasicInput :placeholder="form.role" v-model="form.role" />
-        </div>
-        <div class="item-row">
-          <div class="header-info">
-            <span>Hasło</span>
-            <component :is="errorFields?.password ? IconInvalid : IconValid"
-                       @mouseover="showBox(rules.password.message)" @mouseleave="hideBox"/>
-          </div>
-          <BasicInput placeholder="Nowe hasło..." v-model="form.password" />
+          <BasicInput :placeholder="fieldsHeaders[idx].concat('...')" v-model="form[key]"/>
         </div>
       </div>
-      <div class="form-actions">
-        <BasicButton @click="delUser" class="!bg-red-600/70">
-          <Icon icon="fa-solid fa-trash"/>
-        </BasicButton>
-        <BasicButton @click="reject">
-          <Icon icon="fa-solid fa-xmark"/>
-        </BasicButton>
-        <BasicButton @click="accept" class="!bg-teal-900">
-          <Icon icon="fa-solid fa-check"/>
+      <div class="item-row !gap-2" v-if="props.user.role === 'user'">
+        <span class="text-center">Zawartość</span>
+        <BasicButton class="button-restyle" v-for="el in content" :buttonText="el.name" @click="emit('view', el.view)">
+          <Icon :icon="['fa-solid', `fa-${el.icon}`]" class="order-first mx-auto"/>
         </BasicButton>
       </div>
+      <Actions @delete="delUser" @reject="reject" @accept="accept"/>
       <Transition name="fade">
         <span v-if="error" class="error-message">Nazwa lub Email już istnieje</span>
       </Transition>
