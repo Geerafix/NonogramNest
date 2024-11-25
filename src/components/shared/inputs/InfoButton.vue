@@ -27,7 +27,7 @@ const elementHover = useElementHover(element);
   justify-center
   w-14
   h-14
-  bg-teal-700
+  bg-teal-800
   rounded-xl
   border-b-4
   border-teal-950/60
@@ -38,12 +38,12 @@ const elementHover = useElementHover(element);
   ease-in
   text-2xl
   text-nowrap
-  text-gray-300
+  text-slate-300
   select-none
   drop-shadow
   cursor-pointer
   overflow-x-hidden
-  hover:rounded-[30px]
+  hover:rounded-[1.25rem]
 }
 
 .info {
@@ -55,7 +55,7 @@ const elementHover = useElementHover(element);
   mt-2
   border-b-4
   border-teal-950/45
-  rounded-full
+  rounded-[1.25rem]
   content-center
   transition-all
   text-white

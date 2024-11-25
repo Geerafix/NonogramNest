@@ -10,17 +10,14 @@ export const useNonogramStore = () => {
     const load = (nonogram, time, points, started, pauseTime) => {
         try {
             const saved = JSON.parse(localStorage.getItem('nonogram'));
-
             nonogram.value.nonogram.board = saved.nonogram.board;
             nonogram.value.nonogram.answers = saved.nonogram.answers;
             nonogram.value.nonogram.cluesX = saved.nonogram.cluesX;
             nonogram.value.nonogram.cluesY = saved.nonogram.cluesY;
             nonogram.value.nonogram.size = saved.nonogram.size;
-
             time.value = saved.time;
             points.value = saved.points;
             started.value = true;
-
             pauseTime();
         } catch (err) {
             remove();
@@ -33,6 +30,31 @@ export const useNonogramStore = () => {
 
     const isSaved = () => {
         return JSON.parse(localStorage.getItem('nonogram')) !== null;
+    };
+
+    return {save, load, remove, isSaved}
+};
+
+export const useCreatedStore = () => {
+    const save = (board) => {
+        localStorage.setItem('created', JSON.stringify(board.value));
+    }
+
+    const load = (board) => {
+        try {
+            const saved = JSON.parse(localStorage.getItem('created'));
+            board.value.answers = saved.answers;
+        } catch (err) {
+            remove();
+        }
+    };
+
+    const remove = () => {
+        localStorage.removeItem('created');
+    };
+
+    const isSaved = () => {
+        return JSON.parse(localStorage.getItem('created')) !== null;
     };
 
     return {save, load, remove, isSaved}

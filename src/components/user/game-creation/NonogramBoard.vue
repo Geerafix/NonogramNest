@@ -88,6 +88,7 @@ defineExpose({setBoard, clearBoard, answers});
   border-[1px]
   rounded-[3px]
   text-center
+  duration-75
   transition-colors;
 }
 .x::after {

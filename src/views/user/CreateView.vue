@@ -1,22 +1,23 @@
 <script setup>
 import Actions from '@/components/user/game-creation/Actions.vue';
 import NonogramBoard from '@/components/user/game-creation/NonogramBoard.vue';
+import HelpCreate from "@/components/user/other/HelpCreate.vue";
 import {postCommunityPuzzle} from '@/services/communityService.js';
 import {generateGame} from '@/scripts/puzzleScripts';
-import {ref} from 'vue';
+import {onBeforeUnmount, onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {useNotification} from '@/composables/useNotification';
-import HelpCreate from "@/components/user/other/HelpCreate.vue";
+import {useCreatedStore} from "@/store.js";
 
 const board = ref(null);
-
-const {notify} = useNotification();
-
 const isSizeSelected = ref(false);
+const {notify} = useNotification();
+const boardStore = useCreatedStore();
 
 const handleNewBoard = (size) => {
   board.value.setBoard(size);
   set(isSizeSelected, size !== null ? size : null);
+  typeof size === 'undefined' ? boardStore.remove() : null;
 };
 
 const handleClearBoard = () => {
@@ -39,6 +40,17 @@ const handleSubmitGame = async (name) => {
     notify(false, 'Nie wybrano rozmiaru planszy.');
   }
 };
+
+onBeforeUnmount(() => {
+  boardStore.save(board);
+});
+
+onMounted(() => {
+  if (boardStore.isSaved()) {
+    boardStore.load(board);
+    set(isSizeSelected, true);
+  }
+});
 </script>
 
 <template>
