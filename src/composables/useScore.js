@@ -1,59 +1,50 @@
-import {set, useInterval} from "@vueuse/core";
+import {useInterval} from "@vueuse/core";
 import {onMounted, ref, watch} from "vue";
 
 export function useScore() {
     const {counter, pause, resume, reset} = useInterval(1000, {controls: true});
-
-    const initialPoints = ref(null);
     const points = ref(null);
-    
-    const started = ref(false);
+    const started = ref(null);
     const paused = ref(true);
     
     const setPoints = (value) => {
-        set(points, value);
-        if (initialPoints.value === null) {
-            set(initialPoints, value);
-        }
+        points.value = value;
     }
 
-    const setTime = (time) => {
-        set(counter, time);
+    const setTime = (value) => {
+        counter.value = value;
     };
 
     const startTime = () => {
-        set(started, true);
-        set(paused, false);
+        started.value = true;
+        paused.value = false;
     };
 
     const pauseTime = () => {
-        set(paused, !paused.value);
+        paused.value = !paused.value;
         pause();
     };
 
     const clearPoints = () => {
-        set(started, false);
-        set(points, null);
-        set(initialPoints, null);
+        started.value = false;
+        points.value = null;
     };
 
-    watch(paused, (newValue) => newValue ? pause() : resume());
-
-    watch(started, (newValue) => {
-        if (!newValue) {
+    watch(paused, (newValue) => {
+        if (newValue) {
             pause();
-            reset();
         } else {
             resume();
         }
-    }, {immediate: true});
+    });
 
-    onMounted(pause);
+    onMounted(pauseTime);
 
     return {
         setPoints,
         clearPoints, 
         setTime,
+        resetTime: reset,
         startTime,
         pauseTime,
         time: counter, 

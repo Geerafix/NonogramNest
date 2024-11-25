@@ -3,24 +3,25 @@ import Nonogram from '@/components/user/game/Nonogram.vue';
 import Score from "@/components/user/game/Score.vue";
 import Actions from "@/components/user/game/Actions.vue";
 import Summary from '@/components/user/game/Summary.vue';
-import {ref} from 'vue';
+import HelpClassic from "@/components/user/other/HelpClassic.vue";
+import {onBeforeUnmount, onMounted, ref} from 'vue';
 import {useScore} from '@/composables/useScore';
 import {postPuzzle, postSolvedPuzzle} from '@/services/puzzleService';
 import {useNotification} from '@/composables/useNotification';
 import {useNonogram} from '@/composables/useNonogram';
 import {calcTimeBonus, getPointsBySize} from "@/scripts/puzzleScripts.js";
 import {achievementWatcher} from "@/composables/achievementWatcher.js";
-import HelpClassic from "@/components/user/other/HelpClassic.vue";
+import {useNonogramStore} from "@/store.js";
 
 const {notify} = useNotification();
-
 const {watcher} = achievementWatcher();
 
 const nonogram = ref(null);
 const {setBoardSize, setNewBoard, checkSolution, resetBoard, cluesX, cluesY, boardSize} = useNonogram(nonogram);
+const nonogramStore = useNonogramStore();
 
 const summary = ref(null);
-const {setPoints, clearPoints, startTime, pauseTime, time, points, paused, started} = useScore();
+const {setPoints, clearPoints, startTime, pauseTime, resetTime, time, points, paused, started} = useScore();
 
 const setGame = (size) => {
   setBoardSize(size);
@@ -29,6 +30,7 @@ const setGame = (size) => {
 
 const startGame = () => {
   setNewBoard();
+  resetTime();
   startTime();
 };
 
@@ -51,16 +53,27 @@ const checkGame = async () => {
 const endGame = () => {
   resetBoard();
   clearPoints();
+  nonogramStore.remove();
 };
+
+onBeforeUnmount(() => {
+  if (started.value) {
+    nonogramStore.save(nonogram, time, points);
+  }
+});
+
+onMounted(() => {
+  if (nonogramStore.isSaved()) {
+    nonogramStore.load(nonogram, time, points, started, pauseTime);
+  }
+});
 </script>
 
 <template>
   <main>
-    <Transition name="fade" mode="out-in">
-      <div class="game-instructions" v-if="!started">
-        <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
-      </div>
-    </Transition>
+    <div class="game-instructions" v-if="!started">
+      <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
+    </div>
     <Transition name="fade">
       <Nonogram ref="nonogram" v-bind="{started, paused}"/>
     </Transition>

@@ -50,6 +50,7 @@ const setDailyChallenge = async () => {
     return;
   }
   startTime();
+  pauseTime();
 };
 
 const checkGame = async () => {
