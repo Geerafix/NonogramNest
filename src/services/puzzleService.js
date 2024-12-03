@@ -18,3 +18,31 @@ export function postSolvedPuzzle(puzzleId, time, points) {
         points: points
     });
 }
+
+export function saveNonogram(nonogramData) {
+    return api.post('/puzzle/save', {
+        nonogramData: nonogramData
+    });
+}
+
+export function loadNonogram(nonogramData) {
+    return api.get('/puzzle/load', {
+        params: {
+            nonogramData: nonogramData
+        }
+    });
+}
+
+export function saveCreatedNonogram(nonogramData) {
+    return api.post('/create/save', {
+        nonogramData: nonogramData
+    });
+}
+
+export function loadCreatedNonogram(nonogramData) {
+    return api.get('/create/load', {
+        params: {
+            nonogramData: nonogramData
+        }
+    });
+}

@@ -4,6 +4,7 @@ const apiUrl = `http://${import.meta.env.VITE_SERVER_NETWORK}:${import.meta.env.
 const api = axios.create({baseURL: apiUrl, withCredentials: true});
 
 export function postLogOut() {
+    sessionStorage.clear();
     return api.post('/logout');
 }
 

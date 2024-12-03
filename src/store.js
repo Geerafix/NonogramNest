@@ -1,22 +1,29 @@
+import {saveNonogram, loadNonogram, saveCreatedNonogram, loadCreatedNonogram} from "@/services/puzzleService.js";
+
 export const useNonogramStore = () => {
-    const save = (nonogram, time, points) => {
-        localStorage.setItem('nonogram', JSON.stringify({
+    const save = async (nonogram, time, points) => {
+        const nonogramData = {
             nonogram: nonogram.value.nonogram,
             time: time.value,
             points: points.value
-        }));
+        };
+
+        const encoded = await saveNonogram(nonogramData).then(res => res.data);
+        sessionStorage.setItem('saved', encoded);
     }
 
-    const load = (nonogram, time, points, started, pauseTime) => {
+    const load = async (nonogram, time, points, started, pauseTime) => {
         try {
-            const saved = JSON.parse(localStorage.getItem('nonogram'));
-            nonogram.value.nonogram.board = saved.nonogram.board;
-            nonogram.value.nonogram.answers = saved.nonogram.answers;
-            nonogram.value.nonogram.cluesX = saved.nonogram.cluesX;
-            nonogram.value.nonogram.cluesY = saved.nonogram.cluesY;
-            nonogram.value.nonogram.size = saved.nonogram.size;
-            time.value = saved.time;
-            points.value = saved.points;
+            const data = sessionStorage.getItem('saved');
+            const decoded = await loadNonogram(data).then(res => res.data);
+
+            nonogram.value.nonogram.board = decoded.nonogram.board;
+            nonogram.value.nonogram.answers = decoded.nonogram.answers;
+            nonogram.value.nonogram.cluesX = decoded.nonogram.cluesX;
+            nonogram.value.nonogram.cluesY = decoded.nonogram.cluesY;
+            nonogram.value.nonogram.size = decoded.nonogram.size;
+            time.value = decoded.time;
+            points.value = decoded.points;
             started.value = true;
             pauseTime();
         } catch (err) {
@@ -25,36 +32,39 @@ export const useNonogramStore = () => {
     };
 
     const remove = () => {
-        localStorage.removeItem('nonogram');
+        sessionStorage.removeItem('saved');
     };
 
     const isSaved = () => {
-        return JSON.parse(localStorage.getItem('nonogram')) !== null;
+        return sessionStorage.getItem('saved') !== null;
     };
 
     return {save, load, remove, isSaved}
 };
 
 export const useCreatedStore = () => {
-    const save = (board) => {
-        localStorage.setItem('created', JSON.stringify(board.value));
+    const save = async (board) => {
+        const encoded = await saveCreatedNonogram(board.value).then(res => res.data);
+        sessionStorage.setItem('created', encoded);
     }
 
-    const load = (board) => {
+    const load = async (board) => {
         try {
-            const saved = JSON.parse(localStorage.getItem('created'));
-            board.value.answers = saved.answers;
+            const data = sessionStorage.getItem('created');
+            const decoded = await loadCreatedNonogram(data).then(res => res.data);
+
+            board.value.answers = decoded.answers;
         } catch (err) {
             remove();
         }
     };
 
     const remove = () => {
-        localStorage.removeItem('created');
+        sessionStorage.removeItem('created');
     };
 
     const isSaved = () => {
-        return JSON.parse(localStorage.getItem('created')) !== null;
+        return sessionStorage.getItem('created') !== null;
     };
 
     return {save, load, remove, isSaved}

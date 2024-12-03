@@ -150,3 +150,18 @@ sequelize.addHook('afterBulkSync', async (options) => {
 // uncomment to migrate models and insert test data
 
 // await sequelize.sync({ force: true });
+
+
+User.hasMany(SolvedPuzzle, {foreignKey: 'user_id'});
+User.hasMany(DailyChallenge, {foreignKey: 'user_id'});
+User.hasMany(CreatedPuzzle, {foreignKey: 'user_id'});
+User.hasOne(UserProfile, {foreignKey: 'user_id'});
+User.hasOne(Score, {foreignKey: 'user_id'});
+User.hasMany(UserAchievement, {foreignKey: 'user_id'});
+User.hasMany(Message, {foreignKey: 'user_id'});
+
+Puzzle.hasMany(SolvedPuzzle, {foreignKey: 'puzzle_id'});
+Puzzle.hasMany(DailyChallenge, {foreignKey: 'puzzle_id'});
+Puzzle.hasOne(CreatedPuzzle, {foreignKey: 'puzzle_id'});
+
+Achievement.hasMany(UserAchievement, {foreignKey: 'achievement_id'});

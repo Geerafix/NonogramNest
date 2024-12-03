@@ -4,15 +4,15 @@ import NonogramBoard from '@/components/user/game-creation/NonogramBoard.vue';
 import HelpCreate from "@/components/user/other/HelpCreate.vue";
 import {postCommunityPuzzle} from '@/services/communityService.js';
 import {generateGame} from '@/scripts/puzzleScripts';
-import {onBeforeUnmount, onMounted, ref, watch} from 'vue';
+import {onBeforeUnmount, onMounted, ref} from 'vue';
 import {set} from '@vueuse/core';
 import {useNotification} from '@/composables/useNotification';
 import {useCreatedStore} from "@/store.js";
 
-const board = ref(null);
 const isSizeSelected = ref(false);
-const {notify} = useNotification();
+const board = ref(null);
 const boardStore = useCreatedStore();
+const {notify} = useNotification();
 
 const handleNewBoard = (size) => {
   board.value.setBoard(size);
@@ -33,6 +33,7 @@ const handleSubmitGame = async (name) => {
       const nonogram = generateGame(dCopy);
       await postCommunityPuzzle(name, nonogram.cluesX, nonogram.cluesY, board.value.answers.length, board.value.answers);
       board.value.clearBoard();
+      boardStore.remove();
     } else {
       notify(false, 'Nie wpisano nazwy planszy.');
     }
@@ -42,7 +43,9 @@ const handleSubmitGame = async (name) => {
 };
 
 onBeforeUnmount(() => {
-  boardStore.save(board);
+  if (isSizeSelected.value) {
+    boardStore.save(board);
+  }
 });
 
 onMounted(() => {
