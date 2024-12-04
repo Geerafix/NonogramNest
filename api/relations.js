@@ -9,7 +9,6 @@ import {UserAchievement} from "./models/UserAchievement.js";
 import {Achievement} from "./models/Achievement.js";
 import {Message} from "./models/Message.js";
 import {sequelize, server} from "./server.js";
-import {asyncHandler} from "./utils.js";
 import * as argon2 from "argon2";
 
 User.hasMany(SolvedPuzzle, {foreignKey: 'user_id'});

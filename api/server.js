@@ -13,6 +13,11 @@ import('./endpoints/user.js');
 import('./endpoints/admin.js');
 import('./endpoints/auth.js');
 
+import('./services/ratingService.js');
+import('./services/challengeService.js');
+import('./services/communityService.js');
+
+
 dotenv.config({path: '../.env'});
 
 const db_user = process.env.DB_USER;
@@ -22,7 +27,7 @@ const db_port = process.env.DB_PORT;
 const db_database = process.env.DB_NAME;
 const server_port = process.env.VITE_SERVER_PORT;
 
-const connectionString = `postgres://${db_user}:${db_password}@${db_network}:${db_port}/${db_database}`;
+const connectionString = `postgres://postgres:admin@localhost:5432/nonogram-database`;
 
 export const sequelize = new Sequelize(connectionString, { dialect: 'postgres', logging: false });
 

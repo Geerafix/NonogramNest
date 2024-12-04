@@ -3,6 +3,11 @@ import {DataTypes} from 'sequelize';
 
 import {UserProfile} from './UserProfile.js';
 import {Score} from './Score.js';
+import "./SolvedPuzzle.js";
+import "./DailyChallenge.js";
+import "./CreatedPuzzle.js";
+import "./UserAchievement.js";
+import "./Message.js";
 
 export const User = sequelize.define('User', {
     user_id: {
