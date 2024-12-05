@@ -92,7 +92,7 @@ export const getStreak = async (user_id) => {
     if (![yesterdayDateonly, todayDateonly].includes(firstDailyDateonly)) return 0;
 
     if (firstDailyDateonly === todayDateonly) {
-        if (dailyDays[0].is_solved){
+        if (dailyDays[0].is_solved) {
             ++streak;
         }
         dailyDays = dailyDays.slice(1);
@@ -103,8 +103,7 @@ export const getStreak = async (user_id) => {
         if (challenge.is_solved && new Date(challenge.date).getDate() === acc.getDate()) {
             ++streak;
             acc = new Date(acc.setDate(acc.getDate() - 1));
-        }
-        else break;
+        } else break;
     }
 
     return streak;

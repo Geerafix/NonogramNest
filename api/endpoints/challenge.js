@@ -1,12 +1,13 @@
 import {server} from "../server.js";
 import {asyncHandler, authHandler} from "../utils.js";
 import {
-    getDailyChallenges,
-    getDailyChallenge,
-    postDailyChallenge,
-    updateDailyChallenge,
+    getChallengeInfo,
     getDailies,
-    getStreak, getChallengeInfo
+    getDailyChallenge,
+    getDailyChallenges,
+    getStreak,
+    postDailyChallenge,
+    updateDailyChallenge
 } from "../services/challengeService.js";
 
 server.get('/challenges', authHandler, asyncHandler(async (req, res) => {

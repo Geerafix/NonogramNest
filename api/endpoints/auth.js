@@ -1,9 +1,9 @@
 import {server} from "../server.js";
 import {Op} from "sequelize";
-import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
-import {asyncHandler} from "../utils.js";
+import * as argon2 from "argon2";
 import {User} from "../models/User.js";
+import {asyncHandler} from "../utils.js";
 
 server.post('/signin', asyncHandler(async (req, res) => {
     const user = await User.findOne({
@@ -18,7 +18,7 @@ server.post('/signin', asyncHandler(async (req, res) => {
         res.cookie('token', token, {httpOnly: true});
         res.status(200).json(token);
     } else {
-        res.status(404).send({msg: 'Nieprawidłowa nazwa użytkownika lub hasło'});
+        res.status(404).send({msg: 'User not found'});
     }
 }));
 
@@ -34,5 +34,5 @@ server.post('/signup', asyncHandler(async (req, res) => {
         password: hash
     });
 
-    res.json({message: 'Zarejestrowano'});
+    res.json({message: 'Succes'});
 }));

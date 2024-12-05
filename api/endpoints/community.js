@@ -1,10 +1,10 @@
 import {server} from "../server.js";
 import {asyncHandler, authHandler} from "../utils.js";
 import {
-    getCommunityPuzzles,
     getCommunityPuzzle,
-    postCreatedPuzzle,
-    getUserPuzzles
+    getCommunityPuzzles,
+    getUserPuzzles,
+    postCreatedPuzzle
 } from "../services/communityService.js";
 
 server.get('/community/puzzles', authHandler, asyncHandler(async (req, res) => {
@@ -36,7 +36,7 @@ server.post('/community/created', authHandler, asyncHandler(async (req, res) => 
 
     await postCreatedPuzzle(user.user_id, clues_x, clues_y, size, excluded_tiles, name);
 
-    res.json({});
+    res.json({msg: 'Sent puzzle'});
 }));
 
 server.get('/user/puzzles', authHandler, asyncHandler(async (req, res) => {

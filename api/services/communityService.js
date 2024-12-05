@@ -4,7 +4,6 @@ import {User} from "../models/User.js";
 import {Op} from "sequelize";
 import {getPagination} from "../utils.js";
 
-
 export const getCommunityPuzzles = async (user_id, s, option, l, o) => {
     const {limit, offset} = getPagination(l, o);
     const search = `%${s}%` || '%%';

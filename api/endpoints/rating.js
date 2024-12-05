@@ -1,11 +1,6 @@
 import {server} from '../server.js';
 import {asyncHandler, authHandler} from "../utils.js";
-import {
-    getRatingClassic,
-    getRatingChallenge,
-    getRatingAll,
-    getRatingUser
-} from "../services/ratingService.js";
+import {getRatingAll, getRatingChallenge, getRatingClassic, getRatingUser} from "../services/ratingService.js";
 
 server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;

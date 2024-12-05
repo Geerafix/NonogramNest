@@ -1,6 +1,5 @@
 import {sequelize} from '../server.js';
 import {DataTypes} from 'sequelize';
-import "./User.js";
 
 export const UserProfile = sequelize.define('UserProfile', {
     user_profile_id: {

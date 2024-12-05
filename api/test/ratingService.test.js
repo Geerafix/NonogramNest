@@ -1,4 +1,5 @@
 import {expect, test, describe} from "vitest"
+import ("../relations.js")
 import {getRatingClassic, getRatingChallenge, getRatingAll, getRatingUser} from "../services/ratingService.js";
 
 describe('classic rating', () => {
@@ -26,6 +27,19 @@ describe('classic rating', () => {
     test('should return every object with same board size in every board size category (classic rating)', async () => {
         for (let size = 5; size < 16; size++) {
             const mock = await getRatingClassic(undefined, undefined, size);
+            for (const el of mock) {
+                expect(el).toHaveProperty(`size_${size}`);
+            }
+        }
+    });
+
+    test('should return paged data of objects with same board size in every board size category (classic rating)', async () => {
+        // założenie: w bazie przynajmniej 10 użytkowników
+        const page = 1; // strona
+        const limit = 10; // limit elementów na stronie
+
+        for (let size = 5; size <= 15; size++) {
+            const mock = await getRatingClassic(page, limit, size);
             for (const el of mock) {
                 expect(el).toHaveProperty(`size_${size}`);
             }

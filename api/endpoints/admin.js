@@ -1,104 +1,70 @@
 import {server} from "../server.js";
-import {Op} from "sequelize";
-import * as argon2 from "argon2";
-import {asyncHandler, authHandler, getPagination} from "../utils.js";
-import {CreatedPuzzle} from "../models/CreatedPuzzle.js";
-import {Puzzle} from "../models/Puzzle.js";
-import {User} from "../models/User.js";
-import {Message} from "../models/Message.js";
-import {Achievement} from "../models/Achievement.js";
-import {SolvedPuzzle} from "../models/SolvedPuzzle.js";
-import {DailyChallenge} from "../models/DailyChallenge.js";
+import {asyncHandler, authHandler} from "../utils.js";
+import {
+    deleteAchievement,
+    deleteChallenge,
+    deleteClassic,
+    deleteCreated,
+    deleteMessage,
+    deletePuzzle,
+    deleteUser,
+    getAchievements,
+    getAdmins,
+    getCreatedPuzzles,
+    getMessages,
+    getPuzzle,
+    getPuzzles,
+    getSolvedChallenge,
+    getSolvedClassic,
+    getUser,
+    getUsers,
+    postAchievement,
+    publishPuzzle,
+    updateAchievement,
+    updateUser
+} from "../services/adminService.js";
 
 server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-    const search = `%${req.query.search}%` || '%%';
+    const {page, limit} = req.query;
+    const search = req.query.search;
     const option = req.query.option;
 
-    const puzzles = await CreatedPuzzle.findAll({
-        include: [{
-            model: Puzzle,
-            attributes: []
-        }, {
-            model: User,
-            attributes: [],
-            where: {username: {[Op.iLike]: option === 'creator' ? search : '%%'}}
-        }],
-        where: {
-            name: {[Op.iLike]: option === 'name' ? search : '%%'},
-            is_public: false
-        },
-        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'Puzzle.excluded_tiles'],
-        order: [['date', 'DESC']],
-        limit: limit,
-        offset: offset,
-        raw: true
-    });
+    const puzzles = await getPuzzles(page, limit, search, option);
 
     res.json(puzzles);
 }));
- 
+
 server.get('/admin/puzzle', authHandler, async (req, res) => {
-    const id = req.query.puzzleId || 6;
- 
-    const puzzle = await CreatedPuzzle.findOne({
-        include: {
-            model: Puzzle,
-            attributes: []
-        },
-        where: {
-            created_id: id
-        },
-        attributes: {
-            include: ['Puzzle.excluded_tiles']
-        },
-        raw: true
-    }); 
+    const created_id = req.query.puzzleId;
+
+    const puzzle = await getPuzzle(created_id);
 
     res.json(puzzle);
 });
 
 server.put('/admin/puzzle', authHandler, async (req, res) => {
-    const id = await req.body.puzzleId;
+    const created_id = await req.body.puzzleId;
     const board = await req.body.board;
 
-    const createdPuzzle = await CreatedPuzzle.findOne({where: {created_id: id}});
-    const puzzle = await Puzzle.findOne({where: {puzzle_id: createdPuzzle.puzzle_id}})
+    await publishPuzzle(created_id, board);
 
-    createdPuzzle.is_public = true;
-    puzzle.excluded_tiles = JSON.stringify(board);
-
-    await puzzle.save();
-    await createdPuzzle.save();
- 
-    res.json();
+    res.json({msg: 'Success'});
 });
 
 server.delete('/admin/puzzle', authHandler, async (req, res) => {
-    const id = req.query.puzzleId;
+    const created_id = req.query.puzzleId;
 
-    const createdPuzzle = await CreatedPuzzle.findOne({where: {created_id: id}});
-    await Puzzle.destroy({where: {puzzle_id: createdPuzzle.puzzle_id}});
- 
-    res.json();
+    await deletePuzzle(created_id);
+
+    res.json({msg: 'Success'});
 });
 
 server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-    const search = `%${req.query.search}%` || '%%';
+    const {page, limit} = req.query;
+    const search = req.query.search;
     const option = req.query.option;
 
-    const users = await User.findAll({
-        attributes: {exclude: ['password']},
-        where: {
-            role: 'user',
-            username: {[Op.iLike]: option === 'name' ? search : '%%'},
-            email: {[Op.iLike]: option === 'email' ? search : '%%'}
-        },
-        limit: limit,
-        offset: offset,
-        order: [['user_id', 'ASC']]
-    });
+    const users = await getUsers(page, limit, search, option);
 
     res.json(users);
 }));
@@ -106,54 +72,34 @@ server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
 server.get('/admin/user', authHandler, asyncHandler(async (req, res) => {
     const user_id = req.query.user_id;
 
-    const user = await User.findOne({where: {user_id: user_id}});
+    const user = await getUser(user_id);
 
     res.json(user);
 }));
 
 server.get('/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-    const userId = req.query.userId;
+    const {page, limit} = req.query;
+    const user_id = req.query.userId;
 
-    const classic = await SolvedPuzzle.findAll({
-        where: {user_id: userId},
-        attributes: ['solved_id', 'points', 'time'],
-        order: [['solved_id', 'DESC']],
-        offset: offset,
-        limit: limit,
-    });
+    const classic = await getSolvedClassic(user_id, page, limit);
 
     res.json(classic);
 }));
 
 server.get('/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-    const userId = req.query.userId;
+    const {page, limit} = req.query;
+    const user_id = req.query.userId;
 
-    const challenges = await DailyChallenge.findAll({
-        where: {[Op.and]: [{user_id: userId}, {is_solved: true}]},
-        attributes: ['daily_id', 'points', 'time', 'date'],
-        order: [['daily_id', 'DESC']],
-        offset: offset,
-        limit: limit
-    });
+    const challenges = await getSolvedChallenge(user_id, page, limit);
 
     res.json(challenges);
 }));
 
 server.get('/admin/user/created', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-    const userId = req.query.userId;
+    const {page, limit} = req.query;
+    const user_id = req.query.userId;
 
-    const created = await CreatedPuzzle.findAll({
-        include: [{model: Puzzle, attributes: []}, {model: User, attributes: []}],
-        where: {user_id: userId},
-        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username', 'date'],
-        order: [['date', 'DESC']],
-        offset: offset,
-        limit: limit,
-        raw: true
-    });
+    const created = await getCreatedPuzzles(user_id, page, limit)
 
     res.json(created);
 }));
@@ -161,104 +107,58 @@ server.get('/admin/user/created', authHandler, asyncHandler(async (req, res) => 
 server.delete('/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
     const {userId, contentId} = req.query;
 
-    await SolvedPuzzle.destroy({
-        where: {
-            user_id: userId,
-            solved_id: contentId
-        },
-        individualHooks: true
-    });
+    await deleteClassic(userId, contentId);
 
-    res.json();
+    res.json({msg: 'Success'});
 }));
 
 server.delete('/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
     const {userId, contentId} = req.query;
 
-    await DailyChallenge.destroy({
-        where: {
-            user_id: userId,
-            daily_id: contentId
-        },
-        individualHooks: true
-    });
+    await deleteChallenge(userId, contentId);
 
-    res.json();
+    res.json({msg: 'Success'});
 }));
 
 server.delete('/admin/user/created', authHandler, asyncHandler(async (req, res) => {
     const {userId, contentId} = req.query;
 
-    await CreatedPuzzle.destroy({
-        where: {
-            user_id: userId,
-            created_id: contentId
-        },
-        individualHooks: true
-    });
+    await deleteCreated(userId, contentId);
 
-    res.json();
+    res.json({msg: 'Success'});
 }));
 
 server.delete('/admin/deleteUser', async (req, res) => {
-    const userId = req.query.userId;
+    const user_id = req.query.userId;
 
-    await User.destroy({where: {user_id: userId}});
+    await deleteUser(user_id);
 
-    res.json();
+    res.json({msg: 'Success'});
 });
 
 server.put('/admin/user', authHandler, asyncHandler(async (req, res) => {
     const user = await req.body.user;
 
-    const updatedUser = await User.findOne({
-        where: { user_id: user.user_id }
-    });
+    const updatedUser = await updateUser(user);
 
-    updatedUser.email = user.email;
-    updatedUser.username = user.username;
-    updatedUser.role = user.role;
-
-    if (user.password !== updatedUser.password) {
-        updatedUser.password = await argon2.hash(user.password);
-    }
-
-    await updatedUser.save();
-
-    res.json(user);
+    res.json(updatedUser);
 }));
 
 server.get('/admin/admins', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
-    const search = `%${req.query.search}%` || '%%';
+    const {page, limit} = req.query;
+    const search = req.query.search;
     const option = req.query.option;
     const user = await req.user;
 
-    const users = await User.findAll({
-        attributes: {exclude: ['password']},
-        where: {
-            role: 'admin',
-            [Op.and]: [
-                {username: {[Op.iLike]: option === 'name' ? search : '%%'}},
-                {user_id: {[Op.ne]: user.user_id}}
-            ],
-            email: {[Op.iLike]: option === 'email' ? search : '%%'},
-        },
-        limit: limit,
-        offset: offset
-    });
+    const users = await getAdmins(user.user_id, page, limit, search, option);
 
     res.json(users);
 }));
 
 server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
+    const {page, limit} = req.query;
 
-    const achievements = await Achievement.findAll({
-        limit: limit,
-        offset: offset,
-        raw: true
-    });
+    const achievements = await getAchievements(page, limit);
 
     res.json(achievements);
 }));
@@ -266,64 +166,40 @@ server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => 
 server.post('/admin/achievement', authHandler, async (req, res) => {
     const achievement = await req.body.achievement;
 
-    await Achievement.create({
-        name: achievement.name,
-        description: achievement.description,
-        type: achievement.type,
-        criteria: achievement.criteria
-    });
+    await postAchievement(achievement);
 
-    res.json();
+    res.json({msg: 'Success'});
 });
 
 server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const achievement = await req.body.achievement;
 
-    await Achievement.update({
-        name: achievement.name,
-        description: achievement.description,
-        type: achievement.type,
-        criteria: achievement.criteria
-        }, {
-        where: {achievement_id: achievement.id}
-    });
+    await updateAchievement(achievement);
 
-    res.json();
+    res.json({msg: 'Success'});
 }));
 
 server.delete('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
-    const id = req.query.achievement_id;
-    
-    await Achievement.destroy({where: {achievement_id: id}});
+    const achievement_id = req.query.achievement_id;
 
-    res.json();
+    await deleteAchievement(achievement_id);
+
+    res.json({msg: 'Success'});
 }));
 
 server.get('/admin/messages', authHandler, asyncHandler(async (req, res) => {
-    const {limit, offset} = getPagination(req);
+    const {page, limit} = req.query;
 
-    const messages = await Message.findAll({
-        include: {
-          model: User,
-          attributes: [],
-        },
-        attributes: {
-            exclude: ['user_id'],
-            include: ['User.username', 'title', 'content', 'date']
-        },
-        order: [['date', 'ASC']],
-        limit: limit,
-        offset: offset,
-        raw: true
-    });
+    const messages = await getMessages(page, limit);
 
     res.json(messages);
 }));
 
 server.delete('/admin/message', authHandler, asyncHandler(async (req, res) => {
-    const messageId = req.query.messageId;
-    const messages = await Message.destroy({where: {id: messageId}});
+    const message_id = req.query.messageId;
 
-    res.json(messages);
+    await deleteMessage(message_id);
+
+    res.json({msg: 'Success'});
 }));
 

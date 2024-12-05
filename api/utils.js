@@ -36,6 +36,11 @@ export const authHandler = (req, res, next) => {
             if (err) {
                 res.json({message: 'Invalid token'});
             }
+
+            if (user.role !== 'admin' && req.originalUrl.includes('admin')) {
+                res.json({message: 'Access denied'});
+            }
+
             req.user = {
                 user_id: user.user_id,
                 username: user.username,

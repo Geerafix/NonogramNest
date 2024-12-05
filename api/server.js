@@ -17,6 +17,7 @@ import('./services/ratingService.js');
 import('./services/challengeService.js');
 import('./services/communityService.js');
 
+import('./relations.js')
 
 dotenv.config({path: '../.env'});
 
