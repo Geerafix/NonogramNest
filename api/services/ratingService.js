@@ -1,7 +1,7 @@
 import {sequelize} from "../server.js";
-import {Score} from "../models/Score.js";
 import {User} from "../models/User.js";
 import {UserProfile} from "../models/UserProfile.js";
+import {Score} from "../models/Score.js";
 import {getPagination} from "../utils.js";
 
 export const getRatingClassic = async (l, o, size) => {

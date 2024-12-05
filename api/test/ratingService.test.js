@@ -1,6 +1,6 @@
 import {expect, test, describe} from "vitest"
-import ("../relations.js")
 import {getRatingClassic, getRatingChallenge, getRatingAll, getRatingUser} from "../services/ratingService.js";
+await import('../relations.js');
 
 describe('classic rating', () => {
     test('should return user objects with required properties (classic rating)', async () => {

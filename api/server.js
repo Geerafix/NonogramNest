@@ -5,20 +5,6 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import {errorHandler} from "./utils.js";
 
-import('./endpoints/rating.js');
-import('./endpoints/puzzles.js');
-import('./endpoints/community.js');
-import('./endpoints/challenge.js');
-import('./endpoints/user.js');
-import('./endpoints/admin.js');
-import('./endpoints/auth.js');
-
-import('./services/ratingService.js');
-import('./services/challengeService.js');
-import('./services/communityService.js');
-
-import('./relations.js')
-
 dotenv.config({path: '../.env'});
 
 const db_user = process.env.DB_USER;
@@ -30,7 +16,25 @@ const server_port = process.env.VITE_SERVER_PORT;
 
 const connectionString = `postgres://postgres:admin@localhost:5432/nonogram-database`;
 
+
 export const sequelize = new Sequelize(connectionString, { dialect: 'postgres', logging: false });
+
+import('./relations.js');
+
+import('./endpoints/rating.js');
+import('./endpoints/puzzles.js');
+import('./endpoints/community.js');
+import('./endpoints/challenge.js');
+import('./endpoints/user.js');
+import('./endpoints/admin.js');
+import('./endpoints/auth.js');
+
+import('./services/userService.js');
+import('./services/adminService.js');
+import('./services/ratingService.js');
+import('./services/puzzleService.js');
+import('./services/challengeService.js');
+import('./services/communityService.js');
 
 export const server = express();
 

@@ -17,7 +17,7 @@ const toggleNavbar = () => {
 
 const toggleLogout = async () => {
   await postLogOut();
-  router.push({name: 'SignIn'});
+  await router.push({name: 'SignIn'});
 };
 
 const computedScreen = computed(() => {

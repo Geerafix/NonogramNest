@@ -55,7 +55,7 @@ onMounted(fetchCommunityGame);
       <Nonogram ref="nonogram" :started="started" :paused="paused"/>
     </Transition>
     <Transition name="slide-down-no-leave">
-      <div class="actions" v-if="started">
+      <div class="actions [&>*]:nth-child(even)" v-if="started">
         <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @end-game="handleEndGame"/>
       </div>
     </Transition>
