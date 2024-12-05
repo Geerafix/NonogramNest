@@ -62,7 +62,7 @@ export const postCreatedPuzzle = async (user_id, clues_x, clues_y, size, exclude
 
 export const getUserPuzzles = async (user_id, s, l, o) => {
     const {limit, offset} = getPagination(l, o);
-    const search = `%${s}%` || '%%';
+    const search = typeof s !== 'undefined' ? `%${s}%` : '%%';
 
     return await CreatedPuzzle.findAll({
         include: [{
