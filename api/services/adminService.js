@@ -262,13 +262,13 @@ export const getMessages = async (p, l) => {
 }
 
 export const deleteAchievement = async (achievementId) => {
-    await Message.destroy({
-        where: {id: messageId}
+    await Achievement.destroy({
+        where: {achievement_id: achievementId}
     });
 }
 
 export const deleteMessage = async (messageId) => {
     await Message.destroy({
-        where: {id: messageId}
+        where: {message_id: messageId}
     });
 }

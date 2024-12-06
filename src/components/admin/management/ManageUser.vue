@@ -1,7 +1,6 @@
 <script setup>
-import {onMounted, reactive, ref, watchEffect} from "vue";
+import {reactive} from "vue";
 import {deleteUser, updateUser} from "@/services/adminService.js";
-import {set} from "@vueuse/core";
 import {useAsyncValidator} from "@vueuse/integrations/useAsyncValidator";
 import {useTrailingBox} from "@/composables/useTrailingBox.js";
 import IconInvalid from "@/components/auth/IconInvalid.vue";
@@ -13,7 +12,6 @@ import Actions from "@/components/admin/management/Actions.vue";
 const props = defineProps(['user']);
 const emit = defineEmits(['accept', 'reject', 'view']);
 
-const error = ref(false);
 const form = reactive({
   username: props.user.username,
   email: props.user.email,
@@ -45,8 +43,8 @@ const rules = {
 const {pass, errorFields} = useAsyncValidator(form, rules);
 const {showBox, hideBox, message, isHovered} = useTrailingBox();
 const content = [
-  {name: 'T. klasyczny', view: 'classic', icon: 'chess-board'},
-  {name: 'T. wyzwania', view: 'challenge', icon: 'trophy'},
+  {name: 'Tryb klasyczny', view: 'classic', icon: 'chess-board'},
+  {name: 'Tryb wyzwania', view: 'challenge', icon: 'trophy'},
   {name: 'Plansze', view: 'created', icon: 'pen-to-square'},
   {name: 'Profil', view: 'profile', icon: 'address-card'},
 ];
@@ -60,11 +58,8 @@ const accept = async () => {
     role: form.role
   }
   await updateUser(updatedUser)
-      .then((_) => set(error, false))
-      .catch((_) => set(error, true));
-  if (!error.value && pass.value) {
-    emit('accept', true, 'Zaktualizowano dane użytkownika');
-  }
+      .then((_) => emit('accept', true, 'Zaktualizowano dane użytkownika'))
+      .catch((_) => emit('accept', false, 'Nazwa lub Email już istnieje.'));
 };
 
 const reject = () => emit('reject');
@@ -94,9 +89,6 @@ const delUser = async () => {
         </BasicButton>
       </div>
       <Actions @delete="delUser" @reject="reject" @accept="accept" class="col-span-2"/>
-      <Transition name="fade">
-        <span v-if="error" class="error-message">Nazwa lub Email już istnieje</span>
-      </Transition>
     </div>
     <TrailingBox :message="message" :isHovered="isHovered" />
   </div>

@@ -26,11 +26,11 @@ export const SolvedPuzzle = sequelize.define('SolvedPuzzle', {
         allowNull: true,
     },
     time: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     points: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.INTEGER,
         allowNull: false,
     }
 }, {

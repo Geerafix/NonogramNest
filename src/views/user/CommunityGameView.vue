@@ -1,6 +1,5 @@
 <script setup>
 import Nonogram from "@/components/user/game/Nonogram.vue";
-import Actions from "@/components/user/game/Actions.vue";
 import {getCommunityPuzzle} from "@/services/communityService.js";
 import {set} from "@vueuse/core";
 import {onMounted, ref} from "vue";
@@ -30,10 +29,6 @@ const fetchCommunityGame = async () => {
   set(paused, false);
 };
 
-const handlePause = () => {
-  paused.value = !paused.value;
-};
-
 const handleCheck = async () => {
   const {isSolved} = checkSolution();
   if (!isSolved) {
@@ -55,8 +50,13 @@ onMounted(fetchCommunityGame);
       <Nonogram ref="nonogram" :started="started" :paused="paused"/>
     </Transition>
     <Transition name="slide-down-no-leave">
-      <div class="actions [&>*]:nth-child(even)" v-if="started">
-        <Actions :started="started" :paused="paused" @pause="handlePause" @check="handleCheck" @end-game="handleEndGame"/>
+      <div class="actions" v-if="started">
+        <BasicButton @click="handleEndGame">
+          <Icon icon="fa-solid fa-xmark"/>
+        </BasicButton>
+        <BasicButton @click="handleCheck" :style="{ backgroundColor: 'rgb(17 94 89)'}">
+          <Icon icon="fa-solid fa-check"/>
+        </BasicButton>
       </div>
     </Transition>
   </main>

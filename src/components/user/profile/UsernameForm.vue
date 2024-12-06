@@ -3,8 +3,7 @@ import IconInvalid from "@/components/auth/IconInvalid.vue";
 import IconValid from "@/components/auth/IconValid.vue";
 import TrailingBox from "@/components/shared/TrailingBox.vue";
 import {useAsyncValidator} from "@vueuse/integrations/useAsyncValidator";
-import {reactive, ref, watch} from "vue";
-import {set} from "@vueuse/core";
+import {reactive} from "vue";
 import {updateUsername} from "@/services/userService.js";
 import {useTrailingBox} from "@/composables/useTrailingBox.js";
 
@@ -19,16 +18,14 @@ const rules = {
   }
 }
 const {pass, errorFields} = useAsyncValidator(form, rules);
-const wasChecked = ref(false);
 
 const {showBox, hideBox, message, isHovered} = useTrailingBox();
 
 const accept = async () => {
   if (pass.value) {
-    await updateUsername(form.username);
-    emit('accept', true, 'Zmieniono nazwę użytkownika');
-  } else {
-    set(wasChecked, true)
+    await updateUsername(form.username)
+        .then(_ => emit('accept', true, 'Zmieniono nazwę użytkownika.'))
+        .catch(_ => emit('accept', false, 'Podana nazwa juz istnieje.'));
   }
 };
 
@@ -54,9 +51,6 @@ const reject = () => {
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>
-      <Transition name="fade">
-        <div v-if="wasChecked" class="profile-form-message">{{rules.username.message}}</div>
-      </Transition>
     </div>
     <TrailingBox :message="message" :isHovered="isHovered" />
   </div>

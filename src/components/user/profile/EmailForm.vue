@@ -23,8 +23,9 @@ const {showBox, hideBox, message, isHovered} = useTrailingBox();
 
 const accept = async () => {
   if (pass.value) {
-    await updateEmail(form.email);
-    emit('accept', true, 'Zmieniono email.');
+    await updateEmail(form.email)
+        .then(_ => emit('accept', true, 'Zmieniono email.'))
+        .catch(_ => emit('accept', false, 'Podany email już istnieje.'));
   }
 };
 

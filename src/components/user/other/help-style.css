@@ -59,15 +59,3 @@ p {
     p-3
     shadow-inner
 }
-
-.blurred-background {
-    @apply
-    fixed
-    h-full
-    w-full
-    top-0
-    left-0
-    backdrop-blur-md
-    backdrop-brightness-95
-    z-0
-}

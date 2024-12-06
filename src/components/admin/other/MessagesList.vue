@@ -11,7 +11,7 @@ const onClick = (id) => {
   <Transition name="fade-slower" mode="out-in">
     <div class="container" :key="messages">
       <li v-for="message in messages">
-        <div class="item" @click="onClick(message.id)">
+        <div class="item" @click="onClick(message.message_id)">
           <div class="primary-info">
             <div class="item-row text-left text-2xl bg-gradient-to-r from-gray-700">{{message.title}}</div>
             <div class="item-row !bg-gray-700/20 bg-gradient-to-r">Od: {{message.username}}</div>
@@ -30,7 +30,8 @@ const onClick = (id) => {
 <style scoped>
 .container {
   @apply
-  columns-2
+  grid
+  grid-cols-2
   gap-4
   list-none
   text-xl
@@ -43,7 +44,6 @@ const onClick = (id) => {
 li {
   @apply
   break-inside-avoid
-  mb-4
 }
 .item {
   @apply

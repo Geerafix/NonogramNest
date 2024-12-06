@@ -100,6 +100,6 @@ const isScoresEmpty = computed(() => scoresList.value.length === 0);
     <BasicButton v-if="!isScoresEmpty" @click="scoresList = []" class="absolute bottom-0 right-0" key="4">
       <Icon icon="fa-solid fa-xmark" class="icon-fix"/>
     </BasicButton>
-    <ManagePopup v-if="content" message="Usunąć tą zawartość?" @reject="content = null" @accept="deleteContent" />
+    <ManagePopup v-if="content" message="Usunąć tą zawartość?" @reject="content = null" @accept="deleteContent" key="5"/>
   </TransitionGroup>
 </template>

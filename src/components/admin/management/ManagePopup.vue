@@ -12,15 +12,32 @@ const reject = () => {
 </script>
 
 <template>
-  <div class="form-container">
-    <span>{{message}}</span>
-    <div class="form-actions">
-      <BasicButton @click="reject">
-        <Icon icon="fa-solid fa-xmark"/>
-      </BasicButton>
-      <BasicButton @click="accept" class="!bg-teal-900">
-        <Icon icon="fa-solid fa-check"/>
-      </BasicButton>
+  <div>
+    <div class="form-container">
+      <span>{{message}}</span>
+      <div class="form-actions">
+        <BasicButton @click="reject">
+          <Icon icon="fa-solid fa-xmark"/>
+        </BasicButton>
+        <BasicButton @click="accept" class="!bg-teal-900">
+          <Icon icon="fa-solid fa-check"/>
+        </BasicButton>
+      </div>
     </div>
+    <div class="blurred-background"/>
   </div>
 </template>
+
+<style scoped>
+.blurred-background {
+  @apply
+  fixed
+  h-full
+  w-full
+  top-0
+  left-0
+  backdrop-blur-md
+  backdrop-brightness-95
+  z-0
+}
+</style>

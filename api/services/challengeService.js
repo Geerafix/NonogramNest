@@ -36,8 +36,8 @@ export const updateDailyChallenge = async (user_id, answers, time, points, bonus
     });
 
     dailyChallenge.answers = JSON.stringify(answers);
-    dailyChallenge.time = time;
-    dailyChallenge.points = points;
+    dailyChallenge.time = parseInt(time);
+    dailyChallenge.points = parseInt(points);
 
     if (is_solved) {
         const streak = await getStreak(user_id);

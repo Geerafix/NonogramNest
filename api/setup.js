@@ -1,46 +1,9 @@
 import {User} from "./models/User.js";
-import {UserProfile} from "./models/UserProfile.js";
-import {Puzzle} from "./models/Puzzle.js";
-import {SolvedPuzzle} from "./models/SolvedPuzzle.js";
-import {DailyChallenge} from "./models/DailyChallenge.js";
-import {Score} from "./models/Score.js";
-import {CreatedPuzzle} from "./models/CreatedPuzzle.js";
-import {UserAchievement} from "./models/UserAchievement.js";
 import {Achievement} from "./models/Achievement.js";
-import {Message} from "./models/Message.js";
 import {sequelize} from "./server.js";
 import * as argon2 from "argon2";
 
-User.hasMany(SolvedPuzzle, {foreignKey: 'user_id'});
-User.hasMany(DailyChallenge, {foreignKey: 'user_id'});
-User.hasMany(CreatedPuzzle, {foreignKey: 'user_id'});
-User.hasOne(UserProfile, {foreignKey: 'user_id'});
-User.hasOne(Score, {foreignKey: 'user_id'});
-User.hasMany(UserAchievement, {foreignKey: 'user_id'});
-User.hasMany(Message, {foreignKey: 'user_id'});
-
-UserAchievement.belongsTo(User, {foreignKey: 'user_id'});
-
-UserProfile.belongsTo(User, {foreignKey: 'user_id'});
-
-Score.belongsTo(User, {foreignKey: 'user_id'});
-
-Puzzle.hasMany(SolvedPuzzle, {foreignKey: 'puzzle_id'});
-Puzzle.hasMany(DailyChallenge, {foreignKey: 'puzzle_id'});
-Puzzle.hasOne(CreatedPuzzle, {foreignKey: 'puzzle_id'});
-
-SolvedPuzzle.belongsTo(User, {foreignKey: 'user_id'});
-SolvedPuzzle.belongsTo(Puzzle, {foreignKey: 'puzzle_id'});
-
-DailyChallenge.belongsTo(User, {foreignKey: 'user_id'});
-DailyChallenge.belongsTo(Puzzle, {foreignKey: 'puzzle_id'});
-
-CreatedPuzzle.belongsTo(User, {foreignKey: 'user_id'});
-CreatedPuzzle.belongsTo(Puzzle, {foreignKey: 'puzzle_id'});
-
-Achievement.hasMany(UserAchievement, {foreignKey: 'achievement_id'});
-
-Message.belongsTo(User, {foreignKey: 'user_id'});
+await import ('./relations.js');
 
 sequelize.addHook('afterBulkSync', async (options) => {
     const names = [
@@ -148,4 +111,4 @@ sequelize.addHook('afterBulkSync', async (options) => {
 
 // uncomment to migrate models and insert test data
 
-// await sequelize.sync({ alter: true });
+// await sequelize.sync({ force: true });
