@@ -78,7 +78,9 @@ server.put('/profile/password', authHandler, asyncHandler(async (req, res) => {
     const currentPassword = await req.body.currentPassword;
     const newPassword = await req.body.newPassword;
 
-    await updatePassword(user.user_id, currentPassword, newPassword);
+    const result = await updatePassword(user.user_id, currentPassword, newPassword);
+
+    if (result === false) res.status(409).send();
 
     res.json({msg: 'Successfully updated password'});
 }));

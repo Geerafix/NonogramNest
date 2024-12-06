@@ -53,11 +53,13 @@ export const postCreatedPuzzle = async (user_id, clues_x, clues_y, size, exclude
         excluded_tiles: excluded_tiles
     });
 
-    await CreatedPuzzle.create({
+    const created = await CreatedPuzzle.create({
         user_id: user_id,
         puzzle_id: puzzle.puzzle_id,
         name: name,
     });
+
+    return {puzzle, created};
 }
 
 export const getUserPuzzles = async (user_id, s, l, o) => {

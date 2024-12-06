@@ -33,11 +33,8 @@ const {showBox, hideBox, message, isHovered} = useTrailingBox();
 const accept = async () => {
   if (pass.value) {
     await updatePassword(form.currentPassword, form.newPassword)
-      .then((_) => {
-        emit('accept', true, 'Zmieniono hasło');
-      }).catch((_) => {
-        set(wasChecked, true)
-      });
+      .then((_) => emit('accept', true, 'Zmieniono hasło'))
+      .catch((_) => emit('accept', false, 'Aktualne hasło jest nieprawidłowe.'));
   }
 };
 

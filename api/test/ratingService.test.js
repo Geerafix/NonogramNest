@@ -117,7 +117,7 @@ describe('rating user profile', () => {
         try {
             await getRatingUser();
         } catch (error) {
-            expect(error).toBeDefined();
+            expect(error).toBeInstanceOf(Error);
         }
     });
 

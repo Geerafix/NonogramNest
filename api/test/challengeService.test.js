@@ -67,11 +67,11 @@ describe('challenge', () => {
         expect(mock).toHaveProperty('date');
     });
 
-    test('should return error', async () => {
+    test('should return error ', async () => {
         try {
             await updateDailyChallenge();
         } catch (error) {
-            expect(error).toBeDefined();
+            expect(error).toBeInstanceOf(Error);
         }
     });
 

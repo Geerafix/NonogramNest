@@ -8,7 +8,7 @@ describe('puzzles', () => {
         try {
             await postPuzzle();
         } catch (error) {
-            expect(error).toBeDefined();
+            expect(error).toBeInstanceOf(Error);
         }
     });
 
@@ -29,7 +29,7 @@ describe('puzzles', () => {
         try {
             await postSolved();
         } catch (error) {
-            expect(error).toBeDefined();
+            expect(error).toBeInstanceOf(Error);
         }
     });
 

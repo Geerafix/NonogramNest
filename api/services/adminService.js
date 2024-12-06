@@ -71,7 +71,7 @@ export const deletePuzzle = async (created_id) => {
         where: {created_id: created_id}
     });
 
-    await Puzzle.destroy({where: {puzzle_id: createdPuzzle.puzzle_id}});
+    return await Puzzle.destroy({where: {puzzle_id: createdPuzzle.puzzle_id}});
 }
 
 export const getUsers = async (p, l, s, o) => {
@@ -137,7 +137,7 @@ export const getCreatedPuzzles = async (user_id, p, l) => {
 }
 
 export const deleteClassic = async (userId, contentId) => {
-    await SolvedPuzzle.destroy({
+    return await SolvedPuzzle.destroy({
         where: {
             user_id: userId,
             solved_id: contentId
@@ -147,18 +147,17 @@ export const deleteClassic = async (userId, contentId) => {
 }
 
 export const deleteChallenge = async (userId, contentId) => {
-    await DailyChallenge.destroy({
+    return await DailyChallenge.destroy({
         where: {
             user_id: userId,
             daily_id: contentId
         },
         individualHooks: true
     });
-
 }
 
 export const deleteCreated = async (userId, contentId) => {
-    await CreatedPuzzle.destroy({
+    return await CreatedPuzzle.destroy({
         where: {
             user_id: userId,
             created_id: contentId
@@ -186,7 +185,7 @@ export const updateUser = async (user) => {
 }
 
 export const deleteUser = async (user_id) => {
-    await User.destroy({
+    return await User.destroy({
         where: {user_id: user_id}
     });
 }
@@ -223,7 +222,7 @@ export const getAchievements = async (p, l) => {
 }
 
 export const postAchievement = async (achievement) => {
-    await Achievement.create({
+    return await Achievement.create({
         name: achievement.name,
         description: achievement.description,
         type: achievement.type,
@@ -232,7 +231,7 @@ export const postAchievement = async (achievement) => {
 }
 
 export const updateAchievement = async (achievement) => {
-    await Achievement.update({
+    return await Achievement.update({
         name: achievement.name,
         description: achievement.description,
         type: achievement.type,
@@ -262,13 +261,13 @@ export const getMessages = async (p, l) => {
 }
 
 export const deleteAchievement = async (achievementId) => {
-    await Achievement.destroy({
+    return await Achievement.destroy({
         where: {achievement_id: achievementId}
     });
 }
 
 export const deleteMessage = async (messageId) => {
-    await Message.destroy({
+    return await Message.destroy({
         where: {message_id: messageId}
     });
 }

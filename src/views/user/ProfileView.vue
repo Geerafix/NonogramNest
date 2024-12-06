@@ -2,9 +2,9 @@
 import UserProfile from '@/components/user/profile/UserProfile.vue';
 import RollButton from "@/components/shared/inputs/InfoButton.vue";
 import {useNotification} from "@/composables/useNotification.js";
-import {computed, onBeforeMount, reactive, ref, watch, watchEffect} from 'vue';
+import {computed, onBeforeMount, ref} from 'vue';
 import {getUserProfile, updatePfp} from '@/services/userService';
-import {set, useFileDialog, watchDeep} from "@vueuse/core";
+import {set, useFileDialog} from "@vueuse/core";
 import {defineAsyncComponent} from "vue";
 import {profileButtons} from "@/config.js";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
@@ -76,7 +76,7 @@ onBeforeMount(fetchUserProfile);
         </div>
       </div>
     </Transition>
-    <Transition name="slide-up">
+    <Transition name="fade">
       <component :is="selectedForm" @reject="onReject" @accept="onResolve" />
     </Transition>
   </main>

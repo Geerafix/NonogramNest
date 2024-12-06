@@ -59,7 +59,7 @@ export const getProfile = async (user_id) => {
 }
 
 export const updateUsername = async (user_id, username) => {
-    await User.update({
+    return await User.update({
         username: username
     }, {
         where: {user_id: user_id}
@@ -67,7 +67,7 @@ export const updateUsername = async (user_id, username) => {
 }
 
 export const updatePfp = async (user_id, pfp) => {
-    await UserProfile.update({
+    return await UserProfile.update({
         pfp: pfp
     }, {
         where: {user_id: user_id}
@@ -75,7 +75,7 @@ export const updatePfp = async (user_id, pfp) => {
 }
 
 export const updateBio = async (user_id, bio) => {
-    await UserProfile.update({
+    return await UserProfile.update({
         bio: bio
     }, {
         where: {user_id: user_id}
@@ -94,11 +94,13 @@ export const updatePassword = async (user_id, currentPassword, newPassword) => {
         }, {
             where: {user_id: user_id}
         });
+    } else {
+        return false;
     }
 }
 
 export const updateEmail = async (user_id, email) => {
-    await User.update({
+    return await User.update({
         email: email
     }, {
         where: {user_id: user_id}
@@ -106,7 +108,7 @@ export const updateEmail = async (user_id, email) => {
 }
 
 export const postMessage = async (user_id, title, content) => {
-    await Message.create({
+    return await Message.create({
         user_id: user_id,
         title: title,
         content: content

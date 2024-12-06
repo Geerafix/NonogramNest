@@ -3,6 +3,8 @@ import Pagination from '@/components/shared/Pagination.vue';
 import List from '@/components/shared/list/List.vue';
 import Switch from "@/components/shared/inputs/Switch.vue";
 import Select from "@/components/shared/inputs/Select.vue";
+import BasicButton from "@/components/shared/inputs/BasicButton.vue";
+import ManageUserPartial from "@/views/admin/ManageUserPartial.vue";
 import {getUsers, getAdmins, getUser} from '@/services/adminService';
 import {onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
@@ -11,8 +13,6 @@ import {usePagination} from '@/composables/usePagination';
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
 import {useNotification} from "@/composables/useNotification.js";
 import {usersSearchBy} from "@/config.js";
-import BasicButton from "@/components/shared/inputs/BasicButton.vue";
-import ManageUserPartial from "@/views/admin/ManageUserPartial.vue";
 
 const search = ref('');
 const option = ref('name');
@@ -78,7 +78,7 @@ onMounted(fetchUsers);
         </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..." />
         <Select :items="usersSearchBy" @onSelect="setOption"/>
-        <Switch @onSwitch="fetchUsers" :displayed="who ? 'Admini' : 'Użytkownicy'">
+        <Switch v-if="false" @onSwitch="fetchUsers" :displayed="who ? 'Admini' : 'Użytkownicy'">
           <Icon icon="fa-solid fa-user" class="icon-fix"/>
           <Icon icon="fa-solid fa-user-secret" class="icon-fix"/>
         </Switch>

@@ -3,21 +3,21 @@ import {getCommunityPuzzles, getUserPuzzles} from "../services/communityService.
 await import('../relations.js');
 
 describe('community puzzles', () => {
-    test('should return empty users puzzle list (community puzzles)', async () => {
+    test('should return empty users puzzle list', async () => {
         // założenie: brak podanych parametrów
         const mock = await getCommunityPuzzles();
 
         expect(mock.length).toBeGreaterThanOrEqual(0);
     });
 
-    test('should return users puzzle list (community puzzles)', async () => {
+    test('should return users puzzle list', async () => {
         // założenie: w bazie istnieją x > 0 plansz użytkownika o id 1, podajemy id innego uż.
         const mock = await getCommunityPuzzles(3);
 
         expect(mock.length).toBeGreaterThan(0);
     });
 
-    test('should return users puzzle objects with required properties (community puzzles)', async () => {
+    test('should return users puzzle objects with required properties', async () => {
         const mock = await getCommunityPuzzles(1);
 
         for (const el of mock) {
@@ -28,7 +28,7 @@ describe('community puzzles', () => {
         }
     });
 
-    test('should return searched objects with required properties (community puzzles)', async () => {
+    test('should return searched objects with required properties', async () => {
         // założenie: w bazie istnieje 1 mapa o wybranej nazwie
         const mock = await getCommunityPuzzles(3, 'Test', 'name');
 
@@ -40,7 +40,7 @@ describe('community puzzles', () => {
         }
     });
 
-    test('should return searched objects with required properties with option (community puzzles)', async () => {
+    test('should return searched objects with required properties with option', async () => {
         // założenie: w bazie nie istnieją plansze wybranego użytkownika
         const mock = await getCommunityPuzzles(3, 'Test', 'creator');
 
@@ -56,7 +56,7 @@ describe('community puzzles', () => {
         expect(mock).toHaveLength(1);
     });
 
-    test('should return an empty array when requesting a page beyond available data (community puzzles)', async () => {
+    test('should return an empty array when requesting a page beyond available data', async () => {
         const page = 2147483647;
         const limit = 10;
 
@@ -67,7 +67,7 @@ describe('community puzzles', () => {
 });
 
 describe('user puzzles', () => {
-    test('should paginate data properly (user puzzles)', async () => {
+    test('should paginate data properly', async () => {
         const page = 1;
         const limit = 2;
 
@@ -76,7 +76,7 @@ describe('user puzzles', () => {
         expect(mock).toHaveLength(2);
     });
 
-    test('should return searched objects with required properties (user puzzles)', async () => {
+    test('should return searched objects with required properties', async () => {
         // założenie: w bazie istnieje 1 mapa o wybranej nazwie
         const mock = await getUserPuzzles(1);
 
@@ -88,14 +88,14 @@ describe('user puzzles', () => {
         }
     });
 
-    test('should return empty object list (user puzzles)', async () => {
+    test('should return empty object list', async () => {
         // założenie: id 0 nie istnieje
         const mock = await getUserPuzzles(2147483647);
 
         expect(mock).toEqual([]);
     });
 
-    test('should return an empty array when requesting a page beyond available data (user puzzles)', async () => {
+    test('should return an empty array when requesting a page beyond available data', async () => {
         const page = 2147483647;
         const limit = 10;
 
