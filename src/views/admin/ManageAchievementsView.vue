@@ -39,7 +39,7 @@ const newAchievement = () => {
   set(manageAchievement, {});
 };
 
-onMounted(fetchAchievements)
+onMounted(fetchAchievements);
 </script>
 
 <template>

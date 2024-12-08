@@ -35,7 +35,7 @@ watchEffect( () => {
         </div>
       </div>
       <div>
-        <textarea disabled class="bio" :placeholder="user.bio ? '' : 'Brak opisu'">{{ user.bio }}</textarea>
+        <textarea class="bio" :placeholder="user.bio ? '' : 'Brak opisu'">{{ user.bio }}</textarea>
       </div>
     </div>
     <div class="stats-col">
@@ -122,6 +122,7 @@ watchEffect( () => {
   text-wrap
   resize-none
   outline-none
+  pointer-events-none
 }
 
 .info {

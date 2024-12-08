@@ -52,14 +52,16 @@ onMounted(fetchPuzzles);
 <template>
   <main>
     <List :class="['list', blurred]" v-bind="listState" @onListItemClick="managePuzzle"/>
-    <Pagination v-bind="pageState" @onPageChange="fetchPuzzles"/>
+    <Transition name="fade" mode="out-in">
+      <Pagination v-bind="pageState" @onPageChange="fetchPuzzles" v-if="!managedPuzzle"/>
+    </Transition>
     <Transition name="slide-left-hidden">
-      <BasicButton v-if="!rolledSearch" @click="rolledSearch = !rolledSearch" class="absolute right-0 bottom-0">
+      <BasicButton v-if="!rolledSearch && !managedPuzzle" @click="rolledSearch = !rolledSearch" class="absolute right-0 bottom-0">
         <Icon icon="fa-solid fa-search" class="icon-fix"/>
       </BasicButton>
     </Transition>
     <Transition name="slide-left-hidden">
-      <div class="search-container" v-show="rolledSearch">
+      <div class="search-container" v-show="rolledSearch && !managedPuzzle">
         <BasicButton @click="rolledSearch = false">
           <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
         </BasicButton>

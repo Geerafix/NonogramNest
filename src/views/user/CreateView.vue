@@ -50,8 +50,7 @@ onBeforeUnmount(() => {
 
 onMounted(() => {
   if (boardStore.isSaved()) {
-    boardStore.load(board);
-    set(isSizeSelected, true);
+    boardStore.load(board, isSizeSelected);
   }
 });
 </script>
@@ -60,7 +59,7 @@ onMounted(() => {
   <main>
     <Transition name="fade" v-if="!isSizeSelected">
       <div class="game-instructions">
-        <p>Wybierz rozmiar planszy nonogramu,<br>aby rozpocząć tworzenie gry.</p>
+        <p>Wybierz rozmiar planszy nonogramu, aby rozpocząć tworzenie gry.</p>
       </div>
     </Transition>
     <Transition name="fade">

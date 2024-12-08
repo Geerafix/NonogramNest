@@ -72,7 +72,7 @@ onMounted(() => {
 <template>
   <main>
     <div class="game-instructions" v-if="!started">
-      <p>Wybierz rozmiar planszy nonogramu.<br>Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
+      <p>Wybierz rozmiar planszy nonogramu. Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
     </div>
     <Transition name="fade">
       <Nonogram ref="nonogram" v-bind="{started, paused}"/>

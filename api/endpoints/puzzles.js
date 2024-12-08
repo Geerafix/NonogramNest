@@ -1,7 +1,6 @@
 import {server} from '../server.js';
-import jwt from "jsonwebtoken";
 import {asyncHandler, authHandler} from "../utils.js";
-import {postPuzzle, postSolved} from "../services/puzzleService.js";
+import {postPuzzle, postSolved, saveNonogram, loadNonogram} from "../services/puzzleService.js";
 
 server.post('/puzzle', authHandler, asyncHandler(async (req, res) => {
     const cluesX = await req.body.cluesX;
@@ -26,34 +25,24 @@ server.post('/puzzle/solved', authHandler, asyncHandler(async (req, res) => {
 
 server.post('/puzzle/save', authHandler, asyncHandler(async (req, res) => {
     const nonogram = await req.body.nonogramData;
-
-    const saved = jwt.sign(
-        JSON.stringify(nonogram),
-        process.env.JWT_SECRET,
-    );
-
+    
+    const saved = saveNonogram(nonogram);
+    
     res.json(saved);
 }));
 
 server.get('/puzzle/load', authHandler, asyncHandler(async (req, res) => {
     const nonogram = req.query.nonogramData;
 
-    jwt.verify(nonogram, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            res.json();
-        }
+    const decoded = loadNonogram(nonogram);
 
-        res.json(decoded);
-    });
+    res.json(decoded);
 }));
 
 server.post('/create/save', authHandler, asyncHandler(async (req, res) => {
     const nonogram = await req.body.nonogramData;
 
-    const saved = jwt.sign(
-        JSON.stringify(nonogram),
-        process.env.JWT_SECRET,
-    );
+    const saved = saveNonogram(nonogram);
 
     res.json(saved);
 }));
@@ -62,11 +51,7 @@ server.post('/create/save', authHandler, asyncHandler(async (req, res) => {
 server.get('/create/load', authHandler, asyncHandler(async (req, res) => {
     const nonogram = req.query.nonogramData;
 
-    jwt.verify(nonogram, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            res.json();
-        }
+    const decoded = loadNonogram(nonogram);
 
-        res.json(decoded);
-    });
+    res.json(decoded);
 }));

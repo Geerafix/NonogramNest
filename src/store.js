@@ -48,12 +48,17 @@ export const useCreatedStore = () => {
         sessionStorage.setItem('created', encoded);
     }
 
-    const load = async (board) => {
+    const load = async (board, isSizeSelected) => {
         try {
             const data = sessionStorage.getItem('created');
             const decoded = await loadCreatedNonogram(data).then(res => res.data);
 
-            board.value.answers = decoded.answers;
+            if (decoded) {
+                board.value.answers = decoded.answers;
+                isSizeSelected.value = true;
+            } else {
+                remove();
+            }
         } catch (err) {
             remove();
         }

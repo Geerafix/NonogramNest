@@ -1,5 +1,6 @@
 import {Puzzle} from "../models/Puzzle.js";
 import {SolvedPuzzle} from "../models/SolvedPuzzle.js";
+import jwt from "jsonwebtoken";
 
 export const postPuzzle = async (cluesX, cluesY, size) => {
     return await Puzzle.create({
@@ -16,4 +17,25 @@ export const postSolved = async (user_id, puzzle_id, time, points) => {
         time: time,
         points: points
     });
+}
+
+export const saveNonogram = (nonogram) => {
+    return jwt.sign(
+        JSON.stringify(nonogram),
+        process.env.JWT_SECRET
+    );
+}
+
+export const loadNonogram = (nonogram) => {
+    let result;
+
+    jwt.verify(nonogram, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return;
+        }
+
+        result = decoded
+    });
+
+    return result ? result : null;
 }

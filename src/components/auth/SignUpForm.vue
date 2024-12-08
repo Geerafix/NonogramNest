@@ -45,7 +45,7 @@ const onSubmit = () => {
       notify(true, 'Zarejestrowano.', 4000);
     })
     .catch(() => {
-      notify(false, 'Użytkownik już istnieje.', 4000);
+      notify(false, 'Nazwa lub Email już istnieje.', 4000);
     });
 };
 </script>

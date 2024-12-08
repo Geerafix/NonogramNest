@@ -22,7 +22,7 @@ const isDisplayed = ref(false);
           <p>
             • Za systematyczne, codzienne rozwiązywanie plansz zwiększa się Twój streak, który jest liczony od pierwszego dnia, w którym wykonasz wyzwanie.<br>
             • Z każdym rozwiązanym wyzwaniem mnożnik punktów jest zwiększany.<br>
-            • Po rozwiązaniu wyzwania maksymalna możliwa liczba punktów bazowych jest mnożona i dodawana do końcowej punktacji.
+            • Po rozwiązaniu wyzwania maksymalna możliwa liczba punktów bazowych jest mnożona, dzielona przez 100, a następnie dodawana do końcowej punktacji.
           </p>
         </div>
         <div>
@@ -35,7 +35,7 @@ const isDisplayed = ref(false);
           <h1>4. Kalendarz</h1>
           <p>
             • Możesz przeglądać kalendarz, aby zobaczyć, w które dni rozwiązano wyzwanie.<br>
-            • Rozwiązane wyzwania są oznaczone 'zielonym listkiem'.
+            • Rozwiązane wyzwania są oznaczone zielonym "listkiem".
           </p>
         </div>
         <div class="italic text-2xl text-right mx-4">Miłej gry! ツ</div>
