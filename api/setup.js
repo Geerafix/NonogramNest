@@ -111,4 +111,5 @@ sequelize.addHook('afterBulkSync', async (options) => {
 
 // uncomment to migrate models and insert test data
 
-// await sequelize.sync({ force: true });
+console.log("Migrating models...");
+await sequelize.sync({ force: true }).then((res) => console.log("Models migrated.")).catch((err) => console.log("Error while migrating models."));

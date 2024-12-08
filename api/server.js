@@ -16,10 +16,12 @@ const server_port = process.env.VITE_SERVER_PORT;
 
 const connectionString = `postgres://postgres:admin@localhost:5432/nonogram-database`;
 
-
 export const sequelize = new Sequelize(connectionString, { dialect: 'postgres', logging: false });
 
-import('./relations.js');
+console.log("Setting relations...");
+import('./relations.js')
+    .then((res) => console.log("Relations set."))
+    .catch((err) => console.log("Error while setting relations."));
 
 import('./endpoints/rating.js');
 import('./endpoints/puzzles.js');
