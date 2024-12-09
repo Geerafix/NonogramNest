@@ -33,7 +33,7 @@ export const ratingSearchBy = [
 ];
 
 export const usersSearchBy = [
-    { name: 'Email', value: 'email' },
+    { name: 'E-mail', value: 'email' },
     { name: 'Nazwa', value: 'name' },
 ];
 

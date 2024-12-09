@@ -15,9 +15,8 @@ describe('classic rating', () => {
     });
 
     test('should paginate data properly (classic rating)', async () => {
-        // założenie: w bazie przynajmniej 10 użytkowników
-        const page = 1; // strona
-        const limit = 10; // limit elementów na stronie
+        const page = 1;
+        const limit = 10;
 
         const mock = await getRatingClassic(page, limit);
 
@@ -34,9 +33,8 @@ describe('classic rating', () => {
     });
 
     test('should return paged data of objects with same board size in every board size category (classic rating)', async () => {
-        // założenie: w bazie przynajmniej 10 użytkowników
-        const page = 1; // strona
-        const limit = 10; // limit elementów na stronie
+        const page = 1;
+        const limit = 10;
 
         for (let size = 5; size <= 15; size++) {
             const mock = await getRatingClassic(page, limit, size);
@@ -60,9 +58,8 @@ describe('challenge rating', () => {
     });
 
     test('should paginate data properly (challenge rating)', async () => {
-        // założenie: w bazie przynajmniej 10 użytkowników
-        const page = 1; // strona
-        const limit = 10; // limit elementów na stronie
+        const page = 1;
+        const limit = 10;
 
         const mock = await getRatingChallenge(page, limit);
 
@@ -83,9 +80,8 @@ describe('all rating', () => {
     });
 
     test('should paginate data properly (whole rating)', async () => {
-        // założenie: w bazie przynajmniej 10 użytkowników
-        const page = 1; // strona
-        const limit = 10; // limit elementów na stronie
+        const page = 1;
+        const limit = 10;
 
         const mock = await getRatingAll(page, limit);
 
@@ -104,7 +100,6 @@ describe('rating user profile', () => {
     });
 
     test('should return null if rating user profile does not exists', async () => {
-        // założenie: użytkownik o podanym id nie istnieje
         const user_id = 2147483647;
 
         const mock = await getRatingUser(user_id);
@@ -113,7 +108,6 @@ describe('rating user profile', () => {
     });
 
     test('should throw an error if user ID is not provided in rating', async () => {
-        // założenie: brak podanego id użytkownika
         try {
             await getRatingUser();
         } catch (error) {

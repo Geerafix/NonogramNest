@@ -57,7 +57,9 @@ const computedScreen = computed(() => {
   h-full
   p-[10px]
   border-gray-700
-  bg-gray-600
+  bg-gradient-to-b
+  from-gray-600
+  to-gray-600/90
   shadow-black
   border-s-4
   rounded-2xl

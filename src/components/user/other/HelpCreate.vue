@@ -25,7 +25,14 @@ const isDisplayed = ref(false);
           </p>
         </div>
         <div>
-          <h1>3. Weryfikacja planszy</h1>
+          <h1>3. Opcje tworzenia</h1>
+          <p>
+            • Planszę możesz zresetować w dowolnym momencie.<br>
+            • Stan tworzonej planszy jest zapisywany do czasu wylogowania.
+          </p>
+        </div>
+        <div>
+          <h1>4. Weryfikacja planszy</h1>
           <p>
             • Po stworzeniu nonogramu, plansza jest wysyłana do administracji w celu weryfikacji.<br>
             • Administracja ma prawo odrzucić planszę, jeśli jest niestosowna.

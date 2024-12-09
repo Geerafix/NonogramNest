@@ -11,7 +11,6 @@ import {postPuzzle} from "../services/puzzleService.js";
 
 describe('challenge', () => {
     test('should return daily challenge with required properties', async () => {
-        // założenie: użytkownik o podanym id zaczął rozwiązywać wyzwanie
         const mock = await getDailyChallenge(1);
 
         expect(Object.keys(mock).length).toBeGreaterThan(0);
@@ -27,8 +26,8 @@ describe('challenge', () => {
     });
 
     test('should return array of days of month with solved dailies', async () => {
-        const month = 11; // grudzień
-        const year = 2024; //rok
+        const month = 11;
+        const year = 2024;
 
         const mock = await getDailies(1, month, year);
 

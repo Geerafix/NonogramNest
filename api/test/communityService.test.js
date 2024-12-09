@@ -4,14 +4,12 @@ await import('../relations.js');
 
 describe('community puzzles', () => {
     test('should return empty users puzzle list', async () => {
-        // założenie: brak podanych parametrów
         const mock = await getCommunityPuzzles();
 
         expect(mock.length).toBeGreaterThanOrEqual(0);
     });
 
     test('should return users puzzle list', async () => {
-        // założenie: w bazie istnieją x > 0 plansz użytkownika o id 1, podajemy id innego uż.
         const mock = await getCommunityPuzzles(3);
 
         expect(mock.length).toBeGreaterThan(0);
@@ -29,7 +27,6 @@ describe('community puzzles', () => {
     });
 
     test('should return searched objects with required properties', async () => {
-        // założenie: w bazie istnieje 1 mapa o wybranej nazwie
         const mock = await getCommunityPuzzles(3, 'Test', 'name');
 
         for (const el of mock) {
@@ -41,7 +38,6 @@ describe('community puzzles', () => {
     });
 
     test('should return searched objects with required properties with option', async () => {
-        // założenie: w bazie nie istnieją plansze wybranego użytkownika
         const mock = await getCommunityPuzzles(3, 'Test', 'creator');
 
         expect(mock).toHaveLength(0);
@@ -77,7 +73,6 @@ describe('user puzzles', () => {
     });
 
     test('should return searched objects with required properties', async () => {
-        // założenie: w bazie istnieje 1 mapa o wybranej nazwie
         const mock = await getUserPuzzles(1);
 
         for (const el of mock) {
@@ -89,7 +84,6 @@ describe('user puzzles', () => {
     });
 
     test('should return empty object list', async () => {
-        // założenie: id 0 nie istnieje
         const mock = await getUserPuzzles(2147483647);
 
         expect(mock).toEqual([]);

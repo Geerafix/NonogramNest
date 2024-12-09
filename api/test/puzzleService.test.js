@@ -4,7 +4,6 @@ await import('../relations.js');
 
 describe('puzzles', () => {
     test('should return error (post puzzles)', async () => {
-        // założenie: brak podanych parametrów
         try {
             await postPuzzle();
         } catch (error) {
@@ -25,7 +24,6 @@ describe('puzzles', () => {
     });
 
     test('should return error (post solved puzzle)', async () => {
-        // założenie: brak podanych parametrów
         try {
             await postSolved();
         } catch (error) {

@@ -14,8 +14,8 @@ const isDisplayed = ref(false);
         <div>
           <h1>1. Cel</h1>
           <p>
-            • Uzupełnij siatkę, zaznaczając pola, aby odtworzyć ukryty obrazek na podstawie
-              podanych wskazówek liczbowych.
+            • Uzupełnij siatkę, zaznaczając pola na podstawie
+              podanych wskazówek liczbowych, aby odkryć ukryty wzór lub obrazek.
           </p>
         </div>
         <div>
@@ -36,15 +36,15 @@ const isDisplayed = ref(false);
         <div>
           <h1>4. Logika i eliminacja</h1>
           <p>
-            • Analizuj wskazówki i używaj logiki, aby wykluczać niemożliwe opcje.<br>
-            • Rozwiązuj krok po kroku, sprawdzając wiersze i kolumny na zmianę.
+            • Analizowanie wskazówkek i używanie logiki jest konieczne do wykluczenia niemożliwych opcji.<br>
+            • Wyznaczanie pól wyłączonych z gry jest często niezbędne do rozwiązania planszy.
           </p>
         </div>
         <div>
           <h1>5. Poprawność</h1>
           <p>
             • Rozwiązanie musi spełniać wszystkie wskazówki dla wierszy i kolumn.<br>
-            • Wypełniona siatka tworzy kompletny obraz.<br>
+            • Wypełniona siatka tworzy kompletny wzór.<br>
             • Gdy jesteś pewien rozwiązania, zatwierdź je, aby ukończyć łamigłówkę.
           </p>
         </div>
@@ -66,7 +66,8 @@ const isDisplayed = ref(false);
         <div>
           <h1>8. Opcje w grze</h1>
           <p>
-            • Grę możesz wznawiać, zatrzymywać lub anulować planszę w dowolnym momencie.
+            • Grę możesz wznawiać, zatrzymywać lub anulować w dowolnym momencie.<br>
+            • Stan rozpoczętej gry jest zapisywany do czasu wylogowania.
           </p>
         </div>
         <div class="italic text-2xl text-right mx-4">Miłej gry! ツ</div>
