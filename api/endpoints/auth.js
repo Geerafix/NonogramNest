@@ -16,9 +16,9 @@ server.post('/signin', asyncHandler(async (req, res) => {
             process.env.JWT_SECRET,
         );
         res.cookie('token', token, {httpOnly: true});
-        res.status(200).json(token);
+        res.json(token);
     } else {
-        res.status(404).send({msg: 'User not found'});
+        res.status(404).json();
     }
 }));
 
@@ -28,11 +28,12 @@ server.post('/signup', asyncHandler(async (req, res) => {
     const password = await req.body.password;
 
     const hash = await argon2.hash(password);
-    await User.create({
+
+    const created = await User.create({
         email: email,
         username: username,
         password: hash
     });
 
-    res.json({message: 'Succes'});
+    res.json(created);
 }));

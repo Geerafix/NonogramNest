@@ -38,13 +38,13 @@ server.get('/user/achieved', authHandler, asyncHandler(async (req, res) => {
     res.json(count);
 }));
 
-server.get('/profile', authHandler, async (req, res) => {
+server.get('/profile', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
 
     const userProfile = await getProfile(user.user_id);
 
     res.json(userProfile);
-});
+}));
 
 server.put('/profile/username', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;

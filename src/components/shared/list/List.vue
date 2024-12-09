@@ -59,7 +59,7 @@ const filteredItem = (item) => (
   sticky
   top-0
   transition-all
-  z-50
+  z-10
   list-none;
 }
 .items {

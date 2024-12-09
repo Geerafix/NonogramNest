@@ -26,7 +26,7 @@ server.get('/challenge', authHandler, asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.post('/challenge', authHandler, async (req, res) => {
+server.post('/challenge', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const puzzle_id = await req.body.puzzleId;
     const time = await req.body.time;
@@ -36,9 +36,9 @@ server.post('/challenge', authHandler, async (req, res) => {
     const dailyChallenge = await postDailyChallenge(user.user_id, puzzle_id, answers, time, points);
 
     res.json(dailyChallenge);
-});
+}));
 
-server.put('/challenge', authHandler, (async (req, res) => {
+server.put('/challenge', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const time = await req.body.time;
     const points = await req.body.points;

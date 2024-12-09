@@ -13,7 +13,7 @@ import {useBlurOnView} from "@/composables/useBlurOnView.js";
 import {useNotification} from "@/composables/useNotification.js";
 
 const puzzles = ref([]);
-const listState = useList(['ID twórcy planszy','Nazwa planszy','Rozmiar planszy','Nazwa twórcy planszy'], puzzles, [4]);
+const listState = useList(['ID planszy','Nazwa planszy','Rozmiar planszy','Nazwa twórcy planszy'], puzzles, [4]);
 
 const search = ref('');
 const option = ref('name');

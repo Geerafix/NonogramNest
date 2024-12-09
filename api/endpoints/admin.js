@@ -34,30 +34,30 @@ server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.get('/admin/puzzle', authHandler, async (req, res) => {
+server.get('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     const created_id = req.query.puzzleId;
 
     const puzzle = await getPuzzle(created_id);
 
     res.json(puzzle);
-});
+}));
 
-server.put('/admin/puzzle', authHandler, async (req, res) => {
+server.put('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     const created_id = await req.body.puzzleId;
     const board = await req.body.board;
 
     await publishPuzzle(created_id, board);
 
     res.json({msg: 'Success'});
-});
+}));
 
-server.delete('/admin/puzzle', authHandler, async (req, res) => {
+server.delete('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     const created_id = req.query.puzzleId;
 
     await deletePuzzle(created_id);
 
     res.json({msg: 'Success'});
-});
+}));
 
 server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
@@ -128,13 +128,13 @@ server.delete('/admin/user/created', authHandler, asyncHandler(async (req, res) 
     res.json({msg: 'Success'});
 }));
 
-server.delete('/admin/deleteUser', async (req, res) => {
+server.delete('/admin/deleteUser', authHandler, asyncHandler(async (req, res) => {
     const user_id = req.query.userId;
 
     await deleteUser(user_id);
 
     res.json({msg: 'Success'});
-});
+}));
 
 server.put('/admin/user', authHandler, asyncHandler(async (req, res) => {
     const user = await req.body.user;
@@ -163,13 +163,13 @@ server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => 
     res.json(achievements);
 }));
 
-server.post('/admin/achievement', authHandler, async (req, res) => {
+server.post('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const achievement = await req.body.achievement;
 
     await postAchievement(achievement);
 
     res.json({msg: 'Success'});
-});
+}));
 
 server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const achievement = await req.body.achievement;
