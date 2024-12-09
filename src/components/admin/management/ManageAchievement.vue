@@ -65,7 +65,15 @@ const delAchievement = async () => {
           <TextArea :placeholder="achievement.description || 'Opis...'" v-model="description" />
         </div>
       </div>
-      <Actions @delete="delAchievement" @reject="reject" @accept="accept" class="col-span-2"/>
+      <Actions @delete="delAchievement" @reject="reject" @accept="accept" :class="['col-span-2', {'hidden-x': !achievement.achievement_id}]"/>
     </div>
   </div>
 </template>
+
+<style scoped>
+.hidden-x > :first-child {
+  @apply
+  hidden
+  !w-0
+}
+</style>
