@@ -50,7 +50,7 @@ watch(() => props.started, (started) => {
         <Icon icon="fa-solid fa-xmark"/>
       </BasicButton>
       <BasicButton @click="emit('pause')" :class="{ 'animate-pulse': paused }"
-                   :style="{ backgroundColor: paused ? 'rgb(6 95 70)' : '#7C2C3B' }">
+                   :style="{ backgroundColor: paused ? 'rgb(120 95 70)' : '#7C2C3B' }">
         <Icon v-if="paused" icon="fa-solid fa-play"/>
         <Icon v-else icon="fa-solid fa-stop"/>
       </BasicButton>

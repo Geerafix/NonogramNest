@@ -48,9 +48,13 @@ onMounted(fetchAchievements);
     <Transition name="fade">
       <ManageAchievement v-if="manageAchievement" @accept="onAccept" @reject="onReject" :achievement="manageAchievement"/>
     </Transition>
-    <BasicButton class="absolute right-0 bottom-0" @click="newAchievement">
-      Nowe <Icon icon="fa-solid fa-plus" class="icon-fix"/>
-    </BasicButton>
-    <Pagination v-bind="pageState" @onPageChange="fetchAchievements" />
+    <Transition name="fade" mode="out-in">
+      <div v-if="!manageAchievement">
+        <BasicButton class="absolute right-0 bottom-0" @click="newAchievement">
+          Nowe <Icon icon="fa-solid fa-plus" class="icon-fix"/>
+        </BasicButton>
+        <Pagination v-bind="pageState" @onPageChange="fetchAchievements" />
+      </div>
+    </Transition>
   </main>
 </template>

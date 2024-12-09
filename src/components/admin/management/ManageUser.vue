@@ -82,7 +82,7 @@ const delUser = async () => {
           <BasicInput :placeholder="fieldsHeaders[idx].concat('...')" v-model="form[key]"/>
         </div>
       </div>
-      <div class="item-row !gap-2" v-if="props.user.role === 'user'">
+      <div class="item-row !gap-3" v-if="props.user.role === 'user'">
         <span class="text-center">Zawartość</span>
         <BasicButton class="button-restyle" v-for="el in content" :buttonText="el.name" @click="emit('view', el.view)">
           <Icon :icon="['fa-solid', `fa-${el.icon}`]" class="order-first mx-auto"/>

@@ -30,5 +30,6 @@ const {x, y} = useMouse();
   border-b-4
   border-slate-800/60
   -translate-x-1/2
+  z-50
 }
 </style>
