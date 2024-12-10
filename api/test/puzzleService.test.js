@@ -32,7 +32,7 @@ describe('puzzles', () => {
     });
 
     test('should return object with required properties (post solved puzzles)', async () => {
-        const mock = await postSolved(1, 1, 100, 20);
+        const mock = await postSolved(2, 1, 100, 20);
 
         expect(mock).toHaveProperty('user_id');
         expect(mock).toHaveProperty('puzzle_id');

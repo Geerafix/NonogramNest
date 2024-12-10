@@ -11,7 +11,11 @@ import {postPuzzle} from "../services/puzzleService.js";
 
 describe('challenge', () => {
     test('should return daily challenge with required properties', async () => {
-        const mock = await getDailyChallenge(1);
+        const puzzle = await postPuzzle('[]', '[]', 5);
+
+        await postDailyChallenge(2, puzzle.puzzle_id, '[]', 100, 100);
+
+        const mock = await getDailyChallenge(2);
 
         expect(Object.keys(mock).length).toBeGreaterThan(0);
 
@@ -37,7 +41,7 @@ describe('challenge', () => {
 
     test('should return new daily challenge', async () => {
         const puzzle = await postPuzzle('[]', '[]', 10)
-        const mock = await postDailyChallenge(1, puzzle.puzzle_id, '[]', 0, 1000);
+        const mock = await postDailyChallenge(2, puzzle.puzzle_id, '[]', 0, 1000);
 
         expect(Object.keys(mock).length).toBeGreaterThan(0);
 
@@ -52,7 +56,7 @@ describe('challenge', () => {
     });
 
     test('should return updated daily challenge', async () => {
-        const mock = await updateDailyChallenge(1, '[1, 2, 3, 4, 5]', 100, 1000, 100, true);
+        const mock = await updateDailyChallenge(2, '[1, 2, 3, 4, 5]', 100, 1000, 100, true);
 
         expect(Object.keys(mock).length).toBeGreaterThan(0);
 

@@ -21,6 +21,9 @@ import {
 } from "../services/adminService.js";
 import {postCreatedPuzzle} from "../services/communityService.js";
 import * as argon2 from "argon2";
+import {postMessage} from "../services/userService.js";
+import {postDailyChallenge} from "../services/challengeService.js";
+import {postPuzzle, postSolved} from "../services/puzzleService.js";
 
 describe('admin - puzzles', () => {
     test('should return pending puzzles each with required properties', async () => {
@@ -67,6 +70,15 @@ describe('admin - puzzles', () => {
     });
 
     test('should return searched pending puzzles by name', async () => {
+        const id1 = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+        const id2 = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+
+        await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+        await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+
+        await publishPuzzle(id1.created.created_id, '[]');
+        await publishPuzzle(id2.created.created_id, '[]');
+
         const mock = await getPuzzles(undefined, undefined, 's', 'name');
 
         expect(mock.length > 0).toBe(true);
@@ -79,7 +91,11 @@ describe('admin - puzzles', () => {
     });
 
     test('should return searched pending puzzles by creator', async () => {
-        const mock = await getPuzzles(undefined, undefined, 'adam', 'creator');
+        const {created} = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+
+        await publishPuzzle(created.created_id, '[]');
+
+        const mock = await getPuzzles(undefined, undefined, 'm', 'creator');
 
         expect(mock.length > 0).toBe(true);
     });
@@ -91,7 +107,7 @@ describe('admin - puzzles', () => {
     });
 
     test('should return single pending puzzle with required properties', async () => {
-        const {created} = await postCreatedPuzzle(1, '[]', '[]', 5, '[]', 'name');
+        const {created} = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 'name');
 
         const mock = await getPuzzle(created.created_id);
 
@@ -117,7 +133,7 @@ describe('admin - puzzles', () => {
     });
 
     test('should return undefined if published', async () => {
-        const {created} = await postCreatedPuzzle(1, '[]', '[]', 5, '[]', 'name');
+        const {created} = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 'name');
 
         const mock = await publishPuzzle(created.created_id, '[]');
 
@@ -149,7 +165,7 @@ describe('admin - puzzles', () => {
     });
 
     test('should return 1 if published puzzle is deleted', async () => {
-        const {created} = await postCreatedPuzzle(1, '[]', '[]', 5, '[]', 'name');
+        const {created} = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 'name');
 
         const mock = await deletePuzzle(created.created_id);
 
@@ -183,7 +199,7 @@ describe('admin - users', () => {
     });
 
     test('should return single user object with required properties', async () => {
-        const mock = await getUser(1);
+        const mock = await getUser(2);
 
         expect(mock).toBeDefined();
 
@@ -299,19 +315,29 @@ describe('admin - users', () => {
     });
 
     test('should return 1 if user classic content was deleted', async () => {
-        const mock = await deleteClassic(1, 1);
+        const puzzle = await postPuzzle('[]', '[]', 5);
+
+        const solved = await postSolved(2, puzzle.puzzle_id, 100, 100);
+
+        const mock = await deleteClassic(2, solved.solved_id);
 
         expect(mock).toEqual(1);
     });
 
     test('should return 1 if user challenge content was deleted', async () => {
-        const mock = await deleteChallenge(1, 1);
+        const puzzle = await postPuzzle('[]', '[]', 5);
+
+        const challenge = await postDailyChallenge(2, puzzle.puzzle_id, '[]', 100, 100);
+
+        const mock = await deleteChallenge(2, challenge.daily_id);
 
         expect(mock).toEqual(1);
     });
 
     test('should return 1 if user created content was deleted', async () => {
-        const mock = await deleteCreated(1, 1);
+        const {created} = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+
+        const mock = await deleteCreated(2, created.created_id);
 
         expect(mock).toEqual(1);
     });
@@ -334,20 +360,32 @@ describe('admin - users', () => {
         expect(mock).toEqual(0);
     });
 
-    test('should return 1 if user was deleted', async () => {
+    test('should return 1 if user was deleted (must provide existing user ID)', async () => {
+        // UWAGA! ID użytkownik musi istnieć!
         const mock = await deleteUser(1);
 
         expect(mock).toEqual(1);
     });
 
     test('should return 1 if achievement was deleted', async () => {
-        const mock = await deleteAchievement(1);
+        const achievement = {
+            name: 'Test achievement',
+            description: 'Test achievement description',
+            type: 'solved_challenges',
+            criteria: 1
+        };
+
+        const created = await postAchievement(achievement);
+
+        const mock = await deleteAchievement(created.achievement_id);
 
         expect(mock).toEqual(1);
     });
 
     test('should return 1 if message was deleted', async () => {
-        const mock = await deleteMessage(1);
+        const message = await postMessage(2, 'title', 'content');
+
+        const mock = await deleteMessage(message.message_id);
 
         expect(mock).toEqual(1);
     });
@@ -366,6 +404,8 @@ describe('admin - users', () => {
 
         expect(Object.keys(mock).length).toBeGreaterThan(0);
 
+        await deleteAchievement(mock.achievement_id);
+
         expect(mock).toHaveProperty('name');
         expect(mock).toHaveProperty('description');
         expect(mock).toHaveProperty('type');
@@ -374,14 +414,17 @@ describe('admin - users', () => {
 
     test('should update achievement with success', async () => {
         const achievement = {
-            id: 3,
             name: 'Updated achievement',
             description: 'Updated description',
             type: 'solved_puzzles',
             criteria: 100
         };
 
-        const mock = await updateAchievement(achievement);
+        const created = await postAchievement(achievement);
+
+        const mock = await updateAchievement(created);
+
+        await deleteAchievement(created.achievement_id);
 
         expect(mock[0]).toEqual(1);
     });

@@ -1,5 +1,6 @@
 import {expect, test, describe} from "vitest"
-import {getCommunityPuzzles, getUserPuzzles} from "../services/communityService.js";
+import {getCommunityPuzzles, getUserPuzzles, postCreatedPuzzle} from "../services/communityService.js";
+import {deleteCreated, publishPuzzle} from "../services/adminService.js";
 await import('../relations.js');
 
 describe('community puzzles', () => {
@@ -10,6 +11,10 @@ describe('community puzzles', () => {
     });
 
     test('should return users puzzle list', async () => {
+        const {created} = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+
+        await publishPuzzle(created.created_id, '[]');
+
         const mock = await getCommunityPuzzles(3);
 
         expect(mock.length).toBeGreaterThan(0);
@@ -64,12 +69,20 @@ describe('community puzzles', () => {
 
 describe('user puzzles', () => {
     test('should paginate data properly', async () => {
+        const {created} = await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+
+        await postCreatedPuzzle(2, '[]', '[]', 5, '[]', 's');
+
+        await publishPuzzle(created.created_id, '[]');
+
         const page = 1;
-        const limit = 2;
+        const limit = 1;
 
-        const mock = await getUserPuzzles(1, undefined, page, limit);
+        const mock = await getUserPuzzles(2, undefined, page, limit);
 
-        expect(mock).toHaveLength(2);
+        await deleteCreated(2, created.created_id);
+
+        expect(mock).toHaveLength(1);
     });
 
     test('should return searched objects with required properties', async () => {

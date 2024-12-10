@@ -1,4 +1,4 @@
-import {expect, test, describe} from "vitest"
+import {expect, test, describe, afterAll} from "vitest"
 import {getAchievedCount, getAchievementsCount, getProfile, getUserAchievements} from "../services/userService.js";
 await import('../relations.js');
 
@@ -62,7 +62,7 @@ describe('user profile', () => {
     });
 
     test('should return user profile with required properties', async () => {
-        const mock = await getProfile(1);
+        const mock = await getProfile(2);
 
         expect(Object.keys(mock).length).toBeGreaterThan(0);
 
@@ -82,4 +82,8 @@ describe('user profile', () => {
 
         expect(mock).toBeNull();
     });
+});
+
+afterAll(() => {
+    import('../setup.js');
 });

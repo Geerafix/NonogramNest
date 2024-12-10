@@ -116,7 +116,7 @@ describe('rating user profile', () => {
     });
 
     test('should return user profile objects with required properties', async () => {
-        const user_id = 1;
+        const user_id = 2;
 
         const mock = await getRatingUser(user_id);
 

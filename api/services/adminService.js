@@ -237,7 +237,7 @@ export const updateAchievement = async (achievement) => {
         type: achievement.type,
         criteria: achievement.criteria
     }, {
-        where: {achievement_id: achievement.id}
+        where: {achievement_id: achievement.achievement_id}
     });
 }
 
