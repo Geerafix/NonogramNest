@@ -10,7 +10,7 @@ import {
     updateDailyChallenge
 } from "../services/challengeService.js";
 
-server.get('/api/challenges', authHandler, asyncHandler(async (req, res) => {
+server.get('/challenges', authHandler, asyncHandler(async (req, res) => {
     const user = req.user;
 
     const dailyChallenge = await getDailyChallenges(user.user_id)
@@ -18,7 +18,7 @@ server.get('/api/challenges', authHandler, asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.get('/api/challenge', authHandler, asyncHandler(async (req, res) => {
+server.get('/challenge', authHandler, asyncHandler(async (req, res) => {
     const user = req.user;
 
     const dailyChallenge = await getDailyChallenge(user.user_id)
@@ -26,7 +26,7 @@ server.get('/api/challenge', authHandler, asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.post('/api/challenge', authHandler, asyncHandler(async (req, res) => {
+server.post('/challenge', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const puzzle_id = await req.body.puzzleId;
     const time = await req.body.time;
@@ -38,7 +38,7 @@ server.post('/api/challenge', authHandler, asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.put('/api/challenge', authHandler, asyncHandler(async (req, res) => {
+server.put('/challenge', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const time = await req.body.time;
     const points = await req.body.points;
@@ -51,7 +51,7 @@ server.put('/api/challenge', authHandler, asyncHandler(async (req, res) => {
     res.json(dailyChallenge);
 }));
 
-server.get('/api/challenge/streak', authHandler, asyncHandler(async (req, res) => {
+server.get('/challenge/streak', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
 
     const streak = await getStreak(user.user_id);
@@ -59,7 +59,7 @@ server.get('/api/challenge/streak', authHandler, asyncHandler(async (req, res) =
     res.json(streak);
 }));
 
-server.get('/api/challenge/dailies', authHandler, asyncHandler(async (req, res) => {
+server.get('/challenge/dailies', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const {month, year} = req.query;
 
@@ -68,7 +68,7 @@ server.get('/api/challenge/dailies', authHandler, asyncHandler(async (req, res) 
     res.json(dailyDays);
 }));
 
-server.get('/api/challenge/info', authHandler, asyncHandler(async (req, res) => {
+server.get('/challenge/info', authHandler, asyncHandler(async (req, res) => {
     const user = req.user;
     const date = req.query.date;
 

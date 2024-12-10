@@ -5,12 +5,7 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import {errorHandler} from "./utils.js";
 
-import path from 'path';
-import { fileURLToPath } from 'url';
-
 dotenv.config({path: '../.env'});
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const db_user = process.env.DB_USER;
 const db_password = process.env.DB_PASSWORD;
@@ -52,12 +47,5 @@ server.use(cookieParser());
 server.use(cors({ origin: true, credentials: true }));
 
 server.use(errorHandler);
-
-server.use(express.static(path.join(__dirname, '../dist')));
-
-server.get('*', (req, res, next) => {
-    if (req.url.includes('api')) return next();
-    else res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-});
 
 server.listen(server_port, () => { console.log("Server (re)started") });

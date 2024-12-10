@@ -5,7 +5,7 @@ import * as argon2 from "argon2";
 import {User} from "../models/User.js";
 import {asyncHandler} from "../utils.js";
 
-server.post('/api/signin', asyncHandler(async (req, res) => {
+server.post('/signin', asyncHandler(async (req, res) => {
     const user = await User.findOne({
         where: {[Op.or]: [{username: await req.body.username}, {email: await req.body.username}]}
     });
@@ -22,7 +22,7 @@ server.post('/api/signin', asyncHandler(async (req, res) => {
     }
 }));
 
-server.post('/api/signup', asyncHandler(async (req, res) => {
+server.post('/signup', asyncHandler(async (req, res) => {
     const email = await req.body.email;
     const username = await req.body.username;
     const password = await req.body.password;
