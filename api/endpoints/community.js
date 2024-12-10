@@ -7,7 +7,7 @@ import {
     postCreatedPuzzle
 } from "../services/communityService.js";
 
-server.get('/community/puzzles', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/community/puzzles', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const {page, limit} = req.query;
     const search = req.query.search;
@@ -18,7 +18,7 @@ server.get('/community/puzzles', authHandler, asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.get('/community/puzzle', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/community/puzzle', authHandler, asyncHandler(async (req, res) => {
     const puzzle_id = req.query.created_id;
 
     const communityPuzzle = await getCommunityPuzzle(puzzle_id);
@@ -26,7 +26,7 @@ server.get('/community/puzzle', authHandler, asyncHandler(async (req, res) => {
     res.json(communityPuzzle);
 }));
 
-server.post('/community/created', authHandler, asyncHandler(async (req, res) => {
+server.post('/api/community/created', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const clues_x = await req.body.cluesX;
     const clues_y = await req.body.cluesY;
@@ -39,7 +39,7 @@ server.post('/community/created', authHandler, asyncHandler(async (req, res) => 
     res.json({msg: 'Sent puzzle'});
 }));
 
-server.get('/user/puzzles', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/user/puzzles', authHandler, asyncHandler(async (req, res) => {
     const user = await req.user;
     const {page, limit} = req.query;
     const search = req.query.search;

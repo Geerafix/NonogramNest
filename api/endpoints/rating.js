@@ -2,7 +2,7 @@ import {server} from '../server.js';
 import {asyncHandler, authHandler} from "../utils.js";
 import {getRatingAll, getRatingChallenge, getRatingClassic, getRatingUser} from "../services/ratingService.js";
 
-server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/rating/classic', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
     const size = parseInt(req.query.size);
 
@@ -11,7 +11,7 @@ server.get('/rating/classic', authHandler, asyncHandler(async (req, res) => {
     res.json(rating);
 }));
 
-server.get('/rating/challenges', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/rating/challenges', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
 
     const rating = await getRatingChallenge(page, limit);
@@ -19,7 +19,7 @@ server.get('/rating/challenges', authHandler, asyncHandler(async (req, res) => {
     res.json(rating);
 }));
 
-server.get('/rating/all', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/rating/all', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
 
     const rating = await getRatingAll(page, limit);
@@ -27,7 +27,7 @@ server.get('/rating/all', authHandler, asyncHandler(async (req, res) => {
     res.json(rating);
 }));
 
-server.get('/rating/profile', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/rating/profile', authHandler, asyncHandler(async (req, res) => {
     const user_id = req.query.user_id;
 
     const profile = await getRatingUser(user_id);

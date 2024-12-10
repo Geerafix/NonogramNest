@@ -5,7 +5,12 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import {errorHandler} from "./utils.js";
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 dotenv.config({path: '../.env'});
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const db_user = process.env.DB_USER;
 const db_password = process.env.DB_PASSWORD;
@@ -14,9 +19,9 @@ const db_port = process.env.DB_PORT;
 const db_database = process.env.DB_NAME;
 const server_port = process.env.VITE_SERVER_PORT;
 
-const connectionString = `postgres://postgres:admin@localhost:5432/nonogram-database`;
+const connectionString = `postgres://postgres:admin@localhost:5432/`;
 
-export const sequelize = new Sequelize(connectionString, { dialect: 'postgres', logging: false });
+export const sequelize = new Sequelize(connectionString + 'nonogram_nest', { dialect: 'postgres', logging: false });
 
 console.log("Setting relations...");
 import('./relations.js')
@@ -47,5 +52,12 @@ server.use(cookieParser());
 server.use(cors({ origin: true, credentials: true }));
 
 server.use(errorHandler);
+
+server.use(express.static(path.join(__dirname, '../dist')));
+
+server.get('*', (req, res, next) => {
+    if (req.url.includes('api')) return next();
+    else res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
 
 server.listen(server_port, () => { console.log("Server (re)started") });

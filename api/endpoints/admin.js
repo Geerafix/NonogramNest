@@ -24,7 +24,7 @@ import {
     updateUser
 } from "../services/adminService.js";
 
-server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
     const search = req.query.search;
     const option = req.query.option;
@@ -34,7 +34,7 @@ server.get('/admin/puzzles', authHandler, asyncHandler(async (req, res) => {
     res.json(puzzles);
 }));
 
-server.get('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     const created_id = req.query.puzzleId;
 
     const puzzle = await getPuzzle(created_id);
@@ -42,7 +42,7 @@ server.get('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     res.json(puzzle);
 }));
 
-server.put('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
+server.put('/api/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     const created_id = await req.body.puzzleId;
     const board = await req.body.board;
 
@@ -51,7 +51,7 @@ server.put('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     res.json({msg: 'Success'});
 }));
 
-server.delete('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
+server.delete('/api/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     const created_id = req.query.puzzleId;
 
     await deletePuzzle(created_id);
@@ -59,7 +59,7 @@ server.delete('/admin/puzzle', authHandler, asyncHandler(async (req, res) => {
     res.json({msg: 'Success'});
 }));
 
-server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/users', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
     const search = req.query.search;
     const option = req.query.option;
@@ -69,7 +69,7 @@ server.get('/admin/users', authHandler, asyncHandler(async (req, res) => {
     res.json(users);
 }));
 
-server.get('/admin/user', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/user', authHandler, asyncHandler(async (req, res) => {
     const user_id = req.query.user_id;
 
     const user = await getUser(user_id);
@@ -77,7 +77,7 @@ server.get('/admin/user', authHandler, asyncHandler(async (req, res) => {
     res.json(user);
 }));
 
-server.get('/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
     const user_id = req.query.userId;
 
@@ -86,7 +86,7 @@ server.get('/admin/user/classic', authHandler, asyncHandler(async (req, res) => 
     res.json(classic);
 }));
 
-server.get('/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
     const user_id = req.query.userId;
 
@@ -95,7 +95,7 @@ server.get('/admin/user/challenge', authHandler, asyncHandler(async (req, res) =
     res.json(challenges);
 }));
 
-server.get('/admin/user/created', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/user/created', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
     const user_id = req.query.userId;
 
@@ -104,7 +104,7 @@ server.get('/admin/user/created', authHandler, asyncHandler(async (req, res) => 
     res.json(created);
 }));
 
-server.delete('/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
+server.delete('/api/admin/user/classic', authHandler, asyncHandler(async (req, res) => {
     const {userId, contentId} = req.query;
 
     await deleteClassic(userId, contentId);
@@ -112,7 +112,7 @@ server.delete('/admin/user/classic', authHandler, asyncHandler(async (req, res) 
     res.json({msg: 'Success'});
 }));
 
-server.delete('/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
+server.delete('/api/admin/user/challenge', authHandler, asyncHandler(async (req, res) => {
     const {userId, contentId} = req.query;
 
     await deleteChallenge(userId, contentId);
@@ -120,7 +120,7 @@ server.delete('/admin/user/challenge', authHandler, asyncHandler(async (req, res
     res.json({msg: 'Success'});
 }));
 
-server.delete('/admin/user/created', authHandler, asyncHandler(async (req, res) => {
+server.delete('/api/admin/user/created', authHandler, asyncHandler(async (req, res) => {
     const {userId, contentId} = req.query;
 
     await deleteCreated(userId, contentId);
@@ -128,7 +128,7 @@ server.delete('/admin/user/created', authHandler, asyncHandler(async (req, res) 
     res.json({msg: 'Success'});
 }));
 
-server.delete('/admin/deleteUser', authHandler, asyncHandler(async (req, res) => {
+server.delete('/api/admin/deleteUser', authHandler, asyncHandler(async (req, res) => {
     const user_id = req.query.userId;
 
     await deleteUser(user_id);
@@ -136,7 +136,7 @@ server.delete('/admin/deleteUser', authHandler, asyncHandler(async (req, res) =>
     res.json({msg: 'Success'});
 }));
 
-server.put('/admin/user', authHandler, asyncHandler(async (req, res) => {
+server.put('/api/admin/user', authHandler, asyncHandler(async (req, res) => {
     const user = await req.body.user;
 
     const updatedUser = await updateUser(user);
@@ -144,7 +144,7 @@ server.put('/admin/user', authHandler, asyncHandler(async (req, res) => {
     res.json(updatedUser);
 }));
 
-server.get('/admin/admins', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/admins', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
     const search = req.query.search;
     const option = req.query.option;
@@ -155,7 +155,7 @@ server.get('/admin/admins', authHandler, asyncHandler(async (req, res) => {
     res.json(users);
 }));
 
-server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/achievements', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
 
     const achievements = await getAchievements(page, limit);
@@ -163,7 +163,7 @@ server.get('/admin/achievements', authHandler, asyncHandler(async (req, res) => 
     res.json(achievements);
 }));
 
-server.post('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
+server.post('/api/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const achievement = await req.body.achievement;
 
     await postAchievement(achievement);
@@ -171,7 +171,7 @@ server.post('/admin/achievement', authHandler, asyncHandler(async (req, res) => 
     res.json({msg: 'Success'});
 }));
 
-server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
+server.put('/api/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const achievement = await req.body.achievement;
 
     await updateAchievement(achievement);
@@ -179,7 +179,7 @@ server.put('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     res.json({msg: 'Success'});
 }));
 
-server.delete('/admin/achievement', authHandler, asyncHandler(async (req, res) => {
+server.delete('/api/admin/achievement', authHandler, asyncHandler(async (req, res) => {
     const achievement_id = req.query.achievement_id;
 
     await deleteAchievement(achievement_id);
@@ -187,7 +187,7 @@ server.delete('/admin/achievement', authHandler, asyncHandler(async (req, res) =
     res.json({msg: 'Success'});
 }));
 
-server.get('/admin/messages', authHandler, asyncHandler(async (req, res) => {
+server.get('/api/admin/messages', authHandler, asyncHandler(async (req, res) => {
     const {page, limit} = req.query;
 
     const messages = await getMessages(page, limit);
@@ -195,7 +195,7 @@ server.get('/admin/messages', authHandler, asyncHandler(async (req, res) => {
     res.json(messages);
 }));
 
-server.delete('/admin/message', authHandler, asyncHandler(async (req, res) => {
+server.delete('/api/admin/message', authHandler, asyncHandler(async (req, res) => {
     const message_id = req.query.messageId;
 
     await deleteMessage(message_id);
