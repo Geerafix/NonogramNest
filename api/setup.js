@@ -113,3 +113,5 @@ sequelize.addHook('afterBulkSync', async (options) => {
 
 console.log("Migrating models...");
 await sequelize.sync({ force: true }).then((res) => console.log("Models migrated.")).catch((err) => console.log("Error while migrating models."));
+
+process.exit();
