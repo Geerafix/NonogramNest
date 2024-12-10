@@ -1,4 +1,4 @@
-import {expect, test, describe, afterAll} from "vitest"
+import {expect, test, describe} from "vitest"
 import {getAchievedCount, getAchievementsCount, getProfile, getUserAchievements} from "../services/userService.js";
 await import('../relations.js');
 
@@ -82,8 +82,4 @@ describe('user profile', () => {
 
         expect(mock).toBeNull();
     });
-});
-
-afterAll(() => {
-    import('../setup.js');
 });

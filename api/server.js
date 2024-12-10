@@ -14,9 +14,9 @@ const db_port = process.env.DB_PORT;
 const db_database = process.env.DB_NAME;
 const server_port = process.env.VITE_SERVER_PORT;
 
-const connectionString = `postgres://postgres:admin@localhost:5432/`;
+const connectionString = `postgres://${db_user}:${db_password}@${db_network}:${db_port}/${db_database}`;
 
-export const sequelize = new Sequelize(connectionString + 'nonogram_nest', { dialect: 'postgres', logging: false });
+export const sequelize = new Sequelize(connectionString, { dialect: 'postgres', logging: false });
 
 console.log("Setting relations...");
 import('./relations.js')
