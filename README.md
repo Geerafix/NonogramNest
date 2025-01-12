@@ -43,8 +43,7 @@ Instrukcja uruchamiania aplikacji.
    ```
    
 7. **Dostęp do aplikacji**  
-   Jeśli wszystko przebiegło pomyślnie, aplikacja powinna działać pod adresem:  
-
+   Jeśli wszystko przebiegło pomyślnie, aplikacja powinna działać pod adresem:
    http://localhost:4000
 
 
