@@ -5,7 +5,7 @@ const props = defineProps(['clues', 'highlightedIdx']);
 
 const tileSize = computed(() => {
   const len = props.clues.length;
-  return (0.8 + (15/len)) + 'rem';
+  return (0.8 + (15 / len)) + 'rem';
 });
 
 const highlightedStyle = computed(() =>
@@ -17,7 +17,7 @@ const highlightedStyle = computed(() =>
   <div class="yclues-container">
     <div v-for="(ans, idx) in clues"
          :class="[highlightedIdx === idx ? highlightedStyle : '']">
-      <div class="single-clue" :style="{'height': tileSize}">
+      <div :style="{'height': tileSize}" class="single-clue">
         <div v-for="single in ans" class="text-xl">
           <p>&nbsp;{{ single }}&nbsp;</p>
         </div>

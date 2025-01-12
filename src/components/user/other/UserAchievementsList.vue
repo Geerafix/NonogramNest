@@ -12,28 +12,28 @@ const date = (date_achieved) => (
 </script>
 
 <template>
-  <Transition name="fade-slower" mode="out-in">
-    <div class="container" :key="achievements">
+  <Transition mode="out-in" name="fade-slower">
+    <div :key="achievements" class="container">
       <li v-for="achievement in achievements">
         <div :class="['item', {'opacity-30': !achievement.date_achieved}]">
           <div class="grid grid-cols-[1fr_25%] gap-2">
             <div class="item-row bg-gradient-to-r from-gray-700"
                  @mouseenter="showBox('Nazwa')" @mouseleave="hideBox">
-              {{achievement.name}}
+              {{ achievement.name }}
             </div>
             <div class="date-achieved bg-gradient-to-l"
                  @mouseenter="showBox('Data osiągnięcia')" @mouseleave="hideBox">
-              {{date(achievement.date_achieved)}}
+              {{ date(achievement.date_achieved) }}
             </div>
           </div>
           <div class="item-row bg-gradient-to-l from-gray-700/25" @mouseenter="showBox('Opis')" @mouseleave="hideBox">
-            {{achievement.description}}
+            {{ achievement.description }}
           </div>
         </div>
       </li>
     </div>
   </Transition>
-  <TrailingBox :message="message" :isHovered="isHovered" />
+  <TrailingBox :isHovered="isHovered" :message="message"/>
 </template>
 
 <style scoped>
@@ -51,6 +51,7 @@ const date = (date_achieved) => (
   max-w-full
   overflow-auto;
 }
+
 .item {
   @apply
   p-2
@@ -59,6 +60,7 @@ const date = (date_achieved) => (
   select-none
   bg-gray-900/40
 }
+
 .item-row {
   @apply
   bg-gray-700/40
@@ -69,12 +71,13 @@ const date = (date_achieved) => (
   transition-all
   text-wrap
 }
+
 .date-achieved {
-    @apply
-    item-row
-    content-center
-    text-center
-    bg-gradient-to-b
+  @apply
+  item-row
+  content-center
+  text-center
+  bg-gradient-to-b
 }
 
 </style>

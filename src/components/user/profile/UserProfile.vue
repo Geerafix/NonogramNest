@@ -5,7 +5,7 @@ const props = defineProps(['user']);
 
 const source = ref('');
 
-watchEffect( () => {
+watchEffect(() => {
   if (props.user?.pfp?.data) {
     const bytes = new Uint8Array(props.user.pfp.data);
     let ascii = "";
@@ -22,10 +22,10 @@ watchEffect( () => {
     <div class="info-col">
       <div class="grid grid-cols-[auto_1fr] gap-2 [&_div]:!h-full">
         <div class="p-2 aspect-square bg-gray-800/80 rounded-lg h-min w-min">
-          <Transition name="fade" mode="out-in">
-            <div class="content-center" :key="user">
+          <Transition mode="out-in" name="fade">
+            <div :key="user" class="content-center">
               <img v-if="user.pfp?.data?.length" :src="source" class="rounded-md"/>
-              <Icon v-else icon="fa-solid fa-user" class="my-auto mx-auto h-full"/>
+              <Icon v-else class="my-auto mx-auto h-full" icon="fa-solid fa-user"/>
             </div>
           </Transition>
         </div>
@@ -35,7 +35,7 @@ watchEffect( () => {
         </div>
       </div>
       <div>
-        <textarea class="bio" :placeholder="user.bio ? '' : 'Brak opisu'">{{ user.bio }}</textarea>
+        <textarea :placeholder="user.bio ? '' : 'Brak opisu'" class="bio">{{ user.bio }}</textarea>
       </div>
     </div>
     <div class="stats-col">
@@ -48,7 +48,7 @@ watchEffect( () => {
       <div class="item-container">Łączny czas gry</div>
       <div class="item">{{ (user.total_play_time / 3600).toFixed(2) }} h</div>
       <div class="item-container">Data rejestracji</div>
-      <div class="item">{{new Date(user?.register_date?.toString()).toLocaleDateString()}}r</div>
+      <div class="item">{{ new Date(user?.register_date?.toString()).toLocaleDateString() }}r</div>
     </div>
   </div>
 </template>

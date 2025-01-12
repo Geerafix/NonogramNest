@@ -1,6 +1,6 @@
 import {server} from '../server.js';
 import {asyncHandler, authHandler} from "../utils.js";
-import {postPuzzle, postSolved, saveNonogram, loadNonogram} from "../services/puzzleService.js";
+import {loadNonogram, postPuzzle, postSolved, saveNonogram} from "../services/puzzleService.js";
 
 server.post('/puzzle', authHandler, asyncHandler(async (req, res) => {
     const cluesX = await req.body.cluesX;
@@ -25,9 +25,9 @@ server.post('/puzzle/solved', authHandler, asyncHandler(async (req, res) => {
 
 server.post('/puzzle/save', authHandler, asyncHandler(async (req, res) => {
     const nonogram = await req.body.nonogramData;
-    
+
     const saved = saveNonogram(nonogram);
-    
+
     res.json(saved);
 }));
 

@@ -1,5 +1,6 @@
-import {expect, test, describe} from "vitest"
+import {describe, expect, test} from "vitest"
 import {postPuzzle, postSolved} from "../services/puzzleService.js";
+
 await import('../relations.js');
 
 describe('puzzles', () => {

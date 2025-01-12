@@ -16,7 +16,7 @@ const mode = ref(null);
 const rating = ref([]);
 const viewedUser = ref(null);
 
-const listState = useList(['ID użytkownika','Nazwa użytkownika','Suma punktów','Miejsce w rankingu'], rating);
+const listState = useList(['ID użytkownika', 'Nazwa użytkownika', 'Suma punktów', 'Miejsce w rankingu'], rating);
 const {pageState} = usePagination(1, rating);
 
 const {blurred} = useBlurOnView(viewedUser, true);
@@ -77,6 +77,7 @@ onMounted(fetchRating);
   flex
   gap-2
 }
+
 .viewed-user {
   @apply
   absolute

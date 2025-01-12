@@ -27,21 +27,21 @@ const computedScreen = computed(() => {
 
 <template>
   <div class="relative transition-all">
-    <Transition name="slide-right-smooth" mode="out-in">
+    <Transition mode="out-in" name="slide-right-smooth">
       <div v-if="!computedScreen" class="menu" @click="visible = !visible"
            @mouseover="toggleNavbar">
         <slot></slot>
         <div class="buttons-container">
           <MenuButton buttonText="Wyloguj" @click="toggleLogout">
-            <Icon icon="fa-solid fa-right-from-bracket" class="my-auto mx-auto"/>
+            <Icon class="my-auto mx-auto" icon="fa-solid fa-right-from-bracket"/>
           </MenuButton>
         </div>
       </div>
     </Transition>
     <BasicButton class="expand-button" @click="visible = !visible">
       <div :class="{ '-rotate-180': visible }" class="transition-all ease-out flex">
-        <Icon v-if="visible" icon="fa-solid fa-bars" class="my-auto mx-auto"/>
-        <Icon v-else icon="fa-solid fa-reply" class="my-auto mx-auto"/>
+        <Icon v-if="visible" class="my-auto mx-auto" icon="fa-solid fa-bars"/>
+        <Icon v-else class="my-auto mx-auto" icon="fa-solid fa-reply"/>
       </div>
     </BasicButton>
   </div>

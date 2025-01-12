@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import {computed, ref, watch} from 'vue';
 import {useElementHover} from "@vueuse/core";
 
 const emit = defineEmits(['onSwitch']);
@@ -18,48 +18,50 @@ const elementHover = useElementHover(element);
 </script>
 
 <template>
-  <Transition name="slide-left-hidden" mode="out-in">
-    <div class="info" v-show="elementHover">
+  <Transition mode="out-in" name="slide-left-hidden">
+    <div v-show="elementHover" class="info">
       <span class="text-gray-300">Wyświetlanie:</span><br>
-      {{displayed}}
+      {{ displayed }}
     </div>
   </Transition>
-  <div class="w-fit relative" ref="element">
-      <button class="switch" @click="switched = !switched">
-          <div :class="['dot', restyleSwitched]"></div>
-          <slot></slot>
-      </button>
+  <div ref="element" class="w-fit relative">
+    <button class="switch" @click="switched = !switched">
+      <div :class="['dot', restyleSwitched]"></div>
+      <slot></slot>
+    </button>
   </div>
 </template>
 
 <style scoped>
 .switch {
-    @apply
-    grid
-    grid-cols-2
-    bg-gray-400
-    border-gray-500
-    border-b-4
-    rounded-2xl
-    w-24
-    h-14
-    transition-all
-    hover:bg-gray-400/90
-    text-gray-600;
+  @apply
+  grid
+  grid-cols-2
+  bg-gray-400
+  border-gray-500
+  border-b-4
+  rounded-2xl
+  w-24
+  h-14
+  transition-all
+  hover:bg-gray-400/90
+  text-gray-600;
 }
+
 .dot {
-    @apply
-    absolute
-    w-1/2
-    h-full
-    bg-gray-600/85
-    border-gray-500
-    border-b-4
-    transition-all
-    drop-shadow-md
-    ease-in-out
-    duration-[75ms]
+  @apply
+  absolute
+  w-1/2
+  h-full
+  bg-gray-600/85
+  border-gray-500
+  border-b-4
+  transition-all
+  drop-shadow-md
+  ease-in-out
+  duration-[75ms]
 }
+
 .info {
   @apply
   p-2

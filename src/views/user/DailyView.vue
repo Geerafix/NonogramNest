@@ -79,7 +79,7 @@ const endGame = async () => {
 };
 
 const displayChallengeInfo = async (date) => {
-  const { data: info } = await getDailyChallengeInfo(date);
+  const {data: info} = await getDailyChallengeInfo(date);
 
   if (info) {
     notify(true, `W tym dniu rozwiązano wyzwanie z punktacją ${info.points} w czasie ${info.time} s.`);
@@ -96,23 +96,24 @@ onBeforeUnmount(async () => {
 <template>
   <main>
     <Transition name="fetch-fade">
-        <Calendar v-if="!started" @onClickedDay="displayChallengeInfo"/>
+      <Calendar v-if="!started" @onClickedDay="displayChallengeInfo"/>
     </Transition>
     <Transition name="fade">
       <Nonogram ref="nonogram" v-bind="{started, paused}"/>
     </Transition>
     <Transition name="slide-down-no-leave">
-      <div class="actions" v-if="started">
-        <Actions v-bind="{started, paused}" @pause="pauseTime" @check="checkGame" @end-game="endGame"/>
+      <div v-if="started" class="actions">
+        <Actions v-bind="{started, paused}" @check="checkGame" @pause="pauseTime" @end-game="endGame"/>
         <Score v-bind="{time, points, started}"/>
       </div>
     </Transition>
-    <Summary ref="summary" />
+    <Summary ref="summary"/>
     <Transition name="slide-down-no-leave">
-      <div class="controls" v-if="!started">
+      <div v-if="!started" class="controls">
         <Streak/>
         <BasicButton @click="setDailyChallenge">
-          Wykonaj <Icon icon="fa-solid fa-calendar-check" class="ml-0.5"/>
+          Wykonaj
+          <Icon class="ml-0.5" icon="fa-solid fa-calendar-check"/>
         </BasicButton>
       </div>
     </Transition>
@@ -131,6 +132,7 @@ onBeforeUnmount(async () => {
   bottom-0
   right-0
 }
+
 .controls {
   @apply
   flex

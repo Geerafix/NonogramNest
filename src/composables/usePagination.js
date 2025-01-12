@@ -1,4 +1,4 @@
-import {ref, computed, watch} from "vue";
+import {computed, ref, watch} from "vue";
 
 export function usePagination(initialPage, initialItems) {
     const initialLimit = 10;
@@ -12,7 +12,8 @@ export function usePagination(initialPage, initialItems) {
         limit: limit.value,
         perpage: items.value.length + (pass.value ? 1 : 0),
         prev: () => page.value -= 1,
-        next: pass.value ? () => page.value += 1 : () => {}
+        next: pass.value ? () => page.value += 1 : () => {
+        }
     }));
 
     const pageReset = () => (page.value = 1);
@@ -22,7 +23,7 @@ export function usePagination(initialPage, initialItems) {
             initialItems.value.pop();
             pass.value = true;
         } else {
-          pass.value = false;
+            pass.value = false;
         }
 
         if (initialItems.value.length === 0 && page.value > 1) {

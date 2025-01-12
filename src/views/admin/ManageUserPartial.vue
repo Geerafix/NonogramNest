@@ -41,15 +41,15 @@ const fetchUserContent = async (opt) => {
   const {page, limit} = pageState.value;
   switch (option.value) {
     case 'classic':
-      headers.value = ['ID','Punkty','Czas (w sekundach)']
+      headers.value = ['ID', 'Punkty', 'Czas (w sekundach)']
       await getUserClassicScores(uid, page, limit).then(res => set(scoresList, res.data));
       break;
     case 'challenge':
-      headers.value = ['ID','Punkty','Czas (w sekundach)','Data']
+      headers.value = ['ID', 'Punkty', 'Czas (w sekundach)', 'Data']
       await getUserChallengeScores(uid, page, limit).then(res => set(scoresList, res.data));
       break;
     case 'created':
-      headers.value = ['ID','Nazwa','Rozmiar','Twórca','Data utworzenia']
+      headers.value = ['ID', 'Nazwa', 'Rozmiar', 'Twórca', 'Data utworzenia']
       await getUserCreatedPuzzles(uid, page, limit).then(res => set(scoresList, res.data));
       break;
     case 'profile':
@@ -92,14 +92,17 @@ const isScoresEmpty = computed(() => scoresList.value.length === 0);
 </script>
 
 <template>
-  <TransitionGroup name="fade" mode="out-in" tag="div">
-    <ManageUser v-if="!userProfile && isScoresEmpty" :user="managedUser" @accept="confirm" @reject="cancel" @view="fetchUserContent" key="0"/>
-    <Pagination v-if="!isScoresEmpty" v-bind="pageState" @onPageChange="fetchUserContent" key="1"/>
-    <List v-if="!isScoresEmpty" v-bind="listState" @onListItemClick="selectContent" class="!absolute top-0" key="2"/>
-    <UserProfile v-if="userProfile" :user="userProfile" class="absolute top-1/2 -translate-y-1/2 left-0 right-0 mx-auto" key="3"/>
-    <BasicButton v-if="!isScoresEmpty" @click="scoresList = []" class="absolute bottom-0 right-0" key="4">
-      <Icon icon="fa-solid fa-xmark" class="icon-fix"/>
+  <TransitionGroup mode="out-in" name="fade" tag="div">
+    <ManageUser v-if="!userProfile && isScoresEmpty" key="0" :user="managedUser" @accept="confirm"
+                @reject="cancel" @view="fetchUserContent"/>
+    <Pagination v-if="!isScoresEmpty" key="1" v-bind="pageState" @onPageChange="fetchUserContent"/>
+    <List v-if="!isScoresEmpty" key="2" class="!absolute top-0" v-bind="listState" @onListItemClick="selectContent"/>
+    <UserProfile v-if="userProfile" key="3" :user="userProfile"
+                 class="absolute top-1/2 -translate-y-1/2 left-0 right-0 mx-auto"/>
+    <BasicButton v-if="!isScoresEmpty" key="4" class="absolute bottom-0 right-0" @click="scoresList = []">
+      <Icon class="icon-fix" icon="fa-solid fa-xmark"/>
     </BasicButton>
-    <ManagePopup v-if="content" message="Usunąć tą zawartość?" @reject="content = null" @accept="deleteContent" key="5"/>
+    <ManagePopup v-if="content" key="5" message="Usunąć tą zawartość?" @accept="deleteContent"
+                 @reject="content = null"/>
   </TransitionGroup>
 </template>

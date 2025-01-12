@@ -3,7 +3,7 @@ import Menu from '@/components/shared/menu/Menu.vue';
 import MenuUserItems from '@/components/shared/menu/MenuUserItems.vue';
 import MenuAdminItems from '@/components/shared/menu/MenuAdminItems.vue';
 import {useRoute} from 'vue-router';
-import {computed, onMounted, ref, provide} from 'vue';
+import {computed, onMounted, provide, ref} from 'vue';
 
 const route = useRoute();
 const user = computed(() => route.meta.pageOwner === 'user');
@@ -17,14 +17,14 @@ onMounted(() => {
 
 <template>
   <main class="app-container">
-    <Transition name="fade" mode="out-in">
+    <Transition mode="out-in" name="fade">
       <Menu v-if="user || admin" v-slot="{ Component }">
         <component :is="admin ? MenuAdminItems : (user ? MenuUserItems : Component)"/>
       </Menu>
     </Transition>
-    <RouterView class="router-container" v-slot="{ Component }">
-      <Transition name="fade" mode="out-in">
-        <div class="view" :key="Component">
+    <RouterView v-slot="{ Component }" class="router-container">
+      <Transition mode="out-in" name="fade">
+        <div :key="Component" class="view">
           <Header/>
           <component :is="Component"/>
         </div>
@@ -45,12 +45,14 @@ onMounted(() => {
   text-white
   sm:gap-4;
 }
+
 .router-container {
   @apply
   h-full
   w-full
   z-auto;
 }
+
 .view {
   @apply
   grid

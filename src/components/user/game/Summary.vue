@@ -26,8 +26,8 @@ defineExpose({isDisplayed, show, hide});
 </script>
 
 <template>
-  <TransitionGroup name="fade" mode="out-in" tag="div">
-    <div ref="target" class="summary" v-if="isDisplayed">
+  <TransitionGroup mode="out-in" name="fade" tag="div">
+    <div v-if="isDisplayed" ref="target" class="summary">
       <div class="info">
         <span>Twoje rozwiązanie jest poprawne.</span>
         <span>Gratulacje!</span>
@@ -35,19 +35,19 @@ defineExpose({isDisplayed, show, hide});
       <div class="score">
         <div class="flex justify-between">
           <span>Punkty bazowe:</span>
-          <span><b>{{points}}</b></span>
+          <span><b>{{ points }}</b></span>
         </div>
         <div class="flex justify-between pb-4">
           <span>Bonus za czas:</span>
-          <span><b>{{bonus}}</b></span>
+          <span><b>{{ bonus }}</b></span>
         </div>
         <div class="text-right border-gray-600 border-t-2 pt-4">
           <span>Razem punktów: </span>
-          <span><b>{{points + bonus}}</b></span>
+          <span><b>{{ points + bonus }}</b></span>
         </div>
       </div>
-      <MenuButton @click="hide()" buttonText="Potwierdź" class="!w-fit !text-2xl">
-        <Icon icon="fa-solid fa-check" class="my-auto mx-auto"/>
+      <MenuButton buttonText="Potwierdź" class="!w-fit !text-2xl" @click="hide()">
+        <Icon class="my-auto mx-auto" icon="fa-solid fa-check"/>
       </MenuButton>
     </div>
     <div v-if="isDisplayed" class="blurred-background"/>
@@ -103,6 +103,7 @@ defineExpose({isDisplayed, show, hide});
   rounded-xl
   bg-gray-700
 }
+
 .blurred-background {
   @apply
   fixed

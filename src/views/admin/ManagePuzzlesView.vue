@@ -13,7 +13,7 @@ import {useBlurOnView} from "@/composables/useBlurOnView.js";
 import {useNotification} from "@/composables/useNotification.js";
 
 const puzzles = ref([]);
-const listState = useList(['ID planszy','Nazwa planszy','Rozmiar planszy','Nazwa twórcy planszy'], puzzles, [4]);
+const listState = useList(['ID planszy', 'Nazwa planszy', 'Rozmiar planszy', 'Nazwa twórcy planszy'], puzzles, [4]);
 
 const search = ref('');
 const option = ref('name');
@@ -52,26 +52,27 @@ onMounted(fetchPuzzles);
 <template>
   <main>
     <List :class="['list', blurred]" v-bind="listState" @onListItemClick="managePuzzle"/>
-    <Transition name="fade" mode="out-in">
-      <Pagination v-bind="pageState" @onPageChange="fetchPuzzles" v-if="!managedPuzzle"/>
+    <Transition mode="out-in" name="fade">
+      <Pagination v-if="!managedPuzzle" v-bind="pageState" @onPageChange="fetchPuzzles"/>
     </Transition>
     <Transition name="slide-left-hidden">
-      <BasicButton v-if="!rolledSearch && !managedPuzzle" @click="rolledSearch = !rolledSearch" class="absolute right-0 bottom-0">
-        <Icon icon="fa-solid fa-search" class="icon-fix"/>
+      <BasicButton v-if="!rolledSearch && !managedPuzzle" class="absolute right-0 bottom-0"
+                   @click="rolledSearch = !rolledSearch">
+        <Icon class="icon-fix" icon="fa-solid fa-search"/>
       </BasicButton>
     </Transition>
     <Transition name="slide-left-hidden">
-      <div class="search-container" v-show="rolledSearch && !managedPuzzle">
+      <div v-show="rolledSearch && !managedPuzzle" class="search-container">
         <BasicButton @click="rolledSearch = false">
-          <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
+          <Icon class="icon-fix" icon="fa-solid fa-eye-slash"/>
         </BasicButton>
-        <BasicInput v-model="search" placeholder="Wyszukaj..." />
-        <Select :items="ratingSearchBy" @onSelect="setOption" />
+        <BasicInput v-model="search" placeholder="Wyszukaj..."/>
+        <Select :items="ratingSearchBy" @onSelect="setOption"/>
       </div>
     </Transition>
-    <ManagePuzzle v-if="managedPuzzle" @accept="onAccept" @reject="managedPuzzle = null"
-                  :id="managedPuzzle?.created_id"
-                  :puzzle="JSON.parse(managedPuzzle?.excluded_tiles)" />
+    <ManagePuzzle v-if="managedPuzzle" :id="managedPuzzle?.created_id" :puzzle="JSON.parse(managedPuzzle?.excluded_tiles)"
+                  @accept="onAccept"
+                  @reject="managedPuzzle = null"/>
   </main>
 </template>
 
@@ -84,6 +85,7 @@ onMounted(fetchPuzzles);
   bottom-0
   right-0;
 }
+
 .icon-fix {
   @apply
   my-auto

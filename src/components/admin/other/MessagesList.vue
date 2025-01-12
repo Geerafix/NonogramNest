@@ -8,14 +8,14 @@ const onClick = (id) => {
 </script>
 
 <template>
-  <Transition name="fade-slower" mode="out-in">
-    <div class="container" :key="messages">
+  <Transition mode="out-in" name="fade-slower">
+    <div :key="messages" class="container">
       <li v-for="message in messages">
         <div class="item" @click="onClick(message.message_id)">
           <div class="primary-info">
-            <div class="item-row text-left text-2xl bg-gradient-to-r from-gray-700">{{message.title}}</div>
-            <div class="item-row !bg-gray-700/20 bg-gradient-to-r">Od: {{message.username}}</div>
-            <div class="item-row !bg-gray-700/20">Data: {{new Date(message.date).toLocaleDateString()}} r.</div>
+            <div class="item-row text-left text-2xl bg-gradient-to-r from-gray-700">{{ message.title }}</div>
+            <div class="item-row !bg-gray-700/20 bg-gradient-to-r">Od: {{ message.username }}</div>
+            <div class="item-row !bg-gray-700/20">Data: {{ new Date(message.date).toLocaleDateString() }} r.</div>
           </div>
           <textarea class="content">{{message.content}}</textarea>
         </div>
@@ -41,10 +41,12 @@ const onClick = (id) => {
   max-w-full
   overflow-auto
 }
+
 li {
   @apply
   break-inside-avoid
 }
+
 .item {
   @apply
   grid
@@ -54,6 +56,7 @@ li {
   rounded-xl
   bg-gray-900/40
 }
+
 .item-row {
   @apply
   bg-gray-700/40
@@ -64,6 +67,7 @@ li {
   transition-all
   text-wrap
 }
+
 .no-info {
   @apply
   absolute
@@ -74,6 +78,7 @@ li {
   text-2xl
   text-nowrap
 }
+
 .primary-info {
   @apply
   grid
@@ -83,6 +88,7 @@ li {
   [&>*]:!content-center
   [&>*]:!text-nowrap
 }
+
 .content {
   @apply
   item-row

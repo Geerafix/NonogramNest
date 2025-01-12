@@ -47,14 +47,14 @@ onMounted(fetchCommunityGame);
 <template>
   <main>
     <Transition name="fade">
-      <Nonogram ref="nonogram" :started="started" :paused="paused"/>
+      <Nonogram ref="nonogram" :paused="paused" :started="started"/>
     </Transition>
     <Transition name="slide-down-no-leave">
-      <div class="actions" v-if="started">
+      <div v-if="started" class="actions">
         <BasicButton @click="handleEndGame">
           <Icon icon="fa-solid fa-xmark"/>
         </BasicButton>
-        <BasicButton @click="handleCheck" :style="{ backgroundColor: 'rgb(17 94 89)'}">
+        <BasicButton :style="{ backgroundColor: 'rgb(17 94 89)'}" @click="handleCheck">
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>

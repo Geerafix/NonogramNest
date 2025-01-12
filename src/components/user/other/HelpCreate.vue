@@ -1,5 +1,6 @@
 <script setup>
 import {ref} from "vue";
+
 const isDisplayed = ref(false);
 </script>
 
@@ -8,8 +9,8 @@ const isDisplayed = ref(false);
     <div class="question-icon" @click="isDisplayed = !isDisplayed">
       <Icon icon="fa-solid fa-question"/>
     </div>
-    <TransitionGroup name="fade" mode="out-in" tag="div">
-      <div class="information !overflow-auto" v-if="isDisplayed">
+    <TransitionGroup mode="out-in" name="fade" tag="div">
+      <div v-if="isDisplayed" class="information !overflow-auto">
         <h1 class="rules-header">Zasady</h1>
         <div>
           <h1>1. Tworzenie nonogramów</h1>
@@ -46,4 +47,4 @@ const isDisplayed = ref(false);
   </div>
 </template>
 
-<style scoped src="./help-style.css" />
+<style scoped src="./help-style.css"/>

@@ -1,6 +1,6 @@
 <script setup>
-import { useElementHover } from "@vueuse/core";
-import { ref } from "vue";
+import {useElementHover} from "@vueuse/core";
+import {ref} from "vue";
 
 defineProps(['text']);
 
@@ -10,11 +10,11 @@ const elementHover = useElementHover(element);
 
 <template>
   <div class="relative">
-    <div class="container" ref="element">
+    <div ref="element" class="container">
       <slot></slot>
     </div>
-    <div class="info" :class="{'opacity-0': !elementHover}">
-      {{text}}
+    <div :class="{'opacity-0': !elementHover}" class="info">
+      {{ text }}
     </div>
   </div>
 </template>

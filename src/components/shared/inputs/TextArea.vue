@@ -8,7 +8,7 @@ const value = defineModel();
 </script>
 
 <template>
-  <textarea class="basic-input" v-model="value" :placeholder="placeholder" />
+  <textarea v-model="value" :placeholder="placeholder" class="basic-input"/>
 </template>
 
 <style scoped>

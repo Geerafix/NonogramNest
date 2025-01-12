@@ -32,8 +32,8 @@ const filteredItem = (item) => (
         </li>
       </ListHeader>
     </div>
-    <Transition name="fade-slower" mode="out-in">
-      <div class="items" :key="props.items">
+    <Transition mode="out-in" name="fade-slower">
+      <div :key="props.items" class="items">
         <li v-for="item in props.items">
           <ListItem @click="onListItemClick(item)">
             <li v-for="value of filteredItem(item)">
@@ -54,6 +54,7 @@ const filteredItem = (item) => (
   max-w-full
   overflow-auto
 }
+
 .headers {
   @apply
   sticky
@@ -62,6 +63,7 @@ const filteredItem = (item) => (
   z-10
   list-none;
 }
+
 .items {
   @apply
   list-none

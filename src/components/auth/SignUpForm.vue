@@ -6,7 +6,7 @@ import {useRouter} from 'vue-router';
 import {postSignUp} from '@/services/authService.js';
 import {useTrailingBox} from "@/composables/useTrailingBox.js";
 import {useAsyncValidator} from '@vueuse/integrations/useAsyncValidator';
-import {reactive, ref} from 'vue';
+import {reactive} from 'vue';
 import {useNotification} from "@/composables/useNotification.js";
 
 const router = useRouter();
@@ -40,13 +40,13 @@ const {notify} = useNotification()
 
 const onSubmit = () => {
   postSignUp(form.email, form.username, form.password)
-    .then(() => {
-      router.push('/logowanie');
-      notify(true, 'Zarejestrowano.', 4000);
-    })
-    .catch(() => {
-      notify(false, 'Nazwa lub Email już istnieje.', 4000);
-    });
+      .then(() => {
+        router.push('/logowanie');
+        notify(true, 'Zarejestrowano.', 4000);
+      })
+      .catch(() => {
+        notify(false, 'Nazwa lub Email już istnieje.', 4000);
+      });
 };
 </script>
 
@@ -56,29 +56,29 @@ const onSubmit = () => {
       <div class="fields">
         <BasicInput v-model="form.username" placeholder="Nazwa użytkownika"/>
         <component :is="errorFields?.username ? IconInvalid : IconValid"
-            @mouseover="showBox(rules.username.message)" @mouseleave="hideBox"/>
+                   @mouseleave="hideBox" @mouseover="showBox(rules.username.message)"/>
 
         <BasicInput v-model="form.email" placeholder="Email"/>
         <component :is="errorFields?.email ? IconInvalid : IconValid"
-            @mouseover="showBox(rules.email.message)" @mouseleave="hideBox"/>
+                   @mouseleave="hideBox" @mouseover="showBox(rules.email.message)"/>
 
-        <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off"/>
+        <BasicInput v-model="form.password" autocomplete="off" placeholder="Hasło" type="password"/>
         <component :is="errorFields?.password ? IconInvalid : IconValid"
-            @mouseover="showBox(rules.password.message)" @mouseleave="hideBox"/>
+                   @mouseleave="hideBox" @mouseover="showBox(rules.password.message)"/>
 
-        <BasicInput v-model="form.confirmPassword" placeholder="Potwierdź hasło" type="password" autocomplete="off"/>
-        <component v-if="(!errorFields?.password)" :is="(errorFields?.confirmPassword) ? IconInvalid : IconValid"
-                   @mouseover="showBox(rules.confirmPassword.message)" @mouseleave="hideBox"/>
+        <BasicInput v-model="form.confirmPassword" autocomplete="off" placeholder="Potwierdź hasło" type="password"/>
+        <component :is="(errorFields?.confirmPassword) ? IconInvalid : IconValid" v-if="(!errorFields?.password)"
+                   @mouseleave="hideBox" @mouseover="showBox(rules.confirmPassword.message)"/>
       </div>
-      <BasicButton buttonText="Zarejestruj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass">
-        <Icon icon="fa-solid fa-user-plus" class="my-auto ml-1"/>
+      <BasicButton :class="{'opacity-50': !pass}" :disabled="!pass" buttonText="Zarejestruj" type="submit">
+        <Icon class="my-auto ml-1" icon="fa-solid fa-user-plus"/>
       </BasicButton>
     </form>
     <span class="mx-auto text-xl">
       Przejdź do
       <a class="login-link" @click="router.push({ name: 'SignIn' })"><b>strony logowania</b></a>
     </span>
-    <TrailingBox :message="message" :isHovered="isHovered"/>
+    <TrailingBox :isHovered="isHovered" :message="message"/>
   </div>
 </template>
 

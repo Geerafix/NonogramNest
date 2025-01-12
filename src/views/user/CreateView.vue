@@ -57,15 +57,16 @@ onMounted(() => {
 
 <template>
   <main>
-    <Transition name="fade" v-if="!isSizeSelected">
+    <Transition v-if="!isSizeSelected" name="fade">
       <div class="game-instructions">
         <p>Wybierz rozmiar planszy nonogramu, aby rozpocząć tworzenie gry.</p>
       </div>
     </Transition>
     <Transition name="fade">
-      <NonogramBoard ref="board" v-show="isSizeSelected" />
+      <NonogramBoard v-show="isSizeSelected" ref="board"/>
     </Transition>
-    <Actions class="actions" :isCreating="isSizeSelected" @new-board="handleNewBoard" @clear-board="handleClearBoard" @submit="handleSubmitGame" />
+    <Actions :isCreating="isSizeSelected" class="actions" @submit="handleSubmitGame" @new-board="handleNewBoard"
+             @clear-board="handleClearBoard"/>
     <HelpCreate/>
   </main>
 </template>
@@ -80,6 +81,7 @@ onMounted(() => {
   font-sans
   text-center;
 }
+
 .actions {
   @apply
   absolute

@@ -1,5 +1,5 @@
 <script setup>
-import {computed, reactive, onBeforeMount} from 'vue';
+import {computed, onBeforeMount, reactive} from 'vue';
 import {useTimeout} from '@vueuse/core'
 
 const settings = reactive({status: false, message: '', time: 2500});
@@ -18,8 +18,8 @@ onBeforeMount(stop);
 </script>
 
 <template>
-  <Transition name="slide-left" mode="out-in">
-    <div v-if="!ready" :class="['notification', notificationColor]" :key="settings.message">
+  <Transition mode="out-in" name="slide-left">
+    <div v-if="!ready" :key="settings.message" :class="['notification', notificationColor]">
       {{ settings.message }}
     </div>
   </Transition>

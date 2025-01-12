@@ -1,5 +1,4 @@
 import {describe, expect, test} from "vitest";
-await import('../relations.js');
 import {
     getDailies,
     getDailyChallenge,
@@ -8,6 +7,8 @@ import {
     updateDailyChallenge
 } from "../services/challengeService.js";
 import {postPuzzle} from "../services/puzzleService.js";
+
+await import('../relations.js');
 
 describe('challenge', () => {
     test('should return daily challenge with required properties', async () => {

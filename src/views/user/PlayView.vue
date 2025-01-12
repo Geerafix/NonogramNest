@@ -71,7 +71,7 @@ onMounted(() => {
 
 <template>
   <main>
-    <div class="game-instructions" v-if="!started">
+    <div v-if="!started" class="game-instructions">
       <p>Wybierz rozmiar planszy nonogramu. Naciśnij przycisk z kontrolerem, aby rozpocząć grę.</p>
     </div>
     <Transition name="fade">
@@ -79,14 +79,14 @@ onMounted(() => {
     </Transition>
     <div class="actions-container">
       <Transition name="slide-right-no-leave">
-        <span class="self-center text-xl" v-if="points && !started">{{points}} pkt.</span>
+        <span v-if="points && !started" class="self-center text-xl">{{ points }} pkt.</span>
       </Transition>
       <Actions v-bind="{started, paused}"
-               @new-game="startGame" @pause="pauseTime" @check="checkGame" @size="setGame" @end-game="endGame"/>
+               @check="checkGame" @pause="pauseTime" @size="setGame" @new-game="startGame" @end-game="endGame"/>
       <Score v-bind="{time, points, started}"/>
     </div>
     <HelpClassic/>
-    <Summary ref="summary" />
+    <Summary ref="summary"/>
   </main>
 </template>
 
@@ -96,6 +96,7 @@ onMounted(() => {
   text-2xl
   text-center;
 }
+
 .actions-container {
   @apply
   flex

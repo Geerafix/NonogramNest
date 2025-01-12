@@ -1,7 +1,7 @@
 <script setup>
 import Select from "@/components/shared/inputs/Select.vue";
 import {sizes} from "@/config.js";
-import { set } from "@vueuse/core";
+import {set} from "@vueuse/core";
 import {ref} from "vue";
 
 defineProps([
@@ -25,10 +25,10 @@ const setSize = (size) => emit('newBoard', size);
 </script>
 
 <template>
-  <Transition name="slide-down-no-leave" class="flex gap-2">
+  <Transition class="flex gap-2" name="slide-down-no-leave">
     <div>
       <Transition name="slide-right">
-        <div class="flex gap-2" v-show="isCreating">
+        <div v-show="isCreating" class="flex gap-2">
           <BasicInput v-model="name" placeholder="Nazwa..."/>
           <BasicButton @click="emit('clearBoard')">
             <Icon icon="fa-solid fa-rotate"/>
@@ -38,7 +38,7 @@ const setSize = (size) => emit('newBoard', size);
           </BasicButton>
         </div>
       </Transition>
-      <Select :items="sizes" @onSelect="setSize" />
+      <Select :items="sizes" @onSelect="setSize"/>
     </div>
   </Transition>
 </template>

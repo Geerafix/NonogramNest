@@ -2,14 +2,13 @@
 import UserProfile from '@/components/user/profile/UserProfile.vue';
 import RollButton from "@/components/shared/inputs/InfoButton.vue";
 import {useNotification} from "@/composables/useNotification.js";
-import {computed, onBeforeMount, ref} from 'vue';
+import {computed, defineAsyncComponent, onBeforeMount, ref} from 'vue';
 import {getUserProfile, updatePfp} from '@/services/userService';
 import {set, useFileDialog} from "@vueuse/core";
-import {defineAsyncComponent} from "vue";
 import {profileButtons} from "@/config.js";
 import {useBlurOnView} from "@/composables/useBlurOnView.js";
 
-const { files, open, reset, onCancel, onChange } = useFileDialog({
+const {files, open, reset, onCancel, onChange} = useFileDialog({
   accept: 'image/*'
 })
 
@@ -63,7 +62,7 @@ onBeforeMount(fetchUserProfile);
 
 <template>
   <main>
-    <Transition name="fetch-fade" :class="['grid gap-2 mt-2', blurred]">
+    <Transition :class="['grid gap-2 mt-2', blurred]" name="fetch-fade">
       <div v-if="user">
         <UserProfile :user="user" class="mb-2"/>
         <div :class="['flex gap-3 mx-auto mt-2']">
@@ -77,7 +76,7 @@ onBeforeMount(fetchUserProfile);
       </div>
     </Transition>
     <Transition name="fade">
-      <component :is="selectedForm" @reject="onReject" @accept="onResolve" />
+      <component :is="selectedForm" @accept="onResolve" @reject="onReject"/>
     </Transition>
   </main>
 </template>

@@ -1,7 +1,6 @@
 <script setup>
 import {ref} from 'vue';
-import {set} from '@vueuse/core';
-import {onClickOutside} from "@vueuse/core";
+import {onClickOutside, set} from '@vueuse/core';
 
 const props = defineProps(['items']);
 const emit = defineEmits(['onSelect']);
@@ -20,7 +19,7 @@ const onSelect = (item) => {
 </script>
 
 <template>
-  <Transition name="fade" ref="target">
+  <Transition ref="target" name="fade">
     <div>
       <Transition name="slide-up-faster">
         <ul v-if="expanded">
@@ -30,10 +29,10 @@ const onSelect = (item) => {
         </ul>
       </Transition>
       <div class="select overflow-hidden" @click="expanded = !expanded">
-        <Transition name="slide-left" mode="out-in">
-          <div class="my-auto mr-3" :key="selected">{{ selected }}</div>
+        <Transition mode="out-in" name="slide-left">
+          <div :key="selected" class="my-auto mr-3">{{ selected }}</div>
         </Transition>
-        <Icon icon="fa-solid fa-chevron-up" :class="['icon', { '-rotate-180': expanded }]"/>
+        <Icon :class="['icon', { '-rotate-180': expanded }]" icon="fa-solid fa-chevron-up"/>
       </div>
     </div>
   </Transition>

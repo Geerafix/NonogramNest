@@ -39,11 +39,11 @@ onMounted(fetchMessages);
 
 <template>
   <main>
-    <MessagesList :messages="messages" @onListItemClick="saveId" :class="[blurred]" />
+    <MessagesList :class="[blurred]" :messages="messages" @onListItemClick="saveId"/>
     <Transition name="fade">
-      <ManagePopup v-if="messageId" message="Usunąć wiadomość?" @reject="messageId = null" @accept="delMessage" />
+      <ManagePopup v-if="messageId" message="Usunąć wiadomość?" @accept="delMessage" @reject="messageId = null"/>
     </Transition>
-    <Transition name="fade" mode="out-in">
+    <Transition mode="out-in" name="fade">
       <Pagination v-if="!messageId" v-bind="pageState" @onPageChange="fetchMessages"/>
     </Transition>
   </main>

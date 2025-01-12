@@ -15,12 +15,14 @@
     rounded-2xl
     transition-all
 }
+
 .profile-form-actions {
     @apply
     flex
     justify-between
     gap-4
 }
+
 .profile-form-message {
     @apply
     absolute

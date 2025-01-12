@@ -1,6 +1,7 @@
-import {expect, test, describe} from "vitest"
+import {describe, expect, test} from "vitest"
 import {getCommunityPuzzles, getUserPuzzles, postCreatedPuzzle} from "../services/communityService.js";
 import {deleteCreated, publishPuzzle} from "../services/adminService.js";
+
 await import('../relations.js');
 
 describe('community puzzles', () => {

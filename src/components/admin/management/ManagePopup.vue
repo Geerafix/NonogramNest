@@ -3,23 +3,23 @@ const emit = defineEmits(['accept', 'reject']);
 defineProps(['message'])
 
 const accept = async () => {
-    emit('accept', false, 'Usunięto wiadomość.');
+  emit('accept', false, 'Usunięto wiadomość.');
 };
 
 const reject = () => {
-    emit('reject');
+  emit('reject');
 };
 </script>
 
 <template>
   <div>
     <div class="form-container">
-      <span>{{message}}</span>
+      <span>{{ message }}</span>
       <div class="form-actions">
         <BasicButton @click="reject">
           <Icon icon="fa-solid fa-xmark"/>
         </BasicButton>
-        <BasicButton @click="accept" class="!bg-teal-900">
+        <BasicButton class="!bg-teal-900" @click="accept">
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>

@@ -12,21 +12,24 @@ const styleOnHome = computed(() => headers.includes(route.name) ? style : '');
 const onMountAnimate = ref(false);
 
 onMounted(() => {
-  setTimeout(() => {onMountAnimate.value = true}, 20);
+  setTimeout(() => {
+    onMountAnimate.value = true
+  }, 20);
 });
 </script>
 
 <template>
   <div :class="['header', styleOnHome]">
-    <Transition name="slide-right-smooth" mode="out-in">
+    <Transition mode="out-in" name="slide-right-smooth">
       <h1 v-show="onMountAnimate" class="flex gap-4">
         <div v-if="headers.includes(route.name)" @click="$router.push('/')">
-          <img src="/favicon.png" class="logo-style"/>
-        </div>{{ route.meta.title }}
+          <img class="logo-style" src="/favicon.png"/>
+        </div>
+        {{ route.meta.title }}
       </h1>
     </Transition>
     <div
-      class="opacity-10 absolute -translate-y-[34.7%] -right-20 scale-75 -skew-x-12">
+        class="opacity-10 absolute -translate-y-[34.7%] -right-20 scale-75 -skew-x-12">
       <img src="/header2.png">
     </div>
   </div>
@@ -57,6 +60,7 @@ onMounted(() => {
   z-50
   select-none;
 }
+
 .logo-style {
   @apply
   h-12
@@ -64,6 +68,7 @@ onMounted(() => {
   cursor-pointer
   transition-all;
 }
+
 .logo-style:hover {
   @apply
   shadow-lg

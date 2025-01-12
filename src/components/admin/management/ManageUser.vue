@@ -74,22 +74,23 @@ const delUser = async () => {
   <div>
     <div class="form-container grid-cols-[auto_auto] gap-4">
       <div class="grid grid-cols-2 gap-4">
-        <div class="item-row" v-for="(field, key, idx) of form">
+        <div v-for="(field, key, idx) of form" class="item-row">
           <div class="header-info">
-            <span>{{fieldsHeaders[idx]}}</span>
-            <component :is="errorFields?.[key] ? IconInvalid : IconValid" @mouseover="showBox(rules[key].message)" @mouseleave="hideBox"/>
+            <span>{{ fieldsHeaders[idx] }}</span>
+            <component :is="errorFields?.[key] ? IconInvalid : IconValid" @mouseleave="hideBox"
+                       @mouseover="showBox(rules[key].message)"/>
           </div>
-          <BasicInput :placeholder="fieldsHeaders[idx].concat('...')" v-model="form[key]"/>
+          <BasicInput v-model="form[key]" :placeholder="fieldsHeaders[idx].concat('...')"/>
         </div>
       </div>
-      <div class="item-row !gap-3" v-if="props.user.role === 'user'">
+      <div v-if="props.user.role === 'user'" class="item-row !gap-3">
         <span class="text-center">Zawartość</span>
-        <BasicButton class="button-restyle" v-for="el in content" :buttonText="el.name" @click="emit('view', el.view)">
+        <BasicButton v-for="el in content" :buttonText="el.name" class="button-restyle" @click="emit('view', el.view)">
           <Icon :icon="['fa-solid', `fa-${el.icon}`]" class="order-first mx-auto"/>
         </BasicButton>
       </div>
-      <Actions @delete="delUser" @reject="reject" @accept="accept" class="col-span-2"/>
+      <Actions class="col-span-2" @accept="accept" @delete="delUser" @reject="reject"/>
     </div>
-    <TrailingBox :message="message" :isHovered="isHovered" />
+    <TrailingBox :isHovered="isHovered" :message="message"/>
   </div>
 </template>

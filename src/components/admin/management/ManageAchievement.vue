@@ -13,30 +13,30 @@ const type = ref(props.achievement.type);
 const criteria = ref(props.achievement.criteria);
 
 const accept = async () => {
-    const achievement = {
-      id: props.achievement.achievement_id,
-      name: name.value,
-      description: description.value,
-      type: type.value,
-      criteria: criteria.value
-    }
+  const achievement = {
+    id: props.achievement.achievement_id,
+    name: name.value,
+    description: description.value,
+    type: type.value,
+    criteria: criteria.value
+  }
 
-    if (props.achievement.achievement_id) {
-      await updateAchievement(achievement);
-      emit('accept', true, 'Zaktualizowano osiągnięcie.');
-    } else {
-      await postAchievement(achievement);
-      emit('accept', true, 'Dodano nowe osiągnięcie.');
-    }
+  if (props.achievement.achievement_id) {
+    await updateAchievement(achievement);
+    emit('accept', true, 'Zaktualizowano osiągnięcie.');
+  } else {
+    await postAchievement(achievement);
+    emit('accept', true, 'Dodano nowe osiągnięcie.');
+  }
 };
 
 const reject = () => {
-    emit('reject');
+  emit('reject');
 };
 
 const delAchievement = async () => {
-    await deleteAchievement(props.achievement.achievement_id);
-    emit('accept', false, 'Usunięto osiągnięcie.');
+  await deleteAchievement(props.achievement.achievement_id);
+  emit('accept', false, 'Usunięto osiągnięcie.');
 };
 </script>
 
@@ -47,25 +47,26 @@ const delAchievement = async () => {
         <div class="grid gap-4">
           <div class="item-row [&>*]:!w-full">
             <span>Nazwa</span>
-            <BasicInput :placeholder="achievement.name || 'Nazwa...'" v-model="name" />
+            <BasicInput v-model="name" :placeholder="achievement.name || 'Nazwa...'"/>
           </div>
           <div class="flex gap-4">
             <div class="item-row">
               <span>Kolumna</span>
-              <BasicInput :placeholder="achievement.type || 'Kolumna...'" v-model="type" />
+              <BasicInput v-model="type" :placeholder="achievement.type || 'Kolumna...'"/>
             </div>
             <div class="item-row">
               <span>Ilość</span>
-              <BasicInput :placeholder="achievement.criteria || 'Ilość...'" v-model="criteria" type="number" />
+              <BasicInput v-model="criteria" :placeholder="achievement.criteria || 'Ilość...'" type="number"/>
             </div>
           </div>
         </div>
         <div class="item-row">
           <span>Opis</span>
-          <TextArea :placeholder="achievement.description || 'Opis...'" v-model="description" />
+          <TextArea v-model="description" :placeholder="achievement.description || 'Opis...'"/>
         </div>
       </div>
-      <Actions @delete="delAchievement" @reject="reject" @accept="accept" :class="['col-span-2', {'hidden-x': !achievement.achievement_id}]"/>
+      <Actions :class="['col-span-2', {'hidden-x': !achievement.achievement_id}]" @accept="accept" @delete="delAchievement"
+               @reject="reject"/>
     </div>
   </div>
 </template>

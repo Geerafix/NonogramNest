@@ -13,10 +13,11 @@ const db_network = process.env.DB_NETWORK;
 const db_port = process.env.DB_PORT;
 const db_database = process.env.DB_NAME;
 const server_port = process.env.VITE_SERVER_PORT;
+const server_network = process.env.VITE_SERVER_NETWORK;
 
 const connectionString = `postgres://${db_user}:${db_password}@${db_network}:${db_port}/${db_database}`;
 
-export const sequelize = new Sequelize(connectionString, { dialect: 'postgres', logging: false });
+export const sequelize = new Sequelize(connectionString, {dialect: 'postgres', logging: false});
 
 console.log("Setting relations...");
 import('./relations.js')
@@ -44,8 +45,10 @@ server.use(express.json());
 
 server.use(cookieParser());
 
-server.use(cors({ origin: true, credentials: true }));
+server.use(cors({origin: true, credentials: true}));
 
 server.use(errorHandler);
 
-server.listen(server_port, () => { console.log("Server (re)started") });
+server.listen(server_port, server_network, () => {
+    console.log("Server (re)started")
+});

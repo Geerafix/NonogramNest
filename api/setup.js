@@ -14,7 +14,9 @@ sequelize.addHook('afterBulkSync', async (options) => {
 
     for (const name of names) {
         accounts.push({
-            email: name.concat('@wp.pl'), username: name.concat(name.length).concat(name.length + 1), password: await argon2.hash(name),
+            email: name.concat('@wp.pl'),
+            username: name.concat(name.length).concat(name.length + 1),
+            password: await argon2.hash(name),
         })
     }
 
@@ -89,11 +91,6 @@ sequelize.addHook('afterBulkSync', async (options) => {
     });
 
     await Achievement.create({
-        name: 'Obieżyświat', description: 'Ukończ 365 nonogramów w trybie codzienne wyzwanie.',
-        type: 'solved_challenges', criteria: 365
-    });
-
-    await Achievement.create({
         name: 'Zbieracz punktów (I)', description: 'Zdobądź 1000 punktów.',
         type: 'total_points', criteria: 1000
     });
@@ -112,6 +109,6 @@ sequelize.addHook('afterBulkSync', async (options) => {
 // uncomment to migrate models and insert test data
 
 console.log("Migrating models...");
-await sequelize.sync({ force: true }).then((res) => console.log("Models migrated.")).catch((err) => console.log("Error while migrating models."));
+await sequelize.sync({force: true}).then((res) => console.log("Models migrated.")).catch((err) => console.log("Error while migrating models."));
 
 process.exit();

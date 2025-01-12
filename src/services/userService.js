@@ -53,7 +53,7 @@ export async function postMessage(title, content) {
 export function getUserAchievements(page, limit) {
     return api.get('/user/achievements', {
         params: {
-            page: page, 
+            page: page,
             limit: limit
         }
     });

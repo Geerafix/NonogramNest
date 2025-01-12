@@ -15,7 +15,7 @@ const newBoard = () => {
 };
 
 const resetBoard = () => {
-    Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0});
+  Object.assign(nonogram, {id: 0, board: [], answers: [], cluesX: [], cluesY: [], size: 0});
 };
 
 const checkSolution = () => {
@@ -41,9 +41,9 @@ onBeforeMount(resetBoard);
 </script>
 
 <template>
-  <main class="nonogram-container" v-if="started">
+  <main v-if="started" class="nonogram-container">
     <Transition name="fade">
-      <div class="paused-info" v-if="paused">Gra wstrzymana</div>
+      <div v-if="paused" class="paused-info">Gra wstrzymana</div>
     </Transition>
     <div :class="['nonogram-components', {'paused-filter': paused }]">
       <div class="blank-area">
@@ -53,9 +53,9 @@ onBeforeMount(resetBoard);
       <NonogramXClues :clues="nonogram.cluesX" :highlightedIdx="indexes.x"/>
       <NonogramBoard
           :answers="nonogram.answers"
-          :size="nonogram.size"
           :paintAnswer="!paused ? paintAnswer : null"
           :paintExclude="!paused ? paintExclude : null"
+          :size="nonogram.size"
           v-on="{highlight: !paused ? highlight : null}"
       />
     </div>
@@ -111,9 +111,10 @@ onBeforeMount(resetBoard);
   text-nowrap
   rounded-xl
   select-none
-    shadow-2xl
+  shadow-2xl
   duration-150;
 }
+
 .nonogram-container {
   @apply
   absolute
@@ -125,6 +126,7 @@ onBeforeMount(resetBoard);
   font-thin
   font-sans;
 }
+
 .nonogram-components {
   @apply
   grid

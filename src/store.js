@@ -1,4 +1,4 @@
-import {saveNonogram, loadNonogram, saveCreatedNonogram, loadCreatedNonogram} from "@/services/puzzleService.js";
+import {loadCreatedNonogram, loadNonogram, saveCreatedNonogram, saveNonogram} from "@/services/puzzleService.js";
 
 export const useNonogramStore = () => {
     const save = async (nonogram, time, points) => {

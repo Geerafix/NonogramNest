@@ -1,5 +1,6 @@
-import {expect, test, describe} from "vitest"
+import {describe, expect, test} from "vitest"
 import {getAchievedCount, getAchievementsCount, getProfile, getUserAchievements} from "../services/userService.js";
+
 await import('../relations.js');
 
 describe('user achievements', () => {

@@ -40,18 +40,18 @@ const reject = () => {
       <div class="header-info">
         <span>Nowa nazwa</span>
         <component :is="errorFields?.username ? IconInvalid : IconValid"
-                   @mouseover="showBox(rules.username.message)" @mouseleave="hideBox"/>
+                   @mouseleave="hideBox" @mouseover="showBox(rules.username.message)"/>
       </div>
-      <BasicInput placeholder="Nazwa..." v-model="form.username" />
+      <BasicInput v-model="form.username" placeholder="Nazwa..."/>
       <div class="profile-form-actions">
         <BasicButton @click="reject">
           <Icon icon="fa-solid fa-xmark"/>
         </BasicButton>
-        <BasicButton @click="accept" :class="[{'opacity-50': !pass}, '!bg-teal-900']" :disabled="!pass">
+        <BasicButton :class="[{'opacity-50': !pass}, '!bg-teal-900']" :disabled="!pass" @click="accept">
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>
     </div>
-    <TrailingBox :message="message" :isHovered="isHovered" />
+    <TrailingBox :isHovered="isHovered" :message="message"/>
   </div>
 </template>

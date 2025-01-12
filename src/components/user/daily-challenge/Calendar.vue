@@ -48,19 +48,19 @@ onBeforeMount(handleMonthChange);
 </script>
 
 <template>
-  <Transition name="fetch-fade" mode="out-in">
-    <div class="calendar-container" v-if="streakDays">
+  <Transition mode="out-in" name="fetch-fade">
+    <div v-if="streakDays" class="calendar-container">
       <div class="calendar-header">
         <MenuButton class="max-w-1" @click="prevMonth">
-          <Icon icon="fa-solid fa-caret-left" class="icon-adjust"/>
+          <Icon class="icon-adjust" icon="fa-solid fa-caret-left"/>
         </MenuButton>
         <div class="date-info">
-          <Transition name="fade" mode="out-in">
+          <Transition mode="out-in" name="fade">
             <span :key="calendar.month">{{ monthsNames[calendar.month] }} {{ calendar.year }}</span>
           </Transition>
         </div>
         <MenuButton class="max-w-1" @click="nextMonth">
-          <Icon icon="fa-solid fa-caret-right" class="icon-adjust"/>
+          <Icon class="icon-adjust" icon="fa-solid fa-caret-right"/>
         </MenuButton>
       </div>
       <div class="days-name-container">
@@ -68,7 +68,8 @@ onBeforeMount(handleMonthChange);
       </div>
       <div class="days-container">
         <div v-for="day in calendar.firstDay"></div>
-        <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]" @click="clickedDay(day)">
+        <div v-for="day in calendar.days" :class="['day', {'today': day === new Date().getDate() && currentYear}]"
+             @click="clickedDay(day)">
           <span>{{ day }}</span>
           <div v-if="streakDays.includes(day)" class="indicator"></div>
         </div>

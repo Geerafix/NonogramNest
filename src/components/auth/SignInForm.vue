@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, ref} from 'vue';
+import {reactive} from 'vue';
 import {useRouter} from 'vue-router';
 import {postSignIn} from '@/services/authService.js';
 import {useAsyncValidator} from '@vueuse/integrations/useAsyncValidator';
@@ -38,9 +38,9 @@ const onSubmit = async () => {
   <div class="signin-container">
     <form @submit.prevent="onSubmit">
       <BasicInput v-model="form.login" placeholder="Login lub Email"/>
-      <BasicInput v-model="form.password" placeholder="Hasło" type="password" autocomplete="off"/>
-      <BasicButton buttonText="Zaloguj" type="submit" :class="{'opacity-50': !pass}" :disabled="!pass">
-        <Icon icon="fa-solid fa-right-to-bracket" class="my-auto ml-px"/>
+      <BasicInput v-model="form.password" autocomplete="off" placeholder="Hasło" type="password"/>
+      <BasicButton :class="{'opacity-50': !pass}" :disabled="!pass" buttonText="Zaloguj" type="submit">
+        <Icon class="my-auto ml-px" icon="fa-solid fa-right-to-bracket"/>
       </BasicButton>
     </form>
     <span class="mx-auto text-xl">

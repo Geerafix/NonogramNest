@@ -1,4 +1,4 @@
-import { computed } from "vue";
+import {computed} from "vue";
 
 export function useNonogram(nonogram) {
     const setBoardSize = (size) => {
@@ -37,11 +37,11 @@ export function useNonogram(nonogram) {
 
     return {
         cluesX,
-        cluesY, 
+        cluesY,
         answers,
         boardSize,
-        setBoardSize, 
-        setNewBoard, 
+        setBoardSize,
+        setNewBoard,
         checkSolution,
         resetBoard,
         paintAnswer,

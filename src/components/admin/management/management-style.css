@@ -17,12 +17,14 @@
     z-50
     transition-all;
 }
+
 .form-actions {
     @apply
     flex
     gap-4
     justify-center
 }
+
 .error-message {
     @apply
     absolute
@@ -50,6 +52,7 @@
     bg-black/20
     rounded-xl;
 }
+
 .button-restyle {
     @apply
     grid

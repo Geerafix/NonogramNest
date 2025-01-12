@@ -8,8 +8,8 @@ const {x, y} = useMouse();
 
 <template>
   <Transition name="fade">
-    <div v-if="isHovered" class="trailing-box" :style="{'top': (y+20)+'px', 'left': (x+4) + 'px'}">
-      {{message}}
+    <div v-if="isHovered" :style="{'top': (y+20)+'px', 'left': (x+4) + 'px'}" class="trailing-box">
+      {{ message }}
     </div>
   </Transition>
 </template>

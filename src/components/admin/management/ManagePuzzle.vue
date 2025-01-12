@@ -30,6 +30,6 @@ onMounted(() => board.value.answers = props.puzzle);
 <template>
   <div class="form-container">
     <NonogramBoard ref="board" class="!relative pointer-events-none"/>
-    <Actions @delete="delPuzzle" @reject="reject" @accept="accept" class="col-span-2"/>
+    <Actions class="col-span-2" @accept="accept" @delete="delPuzzle" @reject="reject"/>
   </div>
 </template>

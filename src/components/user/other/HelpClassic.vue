@@ -1,5 +1,6 @@
 <script setup>
 import {ref} from "vue";
+
 const isDisplayed = ref(false);
 </script>
 
@@ -8,14 +9,14 @@ const isDisplayed = ref(false);
     <div class="question-icon" @click="isDisplayed = !isDisplayed">
       <Icon icon="fa-solid fa-question"/>
     </div>
-    <TransitionGroup name="fade" mode="out-in" tag="div">
-      <div class="information" v-if="isDisplayed">
+    <TransitionGroup mode="out-in" name="fade" tag="div">
+      <div v-if="isDisplayed" class="information">
         <h1 class="rules-header">Zasady gry</h1>
         <div>
           <h1>1. Cel</h1>
           <p>
             • Uzupełnij siatkę, zaznaczając pola na podstawie
-              podanych wskazówek liczbowych, aby odkryć ukryty wzór lub obrazek.
+            podanych wskazówek liczbowych, aby odkryć ukryty wzór lub obrazek.
           </p>
         </div>
         <div>
@@ -53,7 +54,8 @@ const isDisplayed = ref(false);
           <p>
             • Za poprawne rozwiązanie planszy otrzymujesz punkty bazowe.<br>
             • Zatwierdzenie niepoprawnego rozwiązania powoduje utratę punktów.<br>
-            • Jeśli ukończysz planszę w czasie perfekcyjnym, krótszym niż (rozmiar planszy)<sup class="text-sm">2</sup> sekund,
+            • Jeśli ukończysz planszę w czasie perfekcyjnym, krótszym niż (rozmiar planszy)<sup class="text-sm">2</sup>
+            sekund,
             otrzymasz dodatkowe punkty bonusowe równe punktom bazowym za daną planszę.
           </p>
         </div>

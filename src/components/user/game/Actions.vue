@@ -40,7 +40,7 @@ watch(() => props.started, (started) => {
 <template>
   <TransitionGroup name="slide-down-no-leave">
     <div v-if="!props.started" class="flex gap-2">
-      <BasicButton @click="emit('newGame')" :class="{'opacity-50': !isSelected}" :disabled="!isSelected">
+      <BasicButton :class="{'opacity-50': !isSelected}" :disabled="!isSelected" @click="emit('newGame')">
         <Icon icon="fa-solid fa-gamepad"/>
       </BasicButton>
       <Select :items="sizes" @onSelect="setSize"></Select>
@@ -49,13 +49,13 @@ watch(() => props.started, (started) => {
       <BasicButton @click="handleEndGame">
         <Icon icon="fa-solid fa-xmark"/>
       </BasicButton>
-      <BasicButton @click="emit('pause')" :class="{ 'animate-pulse': paused }"
-                   :style="{ backgroundColor: paused ? 'rgb(120 95 70)' : '#7C2C3B' }">
+      <BasicButton :class="{ 'animate-pulse': paused }" :style="{ backgroundColor: paused ? 'rgb(120 95 70)' : '#7C2C3B' }"
+                   @click="emit('pause')">
         <Icon v-if="paused" icon="fa-solid fa-play"/>
         <Icon v-else icon="fa-solid fa-stop"/>
       </BasicButton>
-      <BasicButton @click="emit('check')" :disabled="paused"
-                   :style="{ backgroundColor: 'rgb(17 94 89)', opacity: paused ? 0.5 : 1 }">
+      <BasicButton :disabled="paused" :style="{ backgroundColor: 'rgb(17 94 89)', opacity: paused ? 0.5 : 1 }"
+                   @click="emit('check')">
         <Icon icon="fa-solid fa-check"/>
       </BasicButton>
     </div>

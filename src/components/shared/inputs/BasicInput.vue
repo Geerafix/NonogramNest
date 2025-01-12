@@ -8,7 +8,7 @@ const value = defineModel();
 </script>
 
 <template>
-  <input class="basic-input" v-model="value" :placeholder="placeholder" :type="type">
+  <input v-model="value" :placeholder="placeholder" :type="type" class="basic-input">
 </template>
 
 <style scoped>

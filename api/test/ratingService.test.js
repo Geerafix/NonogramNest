@@ -1,5 +1,6 @@
-import {expect, test, describe} from "vitest"
-import {getRatingClassic, getRatingChallenge, getRatingAll, getRatingUser} from "../services/ratingService.js";
+import {describe, expect, test} from "vitest"
+import {getRatingAll, getRatingChallenge, getRatingClassic, getRatingUser} from "../services/ratingService.js";
+
 await import('../relations.js');
 
 describe('classic rating', () => {

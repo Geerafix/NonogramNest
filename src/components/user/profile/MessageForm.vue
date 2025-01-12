@@ -21,14 +21,14 @@ const reject = () => {
   <div>
     <div class="profile-form-container">
       <span class="w-full">Tytuł</span>
-      <BasicInput placeholder="Tytuł..." v-model="title" :style="{'width': '100%'}" />
+      <BasicInput v-model="title" :style="{'width': '100%'}" placeholder="Tytuł..."/>
       <span class="w-full mt-2">Treść</span>
-      <TextArea placeholder="Opisz swój problem..." v-model="message" class="!w-[30rem]"/>
+      <TextArea v-model="message" class="!w-[30rem]" placeholder="Opisz swój problem..."/>
       <div class="profile-form-actions">
         <BasicButton @click="reject">
           <Icon icon="fa-solid fa-xmark"/>
         </BasicButton>
-        <BasicButton @click="accept" class="!bg-teal-900">
+        <BasicButton class="!bg-teal-900" @click="accept">
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>

@@ -38,12 +38,12 @@ const clearBoard = () => {
 
 const tileSize = computed(() => {
   const len = answers.value.length;
-  return (1.2 + (15/len)) + 'rem';
+  return (1.2 + (15 / len)) + 'rem';
 });
 
 const colorTile = (row, col) => (
-    (answers.value[row-1] && answers.value[col-1][row-1] === -1) ? 'bg-white relative x' :
-    ((answers.value[row-1] && answers.value[col-1][row-1] === 1) ? 'bg-gray-800' : 'bg-white')
+    (answers.value[row - 1] && answers.value[col - 1][row - 1] === -1) ? 'bg-white relative x' :
+        ((answers.value[row - 1] && answers.value[col - 1][row - 1] === 1) ? 'bg-gray-800' : 'bg-white')
 );
 
 defineExpose({setBoard, clearBoard, answers});
@@ -51,7 +51,7 @@ defineExpose({setBoard, clearBoard, answers});
 
 <template>
   <main :class="['board', {'opacity-0': answers.length === 0}]">
-    <div class="rows" v-for="row in answers.length">
+    <div v-for="row in answers.length" class="rows">
       <div v-for="col in answers.length"
            :class="['cols', colorTile(row, col)]"
            :style="{'width': tileSize, 'height': tileSize}"
@@ -77,11 +77,13 @@ defineExpose({setBoard, clearBoard, answers});
   bg-gray-700
   rounded-sm;
 }
+
 .rows {
   @apply
   grid
   grid-flow-row;
 }
+
 .cols {
   @apply
   border-gray-700
@@ -91,6 +93,7 @@ defineExpose({setBoard, clearBoard, answers});
   duration-75
   transition-colors;
 }
+
 .x::after {
   @apply
   bg-gray-700

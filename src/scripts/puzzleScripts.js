@@ -19,7 +19,7 @@ export function generateAndFindHints(nonogram, size) {
     nonogram.answers = nonogram.answers.map((row, rowIdx) =>
         row.map((col, colIdx) =>
             nonogram.board[rowIdx][colIdx] !== 1 ? (Math.random() <= pR ? 1 : 0) * -1 : col
-    ));
+        ));
 
     nonogram.board.forEach((row, rowIdx) => {
         nonogram.cluesX[rowIdx] = [];
@@ -97,7 +97,7 @@ export function check(nonogram) {
             if (el !== checkY[rowIdx][colIdx]) counter += 1;
         });
     });
-    
+
     return {X, Y, counter};
 }
 
@@ -143,17 +143,17 @@ export function generateGame(answers) {
 }
 
 const pR = [
-    { 5: 0.15 },
-    { 6: 0.17 },
-    { 7: 0.20 },
-    { 8: 0.23 },
-    { 9: 0.26 },
-    { 10: 0.29 },
-    { 11: 0.32 },
-    { 12: 0.34 },
-    { 13: 0.36 },
-    { 14: 0.38 },
-    { 15: 0.40 }
+    {5: 0.15},
+    {6: 0.17},
+    {7: 0.20},
+    {8: 0.23},
+    {9: 0.26},
+    {10: 0.29},
+    {11: 0.32},
+    {12: 0.34},
+    {13: 0.36},
+    {14: 0.38},
+    {15: 0.40}
 ];
 
 export const getExcludedProbability = (size) => {
@@ -162,17 +162,17 @@ export const getExcludedProbability = (size) => {
 };
 
 const points = [
-    { 5: 100 },
-    { 6: 150 },
-    { 7: 250 },
-    { 8: 500 },
-    { 9: 750 },
-    { 10: 1000 },
-    { 11: 1250 },
-    { 12: 1500 },
-    { 13: 2000 },
-    { 14: 2500 },
-    { 15: 3000 }
+    {5: 100},
+    {6: 150},
+    {7: 250},
+    {8: 500},
+    {9: 750},
+    {10: 1000},
+    {11: 1250},
+    {12: 1500},
+    {13: 2000},
+    {14: 2500},
+    {15: 3000}
 ];
 
 export const getPointsBySize = (size) => {
@@ -185,7 +185,7 @@ export const calcTimeBonus = (time, size) => {
     const maxPoints = getPointsBySize(size);
     const penalty = (time - perfectTime) > 0 ? (1 + ((time - perfectTime) / 100)) : 1;
 
-    const bonus = Math.floor((maxPoints * (perfectTime/(time * penalty))));
+    const bonus = Math.floor((maxPoints * (perfectTime / (time * penalty))));
 
     return Math.min(bonus, maxPoints);
 };

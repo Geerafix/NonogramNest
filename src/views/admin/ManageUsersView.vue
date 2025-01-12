@@ -5,7 +5,7 @@ import Switch from "@/components/shared/inputs/Switch.vue";
 import Select from "@/components/shared/inputs/Select.vue";
 import BasicButton from "@/components/shared/inputs/BasicButton.vue";
 import ManageUserPartial from "@/views/admin/ManageUserPartial.vue";
-import {getUsers, getAdmins, getUser} from '@/services/adminService';
+import {getAdmins, getUser, getUsers} from '@/services/adminService';
 import {onMounted, ref, watch} from 'vue';
 import {set} from '@vueuse/core';
 import {useList} from '@/composables/useList';
@@ -21,7 +21,7 @@ const managedUser = ref(null);
 const users = ref([]);
 const rolledSearch = ref(false);
 
-const listState = useList(['ID użytkownika','E-mail użytkownika','Nazwa użytkownika','Rola'], users);
+const listState = useList(['ID użytkownika', 'E-mail użytkownika', 'Nazwa użytkownika', 'Rola'], users);
 const {pageState, pageReset} = usePagination(1, users);
 
 const {blurred} = useBlurOnView(managedUser, false);
@@ -63,28 +63,29 @@ onMounted(fetchUsers);
 <template>
   <main>
     <List :class="[blurred]" v-bind="listState" @onListItemClick="manageUser"/>
-    <Transition name="fade" mode="out-in">
+    <Transition mode="out-in" name="fade">
       <Pagination v-if="!managedUser" v-bind="pageState" @onPageChange="fetchUsers(who)"/>
     </Transition>
-    <Transition name="slide-left-hidden" class="absolute right-0 bottom-0">
+    <Transition class="absolute right-0 bottom-0" name="slide-left-hidden">
       <BasicButton v-if="!rolledSearch && !managedUser" @click="rolledSearch = !rolledSearch">
-        <Icon icon="fa-solid fa-search" class="icon-fix"/>
+        <Icon class="icon-fix" icon="fa-solid fa-search"/>
       </BasicButton>
     </Transition>
-    <Transition name="slide-left-hidden" mode="out-in">
-      <div class="search-container" v-if="rolledSearch && !managedUser">
+    <Transition mode="out-in" name="slide-left-hidden">
+      <div v-if="rolledSearch && !managedUser" class="search-container">
         <BasicButton @click="rolledSearch = false">
-          <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
+          <Icon class="icon-fix" icon="fa-solid fa-eye-slash"/>
         </BasicButton>
-        <BasicInput v-model="search" placeholder="Wyszukaj..." />
+        <BasicInput v-model="search" placeholder="Wyszukaj..."/>
         <Select :items="usersSearchBy" @onSelect="setOption"/>
-        <Switch v-if="false" @onSwitch="fetchUsers" :displayed="who ? 'Admini' : 'Użytkownicy'">
-          <Icon icon="fa-solid fa-user" class="icon-fix"/>
-          <Icon icon="fa-solid fa-user-secret" class="icon-fix"/>
+        <Switch v-if="false" :displayed="who ? 'Admini' : 'Użytkownicy'" @onSwitch="fetchUsers">
+          <Icon class="icon-fix" icon="fa-solid fa-user"/>
+          <Icon class="icon-fix" icon="fa-solid fa-user-secret"/>
         </Switch>
       </div>
     </Transition>
-    <ManageUserPartial v-if="managedUser" :managedUser="managedUser" @accept="onAccept" @reject="() => managedUser = null"/>
+    <ManageUserPartial v-if="managedUser" :managedUser="managedUser" @accept="onAccept"
+                       @reject="() => managedUser = null"/>
   </main>
 </template>
 
@@ -97,12 +98,14 @@ onMounted(fetchUsers);
   bottom-0
   right-0;
 }
+
 .icon-fix {
   @apply
   my-auto
   mx-auto
   text-2xl;
 }
+
 .viewed-user {
   @apply
   absolute

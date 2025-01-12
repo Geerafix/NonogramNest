@@ -24,7 +24,7 @@ export const getCommunityPuzzles = async (user_id, s, option, l, o) => {
             name: {[Op.iLike]: option === 'name' ? search : '%%'},
             is_public: true
         },
-        attributes: ['created_id', 'name', 'Puzzle.size', 'User.username'],
+        attributes: ['created_id', 'User.username', 'name', 'Puzzle.size'],
         limit: limit,
         offset: offset,
         order: [['created_id', 'ASC']],

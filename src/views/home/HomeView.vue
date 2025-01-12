@@ -29,18 +29,18 @@ onMounted(() => {
   <main class="bg-gradient-to-b from-gray-700/40 to-gray-700/20 rounded-xl">
     <div class="login">
       <BasicButton buttonText="Logowanie" @click="$router.push({ name: 'SignIn' })">
-        <Icon icon="fa-solid fa-right-to-bracket" class="my-auto ml-1"/>
+        <Icon class="my-auto ml-1" icon="fa-solid fa-right-to-bracket"/>
       </BasicButton>
       <BasicButton button-text="Rejestracja" @click="$router.push({ name: 'SignUp' })">
-        <Icon icon="fa-solid fa-user-plus" class="my-auto ml-1"/>
+        <Icon class="my-auto ml-1" icon="fa-solid fa-user-plus"/>
       </BasicButton>
     </div>
     <div class="grid grid-cols-[min-content_1fr] mt-14">
       <Nonogram ref="nonogram" :started="true" class="board-style"/>
       <div class="slogan">
         <p v-for="(el, idx) in sloganTexts" :class="[{'!opacity-100': counter > idx}, 'slogan-element']">
-          <Icon :icon="['fa-solid', `fa-${el.icon}`]" :class="[el.color, 'icon-style']"/>
-          <span class="bg-gradient-to-r from-gray-700/70 rounded-xl px-4 py-2">{{el.text}}</span>
+          <Icon :class="[el.color, 'icon-style']" :icon="['fa-solid', `fa-${el.icon}`]"/>
+          <span class="bg-gradient-to-r from-gray-700/70 rounded-xl px-4 py-2">{{ el.text }}</span>
         </p>
       </div>
     </div>
@@ -64,13 +64,15 @@ onMounted(() => {
   text-wrap
   text-left;
 }
-.slogan-element{
+
+.slogan-element {
   @apply
   grid
   grid-cols-[auto_1fr]
   gap-4
 }
-.icon-style{
+
+.icon-style {
   @apply
   w-10
   my-auto
@@ -80,6 +82,7 @@ onMounted(() => {
   from-gray-700/70
   rounded-xl
 }
+
 .login {
   @apply
   absolute
@@ -97,7 +100,8 @@ onMounted(() => {
   z-50
   max-sm:bottom-0;
 }
-.board-style{
+
+.board-style {
   @apply
   !static
   !w-fit
@@ -108,6 +112,7 @@ onMounted(() => {
   place-content-center
   shadow-none
 }
+
 p {
   @apply
   opacity-0

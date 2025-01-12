@@ -18,7 +18,7 @@ const whom = ref(false);
 const rolledSearch = ref(false);
 
 const {pageState, pageReset} = usePagination(1, puzzles);
-const listState = useList(['ID twórcy planszy','Nazwa twórcy planszy','Nazwa planszy','Rozmiar planszy'], puzzles);
+const listState = useList(['ID twórcy planszy', 'Nazwa twórcy planszy', 'Nazwa planszy', 'Rozmiar planszy'], puzzles);
 const router = useRouter();
 
 const fetchPuzzles = async (switched) => {
@@ -55,20 +55,20 @@ onBeforeMount(fetchPuzzles);
     <List v-bind="listState" @onListItemClick="routeToSelectedGame"/>
     <Pagination v-bind="pageState" @onPageChange="fetchPuzzles(whom)"/>
     <Transition name="slide-left-hidden">
-      <BasicButton v-if="!rolledSearch" @click="rolledSearch = !rolledSearch" class="search-roll">
-        <Icon icon="fa-solid fa-search" class="icon-fix"/>
+      <BasicButton v-if="!rolledSearch" class="search-roll" @click="rolledSearch = !rolledSearch">
+        <Icon class="icon-fix" icon="fa-solid fa-search"/>
       </BasicButton>
     </Transition>
     <Transition name="slide-left-hidden">
-      <div class="search-container" v-show="rolledSearch">
+      <div v-show="rolledSearch" class="search-container">
         <BasicButton @click="(rolledSearch = false)">
-          <Icon icon="fa-solid fa-eye-slash" class="icon-fix"/>
+          <Icon class="icon-fix" icon="fa-solid fa-eye-slash"/>
         </BasicButton>
         <BasicInput v-model="search" placeholder="Wyszukaj..."/>
         <Select :class="[slideHideSelect]" :items="ratingSearchBy" @onSelect="setOption"/>
-        <Switch @onSwitch="fetchPuzzles" :displayed="whom ? 'Moje gry' : 'Gry użytkowników'">
-          <Icon icon="fa-solid fa-user-group" class="icon-fix"/>
-          <Icon icon="fa-solid fa-user" class="icon-fix"/>
+        <Switch :displayed="whom ? 'Moje gry' : 'Gry użytkowników'" @onSwitch="fetchPuzzles">
+          <Icon class="icon-fix" icon="fa-solid fa-user-group"/>
+          <Icon class="icon-fix" icon="fa-solid fa-user"/>
         </Switch>
       </div>
     </Transition>
@@ -84,12 +84,14 @@ onBeforeMount(fetchPuzzles);
   bottom-0
   right-0;
 }
+
 .icon-fix {
   @apply
   my-auto
   mx-auto
   text-2xl
 }
+
 .search-roll {
   @apply
   absolute right-0 bottom-0

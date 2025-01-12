@@ -253,7 +253,7 @@ export const getMessages = async (p, l) => {
             exclude: ['user_id'],
             include: ['User.username', 'title', 'content', 'date']
         },
-        order: [['date', 'ASC']],
+        order: [['date', 'DESC']],
         limit: limit,
         offset: offset,
         raw: true

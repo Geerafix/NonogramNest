@@ -33,8 +33,8 @@ const {showBox, hideBox, message, isHovered} = useTrailingBox();
 const accept = async () => {
   if (pass.value) {
     await updatePassword(form.currentPassword, form.newPassword)
-      .then((_) => emit('accept', true, 'Zmieniono hasło'))
-      .catch((_) => emit('accept', false, 'Aktualne hasło jest nieprawidłowe.'));
+        .then((_) => emit('accept', true, 'Zmieniono hasło'))
+        .catch((_) => emit('accept', false, 'Aktualne hasło jest nieprawidłowe.'));
   }
 };
 
@@ -52,39 +52,39 @@ const reject = () => (emit('reject'));
         <div class="field">
           <div>
             <span>Aktualne hasło</span>
-            <IconInvalid v-if="wasChecked" @mouseover="showBox(invalidPassword)" @mouseleave="hideBox"/>
+            <IconInvalid v-if="wasChecked" @mouseleave="hideBox" @mouseover="showBox(invalidPassword)"/>
             <IconValid v-else-if="form.currentPassword.length > 0 && !wasChecked"/>
             <span v-else></span>
           </div>
-          <BasicInput placeholder="Aktualne hasło..." type="password" v-model="form.currentPassword" />
+          <BasicInput v-model="form.currentPassword" placeholder="Aktualne hasło..." type="password"/>
         </div>
         <div class="field">
           <div>
             <span>Nowe hasło</span>
             <component :is="errorFields?.newPassword ? IconInvalid : IconValid"
-                       @mouseover="showBox(rules.newPassword.message)" @mouseleave="hideBox"/>
+                       @mouseleave="hideBox" @mouseover="showBox(rules.newPassword.message)"/>
           </div>
-          <BasicInput placeholder="Nowe hasło..." type="password" v-model="form.newPassword" />
+          <BasicInput v-model="form.newPassword" placeholder="Nowe hasło..." type="password"/>
         </div>
         <div class="field">
           <div>
             <span>Potwierdź hasło</span>
-            <component v-if="!errorFields?.newPassword" :is="errorFields?.confirmPassword ? IconInvalid : IconValid"
-                       @mouseover="showBox(rules.confirmPassword.message)" @mouseleave="hideBox"/>
+            <component :is="errorFields?.confirmPassword ? IconInvalid : IconValid" v-if="!errorFields?.newPassword"
+                       @mouseleave="hideBox" @mouseover="showBox(rules.confirmPassword.message)"/>
           </div>
-          <BasicInput placeholder="Potwierdź hasło..." type="password" v-model="form.confirmPassword" />
+          <BasicInput v-model="form.confirmPassword" placeholder="Potwierdź hasło..." type="password"/>
         </div>
       </div>
       <div class="profile-form-actions">
         <BasicButton @click="reject">
           <Icon icon="fa-solid fa-xmark"/>
         </BasicButton>
-        <BasicButton @click="accept" :class="[{'opacity-50': !pass}, '!bg-teal-900']" :disabled="!pass">
+        <BasicButton :class="[{'opacity-50': !pass}, '!bg-teal-900']" :disabled="!pass" @click="accept">
           <Icon icon="fa-solid fa-check"/>
         </BasicButton>
       </div>
     </div>
-    <TrailingBox :message="message" :isHovered="isHovered" />
+    <TrailingBox :isHovered="isHovered" :message="message"/>
   </div>
 </template>
 
@@ -95,6 +95,7 @@ const reject = () => (emit('reject'));
   gap-4
   [&_*]:my-auto
 }
+
 .field {
   @apply
   grid

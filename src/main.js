@@ -1,12 +1,12 @@
 import './assets/main.css'
 import './components/user/profile/form-style.css'
 import './components/admin/management/management-style.css'
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router/router'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {fas} from '@fortawesome/free-solid-svg-icons'
 import Header from '@/components/shared/Header.vue'
 import Notification from "@/components/shared/Notification.vue";
 import BasicButton from "@/components/shared/inputs/BasicButton.vue";

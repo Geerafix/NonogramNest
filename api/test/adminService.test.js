@@ -1,29 +1,33 @@
 import {describe, expect, test} from "vitest";
-await import('../relations.js');
 import {
-    getPuzzles,
-    getPuzzle,
-    getUsers,
-    getUser,
-    publishPuzzle,
-    deletePuzzle,
-    getSolvedClassic,
-    getSolvedChallenge,
-    getCreatedPuzzles,
-    getAchievements,
-    getMessages,
+    deleteAchievement,
+    deleteChallenge,
     deleteClassic,
     deleteCreated,
-    deleteChallenge,
-    deleteUser,
     deleteMessage,
-    deleteAchievement, postAchievement, updateAchievement, updateUser
+    deletePuzzle,
+    deleteUser,
+    getAchievements,
+    getCreatedPuzzles,
+    getMessages,
+    getPuzzle,
+    getPuzzles,
+    getSolvedChallenge,
+    getSolvedClassic,
+    getUser,
+    getUsers,
+    postAchievement,
+    publishPuzzle,
+    updateAchievement,
+    updateUser
 } from "../services/adminService.js";
 import {postCreatedPuzzle} from "../services/communityService.js";
 import * as argon2 from "argon2";
 import {postMessage} from "../services/userService.js";
 import {postDailyChallenge} from "../services/challengeService.js";
 import {postPuzzle, postSolved} from "../services/puzzleService.js";
+
+await import('../relations.js');
 
 describe('admin - puzzles', () => {
     test('should return pending puzzles each with required properties', async () => {
@@ -143,7 +147,7 @@ describe('admin - puzzles', () => {
     test('should return error if published puzzle id is not existent', async () => {
         try {
             await publishPuzzle(2147483647, '[]');
-        } catch(error) {
+        } catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
@@ -151,7 +155,7 @@ describe('admin - puzzles', () => {
     test('should return error if published puzzle board is undefined', async () => {
         try {
             await publishPuzzle(1, undefined);
-        } catch(error) {
+        } catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
@@ -159,7 +163,7 @@ describe('admin - puzzles', () => {
     test('should return error if puzzle id is not existent', async () => {
         try {
             await deletePuzzle(2147483647);
-        } catch(error) {
+        } catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });

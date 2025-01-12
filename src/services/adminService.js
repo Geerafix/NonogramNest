@@ -8,7 +8,7 @@ export function getUsers(search, option, page, limit) {
         params: {
             search: search,
             option: option,
-            page: page, 
+            page: page,
             limit: limit
         }
     });

@@ -27,12 +27,12 @@ onMounted(() => {
 
 <template>
   <main>
-    <UserAchievementsList :achievements="achievements" />
+    <UserAchievementsList :achievements="achievements"/>
     <Pagination v-bind="pageState" @onPageChange="fetchUserAchievements"/>
-    <Transition name="fade" mode="out-in">
-      <div class="achieved-count" v-if="count">
-        <span>Osiągnięto: {{count}}</span>
-        <Icon icon="'fa-solid fa-star" class="ml-4 text-yellow-300"/>
+    <Transition mode="out-in" name="fade">
+      <div v-if="count" class="achieved-count">
+        <span>Osiągnięto: {{ count }}</span>
+        <Icon class="ml-4 text-yellow-300" icon="'fa-solid fa-star"/>
       </div>
     </Transition>
   </main>

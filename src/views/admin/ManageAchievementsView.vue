@@ -44,16 +44,18 @@ onMounted(fetchAchievements);
 
 <template>
   <main>
-    <AchievementsList :achievements="achievements" @onListItemClick="getAchievement" :class="blurred"/>
+    <AchievementsList :achievements="achievements" :class="blurred" @onListItemClick="getAchievement"/>
     <Transition name="fade">
-      <ManageAchievement v-if="manageAchievement" @accept="onAccept" @reject="onReject" :achievement="manageAchievement"/>
+      <ManageAchievement v-if="manageAchievement" :achievement="manageAchievement" @accept="onAccept"
+                         @reject="onReject"/>
     </Transition>
-    <Transition name="fade" mode="out-in">
+    <Transition mode="out-in" name="fade">
       <div v-if="!manageAchievement">
         <BasicButton class="absolute right-0 bottom-0" @click="newAchievement">
-          Nowe <Icon icon="fa-solid fa-plus" class="icon-fix"/>
+          Nowe
+          <Icon class="icon-fix" icon="fa-solid fa-plus"/>
         </BasicButton>
-        <Pagination v-bind="pageState" @onPageChange="fetchAchievements" />
+        <Pagination v-bind="pageState" @onPageChange="fetchAchievements"/>
       </div>
     </Transition>
   </main>

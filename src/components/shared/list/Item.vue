@@ -7,7 +7,7 @@ const overItem = ref(false);
 
 <template>
   <div :class="['item', {'filter brightness-[1.2]': overItem}]"
-       @mouseover="overItem = true" @mouseleave="overItem = false">
+       @mouseleave="overItem = false" @mouseover="overItem = true">
     <span>{{ value }}</span>
   </div>
 </template>

@@ -6,7 +6,7 @@ export function useScore() {
     const points = ref(null);
     const started = ref(null);
     const paused = ref(true);
-    
+
     const setPoints = (value) => {
         points.value = value;
     }
@@ -42,13 +42,13 @@ export function useScore() {
 
     return {
         setPoints,
-        clearPoints, 
+        clearPoints,
         setTime,
         resetTime: reset,
         startTime,
         pauseTime,
-        time: counter, 
-        points, 
+        time: counter,
+        points,
         paused,
         started
     };
