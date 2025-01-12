@@ -20,11 +20,11 @@ Instrukcja uruchamiania aplikacji.
 
 
 4. **Utworzenie bazy danych**  
-   Utwórz bazę danych o nazwie określonej w pliku `.env` w zmiennej `db_name` (domyślna nazwa: `nonogram-nest`).
+   Utwórz bazę danych o nazwie określonej w pliku `.env` w zmiennej `DB_NAME` (domyślna nazwa: `nonogram-nest`).
 
    > Jeśli zmieniasz nazwę bazy danych:
    > 1. Utwórz nową bazę danych w pgAdmin.
-   > 2. Zaktualizuj zmienną `db_name` w pliku `.env`.
+   > 2. Zaktualizuj zmienną `DB_NAME` w pliku `.env`.
 
 5. **Instalacja zależności**  
    Przejdź do głównego katalogu projektu i uruchom:
