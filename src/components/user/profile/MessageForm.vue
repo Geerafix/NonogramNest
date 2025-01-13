@@ -20,9 +20,9 @@ const reject = () => {
 <template>
   <div>
     <div class="profile-form-container">
-      <span class="w-full">Tytuł</span>
+      <span class="w-full">Tytuł wiadomości</span>
       <BasicInput v-model="title" :style="{'width': '100%'}" placeholder="Tytuł..."/>
-      <span class="w-full mt-2">Treść</span>
+      <span class="w-full mt-2">Treść wiadomości</span>
       <TextArea v-model="message" class="!w-[30rem]" placeholder="Opisz swój problem..."/>
       <div class="profile-form-actions">
         <BasicButton @click="reject">

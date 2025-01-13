@@ -36,7 +36,7 @@ sequelize.addHook('afterBulkSync', async (options) => {
     });
 
     await Achievement.create({
-        name: 'Amator klasyki (II)', description: 'Ukończ 5 nonogramy w trybie klasycznym.',
+        name: 'Amator klasyki (II)', description: 'Ukończ 5 nonogramów w trybie klasycznym.',
         type: 'solved_puzzles', criteria: 5
     });
 
@@ -66,7 +66,7 @@ sequelize.addHook('afterBulkSync', async (options) => {
     });
 
     await Achievement.create({
-        name: 'Nowicjusz wyzwań (II)', description: 'Ukończ 5 nonogramy w trybie codzienne wyzwanie.',
+        name: 'Nowicjusz wyzwań (II)', description: 'Ukończ 5 nonogramów w trybie codzienne wyzwanie.',
         type: 'solved_challenges', criteria: 5
     });
 
@@ -106,7 +106,7 @@ sequelize.addHook('afterBulkSync', async (options) => {
     });
 });
 
-// uncomment to migrate models and insert test data
+// uncomment to: migrate models and insert example data
 
 console.log("Migrating models...");
 await sequelize.sync({force: true}).then((res) => console.log("Models migrated.")).catch((err) => console.log("Error while migrating models."));
