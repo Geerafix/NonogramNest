@@ -18,7 +18,7 @@ const whom = ref(false);
 const rolledSearch = ref(false);
 
 const {pageState, pageReset} = usePagination(1, puzzles);
-const listState = useList(['ID twórcy planszy', 'Nazwa twórcy planszy', 'Nazwa planszy', 'Rozmiar planszy'], puzzles);
+const listState = useList(['ID planszy', 'Nazwa twórcy planszy', 'Nazwa planszy', 'Rozmiar planszy'], puzzles);
 const router = useRouter();
 
 const fetchPuzzles = async (switched) => {
